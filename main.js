@@ -160,6 +160,32 @@ document.addEventListener('DOMContentLoaded', () => {
             },
         });
 
+        // Parallax custom block bg
+        const customBg = document.querySelector('.custom-bg-layer');
+        if (customBg) {
+            gsap.to(customBg, {
+                y: () => window.innerHeight * parseFloat(customBg.getAttribute('data-speed') || '0.2'),
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: '.custom-section',
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: true,
+                },
+            });
+        }
+
+        // World Data Slider (Infinite Marquee effect)
+        const worldDataInner = document.querySelector('.world-data-inner');
+        if (worldDataInner) {
+            gsap.to(worldDataInner, {
+                xPercent: -50,
+                ease: 'none',
+                duration: 40,
+                repeat: -1
+            });
+        }
+
         // Counter animations
         gsap.utils.toArray('.stat-number').forEach(el => {
             const target = parseInt(el.getAttribute('data-count'));
@@ -234,5 +260,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // ─── ROI Calculator ───
+    const roiToggle = document.getElementById('roiToggle');
+    const roiContent = document.getElementById('roiContent');
+    const calcEmployees = document.getElementById('calcEmployees');
+    const calcSalary = document.getElementById('calcSalary');
+    const resTotalFOT = document.getElementById('resTotalFOT');
+    const resSavings = document.getElementById('resSavings');
+
+    if (roiToggle && roiContent && calcEmployees && calcSalary) {
+        roiToggle.addEventListener('click', () => {
+            const isExpanded = roiToggle.getAttribute('aria-expanded') === 'true';
+            roiToggle.setAttribute('aria-expanded', !isExpanded);
+            if (!isExpanded) {
+                roiContent.style.maxHeight = roiContent.scrollHeight + "px";
+            } else {
+                roiContent.style.maxHeight = null;
+            }
+        });
+
+        function updateROI() {
+            const emp = parseInt(calcEmployees.value) || 0;
+            const sal = parseInt(calcSalary.value) || 0;
+            const totalFOT = emp * sal * 12;
+            const savings = totalFOT * 0.60; // Предполагаемая замена 60% рутины
+            
+            resTotalFOT.textContent = new Intl.NumberFormat('ru-RU').format(totalFOT) + ' ₽';
+            resSavings.textContent = new Intl.NumberFormat('ru-RU').format(Math.round(savings)) + ' ₽';
+            
+            if (roiToggle.getAttribute('aria-expanded') === 'true') {
+                roiContent.style.maxHeight = roiContent.scrollHeight + "px";
+            }
+        }
+
+        calcEmployees.addEventListener('input', updateROI);
+        calcSalary.addEventListener('input', updateROI);
+        
+        window.addEventListener('resize', () => {
+            if (roiToggle.getAttribute('aria-expanded') === 'true') {
+                roiContent.style.maxHeight = roiContent.scrollHeight + "px";
+            }
+        });
+        
+        updateROI(); // Initial calculation
+    }
 
 });
