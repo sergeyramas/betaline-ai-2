@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betaline AI — ИИ-сотрудник, который продаёт 24/7</title>
+    <meta name="description" content="Замените рутину на интеллект. ИИ-сотрудник, который знает ваш продукт и продаёт его без выходных. Запуск за 5 минут.">
+    <link rel="stylesheet" href="style.css">
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+    <!-- tsParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js" defer></script>
+</head>
+<body>
+
+    <!-- Custom Cursor -->
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div class="cursor-ring" id="cursorRing"></div>
+
+    <!-- Theme Toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
+        <span class="icon-sun">☀️</span>
+        <span class="icon-moon">🌙</span>
+    </button>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="nav-logo">Betaline<span>.AI</span></a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#pain">Проблема</a></li>
+                <li><a href="#how">Как работает</a></li>
+                <li><a href="#offer">Тарифы</a></li>
+                <li><a href="#custom">Интеграция</a></li>
+                <li><a href="#audit" class="nav-cta">Заказать аудит</a></li>
+            </ul>
+            <div class="burger" id="burger">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-gradient"></div>
+        <div id="tsparticles"></div>
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Новая эра автоматизации
+            </div>
+            <h1 id="heroTitle"></h1>
+            <p>Пока вы платите за рутину, лидеры рынка поручают её нейросетям. Внедрите ИИ&#8209;сотрудника, который знает ваш продукт лучше стажёра. Без долгих ТЗ. Просто вставьте ссылку на ваш сайт, и наша система сама соберёт базу знаний за 5&nbsp;минут.</p>
+            <div class="hero-input-wrap">
+                <input type="url" placeholder="https://ваш-сайт.ru" id="heroUrl">
+                <button>Запустить эволюцию продаж →</button>
+            </div>
+        </div>
+
+        <!-- Liquid Blob -->
+        <div class="blob-container" style="top:-100px;right:-200px;">
+            <svg viewBox="0 0 600 600" width="600" height="600">
+                <defs>
+                    <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:rgba(0,212,255,0.15)"/>
+                        <stop offset="100%" style="stop-color:rgba(0,201,167,0.05)"/>
+                    </linearGradient>
+                </defs>
+                <path fill="url(#blobGrad)">
+                    <animate attributeName="d" dur="12s" repeatCount="indefinite"
+                        values="M301.5,305Q280,360,225,385Q170,410,120,370Q70,330,85,270Q100,210,140,170Q180,130,240,105Q300,80,345,120Q390,160,390,230Q390,300,345.5,302.5Q301,305,301.5,305Z;
+                                M316,310Q290,370,225,395Q160,420,110,370Q60,320,90,260Q120,200,155,155Q190,110,250,95Q310,80,355,125Q400,170,385,235Q370,300,343,305Q316,310,316,310Z;
+                                M301.5,305Q280,360,225,385Q170,410,120,370Q70,330,85,270Q100,210,140,170Q180,130,240,105Q300,80,345,120Q390,160,390,230Q390,300,345.5,302.5Q301,305,301.5,305Z"/>
+                </path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ═══════════ TICKER: KLARNA ═══════════ -->
+    <div class="ticker">
+        <div class="ticker-inner" id="ticker">
+            <div class="ticker-item">
+                📊 ИИ-ассистент финтех-гиганта <span class="highlight">Klarna</span> взял на себя
+                <span class="highlight">2/3 всех обращений</span>, выполняя работу
+                <span class="highlight">700 операторов</span>. Время решения — с 11 до
+                <span class="highlight">2 минут</span>.
+            </div>
+            <div class="ticker-item">
+                📊 ИИ-ассистент финтех-гиганта <span class="highlight">Klarna</span> взял на себя
+                <span class="highlight">2/3 всех обращений</span>, выполняя работу
+                <span class="highlight">700 операторов</span>. Время решения — с 11 до
+                <span class="highlight">2 минут</span>.
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ BLOCK 2: PAIN ═══════════ -->
+    <section class="pain-section" id="pain">
+        <div class="container">
+            <h2 class="reveal">Откровенный разговор<br>о ваших расходах.</h2>
+            <div class="pain-text reveal" style="margin-top:32px;">
+                <p>Давайте смотреть правде в&nbsp;глаза. Ваши менеджеры&nbsp;— отличные ребята, но они <strong>устают</strong>. Они отвечают шаблонами, выгорают от глупых вопросов, ходят в&nbsp;отпуск и&nbsp;гарантированно упускают «тёплых» клиентов ночью или в&nbsp;выходные. Вы&nbsp;платите сотни тысяч за&nbsp;<strong>процесс</strong>, а&nbsp;не&nbsp;за&nbsp;<strong>результат</strong>.</p>
+                <p style="margin-top:24px;">Искусственный интеллект не&nbsp;болеет. Ему не&nbsp;нужна мотивация. Он&nbsp;не&nbsp;просит прибавки. Он&nbsp;просто берёт базу знаний вашего продукта и&nbsp;идеально продаёт его 24/7. Мы&nbsp;не&nbsp;предлагаем вам уволить команду. <strong>Мы&nbsp;предлагаем уволить рутину и&nbsp;начать зарабатывать.</strong></p>
+            </div>
+            <img src="assets/pain-split.png" alt="Контраст: старое и новое" class="split-image reveal" loading="lazy">
+        </div>
+    </section>
+
+    <!-- ═══════════ STATS BAR: GARTNER ═══════════ -->
+    <div class="stats-bar">
+        <div class="container">
+            <div class="stat-item reveal">
+                <div class="stat-number" data-count="80">0</div>
+                <div class="stat-label">млрд $ — экономия<br>на оплате труда к 2026</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number" data-count="91">0</div>
+                <div class="stat-label">% руководителей<br>под давлением по ИИ</div>
+            </div>
+            <div class="stat-item reveal">
+                <div class="stat-number" data-count="700">0</div>
+                <div class="stat-label">операторов заменил<br>один ИИ в Klarna</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════ BLOCK 3: HOW IT WORKS ═══════════ -->
+    <section id="how">
+        <div class="container">
+            <h2 class="reveal">Никаких месяцев разработки.<br><span class="accent-text">Система запускается сегодня.</span></h2>
+            <div class="steps-grid">
+                <div class="step-card reveal" data-tilt>
+                    <div class="step-number">01</div>
+                    <h3>Считывание</h3>
+                    <p>Вы&nbsp;даёте URL. Система парсит 5–10 страниц вашего сайта и&nbsp;формирует системный промпт.</p>
+                </div>
+                <div class="step-card reveal" data-tilt>
+                    <div class="step-number">02</div>
+                    <h3>Обучение</h3>
+                    <p>Бот впитывает ваши регламенты, цены и&nbsp;тональность бренда. За&nbsp;минуты, не&nbsp;за&nbsp;недели.</p>
+                </div>
+                <div class="step-card reveal" data-tilt>
+                    <div class="step-number">03</div>
+                    <h3>Интеграция</h3>
+                    <p>Вы&nbsp;получаете готовый виджет для сайта. Лиды автоматически квалифицируются и&nbsp;греются.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ BLOCK 4: OFFER ═══════════ -->
+    <section class="offer-section" id="offer">
+        <div class="container">
+            <div class="offer-badge reveal">Без риска</div>
+            <h2 class="reveal">Не верьте нам на слово.<br>Проверьте на&nbsp;своих клиентах.</h2>
+            <p class="offer-main reveal">Мы&nbsp;даём вам <strong>7&nbsp;дней</strong> или <strong>500 реальных диалогов</strong> абсолютно бесплатно. Без привязки карты. Если бот не&nbsp;принесёт пользы&nbsp;— вы&nbsp;просто уйдёте.</p>
+
+            <div class="countdown reveal" id="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-days">00</div>
+                    <div class="countdown-label">Дней</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-hours">00</div>
+                    <div class="countdown-label">Часов</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-mins">00</div>
+                    <div class="countdown-label">Минут</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-value" id="cd-secs">00</div>
+                    <div class="countdown-label">Секунд</div>
+                </div>
+            </div>
+
+            <div class="pricing-grid">
+                <div class="price-card reveal" data-tilt>
+                    <h3>Базовый</h3>
+                    <div class="price-amount">от 1 990 ₽</div>
+                    <div class="price-period">в месяц</div>
+                    <ul class="price-features">
+                        <li>Самостоятельный запуск виджета</li>
+                        <li>Парсинг до 10 страниц сайта</li>
+                        <li>До 1 000 диалогов / мес</li>
+                        <li>Базовая аналитика</li>
+                        <li>Email-поддержка</li>
+                    </ul>
+                    <a href="#hero" class="btn btn-outline">Начать бесплатно</a>
+                </div>
+                <div class="price-card featured reveal" data-tilt>
+                    <h3>Сложная интеграция</h3>
+                    <div class="price-amount">по запросу</div>
+                    <div class="price-period">индивидуальный проект</div>
+                    <ul class="price-features">
+                        <li>Интеграция с CRM (Amo/Bitrix)</li>
+                        <li>Обучение на закрытых базах (RAG)</li>
+                        <li>Нестандартные сценарии</li>
+                        <li>Выделенный сервер</li>
+                        <li>Персональный SLA</li>
+                    </ul>
+                    <button class="btn" onclick="openModal()">Записаться на аудит →</button>
+                </div>
+            </div>
+
+            <div class="guarantee-block reveal">
+                <h3>🛡️ Железобетонная гарантия 30 дней</h3>
+                <p>Если кастомная система не&nbsp;экономит ваши деньги&nbsp;— мы&nbsp;делаем полный возврат. Без вопросов.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ BLOCK: CUSTOM INTEGRATION ═══════════ -->
+    <section class="custom-section" id="custom">
+        <div class="container">
+            <h2 class="reveal">Виджеты — для новичков.<br><span class="emerald-text">Мы строим архитектуру для лидеров.</span></h2>
+            <p class="reveal" style="margin-top:24px;font-size:1.1rem;line-height:1.9;max-width:760px;">
+                Давайте честно: дешёвые чат-боты бесят ваших клиентов. Они ходят по&nbsp;кругу и&nbsp;в&nbsp;конце выдают: «Я&nbsp;вас не&nbsp;понял, перевожу на&nbsp;оператора». Это&nbsp;не&nbsp;автоматизация, это&nbsp;иллюзия.<br><br>
+                Мы&nbsp;не&nbsp;просто подключаем нейросеть. <strong>Мы&nbsp;оцифровываем мозг вашего лучшего продавца</strong> и&nbsp;масштабируем его на&nbsp;тысячи диалогов одновременно.
+            </p>
+
+            <div class="custom-grid">
+                <div class="custom-card reveal" data-tilt>
+                    <h3>🔬 Глубокий аудит и&nbsp;RAG&#8209;архитектура</h3>
+                    <p>Мы&nbsp;загружаем в&nbsp;изолированную базу данных ваши NDA&#8209;документы, прайсы, скрипты и&nbsp;должностные инструкции. ИИ&nbsp;будет знать о&nbsp;вашем бизнесе больше, чем коммерческий директор.</p>
+                </div>
+                <div class="custom-card reveal" data-tilt>
+                    <h3>🔗 Бесшовная интеграция с&nbsp;CRM</h3>
+                    <p>ИИ&#8209;сотрудник квалифицирует лида по&nbsp;вашей формуле (BANT), создаёт карточку сделки, заполняет поля, ставит теги и&nbsp;назначает задачи на&nbsp;живых менеджеров.</p>
+                </div>
+                <div class="custom-card reveal" data-tilt>
+                    <h3>🧠 Умная маршрутизация (Human&nbsp;Handoff)</h3>
+                    <p>Если клиент готов к&nbsp;покупке или жалуется&nbsp;— система мгновенно переводит диалог на&nbsp;нужного специалиста, передавая ему краткую выжимку (Summary) всей беседы.</p>
+                </div>
+                <div class="custom-card reveal" data-tilt>
+                    <h3>🛡️ SLA и&nbsp;персональная поддержка</h3>
+                    <p>Выделенный сервер, защита данных и&nbsp;инженер, который следит за&nbsp;метриками вашего бота 24/7. Дообучаем систему каждый месяц на&nbsp;основе новых диалогов.</p>
+                </div>
+            </div>
+
+            <!-- Audit -->
+            <div id="audit" style="margin-top:80px;">
+                <h2 class="reveal">Внедрение начинается<br>с&nbsp;препарирования ваших процессов.</h2>
+                <p class="reveal" style="margin-top:16px;">Мы&nbsp;не&nbsp;возьмём ваши деньги, пока не&nbsp;докажем математику окупаемости.</p>
+                <ul class="audit-list reveal">
+                    <li>
+                        <span class="icon">📋</span>
+                        <span>Разбор <strong>50 ваших реальных диалогов</strong> с&nbsp;клиентами: где менеджеры сливают лиды.</span>
+                    </li>
+                    <li>
+                        <span class="icon">🗺️</span>
+                        <span><strong>Карта автоматизации</strong>: какие конкретно этапы заберёт на&nbsp;себя ИИ.</span>
+                    </li>
+                    <li>
+                        <span class="icon">💰</span>
+                        <span><strong>Точный расчёт ROI</strong>: сколько миллионов рублей мы&nbsp;сэкономим вам в&nbsp;первый год.</span>
+                    </li>
+                </ul>
+
+                <div style="margin-top:40px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;" class="reveal">
+                    <div>
+                        <span style="font-family:var(--font-heading);font-size:1.8rem;font-weight:900;color:var(--accent);">от 300 000 ₽</span>
+                        <span style="display:block;font-size:0.85rem;color:var(--text-muted);">Разработка и внедрение · Окупаемость от 2 мес</span>
+                    </div>
+                    <button class="btn" onclick="openModal()">Записаться на разбор процессов →</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="nav-logo">Betaline<span>.AI</span></a>
+                    <p>ИИ-сотрудники для бизнеса. Замените рутину на&nbsp;интеллект и&nbsp;начните зарабатывать больше.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Навигация</h4>
+                    <a href="#pain">Проблема</a>
+                    <a href="#how">Как работает</a>
+                    <a href="#offer">Тарифы</a>
+                    <a href="#custom">Интеграция</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Контакты</h4>
+                    <a href="mailto:info@betaline.ai">info@betaline.ai</a>
+                    <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+                    <a href="#">Telegram</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>© 2026 Betaline AI. Все права защищены.</span>
+                <span>Политика конфиденциальности</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════ STICKY CTA BAR ═══════════ -->
+    <div class="sticky-cta" id="stickyCta">
+        <div class="container">
+            <div class="sticky-cta-text">
+                <strong>500 бесплатных диалогов</strong> — попробуйте ИИ-сотрудника без риска
+            </div>
+            <a href="#hero" class="btn">Попробовать бесплатно</a>
+        </div>
+    </div>
+
+    <!-- ═══════════ BRIEF MODAL ═══════════ -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <h3>Заявка на аудит отдела продаж</h3>
+            <form id="briefForm" onsubmit="submitBrief(event)">
+                <div class="form-group">
+                    <label>Сколько человек в вашем отделе продаж?</label>
+                    <select required>
+                        <option value="">Выберите...</option>
+                        <option>3–5 человек</option>
+                        <option>6–15 человек</option>
+                        <option>16–50 человек</option>
+                        <option>Более 50</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Какая CRM используется?</label>
+                    <select required>
+                        <option value="">Выберите...</option>
+                        <option>AmoCRM</option>
+                        <option>Bitrix24</option>
+                        <option>Salesforce</option>
+                        <option>Другая / Нет</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Главная боль прямо сейчас?</label>
+                    <textarea placeholder="Например: теряем лиды ночью, менеджеры долго отвечают..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Email для связи</label>
+                    <input type="email" placeholder="ceo@company.ru" required>
+                </div>
+                <button type="submit" class="btn" style="width:100%;justify-content:center;">Отправить заявку →</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ═══════════ EXIT-INTENT POPUP ═══════════ -->
+    <div class="exit-popup-overlay" id="exitPopup">
+        <div class="exit-popup">
+            <button class="modal-close" onclick="closeExitPopup()">✕</button>
+            <h2>Уходите?<br>Ваше право.</h2>
+            <p>Прежде чем вы продолжите сжигать бюджет на&nbsp;человеческий фактор, заберите наш закрытый&nbsp;разбор:</p>
+            <p style="font-weight:600;color:var(--text-primary);font-size:0.95rem;">«10 скрытых убытков от содержания штата операторов и&nbsp;как ИИ&nbsp;срезает их&nbsp;до&nbsp;нуля»</p>
+            <div class="email-wrap" style="margin-top:24px;">
+                <input type="email" placeholder="Ваш email" id="exitEmail">
+                <button onclick="submitExitEmail()">Скачать отчёт</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script src="main.js"></script>
+    <script src="marketing.js"></script>
+</body>
+</html>
