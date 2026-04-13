@@ -91,14 +91,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(typeWriter, 800);
 
     // ─── tsParticles ───
+    const isMobile = window.innerWidth <= 768;
     if (typeof tsParticles !== 'undefined') {
         tsParticles.load('tsparticles', {
             fullScreen: false,
             background: { color: 'transparent' },
             particles: {
-                number: { value: 40, density: { enable: true, area: 1000 } },
+                number: { value: isMobile ? 15 : 40, density: { enable: true, area: 1000 } },
                 color: { value: ['#00D4FF', '#00C9A7', '#ffffff'] },
-                opacity: { value: { min: 0.1, max: 0.4 }, animation: { enable: true, speed: 0.5 } },
+                opacity: { value: { min: 0.1, max: 0.4 }, animation: { enable: !isMobile, speed: 0.5 } },
                 size: { value: { min: 1, max: 2.5 } },
                 move: {
                     enable: true,
@@ -107,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     outModes: 'bounce',
                 },
                 links: {
-                    enable: true,
+                    enable: !isMobile,
                     distance: 140,
                     color: '#00D4FF',
                     opacity: 0.06,
@@ -116,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
             },
             interactivity: {
                 events: {
-                    onHover: { enable: true, mode: 'grab' },
+                    onHover: { enable: !isMobile, mode: 'grab' },
                 },
                 modes: {
                     grab: { distance: 160, links: { opacity: 0.15 } },
@@ -178,11 +179,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // World Data Slider (Infinite Marquee effect)
         const worldDataInner = document.querySelector('.world-data-inner');
         if (worldDataInner) {
-            gsap.to(worldDataInner, {
+            const marquee = gsap.to(worldDataInner, {
                 xPercent: -50,
                 ease: 'none',
                 duration: 40,
                 repeat: -1
+            });
+
+            // Pause marquee when out of viewport to save resources
+            ScrollTrigger.create({
+                trigger: '.world-data-slider',
+                start: 'top bottom',
+                end: 'bottom top',
+                onEnter: () => marquee.play(),
+                onLeave: () => marquee.pause(),
+                onEnterBack: () => marquee.play(),
+                onLeaveBack: () => marquee.pause(),
             });
         }
 
@@ -252,9 +264,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── Smooth scroll for anchor links ───
     document.querySelectorAll('a[href^="#"]').forEach(a => {
+        const href = a.getAttribute('href');
+        if (href === '#') return; // Skip bare # links
         a.addEventListener('click', e => {
             e.preventDefault();
-            const target = document.querySelector(a.getAttribute('href'));
+            const target = document.querySelector(href);
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }

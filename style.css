@@ -1395,4 +1395,18 @@ section {
     .countdown-value { font-size: 1.5rem; padding: 6px 12px; min-width: 48px; }
     .cursor-dot, .cursor-ring { display: none; }
     .theme-toggle { top: 16px; right: 16px; width: 40px; height: 40px; font-size: 16px; }
+
+    /* Disable heavy noise overlay on mobile */
+    body::before { display: none; }
+
+    /* Disable backdrop-filter on mobile for performance */
+    .navbar.scrolled,
+    .theme-toggle,
+    .modal-overlay,
+    .exit-popup-overlay,
+    .sticky-cta {
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+    }
+    .navbar.scrolled { background: var(--bg-primary); }
 }
