@@ -1,453 +1,446 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Betaline AI — ИИ-сотрудник, который продаёт 24/7</title>
-    <meta name="description" content="Замените рутину на интеллект. ИИ-сотрудник, который знает ваш продукт и продаёт его без выходных. Запуск за 5 минут.">
-    <!-- Preloads for performance -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;500;700;900&family=Manrope:wght@300;400;500;600;700;800&display=swap">
-    <link rel="preload" as="image" href="assets/hero-bg.png?v=2">
-    <link rel="stylesheet" href="style.css">
-    <!-- GSAP -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
-    <!-- tsParticles -->
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Betaline — AI-интегратор полного цикла</title>
+<meta name="description" content="Betaline — AI-интегратор полного цикла: проектируем и внедряем LLM-системы под ключ — ассистенты, агентные системы, обработка документов и предиктивная аналитика. Бесплатный вводный аудит.">
+<meta property="og:title" content="Betaline — AI-интегратор полного цикла">
+<meta property="og:description" content="Проектируем и внедряем LLM-системы под ключ: ассистенты, агентные системы, обработка документов и аналитика. Бесплатный вводный аудит.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- Custom Cursor -->
-    <div class="cursor-dot" id="cursorDot"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
-
-    <!-- Theme Toggle -->
-    <button class="theme-toggle" id="themeToggle" aria-label="Переключить тему">
-        <span class="icon-sun">☀️</span>
-        <span class="icon-moon">🌙</span>
-    </button>
-
-    <!-- Navbar -->
-    <nav class="navbar" id="navbar">
-        <div class="container">
-            <a href="#" class="nav-logo">Betaline<span>.AI</span></a>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#pain">Проблема</a></li>
-                <li><a href="#how">Как работает</a></li>
-                <li><a href="#offer">Тарифы</a></li>
-                <li><a href="#custom">Интеграция</a></li>
-                <li><a href="#audit" class="nav-cta">Заказать аудит</a></li>
-            </ul>
-            <div class="burger" id="burger">
-                <span></span><span></span><span></span>
-            </div>
-        </div>
+<!-- ================= НАВБАР ================= -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#top" aria-label="Betaline AI — на главную">
+      <i></i>Betaline&nbsp;<span class="ai">AI</span> <span>// интегратор</span>
+    </a>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#services">Услуги</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#why">Почему мы</a>
+      <a href="#process">Процесс</a>
+      <a href="#pricing">Цены</a>
     </nav>
+    <a class="btn btn-solid btn-sm nav-cta" href="#contact">Записаться на аудит</a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="m-menu" id="mmenu" aria-label="Мобильная навигация">
+  <a href="#services">Услуги</a>
+  <a href="#cases">Кейсы</a>
+  <a href="#why">Почему мы</a>
+  <a href="#process">Процесс</a>
+  <a href="#pricing">Цены</a>
+  <a href="#contact" class="acc">Записаться на аудит</a>
+</nav>
 
-    <!-- ═══════════ HERO ═══════════ -->
-    <section class="hero" id="hero">
-        <div class="hero-bg"></div>
-        <div class="hero-gradient"></div>
-        <div id="tsparticles"></div>
-        <div class="container hero-content">
-            <div class="hero-badge">
-                <span class="dot"></span>
-                Новая эра автоматизации
-            </div>
-            <h1 id="heroTitle"></h1>
-            <p>Пока вы платите за рутину, лидеры рынка поручают её нейросетям. Внедрите ИИ&#8209;сотрудника, который знает ваш продукт лучше стажёра. Без долгих ТЗ. Просто вставьте ссылку на ваш сайт, и наша система сама соберёт базу знаний за 5&nbsp;минут.</p>
-            <div class="hero-input-wrap">
-                <input type="url" placeholder="https://ваш-сайт.ru" id="heroUrl">
-                <button>Запустить эволюцию продаж →</button>
-            </div>
-        </div>
+<main id="top">
 
-        <!-- Liquid Blob -->
-        <div class="blob-container" style="top:-100px;right:-200px;">
-            <svg viewBox="0 0 600 600" width="600" height="600">
-                <defs>
-                    <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:rgba(0,212,255,0.15)"/>
-                        <stop offset="100%" style="stop-color:rgba(0,201,167,0.05)"/>
-                    </linearGradient>
-                </defs>
-                <path fill="url(#blobGrad)">
-                    <animate attributeName="d" dur="12s" repeatCount="indefinite"
-                        values="M301.5,305Q280,360,225,385Q170,410,120,370Q70,330,85,270Q100,210,140,170Q180,130,240,105Q300,80,345,120Q390,160,390,230Q390,300,345.5,302.5Q301,305,301.5,305Z;
-                                M316,310Q290,370,225,395Q160,420,110,370Q60,320,90,260Q120,200,155,155Q190,110,250,95Q310,80,355,125Q400,170,385,235Q370,300,343,305Q316,310,316,310Z;
-                                M301.5,305Q280,360,225,385Q170,410,120,370Q70,330,85,270Q100,210,140,170Q180,130,240,105Q300,80,345,120Q390,160,390,230Q390,300,345.5,302.5Q301,305,301.5,305Z"/>
-                </path>
-            </svg>
-        </div>
-    </section>
-
-    <!-- ═══════════ WORLD DATA SLIDER ═══════════ -->
-    <div class="world-data-slider" id="worldData">
-        <div class="world-data-inner">
-            <div class="data-card">
-                <div class="data-source">Кейс Klarna (Финтех)</div>
-                <div class="data-title">ИИ взял на себя 2/3 всех обращений</div>
-                <div class="data-fact">Выполняет работу <span class="highlight">700 операторов</span>. Время решения скриптом сократилось с 11 до <span class="highlight">2 минут</span>.</div>
-            </div>
-            <div class="data-card">
-                <div class="data-source">Gartner Report 2024</div>
-                <div class="data-title">Давление на руководителей</div>
-                <div class="data-fact"><span class="highlight">91% CEO</span> требуют немедленного внедрения ИИ-инструментов конкурентами.</div>
-            </div>
-            <div class="data-card">
-                <div class="data-source">McKinsey Global</div>
-                <div class="data-title">Экономия на оплате труда</div>
-                <div class="data-fact">Ожидаемая экономия мирового бизнеса к 2026 году — <span class="highlight">80 млрд $</span>.</div>
-            </div>
-            <div class="data-card">
-                <div class="data-source">Forbes Tech</div>
-                <div class="data-title">Рост конверсии в B2B</div>
-                <div class="data-fact">Интеграция RAG-систем в отдел продаж увеличивает SQL (Sales Qualified Leads) на <span class="highlight">34%</span>.</div>
-            </div>
-            <!-- Duplicates for infinite scrolling -->
-            <div class="data-card">
-                <div class="data-source">Кейс Klarna (Финтех)</div>
-                <div class="data-title">ИИ взял на себя 2/3 всех обращений</div>
-                <div class="data-fact">Выполняет работу <span class="highlight">700 операторов</span>. Время решения скриптом сократилось с 11 до <span class="highlight">2 минут</span>.</div>
-            </div>
-            <div class="data-card">
-                <div class="data-source">Gartner Report 2024</div>
-                <div class="data-title">Давление на руководителей</div>
-                <div class="data-fact"><span class="highlight">91% CEO</span> требуют немедленного внедрения ИИ-инструментов конкурентами.</div>
-            </div>
-            <div class="data-card">
-                <div class="data-source">McKinsey Global</div>
-                <div class="data-title">Экономия на оплате труда</div>
-                <div class="data-fact">Ожидаемая экономия мирового бизнеса к 2026 году — <span class="highlight">80 млрд $</span>.</div>
-            </div>
-            <div class="data-card">
-                <div class="data-source">Forbes Tech</div>
-                <div class="data-title">Рост конверсии в B2B</div>
-                <div class="data-fact">Интеграция RAG-систем в отдел продаж увеличивает SQL (Sales Qualified Leads) на <span class="highlight">34%</span>.</div>
-            </div>
-        </div>
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-label="Главный экран">
+    <div class="wrap">
+      <div class="hero-top ld">
+        <p class="sec-mark"><b>00</b> / Betaline AI</p>
+        <p class="coord">LLM-СИСТЕМЫ ПОД КЛЮЧ · РФ</p>
+      </div>
+      <h1 class="ld ld1">AI-интегратор <span class="acc">полного цикла</span> для среднего и&nbsp;крупного бизнеса</h1>
+      <p class="hero-sub ld ld2">Проектируем и внедряем LLM-системы: ассистенты, агентные системы,
+        обработка документов и аналитика — весь цикл внутри одной команды.</p>
+      <div class="hero-cta ld ld3">
+        <a class="btn btn-solid" href="#contact">Записаться на аудит <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#pricing">Смотреть решения <span class="arr">↓</span></a>
+      </div>
+      <figure class="hero-fig ld ld4">
+        <img src="assets/hero-diagram.png" alt="Чертёж: топология агентной системы — изолинии поля плотности задач, сеть узлов и траектории данных" width="1800" height="1200">
+        <figcaption class="fig-cap">
+          <span><b>рис. 01</b> — топология агентной системы</span>
+          <span>изолинии · узлы · траектории данных</span>
+        </figcaption>
+      </figure>
     </div>
-
-    <!-- ═══════════ BLOCK 2: PAIN ═══════════ -->
-    <section class="pain-section" id="pain">
-        <div class="container">
-            <h2 class="reveal">Откровенный разговор<br>о ваших расходах.</h2>
-            <div class="pain-text reveal" style="margin-top:32px;">
-                <p>Давайте смотреть правде в&nbsp;глаза. Ваши менеджеры&nbsp;— отличные ребята, но они <strong>устают</strong>. Они отвечают шаблонами, выгорают от глупых вопросов, ходят в&nbsp;отпуск и&nbsp;гарантированно упускают «тёплых» клиентов ночью или в&nbsp;выходные. Вы&nbsp;платите сотни тысяч за&nbsp;<strong>процесс</strong>, а&nbsp;не&nbsp;за&nbsp;<strong>результат</strong>.</p>
-                <p style="margin-top:24px;">Искусственный интеллект не&nbsp;болеет. Ему не&nbsp;нужна мотивация. Он&nbsp;не&nbsp;просит прибавки. Он&nbsp;просто берёт базу знаний вашего продукта и&nbsp;идеально продаёт его 24/7. Мы&nbsp;не&nbsp;предлагаем вам уволить команду. <strong>Мы&nbsp;предлагаем уволить рутину и&nbsp;начать зарабатывать.</strong></p>
-            </div>
-            <img src="assets/pain-split.png" alt="Контраст: старое и новое" class="split-image reveal" loading="lazy">
-        </div>
-    </section>
-
-    <!-- ═══════════ STATS BAR: GARTNER ═══════════ -->
-    <div class="stats-bar">
-        <div class="container">
-            <div class="stat-item reveal">
-                <div class="stat-number" data-count="80">0</div>
-                <div class="stat-label">млрд $ — экономия<br>на оплате труда к 2026</div>
-            </div>
-            <div class="stat-item reveal">
-                <div class="stat-number" data-count="91">0</div>
-                <div class="stat-label">% руководителей<br>под давлением по ИИ</div>
-            </div>
-            <div class="stat-item reveal">
-                <div class="stat-number" data-count="700">0</div>
-                <div class="stat-label">операторов заменил<br>один ИИ в Klarna</div>
-            </div>
-        </div>
+    <div class="wrap hero-stats-wrap">
+      <div class="stats ld ld5" role="list" aria-label="Ключевые цифры">
+        <div class="stat" role="listitem"><div class="num">15<sup>+</sup></div><div class="lbl">инженеров в&nbsp;команде</div></div>
+        <div class="stat" role="listitem"><div class="num">4</div><div class="lbl">года в&nbsp;ML&nbsp;/&nbsp;LLM</div></div>
+        <div class="stat" role="listitem"><div class="num">40<sup>+</sup></div><div class="lbl">внедрений</div></div>
+        <div class="stat" role="listitem"><div class="num">5</div><div class="lbl">направлений работы</div></div>
+      </div>
     </div>
+  </section>
 
-    <!-- ═══════════ BLOCK 3: HOW IT WORKS ═══════════ -->
-    <section id="how">
-        <div class="container">
-            <h2 class="reveal">Никаких месяцев разработки.<br><span class="accent-text">Система запускается сегодня.</span></h2>
-            <div class="steps-grid">
-                <div class="step-card reveal" data-tilt>
-                    <div class="step-number">01</div>
-                    <h3>Считывание</h3>
-                    <p>Вы&nbsp;даёте URL. Система парсит 5–10 страниц вашего сайта и&nbsp;формирует системный промпт.</p>
-                </div>
-                <div class="step-card reveal" data-tilt>
-                    <div class="step-number">02</div>
-                    <h3>Обучение</h3>
-                    <p>Бот впитывает ваши регламенты, цены и&nbsp;тональность бренда. За&nbsp;минуты, не&nbsp;за&nbsp;недели.</p>
-                </div>
-                <div class="step-card reveal" data-tilt>
-                    <div class="step-number">03</div>
-                    <h3>Интеграция</h3>
-                    <p>Вы&nbsp;получаете готовый виджет для сайта. Лиды автоматически квалифицируются и&nbsp;греются.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════ BLOCK 4: OFFER ═══════════ -->
-    <section class="offer-section" id="offer">
-        <div class="container">
-            <div class="offer-badge reveal">Без риска</div>
-            <h2 class="reveal">Не верьте нам на слово.<br>Проверьте на&nbsp;своих клиентах.</h2>
-            <p class="offer-main reveal">Мы&nbsp;даём вам <strong>7&nbsp;дней</strong> или <strong>500 реальных диалогов</strong> абсолютно бесплатно. Без привязки карты. Если бот не&nbsp;принесёт пользы&nbsp;— вы&nbsp;просто уйдёте.</p>
-
-            <div class="countdown reveal" id="countdown">
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cd-days">00</div>
-                    <div class="countdown-label">Дней</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cd-hours">00</div>
-                    <div class="countdown-label">Часов</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cd-mins">00</div>
-                    <div class="countdown-label">Минут</div>
-                </div>
-                <div class="countdown-item">
-                    <div class="countdown-value" id="cd-secs">00</div>
-                    <div class="countdown-label">Секунд</div>
-                </div>
-            </div>
-
-            <div class="pricing-grid">
-                <div class="price-card reveal" data-tilt>
-                    <h3>Базовый</h3>
-                    <div class="price-amount">от 1 990 ₽</div>
-                    <div class="price-period">в месяц</div>
-                    <ul class="price-features">
-                        <li>Самостоятельный запуск виджета</li>
-                        <li>Парсинг до 10 страниц сайта</li>
-                        <li>До 1 000 диалогов / мес</li>
-                        <li>Базовая аналитика</li>
-                        <li>Email-поддержка</li>
-                    </ul>
-                    <a href="#hero" class="btn btn-outline">Начать бесплатно</a>
-                </div>
-                <div class="price-card featured reveal" data-tilt>
-                    <h3>Сложная интеграция</h3>
-                    <div class="price-amount">по запросу</div>
-                    <div class="price-period">индивидуальный проект</div>
-                    <ul class="price-features">
-                        <li>Интеграция с CRM (Amo/Bitrix)</li>
-                        <li>Обучение на закрытых базах (RAG)</li>
-                        <li>Нестандартные сценарии</li>
-                        <li>Выделенный сервер</li>
-                        <li>Персональный SLA</li>
-                    </ul>
-                    <button class="btn" onclick="openModal()">Записаться на аудит →</button>
-                </div>
-            </div>
-
-            <div class="guarantee-block reveal">
-                <h3>🛡️ Железобетонная гарантия 30 дней</h3>
-                <p>Если кастомная система не&nbsp;экономит ваши деньги&nbsp;— мы&nbsp;делаем полный возврат. Без вопросов.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════ BLOCK: CUSTOM INTEGRATION (300k+ RUB) ═══════════ -->
-    <section class="custom-section" id="custom">
-        <div class="custom-bg-layer" data-speed="0.2"></div>
-        <div class="container">
-            <div class="custom-paradigm">
-                <h2 class="reveal">Виджеты — для новичков.<br><span class="gold-text">Мы строим архитектуру для лидеров.</span></h2>
-                <div class="paradigm-text reveal">
-                    <p>Давайте честно: дешёвые чат-боты бесят ваших клиентов. Они ходят по кругу и в конце выдают: «Я вас не понял, перевожу на оператора». Это не автоматизация, это иллюзия.</p>
-                    <p>Если у вас сложный продукт, длинный цикл сделки и сотни регламентов — вам не нужен просто бот. Вам нужна закрытая ИИ-система. Система, которая обучается на ваших внутренних PDF-документах, знает историю переписок за последние 5 лет и имеет прямой доступ к вашей CRM.</p>
-                    <p><strong>Мы не просто подключаем нейросеть. Мы оцифровываем мозг вашего лучшего продавца и масштабируем его на тысячи диалогов одновременно.</strong></p>
-                </div>
-            </div>
-
-            <!-- ROI Calculator -->
-            <div class="roi-calculator reveal">
-                <button class="roi-toggle" id="roiToggle" aria-expanded="false">
-                    <span class="roi-title">
-                        <span class="icon">🧮</span> Калькулятор эффективности (ROI)
-                    </span>
-                    <span class="roi-arrow">▼</span>
-                </button>
-                <div class="roi-content" id="roiContent">
-                    <div class="roi-grid">
-                        <div class="roi-inputs">
-                            <div class="form-group">
-                                <label>Количество операторов/менеджеров</label>
-                                <input type="number" id="calcEmployees" value="5" min="1" max="1000">
-                            </div>
-                            <div class="form-group">
-                                <label>Средняя ЗП + налоги (₽ на сотрудника)</label>
-                                <input type="number" id="calcSalary" value="120000" step="10000">
-                            </div>
-                            <p class="roi-note">Мы рассчитаем ваши годовые расходы на ФОТ и покажем экономию при внедрении ИИ.</p>
-                        </div>
-                        <div class="roi-results">
-                            <div class="roi-stat">
-                                <div class="roi-label">Годовой ФОТ отдела:</div>
-                                <div class="roi-value" id="resTotalFOT">7 200 000 ₽</div>
-                            </div>
-                            <div class="roi-stat highlight">
-                                <div class="roi-label">Инвестиция в ИИ (разово):</div>
-                                <div class="roi-value">~ 300 000 ₽</div>
-                            </div>
-                            <div class="roi-stat emerald">
-                                <div class="roi-label">Экономия в 1-й год (замещая 60% рутины):</div>
-                                <div class="roi-value glow" id="resSavings">4 020 000 ₽</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="custom-grid">
-                <div class="custom-card reveal" data-tilt>
-                    <h3>Глубокий аудит и RAG-архитектура</h3>
-                    <p>Мы не парсим сайт. Мы загружаем в изолированную базу данных ваши NDA-документы, прайсы, скрипты и должностные инструкции. ИИ будет знать о вашем бизнесе больше, чем коммерческий директор.</p>
-                </div>
-                <div class="custom-card reveal" data-tilt>
-                    <h3>Бесшовная интеграция с CRM (Amo/Bitrix)</h3>
-                    <p>ИИ-сотрудник не просто болтает. Он квалифицирует лида по вашей формуле (BANT), сам создает карточку сделки, заполняет поля, ставит теги и назначает задачи на живых менеджеров.</p>
-                </div>
-                <div class="custom-card reveal" data-tilt>
-                    <h3>Умная маршрутизация (Human Handoff)</h3>
-                    <p>Бот понимает контекст. Если клиент готов к покупке или ситуация требует эмпатии (жалоба) — система мгновенно, без швов, переводит диалог на нужного специалиста, передавая ему краткую выжимку (Summary) всей беседы.</p>
-                </div>
-                <div class="custom-card reveal" data-tilt>
-                    <h3>SLA и персональная поддержка</h3>
-                    <p>Выделенный сервер, защита данных и инженер, который следит за метриками вашего бота 24/7. Мы дообучаем систему каждый месяц на основе новых диалогов.</p>
-                </div>
-            </div>
-
-            <!-- Audit Call to action -->
-            <div class="audit-block" id="audit">
-                <div class="audit-content">
-                    <h2 class="reveal">Внедрение начинается с препарирования ваших процессов.</h2>
-                    <p class="reveal">Мы не возьмем ваши деньги, пока не докажем математику окупаемости. Первый шаг — это глубокий аудит вашей текущей воронки коммуникаций.</p>
-                    
-                    <ul class="audit-list reveal">
-                        <li>
-                            <span class="icon">📋</span>
-                            <span>Разбор <strong>50 ваших реальных диалогов</strong> с клиентами: где менеджеры сливают лиды.</span>
-                        </li>
-                        <li>
-                            <span class="icon">🗺️</span>
-                            <span><strong>Карта автоматизации</strong>: какие конкретно этапы заберет на себя ИИ.</span>
-                        </li>
-                        <li>
-                            <span class="icon">💰</span>
-                            <span><strong>Точный расчет ROI</strong>: сколько миллионов рублей мы сэкономим вам в первый год.</span>
-                        </li>
-                        <li>
-                            <span class="bonus">Цена аудита: <strong>Бесплатно</strong> (для квалифицированных компаний с отделом от 3 человек).</span>
-                        </li>
-                    </ul>
-
-                    <div class="audit-footer reveal">
-                        <div class="audit-price">
-                            <span class="price-big">от 300 000 ₽</span>
-                            <span class="price-sub">Разработка и внедрение кастомной системы. Окупаемость — от 2 до 4 месяцев.</span>
-                        </div>
-                        <button class="btn btn-gold" onclick="openModal()">Записаться на разбор процессов →</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ═══════════ FOOTER ═══════════ -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <a href="#" class="nav-logo">Betaline<span>.AI</span></a>
-                    <p>ИИ-сотрудники для бизнеса. Замените рутину на&nbsp;интеллект и&nbsp;начните зарабатывать больше.</p>
-                </div>
-                <div class="footer-col">
-                    <h4>Навигация</h4>
-                    <a href="#pain">Проблема</a>
-                    <a href="#how">Как работает</a>
-                    <a href="#offer">Тарифы</a>
-                    <a href="#custom">Интеграция</a>
-                </div>
-                <div class="footer-col">
-                    <h4>Контакты</h4>
-                    <a href="mailto:info@betaline.ai">info@betaline.ai</a>
-                    <a href="tel:+74951234567">+7 (495) 123-45-67</a>
-                    <a href="#">Telegram</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <span>© 2026 Betaline AI. Все права защищены.</span>
-                <span>Политика конфиденциальности</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- ═══════════ STICKY CTA BAR ═══════════ -->
-    <div class="sticky-cta" id="stickyCta">
-        <div class="container">
-            <div class="sticky-cta-text">
-                <strong>500 бесплатных диалогов</strong> — попробуйте ИИ-сотрудника без риска
-            </div>
-            <a href="#hero" class="btn">Попробовать бесплатно</a>
-        </div>
+  <!-- ================= УСЛУГИ ================= -->
+  <section class="sec" id="services">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>01</b> / Услуги</p>
+      <h2 class="rv">Пять направлений — одна инженерная команда</h2>
+      <div class="svc-grid">
+        <article class="svc rv">
+          <p class="idx">01</p>
+          <h3>AI-ассистенты и корпоративные помощники</h3>
+          <p>RAG-боты со знанием вашего продукта и регламентов. Отвечают клиентам и сотрудникам со ссылками на источники.</p>
+          <ul class="tags"><li>Сайт</li><li>Telegram</li><li>WhatsApp</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">02</p>
+          <h3>Агентные системы и автоматизация</h3>
+          <p>Агенты с инструментами, которые действуют сами: ставят задачи, пишут письма, обновляют данные в системах.</p>
+          <ul class="tags"><li>CRM</li><li>Почта</li><li>1С</li><li>Внутренние API</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">03</p>
+          <h3>Обработка документов</h3>
+          <p>Извлечение данных, классификация и сверка первички без ручного ввода — с записью в учётные системы.</p>
+          <ul class="tags"><li>Извлечение</li><li>Классификация</li><li>Сверка</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">04</p>
+          <h3>Data Science и предиктивная аналитика</h3>
+          <p>Прогноз спроса, скоринг лидов, объяснимые модели — решения, которые показывают, почему они так считают.</p>
+          <ul class="tags"><li>Прогноз спроса</li><li>Скоринг</li><li>Explainable&nbsp;ML</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">05</p>
+          <h3>AI-аудит и консалтинг</h3>
+          <p>Карта AI-возможностей вашего бизнеса, дорожная карта внедрения и честная оценка ROI до старта разработки.</p>
+          <ul class="tags"><li>Карта возможностей</li><li>Дорожная карта</li><li>Оценка ROI</li></ul>
+        </article>
+      </div>
     </div>
+  </section>
 
-    <!-- ═══════════ BRIEF MODAL ═══════════ -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
-            <button class="modal-close" onclick="closeModal()">✕</button>
-            <h3>Заявка на аудит отдела продаж</h3>
-            <form id="briefForm" onsubmit="submitBrief(event)">
-                <div class="form-group">
-                    <label>Сколько человек в вашем отделе продаж?</label>
-                    <select required>
-                        <option value="">Выберите...</option>
-                        <option>3–5 человек</option>
-                        <option>6–15 человек</option>
-                        <option>16–50 человек</option>
-                        <option>Более 50</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Какая CRM используется?</label>
-                    <select required>
-                        <option value="">Выберите...</option>
-                        <option>AmoCRM</option>
-                        <option>Bitrix24</option>
-                        <option>Salesforce</option>
-                        <option>Другая / Нет</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Главная боль прямо сейчас?</label>
-                    <textarea placeholder="Например: теряем лиды ночью, менеджеры долго отвечают..." required></textarea>
-                </div>
-                <div class="form-group">
-                    <label>Email для связи</label>
-                    <input type="email" placeholder="ceo@company.ru" required>
-                </div>
-                <button type="submit" class="btn" style="width:100%;justify-content:center;">Отправить заявку →</button>
-            </form>
-        </div>
+  <!-- ================= КЕЙСЫ ================= -->
+  <section class="sec" id="cases">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>02</b> / Кейсы</p>
+      <h2 class="rv">Измеренные эффекты, а&nbsp;не обещания</h2>
+      <div class="cases-list">
+        <article class="case rv">
+          <div class="meta">
+            <p class="dom">Дистрибуция стройматериалов</p>
+            <p class="tag">NDA</p>
+          </div>
+          <div>
+            <h3>ИИ-отдел продаж для дистрибьютора</h3>
+            <p>Ассистент квалифицирует входящие лиды прямо в AmoCRM: задаёт уточняющие вопросы,
+               сегментирует и передаёт менеджеру только готовых к разговору клиентов.</p>
+          </div>
+          <div class="res">
+            <p class="num">+34&thinsp;%</p>
+            <p class="cap">SQL — квалифицированных лидов</p>
+          </div>
+        </article>
+        <article class="case rv">
+          <div class="meta">
+            <p class="dom">Финтех-сервис</p>
+            <p class="tag">NDA</p>
+          </div>
+          <div>
+            <h3>RAG-ассистент поддержки</h3>
+            <p>Две трети обращений закрываются без оператора: ассистент отвечает по базе знаний
+               со ссылками на источники, сложные случаи передаёт человеку.</p>
+          </div>
+          <div class="res">
+            <p class="num">11&thinsp;→&thinsp;2&nbsp;мин</p>
+            <p class="cap">время ответа · 2/3 без оператора</p>
+          </div>
+        </article>
+        <article class="case rv">
+          <div class="meta">
+            <p class="dom">Логистика</p>
+            <p class="tag">Коммерческий проект</p>
+          </div>
+          <div>
+            <h3>Обработка первички для логистической компании</h3>
+            <p>Счета, УПД и транспортные накладные распознаются, сверяются и попадают
+               в учётную систему без участия операторов.</p>
+          </div>
+          <div class="res">
+            <p class="num">18&thinsp;000</p>
+            <p class="cap">документов в месяц без ручного ввода</p>
+          </div>
+        </article>
+      </div>
+      <figure class="case-fig rv">
+        <img src="assets/field-study.png" alt="Чертёж: карта измеренных эффектов — изолинии плотности наблюдений с отметками результатов трёх проектов" width="1400" height="1000">
+        <figcaption class="fig-cap">
+          <span><b>рис. 03</b> — карта измеренных эффектов</span>
+          <span>M-1…M-3 · контрольные точки проектов</span>
+        </figcaption>
+      </figure>
     </div>
+  </section>
 
-    <!-- ═══════════ EXIT-INTENT POPUP ═══════════ -->
-    <div class="exit-popup-overlay" id="exitPopup">
-        <div class="exit-popup">
-            <button class="modal-close" onclick="closeExitPopup()">✕</button>
-            <h2>Уходите?<br>Ваше право.</h2>
-            <p>Прежде чем вы продолжите сжигать бюджет на&nbsp;человеческий фактор, заберите наш закрытый&nbsp;разбор:</p>
-            <p style="font-weight:600;color:var(--text-primary);font-size:0.95rem;">«10 скрытых убытков от содержания штата операторов и&nbsp;как ИИ&nbsp;срезает их&nbsp;до&nbsp;нуля»</p>
-            <div class="email-wrap" style="margin-top:24px;">
-                <input type="email" placeholder="Ваш email" id="exitEmail">
-                <button onclick="submitExitEmail()">Скачать отчёт</button>
+  <!-- ================= ПОЧЕМУ МЫ ================= -->
+  <section class="sec" id="why">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>03</b> / Почему мы</p>
+      <h2 class="rv">LLM-системы как инженерные системы</h2>
+      <div class="why-grid">
+        <article class="why rv">
+          <p class="idx">03.1</p>
+          <h3>Полный цикл внутри команды</h3>
+          <p>От аудита до сопровождения — без субподряда. Аналитики, ML-инженеры и разработчики
+             сидят в одной команде и отвечают за результат вместе.</p>
+        </article>
+        <article class="why rv">
+          <p class="idx">03.2</p>
+          <h3>Качество измеряется, а&nbsp;не предполагается</h3>
+          <p>Оценка качества ответов, логирование, автотесты и мониторинг —
+             а не «промпт и молитва». Каждый релиз проверяется на эталонных наборах.</p>
+        </article>
+        <article class="why rv">
+          <p class="idx">03.3</p>
+          <h3>Готовность к чувствительным данным</h3>
+          <p>Работаем в контуре заказчика, подписываем NDA, разворачиваем изолированные базы
+             знаний — RAG on-premise, когда данные не должны покидать периметр.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ТЕХНОЛОГИИ ================= -->
+  <section class="sec" id="tech">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>04</b> / Технологии</p>
+      <h2 class="rv">Стек подбирается под задачу, а&nbsp;не наоборот</h2>
+      <div class="tech-grid rv" role="list">
+        <div class="tech" role="listitem"><b>Python</b><span>t-01</span></div>
+        <div class="tech" role="listitem"><b>Claude</b><span>t-02</span></div>
+        <div class="tech" role="listitem"><b>GPT</b><span>t-03</span></div>
+        <div class="tech" role="listitem"><b>GigaChat</b><span>t-04</span></div>
+        <div class="tech" role="listitem"><b>YandexGPT</b><span>t-05</span></div>
+        <div class="tech" role="listitem"><b>Mistral</b><span>t-06</span></div>
+        <div class="tech" role="listitem"><b>Qdrant</b><span>t-07</span></div>
+        <div class="tech" role="listitem"><b>PostgreSQL</b><span>t-08</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ПРОЦЕСС ================= -->
+  <section class="sec" id="process">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>05</b> / Процесс</p>
+      <h2 class="rv">Четыре этапа — от гипотезы до работающей системы</h2>
+      <figure class="proc-fig rv">
+        <img src="assets/process-band.png" alt="Чертёж: траектория внедрения по четырём этапам — аудит, проектирование, разработка, запуск — с кобальтовой петлёй обратной связи" width="2200" height="700">
+      </figure>
+      <div class="proc-grid">
+        <article class="proc rv">
+          <p class="idx">01</p>
+          <h3>Аудит и стратегия</h3>
+          <p class="dur">1–2 недели</p>
+          <p>Погружаемся в процессы, находим точки применения AI и считаем ожидаемый эффект.</p>
+        </article>
+        <article class="proc rv">
+          <p class="idx">02</p>
+          <h3>Проектирование</h3>
+          <p class="dur">2–3 недели</p>
+          <p>Архитектура решения, источники данных, метрики качества и план интеграций.</p>
+        </article>
+        <article class="proc rv">
+          <p class="idx">03</p>
+          <h3>Разработка</h3>
+          <p class="dur">4–12 недель</p>
+          <p>Итерации с регулярными демо: система растёт на ваших данных и ваших сценариях.</p>
+        </article>
+        <article class="proc rv">
+          <p class="idx">04</p>
+          <h3>Запуск и развитие</h3>
+          <p class="dur">1–2 недели + сопровождение</p>
+          <p>Внедрение в контур, обучение команды, мониторинг и план развития системы.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ЦЕНЫ ================= -->
+  <section class="sec" id="pricing">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>06</b> / Цены</p>
+      <h2 class="rv">Прозрачные уровни — старт с&nbsp;бесплатного аудита</h2>
+      <p class="sec-lead rv">Каждый проект начинается с вводного разговора: смотрим на процессы
+         и честно говорим, где AI окупится, а где — нет.</p>
+
+      <div class="price-free rv">
+        <p class="k">Точка входа</p>
+        <div>
+          <h3>Вводный AI-аудит — 30-минутный звонок</h3>
+          <p>Разбираем ваши процессы и показываем, что можно автоматизировать уже сейчас.</p>
+          <ul class="inc">
+            <li>разбор процессов</li>
+            <li>карта возможностей</li>
+            <li>оценка бюджета и сроков</li>
+          </ul>
+        </div>
+        <div class="side">
+          <p class="val">0 ₽<small>бесплатно · без обязательств</small></p>
+          <a class="btn btn-solid" href="#contact">Записаться <span class="arr">→</span></a>
+        </div>
+      </div>
+
+      <div class="price-list">
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">AI-аудит и консалтинг</h3>
+            <p class="pi">Полный аудит</p>
+          </div>
+          <ul class="inc">
+            <li>интервью с командой</li>
+            <li>карта AI-возможностей</li>
+            <li>дорожная карта внедрения</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>150&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">Обработка документов</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>извлечение данных</li>
+            <li>классификация и сверка</li>
+            <li>интеграция с одной системой</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>600&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">AI-ассистенты</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>поиск по смыслу со ссылками на источники</li>
+            <li>один канал</li>
+            <li>оценка качества ответов</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>700&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">Data Science и аналитика</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>одна прогнозная модель</li>
+            <li>объяснение факторов</li>
+            <li>интеграция в CRM</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>800&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">Агентные системы</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>агент на один сценарий</li>
+            <li>интеграции с внешними системами</li>
+            <li>логирование действий</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>1&thinsp;000&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+      </div>
+
+      <div class="included rv">
+        <p class="h">Включено во все решения</p>
+        <ul>
+          <li>исходный код в вашем репозитории</li>
+          <li>документация</li>
+          <li>обучение команды</li>
+          <li>мониторинг</li>
+          <li>план развития</li>
+          <li>прямая связь с инженерами</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA / ФОРМА ================= -->
+  <section class="sec" id="contact">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>07</b> / Контакт</p>
+      <h2 class="rv">Начните с&nbsp;бесплатного аудита</h2>
+      <div class="cta-grid">
+        <div class="rv">
+          <p class="cta-note">Расскажите о задаче — вернёмся в течение рабочего дня
+             и предложим время для 30-минутного разговора с инженером, а не менеджером по продажам.</p>
+          <ul class="cta-facts">
+            <li><b>Формат</b><span>30-минутный видеозвонок</span></li>
+            <li><b>Результат</b><span>карта возможностей и оценка бюджета</span></li>
+            <li><b>Стоимость</b><span>бесплатно, без обязательств</span></li>
+            <li><b>Почта</b><span><a class="cta-link" href="mailto:info@betaline.ai">info@betaline.ai</a></span></li>
+            <li><b>Телефон</b><span><a class="cta-link" href="tel:+74951234567">+7 (495) 123-45-67</a></span></li>
+          </ul>
+        </div>
+        <div class="rv">
+          <form class="form" id="lead-form" novalidate>
+            <div class="row2">
+              <div class="field">
+                <label for="f-name">Имя</label>
+                <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="f-company">Компания</label>
+                <input id="f-company" name="company" type="text" placeholder="Название компании" autocomplete="organization">
+              </div>
             </div>
+            <div class="field">
+              <label for="f-contact">Email или телефон</label>
+              <input id="f-contact" name="contact" type="text" placeholder="Куда написать или позвонить" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="f-task">Описание задачи</label>
+              <textarea id="f-task" name="task" placeholder="Пара предложений: какой процесс хочется автоматизировать"></textarea>
+            </div>
+            <div class="form-foot">
+              <button class="btn btn-solid" type="submit">Отправить заявку <span class="arr">→</span></button>
+              <p class="hint">Отвечаем в течение рабочего дня</p>
+            </div>
+          </form>
+          <div class="form-ok" id="form-ok" role="status">
+            <p class="mk">Заявка № принята</p>
+            <h3>Спасибо — мы на связи</h3>
+            <p>Вернёмся в течение рабочего дня и предложим время для вводного аудита —
+               или напишите на <a class="cta-link" href="mailto:info@betaline.ai">info@betaline.ai</a>.</p>
+          </div>
         </div>
+      </div>
     </div>
+  </section>
 
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
+</main>
 
-    <!-- Scripts -->
-    <script src="main.js"></script>
-    <script src="marketing.js"></script>
+<!-- ================= ФУТЕР ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <p class="fl"><i></i>Betaline&nbsp;<span class="ai">AI</span></p>
+      <div class="foot-links">
+        <a href="mailto:info@betaline.ai">info@betaline.ai</a>
+        <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+        <a href="#top">Telegram ↗</a>
+      </div>
+      <p class="foot-copy">© 2026 · чертёж&nbsp;a-01</p>
+    </div>
+  </div>
+</footer>
+
+<script src="main.js"></script>
 </body>
 </html>
