@@ -95,7 +95,7 @@ h2{
 .logo{display:flex;align-items:baseline;gap:10px;font-weight:700;font-size:18px;letter-spacing:-0.01em}
 .logo i{width:9px;height:9px;background:var(--accent);display:inline-block;transform:translateY(-1px)}
 .logo .ai,.foot-grid .fl .ai{color:var(--accent)}
-.logo span{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--soft);letter-spacing:.14em}
+.logo span:not(.ai){font-family:var(--mono);font-size:11px;font-weight:400;color:var(--soft);letter-spacing:.14em}
 .nav-links{display:flex;gap:clamp(14px,2vw,30px)}
 .nav-links a{
   font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
