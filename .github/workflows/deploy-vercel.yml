@@ -1,0 +1,41 @@
+name: Deploy to Vercel
+
+# Создаёт (при первом запуске) и обновляет production-деплой проекта на Vercel.
+# Требуется единственный секрет репозитория: VERCEL_TOKEN.
+# Запускается на push в master и вручную через вкладку Actions.
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: vercel-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Deploy production
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then
+            echo "::error::Секрет VERCEL_TOKEN не задан. Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          # --yes создаёт проект при первом запуске без интерактивных вопросов
+          url=$(npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Production: $url"
+
+      - name: Summary
+        run: echo "### Задеплоено: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
