@@ -1,309 +1,54 @@
-/* ═══════════════════════════════════════════════════════════
-   BETALINE AI 2 — MAIN INTERACTIVITY ENGINE
-   GSAP · tsParticles · Typewriter · Parallax · Cursor · Tilt
-   ═══════════════════════════════════════════════════════════ */
+(function(){
+  "use strict";
 
-document.addEventListener('DOMContentLoaded', () => {
-
-    // ─── Theme Toggle ───
-    const themeToggle = document.getElementById('themeToggle');
-    const savedTheme = localStorage.getItem('betaline-theme') || 'dark';
-    if (savedTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
-
-    themeToggle.addEventListener('click', () => {
-        const current = document.documentElement.getAttribute('data-theme');
-        const next = current === 'light' ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', next);
-        localStorage.setItem('betaline-theme', next);
+  /* ---------- reveal: лёгкое проявление, каскадом от hero вниз ---------- */
+  document.documentElement.classList.add("js");
+  function revealAll(){
+    var els = document.querySelectorAll(".rv");
+    els.forEach(function(el, i){
+      setTimeout(function(){ el.classList.add("on"); }, 160 + Math.min(i * 55, 900));
     });
+  }
+  if (document.readyState === "complete") { revealAll(); }
+  else { window.addEventListener("load", revealAll); }
 
-    // ─── Custom Cursor ───
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    let mouseX = 0, mouseY = 0;
-    let ringX = 0, ringY = 0;
-
-    if (window.matchMedia('(pointer: fine)').matches) {
-        document.addEventListener('mousemove', e => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            dot.style.left = mouseX - 4 + 'px';
-            dot.style.top = mouseY - 4 + 'px';
-        });
-
-        function animateRing() {
-            ringX += (mouseX - ringX) * 0.12;
-            ringY += (mouseY - ringY) * 0.12;
-            ring.style.left = ringX - 20 + 'px';
-            ring.style.top = ringY - 20 + 'px';
-            requestAnimationFrame(animateRing);
-        }
-        animateRing();
-
-        // Magnetic effect on buttons
-        document.querySelectorAll('.btn, .nav-cta, .hero-input-wrap button').forEach(el => {
-            el.addEventListener('mouseenter', () => ring.classList.add('hover'));
-            el.addEventListener('mouseleave', () => ring.classList.remove('hover'));
-        });
-    } else {
-        dot.style.display = 'none';
-        ring.style.display = 'none';
-    }
-
-    // ─── Navbar scroll ───
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        navbar.classList.toggle('scrolled', window.scrollY > 80);
+/* ---------- мобильное меню ---------- */
+  var nav = document.getElementById("nav");
+  var burger = document.getElementById("burger");
+  var mmenu = document.getElementById("mmenu");
+  burger.addEventListener("click", function(){
+    var open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+  });
+  mmenu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){
+      nav.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
     });
+  });
 
-    // ─── Burger menu ───
-    const burger = document.getElementById('burger');
-    const navLinks = document.getElementById('navLinks');
-    burger.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-        burger.classList.toggle('open');
+  /* ---------- форма: без реального submit ---------- */
+  var form = document.getElementById("lead-form");
+  var ok = document.getElementById("form-ok");
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var name = document.getElementById("f-name");
+    var contact = document.getElementById("f-contact");
+    var valid = true;
+    [name, contact].forEach(function(inp){
+      if (!inp.value.trim()) {
+        inp.style.borderBottomColor = "#F97316";
+        inp.focus();
+        valid = false;
+      } else {
+        inp.style.borderBottomColor = "";
+      }
     });
-    navLinks.querySelectorAll('a').forEach(a => {
-        a.addEventListener('click', () => {
-            navLinks.classList.remove('open');
-            burger.classList.remove('open');
-        });
-    });
-
-    // ─── Typewriter Effect ───
-    const heroTitle = document.getElementById('heroTitle');
-    const phrases = [
-        'Ваш бизнес работает в прошлом.',
-        'Пора это признать.',
-    ];
-    const fullText = phrases.join(' ');
-    let charIndex = 0;
-
-    function typeWriter() {
-        if (charIndex <= fullText.length) {
-            heroTitle.innerHTML = fullText.substring(0, charIndex) + '<span class="typewriter"></span>';
-            charIndex++;
-            setTimeout(typeWriter, 45);
-        } else {
-            heroTitle.innerHTML = fullText;
-        }
-    }
-    setTimeout(typeWriter, 800);
-
-    // ─── tsParticles ───
-    if (typeof tsParticles !== 'undefined') {
-        tsParticles.load('tsparticles', {
-            fullScreen: false,
-            background: { color: 'transparent' },
-            particles: {
-                number: { value: 40, density: { enable: true, area: 1000 } },
-                color: { value: ['#00D4FF', '#00C9A7', '#ffffff'] },
-                opacity: { value: { min: 0.1, max: 0.4 }, animation: { enable: true, speed: 0.5 } },
-                size: { value: { min: 1, max: 2.5 } },
-                move: {
-                    enable: true,
-                    speed: 0.4,
-                    direction: 'none',
-                    outModes: 'bounce',
-                },
-                links: {
-                    enable: true,
-                    distance: 140,
-                    color: '#00D4FF',
-                    opacity: 0.06,
-                    width: 1,
-                },
-            },
-            interactivity: {
-                events: {
-                    onHover: { enable: true, mode: 'grab' },
-                },
-                modes: {
-                    grab: { distance: 160, links: { opacity: 0.15 } },
-                },
-            },
-        });
-    }
-
-    // ─── GSAP ScrollTrigger Reveals ───
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        gsap.registerPlugin(ScrollTrigger);
-
-        // Staggered reveals
-        gsap.utils.toArray('.reveal').forEach((el, i) => {
-            gsap.fromTo(el,
-                { opacity: 0, y: 50 },
-                {
-                    opacity: 1,
-                    y: 0,
-                    duration: 0.8,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: el,
-                        start: 'top 85%',
-                        toggleActions: 'play none none none',
-                    },
-                    delay: (i % 3) * 0.15,
-                }
-            );
-        });
-
-        // Parallax hero bg
-        gsap.to('.hero-bg', {
-            y: 120,
-            ease: 'none',
-            scrollTrigger: {
-                trigger: '.hero',
-                start: 'top top',
-                end: 'bottom top',
-                scrub: true,
-            },
-        });
-
-        // Parallax custom block bg
-        const customBg = document.querySelector('.custom-bg-layer');
-        if (customBg) {
-            gsap.to(customBg, {
-                y: () => window.innerHeight * parseFloat(customBg.getAttribute('data-speed') || '0.2'),
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '.custom-section',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: true,
-                },
-            });
-        }
-
-        // World Data Slider (Infinite Marquee effect)
-        const worldDataInner = document.querySelector('.world-data-inner');
-        if (worldDataInner) {
-            gsap.to(worldDataInner, {
-                xPercent: -50,
-                ease: 'none',
-                duration: 40,
-                repeat: -1
-            });
-        }
-
-        // Counter animations
-        gsap.utils.toArray('.stat-number').forEach(el => {
-            const target = parseInt(el.getAttribute('data-count'));
-            const obj = { val: 0 };
-            gsap.to(obj, {
-                val: target,
-                duration: 2,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: el,
-                    start: 'top 85%',
-                    toggleActions: 'play none none none',
-                },
-                onUpdate: () => {
-                    el.textContent = Math.round(obj.val);
-                },
-            });
-        });
-
-        // Step cards stagger
-        gsap.from('.step-card', {
-            opacity: 0,
-            y: 60,
-            stagger: 0.2,
-            duration: 0.8,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.steps-grid',
-                start: 'top 80%',
-            },
-        });
-
-        // Custom cards stagger
-        gsap.from('.custom-card', {
-            opacity: 0,
-            y: 60,
-            stagger: 0.15,
-            duration: 0.7,
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.custom-grid',
-                start: 'top 80%',
-            },
-        });
-    }
-
-    // ─── 3D Tilt Effect ───
-    document.querySelectorAll('[data-tilt]').forEach(card => {
-        card.addEventListener('mousemove', e => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            const rotateX = (y - centerY) / centerY * -6;
-            const rotateY = (x - centerX) / centerX * 6;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) translateY(0)';
-        });
-    });
-
-    // ─── Smooth scroll for anchor links ───
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            e.preventDefault();
-            const target = document.querySelector(a.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        });
-    });
-
-    // ─── ROI Calculator ───
-    const roiToggle = document.getElementById('roiToggle');
-    const roiContent = document.getElementById('roiContent');
-    const calcEmployees = document.getElementById('calcEmployees');
-    const calcSalary = document.getElementById('calcSalary');
-    const resTotalFOT = document.getElementById('resTotalFOT');
-    const resSavings = document.getElementById('resSavings');
-
-    if (roiToggle && roiContent && calcEmployees && calcSalary) {
-        roiToggle.addEventListener('click', () => {
-            const isExpanded = roiToggle.getAttribute('aria-expanded') === 'true';
-            roiToggle.setAttribute('aria-expanded', !isExpanded);
-            if (!isExpanded) {
-                roiContent.style.maxHeight = roiContent.scrollHeight + "px";
-            } else {
-                roiContent.style.maxHeight = null;
-            }
-        });
-
-        function updateROI() {
-            const emp = parseInt(calcEmployees.value) || 0;
-            const sal = parseInt(calcSalary.value) || 0;
-            const totalFOT = emp * sal * 12;
-            const savings = totalFOT * 0.60; // Предполагаемая замена 60% рутины
-            
-            resTotalFOT.textContent = new Intl.NumberFormat('ru-RU').format(totalFOT) + ' ₽';
-            resSavings.textContent = new Intl.NumberFormat('ru-RU').format(Math.round(savings)) + ' ₽';
-            
-            if (roiToggle.getAttribute('aria-expanded') === 'true') {
-                roiContent.style.maxHeight = roiContent.scrollHeight + "px";
-            }
-        }
-
-        calcEmployees.addEventListener('input', updateROI);
-        calcSalary.addEventListener('input', updateROI);
-        
-        window.addEventListener('resize', () => {
-            if (roiToggle.getAttribute('aria-expanded') === 'true') {
-                roiContent.style.maxHeight = roiContent.scrollHeight + "px";
-            }
-        });
-        
-        updateROI(); // Initial calculation
-    }
-
-});
+    if (!valid) return;
+    var num = "A-" + String(Math.floor(100 + Math.random() * 900));
+    ok.querySelector(".mk").textContent = "Заявка " + num + " принята";
+    form.classList.add("sent");
+    ok.classList.add("show");
+  });
+})();

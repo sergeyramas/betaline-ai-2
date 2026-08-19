@@ -3,15 +3,399 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Betaline — AI-интегратор полного цикла</title>
-<meta name="description" content="Betaline — AI-интегратор полного цикла: проектируем и внедряем LLM-системы под ключ — ассистенты, агентные системы, обработка документов и предиктивная аналитика. Бесплатный вводный аудит.">
-<meta property="og:title" content="Betaline — AI-интегратор полного цикла">
-<meta property="og:description" content="Проектируем и внедряем LLM-системы под ключ: ассистенты, агентные системы, обработка документов и аналитика. Бесплатный вводный аудит.">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ru_RU">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/fonts/fonts.css">
-<link rel="stylesheet" href="style.css">
+<title>Betaline AI — AI-интегратор полного цикла</title>
+<meta name="description" content="Проектируем и внедряем LLM-системы под ключ: ассистенты, агентные системы, обработка документов и аналитика.">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+/* ============================================================
+   BETALINE AI · Вариант A «Чертёж» (Blueprint Calm)
+   Тёплый белый · графитовые чернила · один кобальтовый акцент
+   ============================================================ */
+:root{
+  --bg:#FAFAF7;
+  --ink:#16181D;
+  --mut:#5C5F66;
+  --soft:#8E9096;
+  --line:#E4E3DB;
+  --line2:#CBCAC1;
+  --cobalt:#2447F0;
+  --cobalt-d:#1B38C6;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --sans:'Golos Text',system-ui,sans-serif;
+  --wrap:1240px;
+  --pad:clamp(20px,4vw,48px);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+::selection{background:var(--cobalt);color:#fff}
+
+/* ---------- служебная типографика ---------- */
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.sec-mark{
+  font-family:var(--mono);font-size:12px;font-weight:500;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--soft);
+  display:flex;align-items:center;gap:14px;
+}
+.sec-mark b{color:var(--cobalt);font-weight:500}
+.sec-mark::after{content:"";height:1px;width:56px;background:var(--line2)}
+
+/* ---------- каркас: боковые регистры + линейки секций ---------- */
+.wrap{
+  max-width:var(--wrap);margin:0 auto;position:relative;
+  padding-left:var(--pad);padding-right:var(--pad);
+  border-left:1px solid var(--line);border-right:1px solid var(--line);
+}
+.sec .wrap{padding-top:clamp(64px,9vw,120px);padding-bottom:clamp(64px,9vw,120px)}
+.sec{position:relative}
+.sec .wrap::before,.sec .wrap::after{
+  content:"+";position:absolute;top:0;transform:translate(-50%,-56%);
+  font-family:var(--mono);font-size:15px;font-weight:400;color:var(--line2);
+  background:var(--bg);line-height:1;padding:1px 2px;z-index:2;
+}
+.sec .wrap::before{left:0}
+.sec .wrap::after{left:100%}
+.rule{position:absolute;top:0;left:0;right:0;height:1px;background:var(--line)}
+
+h2{
+  font-size:clamp(30px,4.2vw,52px);font-weight:600;line-height:1.06;
+  letter-spacing:-0.02em;margin-top:22px;max-width:17em;
+}
+.sec-lead{margin-top:18px;max-width:34em;color:var(--mut);font-size:clamp(15px,1.3vw,17px)}
+
+/* ---------- reveal: hero — при загрузке, остальное — при скролле ---------- */
+@keyframes rv-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: no-preference){
+  .ld{animation:rv-in .8s cubic-bezier(.22,.61,.36,1) both}
+  .ld1{animation-delay:.08s}.ld2{animation-delay:.16s}.ld3{animation-delay:.24s}
+  .ld4{animation-delay:.32s}.ld5{animation-delay:.42s}
+  .js .rv{opacity:0;transform:translateY(18px);
+          transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+  .js .rv.on{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+}
+
+/* ---------- навбар ---------- */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:rgba(250,250,247,.92);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-in{
+  max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);
+  height:66px;display:flex;align-items:center;justify-content:space-between;gap:24px;
+}
+.logo{display:flex;align-items:baseline;gap:10px;font-weight:700;font-size:18px;letter-spacing:-0.01em}
+.logo i{width:9px;height:9px;background:var(--cobalt);display:inline-block;transform:translateY(-1px)}
+.logo span{font-family:var(--mono);font-size:11px;font-weight:400;color:var(--soft);letter-spacing:.14em}
+.nav-links{display:flex;gap:clamp(14px,2vw,30px)}
+.nav-links a{
+  font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mut);padding:6px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
+}
+.nav-links a:hover{color:var(--cobalt);border-color:var(--cobalt)}
+.nav-cta{white-space:nowrap}
+.burger{display:none;background:none;border:1px solid var(--line2);width:42px;height:42px;cursor:pointer;position:relative}
+.burger span{position:absolute;left:10px;right:10px;height:1.5px;background:var(--ink);transition:transform .25s,opacity .2s}
+.burger span:nth-child(1){top:14px}
+.burger span:nth-child(2){top:20px}
+.burger span:nth-child(3){top:26px}
+.nav.open .burger span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav.open .burger span:nth-child(2){opacity:0}
+.nav.open .burger span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.m-menu{display:none}
+
+/* ---------- кнопки ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--sans);font-size:15px;font-weight:500;
+  padding:14px 26px;border:1px solid var(--ink);cursor:pointer;
+  transition:background .2s,color .2s,border-color .2s;line-height:1;
+  background:transparent;color:var(--ink);
+}
+.btn-solid{background:var(--cobalt);border-color:var(--cobalt);color:#fff}
+.btn-solid:hover{background:var(--cobalt-d);border-color:var(--cobalt-d)}
+.btn-ghost:hover{border-color:var(--cobalt);color:var(--cobalt)}
+.btn-sm{padding:10px 18px;font-size:14px}
+.btn .arr{font-family:var(--mono);font-size:14px;transform:translateY(-.5px)}
+
+/* ---------- hero ---------- */
+.hero .wrap{padding-top:clamp(120px,15vw,176px);padding-bottom:0}
+.hero-top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.hero-top .coord{font-family:var(--mono);font-size:12px;color:var(--soft);letter-spacing:.1em}
+h1{
+  margin-top:26px;
+  font-size:clamp(38px,5.9vw,82px);font-weight:600;line-height:1.02;
+  letter-spacing:-0.028em;max-width:15em;
+}
+h1 .acc{color:var(--cobalt)}
+.hero-sub{
+  margin-top:28px;max-width:36em;color:var(--mut);
+  font-size:clamp(16px,1.5vw,19px);line-height:1.6;
+}
+.hero-cta{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.hero-fig{margin-top:clamp(44px,6vw,72px);border:1px solid var(--line2);position:relative;background:#fff}
+.hero-fig img{width:100%}
+.fig-cap{
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+  border-top:1px solid var(--line);padding:10px 14px;
+  font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft);
+}
+.fig-cap b{color:var(--ink);font-weight:500}
+
+/* статистика */
+.stats{
+  margin-top:0;border-top:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+  border-left:1px solid var(--line);border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.stat{background:var(--bg);padding:clamp(20px,3vw,36px) clamp(16px,2.4vw,32px)}
+.stat .num{
+  font-size:clamp(40px,4.6vw,68px);font-weight:600;letter-spacing:-0.03em;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.stat .num sup{font-size:.48em;color:var(--cobalt);font-weight:500;top:-.62em;position:relative}
+.stat .lbl{margin-top:12px;font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.hero-stats-wrap{padding-top:clamp(40px,5vw,64px);padding-bottom:clamp(56px,7vw,88px)}
+
+/* ---------- услуги ---------- */
+.svc-grid{
+  margin-top:clamp(36px,5vw,56px);
+  display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);
+  border:1px solid var(--line);
+}
+.svc{background:var(--bg);padding:clamp(22px,2.6vw,34px);grid-column:span 2;display:flex;flex-direction:column;min-height:250px;transition:background .25s}
+.svc:nth-child(4),.svc:nth-child(5){grid-column:span 3}
+.svc .idx{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;color:var(--soft);transition:color .25s}
+.svc h3{margin-top:44px;font-size:clamp(19px,1.7vw,23px);font-weight:600;letter-spacing:-0.015em;line-height:1.2}
+.svc p{margin-top:12px;color:var(--mut);font-size:15px;flex:1}
+.svc .tags{margin-top:18px;display:flex;flex-wrap:wrap;gap:6px}
+.svc .tags li{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--mut);border:1px solid var(--line2);padding:4px 8px;
+}
+.svc:hover{background:#fff}
+.svc:hover .idx{color:var(--cobalt)}
+
+/* ---------- кейсы ---------- */
+.case{
+  margin-top:-1px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:200px 1fr 300px;gap:clamp(20px,3vw,48px);
+  padding:clamp(28px,3.6vw,44px) 0;align-items:start;
+}
+.cases-list{margin-top:clamp(36px,5vw,56px)}
+.case .meta{display:flex;flex-direction:column;gap:10px}
+.case .meta .tag{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mut);border:1px solid var(--line2);padding:4px 8px;width:max-content;
+}
+.case .meta .dom{font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--soft);line-height:1.7}
+.case h3{font-size:clamp(20px,2vw,26px);font-weight:600;letter-spacing:-0.015em;line-height:1.25;max-width:18em}
+.case p{margin-top:12px;color:var(--mut);font-size:15.5px;max-width:34em}
+.case .res{text-align:right}
+.case .res .num{
+  font-size:clamp(36px,3.8vw,56px);font-weight:600;letter-spacing:-0.03em;line-height:1;
+  color:var(--cobalt);font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.case .res .cap{margin-top:10px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--soft)}
+.case-fig{margin-top:clamp(40px,5vw,60px);border:1px solid var(--line2);background:#fff}
+
+/* ---------- почему мы ---------- */
+.why-grid{
+  margin-top:clamp(36px,5vw,56px);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+}
+.why{background:var(--bg);padding:clamp(24px,2.8vw,36px)}
+.why .idx{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;color:var(--cobalt)}
+.why h3{margin-top:40px;font-size:clamp(19px,1.7vw,22px);font-weight:600;letter-spacing:-0.015em;line-height:1.25}
+.why p{margin-top:12px;color:var(--mut);font-size:15px}
+
+/* ---------- технологии ---------- */
+.tech-grid{
+  margin-top:clamp(36px,5vw,56px);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);
+}
+.tech{
+  background:var(--bg);padding:clamp(20px,2.4vw,30px);
+  display:flex;align-items:baseline;justify-content:space-between;gap:10px;transition:background .25s;
+}
+.tech b{font-size:clamp(17px,1.6vw,21px);font-weight:600;letter-spacing:-0.01em}
+.tech span{font-family:var(--mono);font-size:11px;color:var(--soft);letter-spacing:.08em;white-space:nowrap}
+.tech:hover{background:#fff}
+
+/* ---------- процесс ---------- */
+.proc-fig{margin-top:clamp(36px,5vw,56px);border:1px solid var(--line2);background:#fff}
+.proc-grid{
+  margin-top:1px;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-top:0;
+}
+.proc{background:var(--bg);padding:clamp(22px,2.6vw,32px)}
+.proc .idx{
+  font-family:var(--mono);font-size:clamp(24px,2.4vw,32px);font-weight:500;color:var(--line2);
+  transition:color .25s;
+}
+.proc:hover .idx{color:var(--cobalt)}
+.proc h3{margin-top:26px;font-size:clamp(17px,1.6vw,21px);font-weight:600;letter-spacing:-0.01em}
+.proc .dur{margin-top:8px;font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--cobalt)}
+.proc p{margin-top:12px;color:var(--mut);font-size:14.5px}
+
+/* ---------- цены ---------- */
+.price-free{
+  margin-top:clamp(36px,5vw,56px);
+  border:1px solid var(--cobalt);background:#fff;position:relative;
+  display:grid;grid-template-columns:1fr 300px;gap:clamp(24px,4vw,56px);
+  padding:clamp(26px,3.4vw,44px);align-items:center;
+}
+.price-free .k{
+  position:absolute;top:-9px;left:clamp(22px,3vw,40px);background:var(--bg);
+  font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--cobalt);padding:0 8px;
+}
+.price-free h3{font-size:clamp(21px,2.2vw,28px);font-weight:600;letter-spacing:-0.015em}
+.price-free p{margin-top:10px;color:var(--mut);font-size:15.5px;max-width:36em}
+.price-free .inc{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px 22px}
+.price-free .inc li{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.price-free .inc li::before{content:"+";color:var(--cobalt);margin-right:8px}
+.price-free .side{text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:18px}
+.price-free .val{font-size:clamp(34px,3.4vw,46px);font-weight:600;letter-spacing:-0.03em;line-height:1;color:var(--cobalt)}
+.price-free .val small{display:block;font-family:var(--mono);font-size:11px;font-weight:400;letter-spacing:.12em;color:var(--soft);margin-top:10px;text-transform:uppercase}
+
+.price-list{margin-top:clamp(28px,4vw,40px);border-top:1px solid var(--line)}
+.price{
+  display:grid;grid-template-columns:minmax(200px,4fr) 5fr minmax(200px,3fr);
+  gap:clamp(18px,3vw,48px);padding:clamp(24px,3vw,36px) 0;border-bottom:1px solid var(--line);align-items:start;
+}
+.price .n .t{font-size:clamp(18px,1.8vw,23px);font-weight:600;letter-spacing:-0.015em;line-height:1.25}
+.price .n .pi{margin-top:8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.price .inc li{
+  color:var(--mut);font-size:14.5px;padding:4px 0;
+}
+.price .inc li::before{content:"—";font-family:var(--mono);color:var(--line2);margin-right:10px}
+.price .v{text-align:right}
+.price .v .val{
+  font-size:clamp(24px,2.5vw,34px);font-weight:600;letter-spacing:-0.025em;line-height:1.1;
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.price .v .val i{font-style:normal;font-family:var(--mono);font-weight:400;font-size:.5em;color:var(--soft);letter-spacing:.08em;margin-right:8px;text-transform:uppercase}
+.price .v .cur{color:var(--cobalt)}
+
+.included{
+  margin-top:clamp(36px,5vw,52px);border:1px solid var(--line);
+  padding:clamp(24px,3vw,36px);background:#fff;
+}
+.included .h{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.included ul{margin-top:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px 32px}
+.included li{color:var(--mut);font-size:14.5px}
+.included li::before{content:"+";font-family:var(--mono);color:var(--cobalt);margin-right:10px}
+
+/* ---------- CTA / форма ---------- */
+.cta-grid{margin-top:clamp(36px,5vw,56px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,5vw,80px)}
+.cta-note{color:var(--mut);font-size:15.5px;max-width:30em}
+.cta-facts{margin-top:28px;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.cta-facts li{
+  display:flex;justify-content:space-between;gap:18px;padding:13px 0;border-bottom:1px solid var(--line);
+  font-size:14.5px;color:var(--mut);
+}
+.cta-facts li b{font-family:var(--mono);font-size:11.5px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);white-space:nowrap}
+.form{display:flex;flex-direction:column;gap:26px}
+.field label{
+  display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft);margin-bottom:8px;
+}
+.field input,.field textarea{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--line2);
+  font-family:var(--sans);font-size:16.5px;color:var(--ink);padding:8px 0 12px;
+  border-radius:0;transition:border-color .2s;resize:vertical;min-height:0;
+}
+.field textarea{min-height:88px}
+.field input::placeholder,.field textarea::placeholder{color:#B9BAB4}
+.field input:focus,.field textarea:focus{outline:none;border-bottom-color:var(--cobalt)}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.form-foot{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.form-foot .hint{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--soft);max-width:22em;text-transform:uppercase}
+.form-ok{
+  border:1px solid var(--cobalt);background:#fff;padding:clamp(24px,3vw,36px);display:none;
+}
+.form-ok .mk{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.12em;color:var(--cobalt);text-transform:uppercase}
+.form-ok h3{margin-top:14px;font-size:22px;font-weight:600;letter-spacing:-0.015em}
+.form-ok p{margin-top:10px;color:var(--mut);font-size:15px}
+.form.sent{display:none}
+.form-ok.show{display:block}
+
+/* ---------- футер ---------- */
+.footer{border-top:1px solid var(--line)}
+.footer .wrap{padding-top:34px;padding-bottom:44px}
+.foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:baseline}
+.foot-grid .fl{display:flex;align-items:baseline;gap:10px;font-weight:700;font-size:16px}
+.foot-grid .fl i{width:8px;height:8px;background:var(--cobalt);display:inline-block}
+.foot-links{display:flex;gap:clamp(16px,3vw,36px);flex-wrap:wrap}
+.foot-links a{font-family:var(--mono);font-size:12px;letter-spacing:.08em;color:var(--mut);border-bottom:1px solid transparent;transition:color .2s,border-color .2s}
+.foot-links a:hover{color:var(--cobalt);border-color:var(--cobalt)}
+.foot-copy{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--soft);text-transform:uppercase}
+
+/* ============================================================
+   АДАПТИВ
+   ============================================================ */
+@media (max-width:1024px){
+  .svc{grid-column:span 3 !important;min-height:0}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .case{grid-template-columns:1fr 240px;gap:20px}
+  .case .meta{grid-column:1 / -1;flex-direction:row;align-items:center;gap:14px}
+  .proc-grid{grid-template-columns:repeat(2,1fr)}
+  .included ul{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:860px){
+  .nav-links,.nav .nav-cta{display:none}
+  .burger{display:block}
+  .svc{grid-column:1 / -1 !important}
+  .m-menu{
+    display:block;position:fixed;top:66px;left:0;right:0;z-index:49;
+    background:var(--bg);border-bottom:1px solid var(--line);
+    transform:translateY(-110%);visibility:hidden;
+    transition:transform .3s cubic-bezier(.22,.61,.36,1),visibility 0s .3s;
+  }
+  .nav.open + .m-menu{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.22,.61,.36,1),visibility 0s 0s}
+  .m-menu a{
+    display:block;padding:16px var(--pad);border-top:1px solid var(--line);
+    font-family:var(--mono);font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+  }
+  .m-menu a:first-child{border-top:0}
+  .m-menu a.acc{color:var(--cobalt)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .cta-grid{grid-template-columns:1fr}
+  .price{grid-template-columns:1fr;gap:14px}
+  .price .v{text-align:left}
+  .price-free{grid-template-columns:1fr}
+  .price-free .side{align-items:flex-start;text-align:left}
+  .why-grid{grid-template-columns:1fr}
+  .case{grid-template-columns:1fr}
+  .case .res{text-align:left;margin-top:4px}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .form .row2{grid-template-columns:1fr}
+  .proc-grid{grid-template-columns:1fr}
+  .tech-grid{grid-template-columns:repeat(2,1fr)}
+  .tech{padding:16px 14px}
+  .tech b{font-size:15.5px}
+  .included ul{grid-template-columns:1fr}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .sec .wrap::before,.sec .wrap::after{display:none}
+  .case .meta{flex-direction:column;align-items:flex-start}
+}
+</style>
 </head>
 <body>
 
@@ -19,7 +403,7 @@
 <header class="nav" id="nav">
   <div class="nav-in">
     <a class="logo" href="#top" aria-label="Betaline AI — на главную">
-      <i></i>Betaline&nbsp;<span class="ai">AI</span> <span>// интегратор</span>
+      <i></i>Betaline&nbsp;AI <span>// интегратор</span>
     </a>
     <nav class="nav-links" aria-label="Основная навигация">
       <a href="#services">Услуги</a>
@@ -384,8 +768,8 @@
             <li><b>Формат</b><span>30-минутный видеозвонок</span></li>
             <li><b>Результат</b><span>карта возможностей и оценка бюджета</span></li>
             <li><b>Стоимость</b><span>бесплатно, без обязательств</span></li>
-            <li><b>Почта</b><span><a class="cta-link" href="mailto:info@betaline.ai">info@betaline.ai</a></span></li>
-            <li><b>Телефон</b><span><a class="cta-link" href="tel:+74951234567">+7 (495) 123-45-67</a></span></li>
+            <li><b>Почта</b><span>info@betaline.ai</span></li>
+            <li><b>Телефон</b><span>+7 (495) 123-45-67</span></li>
           </ul>
         </div>
         <div class="rv">
@@ -416,8 +800,8 @@
           <div class="form-ok" id="form-ok" role="status">
             <p class="mk">Заявка № принята</p>
             <h3>Спасибо — мы на связи</h3>
-            <p>Вернёмся в течение рабочего дня и предложим время для вводного аудита —
-               или напишите на <a class="cta-link" href="mailto:info@betaline.ai">info@betaline.ai</a>.</p>
+            <p>Вернёмся в течение рабочего дня и предложим время для вводного аудита.
+               Если удобнее быстрее — пишите на info@betaline.ai.</p>
           </div>
         </div>
       </div>
@@ -430,7 +814,7 @@
 <footer class="footer">
   <div class="wrap">
     <div class="foot-grid">
-      <p class="fl"><i></i>Betaline&nbsp;<span class="ai">AI</span></p>
+      <p class="fl"><i></i>Betaline&nbsp;AI</p>
       <div class="foot-links">
         <a href="mailto:info@betaline.ai">info@betaline.ai</a>
         <a href="tel:+74951234567">+7 (495) 123-45-67</a>
@@ -441,6 +825,61 @@
   </div>
 </footer>
 
-<script src="main.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- reveal: лёгкое проявление, каскадом от hero вниз ---------- */
+  document.documentElement.classList.add("js");
+  function revealAll(){
+    var els = document.querySelectorAll(".rv");
+    els.forEach(function(el, i){
+      setTimeout(function(){ el.classList.add("on"); }, 160 + Math.min(i * 55, 900));
+    });
+  }
+  if (document.readyState === "complete") { revealAll(); }
+  else { window.addEventListener("load", revealAll); }
+
+/* ---------- мобильное меню ---------- */
+  var nav = document.getElementById("nav");
+  var burger = document.getElementById("burger");
+  var mmenu = document.getElementById("mmenu");
+  burger.addEventListener("click", function(){
+    var open = nav.classList.toggle("open");
+    burger.setAttribute("aria-expanded", open ? "true" : "false");
+    burger.setAttribute("aria-label", open ? "Закрыть меню" : "Открыть меню");
+  });
+  mmenu.querySelectorAll("a").forEach(function(a){
+    a.addEventListener("click", function(){
+      nav.classList.remove("open");
+      burger.setAttribute("aria-expanded", "false");
+    });
+  });
+
+  /* ---------- форма: без реального submit ---------- */
+  var form = document.getElementById("lead-form");
+  var ok = document.getElementById("form-ok");
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var name = document.getElementById("f-name");
+    var contact = document.getElementById("f-contact");
+    var valid = true;
+    [name, contact].forEach(function(inp){
+      if (!inp.value.trim()) {
+        inp.style.borderBottomColor = "#2447F0";
+        inp.focus();
+        valid = false;
+      } else {
+        inp.style.borderBottomColor = "";
+      }
+    });
+    if (!valid) return;
+    var num = "A-" + String(Math.floor(100 + Math.random() * 900));
+    ok.querySelector(".mk").textContent = "Заявка " + num + " принята";
+    form.classList.add("sent");
+    ok.classList.add("show");
+  });
+})();
+</script>
 </body>
 </html>

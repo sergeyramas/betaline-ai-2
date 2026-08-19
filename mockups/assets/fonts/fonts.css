@@ -1,0 +1,27 @@
+/* Local self-hosted fonts — Cyrillic OK */
+@font-face { font-family:'Playfair Display'; src:url('PlayfairDisplay-700.ttf'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Playfair Display'; src:url('PlayfairDisplay-800.ttf'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'Playfair Display'; src:url('PlayfairDisplay-600i.ttf'); font-weight:600; font-style:italic; font-display:swap; }
+@font-face { font-family:'Golos Text'; src:url('GolosText-400.ttf'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Golos Text'; src:url('GolosText-500.ttf'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Golos Text'; src:url('GolosText-600.ttf'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'Golos Text'; src:url('GolosText-700.ttf'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('IBMPlexMono-400.ttf'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'IBM Plex Mono'; src:url('IBMPlexMono-500.ttf'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'JetBrains Mono'; src:url('JetBrainsMono-400.ttf'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'JetBrains Mono'; src:url('JetBrainsMono-500.ttf'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'JetBrains Mono'; src:url('JetBrainsMono-700.ttf'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Tektur'; src:url('Tektur-500.ttf'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Tektur'; src:url('Tektur-700.ttf'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Tektur'; src:url('Tektur-900.ttf'); font-weight:900; font-style:normal; font-display:swap; }
+@font-face { font-family:'Unbounded'; src:url('Unbounded-400.ttf'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Unbounded'; src:url('Unbounded-600.ttf'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'Unbounded'; src:url('Unbounded-800.ttf'); font-weight:800; font-style:normal; font-display:swap; }
+@font-face { font-family:'Cormorant Garamond'; src:url('CormorantGaramond-500.ttf'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Cormorant Garamond'; src:url('CormorantGaramond-600.ttf'); font-weight:600; font-style:normal; font-display:swap; }
+@font-face { font-family:'Cormorant Garamond'; src:url('CormorantGaramond-700.ttf'); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:'Cormorant Garamond'; src:url('CormorantGaramond-500i.ttf'); font-weight:500; font-style:italic; font-display:swap; }
+@font-face { font-family:'Onest'; src:url('Onest-300.ttf'); font-weight:300; font-style:normal; font-display:swap; }
+@font-face { font-family:'Onest'; src:url('Onest-400.ttf'); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:'Onest'; src:url('Onest-500.ttf'); font-weight:500; font-style:normal; font-display:swap; }
+@font-face { font-family:'Onest'; src:url('Onest-600.ttf'); font-weight:600; font-style:normal; font-display:swap; }

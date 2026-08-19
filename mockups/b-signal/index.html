@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Betaline AI — AI-интегратор полного цикла</title>
+<meta name="description" content="Проектируем и внедряем LLM-системы: ассистенты, агентные системы, обработка документов и аналитика. Весь цикл внутри одной команды.">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<style>
+/* ============================================================
+   BETALINE AI — «СИГНАЛ» / NIGHT TELEMETRY
+   ============================================================ */
+:root{
+  --bg:        #0A0C0B;
+  --bg-deep:   #070908;
+  --panel:     #0E1210;
+  --panel-2:   #111614;
+  --line:      #1D2521;
+  --line-soft: #161C19;
+  --mint:      #3DFFB0;
+  --mint-dim:  rgba(61,255,176,.55);
+  --mint-08:   rgba(61,255,176,.08);
+  --mint-14:   rgba(61,255,176,.14);
+  --mint-25:   rgba(61,255,176,.25);
+  --amber:     #FFB454;
+  --amber-dim: rgba(255,180,84,.55);
+  --amber-10:  rgba(255,180,84,.10);
+  --amber-25:  rgba(255,180,84,.25);
+  --ink:       #D9E2DC;
+  --dim:       #93A099;
+  --faint:     #5A6660;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --disp: 'Tektur', var(--mono);
+  --nav-h: 58px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--mono);
+  font-size:15px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* координатная сетка всего поля */
+body::before{
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    repeating-linear-gradient(to right, transparent 0 79px, rgba(61,255,176,.025) 79px 80px),
+    repeating-linear-gradient(to bottom, transparent 0 79px, rgba(61,255,176,.025) 79px 80px);
+}
+::selection{background:var(--mint);color:#04130C}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+img{max-width:100%;display:block}
+button{font-family:inherit}
+
+.wrap{max-width:1240px;margin:0 auto;padding:0 32px;position:relative;z-index:1}
+
+/* ---------- служебная типографика ---------- */
+.tag{
+  font-size:11px;letter-spacing:.14em;color:var(--mint-dim);
+  text-transform:uppercase;white-space:nowrap;
+}
+.tag--amber{color:var(--amber-dim)}
+h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.12;letter-spacing:.01em}
+
+/* ---------- курсор и индикаторы ---------- */
+.cursor::after{
+  content:'▍'; color:var(--mint); margin-left:2px;
+  animation:blink 1.05s steps(1) infinite;
+}
+@keyframes blink{50%{opacity:0}}
+.dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--mint); box-shadow:0 0 8px var(--mint);
+  animation:pulse 2.4s ease-in-out infinite;vertical-align:middle;
+}
+@keyframes pulse{50%{opacity:.35;box-shadow:0 0 2px var(--mint)}}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  *{animation-duration:.01ms !important;animation-iteration-count:1 !important}
+}
+
+/* ============================================================ NAV */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(8,10,9,.88);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav__in{
+  max-width:1240px;margin:0 auto;padding:0 32px;
+  height:var(--nav-h);display:flex;align-items:center;gap:28px;
+}
+.logo{
+  font-family:var(--disp);font-weight:700;font-size:17px;letter-spacing:.06em;
+  color:var(--ink);display:flex;align-items:center;gap:10px;flex-shrink:0;
+}
+.logo b{color:var(--mint);font-weight:900}
+.nav__links{display:flex;gap:4px;margin-left:auto}
+.nav__links a{
+  font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);
+  padding:8px 11px;border:1px solid transparent;transition:color .2s,border-color .2s;
+}
+.nav__links a:hover{color:var(--mint);border-color:var(--mint-25)}
+.nav__cta{
+  flex-shrink:0;margin-left:8px;
+  font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+  color:#04130C;background:var(--mint);padding:10px 18px;font-weight:700;
+  border:1px solid var(--mint);transition:background .2s,color .2s;
+}
+.nav__cta:hover{background:transparent;color:var(--mint)}
+.burger{
+  display:none;margin-left:auto;background:none;border:1px solid var(--line);
+  color:var(--mint);width:42px;height:38px;cursor:pointer;font-size:16px;
+}
+.mnav{
+  display:none;position:fixed;top:var(--nav-h);left:0;right:0;z-index:99;
+  background:#080A09;border-bottom:1px solid var(--line);
+  box-shadow:0 30px 60px rgba(0,0,0,.6);
+  padding:12px 32px 24px;
+}
+.mnav.open{display:block}
+.mnav a{
+  display:block;padding:13px 4px;border-bottom:1px solid var(--line-soft);
+  font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink);
+}
+.mnav a:last-child{border-bottom:none;color:var(--mint)}
+
+/* ============================================================ TICKER */
+.ticker{
+  border-bottom:1px solid var(--line);
+  overflow:hidden;background:var(--bg-deep);
+  font-size:11px;letter-spacing:.14em;color:var(--faint);
+  text-transform:uppercase;white-space:nowrap;
+  position:relative;z-index:1;
+}
+.ticker__rail{display:inline-flex;animation:crawl 46s linear infinite;padding:9px 0}
+.ticker__rail span{padding:0 28px}
+.ticker__rail i{font-style:normal;color:var(--mint-dim)}
+.ticker__rail em{font-style:normal;color:var(--amber-dim)}
+@keyframes crawl{to{transform:translateX(-50%)}}
+
+/* ============================================================ HERO */
+.hero{padding:calc(var(--nav-h) + 0px) 0 0;position:relative}
+.hero__grid{
+  display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:56px;align-items:center;padding:84px 0 64px;
+}
+.hero h1{
+  font-size:clamp(34px,4.6vw,58px);font-weight:900;margin:22px 0 24px;
+  text-wrap:balance;
+}
+.hero h1 .m{color:var(--mint);text-shadow:0 0 26px rgba(61,255,176,.35)}
+.hero__sub{
+  color:var(--dim);font-size:15px;max-width:54ch;margin-bottom:36px;
+}
+.hero__sub b{color:var(--ink);font-weight:500}
+.btnrow{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-block;font-size:12.5px;letter-spacing:.13em;text-transform:uppercase;
+  font-weight:700;padding:15px 26px;cursor:pointer;transition:.2s;
+}
+.btn--pri{
+  color:#04130C;background:var(--mint);border:1px solid var(--mint);
+  box-shadow:0 0 24px rgba(61,255,176,.22);
+}
+.btn--pri:hover{background:transparent;color:var(--mint)}
+.btn--sec{color:var(--mint);background:transparent;border:1px solid var(--mint-25)}
+.btn--sec:hover{border-color:var(--mint);box-shadow:0 0 18px rgba(61,255,176,.15)}
+
+/* рамка-прибор для изображения */
+.scope{
+  position:relative;border:1px solid var(--line);
+  background:var(--panel);
+  box-shadow:0 0 0 1px rgba(61,255,176,.05), 0 24px 60px rgba(0,0,0,.5);
+}
+.scope::before,.scope::after{
+  content:'';position:absolute;width:14px;height:14px;z-index:3;
+}
+.scope::before{top:-1px;left:-1px;border-top:1px solid var(--mint);border-left:1px solid var(--mint)}
+.scope::after{bottom:-1px;right:-1px;border-bottom:1px solid var(--mint);border-right:1px solid var(--mint)}
+.scope__head{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:9px 14px;border-bottom:1px solid var(--line);
+  font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+}
+.scope__head i{font-style:normal;color:var(--mint-dim)}
+.scope__body{position:relative;overflow:hidden}
+.scope__body img{width:100%;height:auto}
+.scan{
+  position:absolute;left:0;right:0;top:0;height:56px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,rgba(61,255,176,.10) 82%,rgba(61,255,176,.5) 99%,transparent);
+  animation:scan 7s linear infinite;opacity:.8;
+}
+@keyframes scan{from{transform:translateY(-70px)}to{transform:translateY(620px)}}
+.scope__foot{
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+  padding:9px 14px;border-top:1px solid var(--line);
+  font-size:10.5px;letter-spacing:.12em;color:var(--faint);text-transform:uppercase;
+}
+.scope__foot i{font-style:normal;color:var(--amber-dim)}
+
+/* статистика */
+.stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border:1px solid var(--line);border-bottom:none;margin-bottom:0;
+  background:var(--panel);
+}
+.stat{
+  padding:26px 26px 22px;border-right:1px solid var(--line);position:relative;
+}
+.stat:last-child{border-right:none}
+.stat__n{
+  font-family:var(--disp);font-weight:700;font-size:clamp(30px,3vw,42px);
+  color:var(--mint);line-height:1;text-shadow:0 0 18px rgba(61,255,176,.3);
+}
+.stat__n sup{font-size:.55em;top:-.5em;position:relative}
+.stat__l{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-top:10px}
+
+/* ============================================================ SECTIONS */
+section{scroll-margin-top:calc(var(--nav-h) + 10px)}
+.sec{padding:0 0 96px}
+.sechead{
+  border-top:1px solid var(--line);
+  padding:18px 0 44px;
+  display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;
+}
+.sechead__idx{
+  font-size:11px;letter-spacing:.14em;color:var(--amber);white-space:nowrap;
+}
+.sechead h2{
+  font-size:clamp(24px,2.8vw,36px);font-weight:700;text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.sechead__meta{
+  margin-left:auto;font-size:10.5px;letter-spacing:.14em;color:var(--faint);
+  text-transform:uppercase;white-space:nowrap;
+}
+.sechead__meta i{font-style:normal;color:var(--mint-dim)}
+.seclead{color:var(--dim);max-width:62ch;margin:-18px 0 44px;font-size:14.5px}
+
+/* ---------- услуги ---------- */
+.svc{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.svc__card{
+  grid-column:span 2;
+  background:var(--panel);border:1px solid var(--line);
+  padding:26px 26px 24px;position:relative;
+  display:flex;flex-direction:column;gap:14px;
+  transition:border-color .25s, box-shadow .25s, transform .25s;
+}
+.svc__card:nth-child(4),.svc__card:nth-child(5){grid-column:span 3}
+.svc__card:hover{
+  border-color:var(--mint-25);
+  box-shadow:0 0 0 1px var(--mint-08), 0 0 34px rgba(61,255,176,.07) inset;
+  transform:translateY(-3px);
+}
+.svc__top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.svc__idx{font-size:11px;letter-spacing:.12em;color:var(--amber-dim)}
+.svc__st{font-size:10px;letter-spacing:.14em;color:var(--faint);text-transform:uppercase}
+.svc__card:hover .svc__st{color:var(--mint-dim)}
+.svc__card h3{font-size:19px;font-weight:700;line-height:1.25}
+.svc__card p{font-size:13.5px;color:var(--dim);flex-grow:1}
+.svc__tags{display:flex;flex-wrap:wrap;gap:8px}
+.svc__tags span{
+  font-size:10px;letter-spacing:.1em;color:var(--mint-dim);
+  border:1px solid var(--line);padding:4px 8px;background:var(--bg-deep);
+  text-transform:uppercase;
+}
+
+/* ---------- кейсы ---------- */
+.cases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.case{
+  background:var(--panel);border:1px solid var(--line);position:relative;
+  display:flex;flex-direction:column;
+  transition:border-color .25s;
+}
+.case:hover{border-color:var(--mint-25)}
+.case__head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:12px 22px;border-bottom:1px solid var(--line);
+  font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);
+}
+.case__nda{color:var(--amber);border:1px solid var(--amber-25);padding:3px 8px;background:var(--amber-10);white-space:nowrap}
+.case__nda--open{color:var(--mint-dim);border-color:var(--mint-25);background:var(--mint-08)}
+.case__body{padding:24px 22px 26px;display:flex;flex-direction:column;gap:14px;flex-grow:1}
+.case__metric{
+  font-family:var(--disp);font-weight:900;font-size:clamp(34px,3.4vw,46px);
+  color:var(--mint);line-height:1;text-shadow:0 0 22px rgba(61,255,176,.3);
+}
+.case__metric small{font-size:.42em;font-weight:700;color:var(--mint-dim);letter-spacing:.05em}
+.case h3{font-size:17px;font-weight:700;line-height:1.3}
+.case p{font-size:13px;color:var(--dim);flex-grow:1}
+.case__delta{
+  font-size:12px;color:var(--faint);letter-spacing:.05em;
+  border-top:1px solid var(--line-soft);padding-top:14px;
+}
+.case__delta b{color:var(--amber);font-weight:500}
+.case__delta i{font-style:normal;color:var(--mint)}
+
+/* ---------- почему мы ---------- */
+.why{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.why__item{
+  border:1px solid var(--line);background:var(--panel);padding:28px 26px;
+  position:relative;
+}
+.why__item::before{
+  content:'';position:absolute;top:-1px;left:-1px;width:14px;height:14px;
+  border-top:1px solid var(--mint);border-left:1px solid var(--mint);
+}
+.why__idx{font-size:11px;letter-spacing:.13em;color:var(--amber-dim);display:block;margin-bottom:16px}
+.why__item h3{font-size:18px;margin-bottom:12px;line-height:1.3}
+.why__item p{font-size:13.5px;color:var(--dim)}
+.why__item p b{color:var(--ink);font-weight:500}
+
+/* ---------- технологии ---------- */
+.tech{
+  border:1px solid var(--line);background:var(--panel);
+  padding:30px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;
+}
+.tech__chip{
+  font-size:12.5px;letter-spacing:.08em;color:var(--ink);
+  border:1px solid var(--line);background:var(--bg-deep);
+  padding:10px 16px;transition:.2s;white-space:nowrap;
+}
+.tech__chip i{font-style:normal;color:var(--mint-dim);margin-right:8px}
+.tech__chip:hover{border-color:var(--mint-25);color:var(--mint)}
+.tech__note{
+  margin-left:auto;font-size:10.5px;letter-spacing:.13em;color:var(--faint);
+  text-transform:uppercase;
+}
+
+/* ---------- процесс ---------- */
+.proc__strip{
+  position:relative;border:1px solid var(--line);overflow:hidden;margin-bottom:16px;
+  background:var(--panel);
+}
+.proc__strip img{width:100%;height:170px;object-fit:cover;opacity:.9}
+.proc__striplab{
+  position:absolute;top:10px;left:14px;
+  font-size:10px;letter-spacing:.14em;color:var(--mint-dim);text-transform:uppercase;
+  background:rgba(7,9,8,.7);padding:4px 8px;border:1px solid var(--line);
+}
+.proc{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.step{
+  border:1px solid var(--line);background:var(--panel);padding:24px 22px;
+  position:relative;transition:border-color .25s;
+}
+.step:hover{border-color:var(--mint-25)}
+.step__n{
+  font-family:var(--disp);font-weight:900;font-size:34px;color:transparent;
+  -webkit-text-stroke:1px var(--mint-dim);line-height:1;
+}
+.step__bar{height:2px;background:var(--line);margin:16px 0;position:relative;overflow:hidden}
+.step__bar i{
+  position:absolute;inset:0;background:var(--mint);transform-origin:left;
+  box-shadow:0 0 8px var(--mint);
+}
+.step:nth-child(1) .step__bar i{transform:scaleX(.18)}
+.step:nth-child(2) .step__bar i{transform:scaleX(.42)}
+.step:nth-child(3) .step__bar i{transform:scaleX(.78)}
+.step:nth-child(4) .step__bar i{transform:scaleX(1)}
+.step h3{font-size:16.5px;margin-bottom:8px}
+.step p{font-size:12.5px;color:var(--dim);margin-bottom:14px}
+.step__t{font-size:11px;letter-spacing:.11em;color:var(--amber);text-transform:uppercase}
+
+/* ---------- цены ---------- */
+.intro-audit{
+  border:1px solid var(--amber-25);background:linear-gradient(180deg,var(--amber-10),transparent 70%),var(--panel);
+  padding:30px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;
+  margin-bottom:16px;position:relative;
+}
+.intro-audit::before{
+  content:'';position:absolute;top:-1px;left:-1px;width:14px;height:14px;
+  border-top:1px solid var(--amber);border-left:1px solid var(--amber);
+}
+.intro-audit h3{font-size:21px;margin:10px 0 10px}
+.intro-audit p{font-size:13.5px;color:var(--dim);max-width:64ch}
+.intro-audit__price{
+  text-align:right;display:flex;flex-direction:column;gap:14px;align-items:flex-end;
+}
+.intro-audit__price .p{
+  font-family:var(--disp);font-weight:900;font-size:34px;color:var(--amber);
+  text-shadow:0 0 22px rgba(255,180,84,.35);line-height:1;
+}
+.prices{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.price{
+  grid-column:span 2;
+  border:1px solid var(--line);background:var(--panel);padding:26px 24px;
+  display:flex;flex-direction:column;gap:14px;transition:border-color .25s,transform .25s;
+}
+.price:nth-child(4),.price:nth-child(5){grid-column:span 3}
+.price:hover{border-color:var(--mint-25);transform:translateY(-3px)}
+.price__top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.price__idx{font-size:11px;letter-spacing:.12em;color:var(--amber-dim)}
+.price__pilot{font-size:10px;letter-spacing:.13em;color:var(--faint);text-transform:uppercase;border:1px solid var(--line);padding:3px 8px}
+.price h3{font-size:17.5px;line-height:1.3}
+.price__p{
+  font-family:var(--disp);font-weight:700;font-size:25px;color:var(--mint);
+  line-height:1;text-shadow:0 0 16px rgba(61,255,176,.25);
+}
+.price__p small{font-size:.52em;color:var(--dim);font-weight:500;font-family:var(--mono);letter-spacing:.05em}
+.price ul{display:flex;flex-direction:column;gap:8px;flex-grow:1}
+.price li{
+  font-size:12.5px;color:var(--dim);padding-left:18px;position:relative;
+}
+.price li::before{content:'▸';position:absolute;left:0;color:var(--mint-dim);font-size:11px}
+.included{
+  margin-top:16px;border:1px solid var(--mint-25);
+  background:linear-gradient(180deg,var(--mint-08),transparent 60%),var(--panel);
+  padding:28px 30px;position:relative;
+}
+.included::before{
+  content:'';position:absolute;bottom:-1px;right:-1px;width:14px;height:14px;
+  border-bottom:1px solid var(--mint);border-right:1px solid var(--mint);
+}
+.included h3{font-size:16px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px}
+.included h3 i{font-style:normal;color:var(--mint)}
+.included ul{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:12px 28px;
+}
+.included li{
+  font-size:12.5px;color:var(--dim);padding-left:34px;position:relative;
+}
+.included li::before{
+  content:'[✓]';position:absolute;left:0;color:var(--mint);font-size:11px;letter-spacing:0;
+}
+
+/* ---------- CTA / форма ---------- */
+.cta{position:relative;border-top:1px solid var(--line)}
+.cta__bg{
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.cta__bg img{
+  width:100%;height:100%;object-fit:cover;opacity:.33;
+}
+.cta__bg::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,var(--bg) 0%,rgba(10,12,11,.55) 45%,var(--bg) 100%);
+}
+.cta__in{
+  position:relative;z-index:1;padding:90px 0;max-width:1240px;margin:0 auto;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:60px;
+  padding-left:32px;padding-right:32px;align-items:center;
+}
+.cta h2{font-size:clamp(26px,3.2vw,40px);text-transform:uppercase;margin:18px 0 18px}
+.cta h2 .m{color:var(--mint)}
+.cta__note{color:var(--dim);font-size:14px;max-width:48ch;margin-bottom:26px}
+.cta__facts{display:flex;flex-direction:column;gap:10px}
+.cta__facts li{font-size:12.5px;color:var(--faint);letter-spacing:.04em}
+.cta__facts i{font-style:normal;color:var(--mint-dim);margin-right:8px}
+.term{
+  border:1px solid var(--line);background:rgba(11,14,12,.92);
+  box-shadow:0 30px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(61,255,176,.05);
+}
+.term__bar{
+  display:flex;align-items:center;gap:8px;padding:11px 16px;
+  border-bottom:1px solid var(--line);
+  font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);
+}
+.term__bar::before{
+  content:'';width:8px;height:8px;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 8px var(--mint);
+}
+.term form{padding:24px 24px 26px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field--full{grid-column:1/-1}
+.field label{
+  font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);
+}
+.field label i{font-style:normal;color:var(--amber-dim)}
+.field input,.field textarea{
+  background:var(--bg-deep);border:1px solid var(--line);color:var(--ink);
+  font-family:var(--mono);font-size:13.5px;padding:12px 14px;outline:none;
+  transition:border-color .2s, box-shadow .2s;resize:vertical;min-height:0;
+}
+.field textarea{min-height:96px}
+.field input::placeholder,.field textarea::placeholder{color:var(--faint)}
+.field input:focus,.field textarea:focus{
+  border-color:var(--mint-dim);box-shadow:0 0 0 1px var(--mint-08), 0 0 18px rgba(61,255,176,.08);
+}
+.term .btn{grid-column:1/-1;width:100%;border:1px solid var(--mint)}
+.form-ok{
+  display:none;padding:38px 28px;text-align:left;
+}
+.form-ok.show{display:block}
+.form-ok .ln{font-size:13px;color:var(--dim);margin-bottom:8px}
+.form-ok .ln i{font-style:normal;color:var(--mint)}
+.form-ok .ln em{font-style:normal;color:var(--amber)}
+.form-ok .big{
+  font-family:var(--disp);font-weight:700;font-size:22px;color:var(--mint);
+  margin:14px 0 10px;text-shadow:0 0 18px rgba(61,255,176,.3);
+}
+
+/* ---------- футер ---------- */
+footer{border-top:1px solid var(--line);background:var(--bg-deep);position:relative;z-index:1}
+.foot{
+  max-width:1240px;margin:0 auto;padding:34px 32px;
+  display:flex;flex-wrap:wrap;gap:18px 36px;align-items:center;
+  font-size:12px;color:var(--faint);letter-spacing:.05em;
+}
+.foot__logo{font-family:var(--disp);font-weight:700;color:var(--ink);font-size:15px;letter-spacing:.06em}
+.foot__logo b{color:var(--mint);font-weight:900}
+.foot a{color:var(--dim);transition:color .2s}
+.foot a:hover{color:var(--mint)}
+.foot__right{margin-left:auto;display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.foot__sys{font-size:10px;letter-spacing:.14em;text-transform:uppercase}
+.foot__sys i{font-style:normal;color:var(--mint-dim)}
+
+/* ============================================================ АДАПТИВ */
+@media (max-width:1080px){
+  .hero__grid{grid-template-columns:1fr;gap:44px;padding-top:64px}
+  .svc__card,.svc__card:nth-child(4),.svc__card:nth-child(5){grid-column:span 3}
+  .price,.price:nth-child(4),.price:nth-child(5){grid-column:span 3}
+  .cta__in{grid-template-columns:1fr;gap:44px}
+}
+@media (max-width:1000px){
+  .nav__links,.nav__cta{display:none}
+  .burger{display:block}
+}
+@media (max-width:860px){
+  .stats{grid-template-columns:1fr 1fr}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(1),.stat:nth-child(2){border-bottom:1px solid var(--line)}
+  .cases,.why,.proc{grid-template-columns:1fr}
+  .included ul{grid-template-columns:1fr}
+  .intro-audit{grid-template-columns:1fr}
+  .intro-audit__price{align-items:flex-start;text-align:left}
+  .tech__note{margin-left:0;width:100%}
+}
+@media (max-width:640px){
+  .wrap{padding:0 20px}
+  .nav__in{padding:0 20px}
+  .foot{padding:30px 20px}
+  .cta__in{padding-left:20px;padding-right:20px;padding-top:70px;padding-bottom:70px}
+  .mnav{padding:8px 20px 20px}
+  .svc__card,.svc__card:nth-child(4),.svc__card:nth-child(5),
+  .price,.price:nth-child(4),.price:nth-child(5){grid-column:1/-1}
+  .term form{grid-template-columns:1fr}
+  .sechead{padding-bottom:32px}
+  .sechead__meta{display:none}
+  .sec{padding-bottom:72px}
+  .hero__grid{padding:52px 0 48px}
+  .btnrow .btn{width:100%;text-align:center}
+  .stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================== NAV -->
+<nav class="nav" aria-label="Основная навигация">
+  <div class="nav__in">
+    <a class="logo" href="#top"><span class="dot" aria-hidden="true"></span>BETALINE<b>_AI</b></a>
+    <div class="nav__links">
+      <a href="#services">Услуги</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#why">Почему мы</a>
+      <a href="#tech">Технологии</a>
+      <a href="#process">Процесс</a>
+      <a href="#pricing">Цены</a>
+    </div>
+    <a class="nav__cta" href="#contact">Записаться на аудит</a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">☰</button>
+  </div>
+</nav>
+<div class="mnav" id="mnav">
+  <a href="#services">[01] Услуги</a>
+  <a href="#cases">[02] Кейсы</a>
+  <a href="#why">[03] Почему мы</a>
+  <a href="#tech">[04] Технологии</a>
+  <a href="#process">[05] Процесс</a>
+  <a href="#pricing">[06] Цены</a>
+  <a href="#contact">▸ Записаться на аудит</a>
+</div>
+
+<!-- ================================================== HERO -->
+<header class="hero" id="top">
+  <div style="height:var(--nav-h)"></div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker__rail" id="tickerRail">
+      <span>SYS.ONLINE <i>●</i></span><span>ВНЕДРЕНИЙ: <i>40+</i></span><span>ИНЖЕНЕРОВ: <i>15+</i></span><span>ML/LLM: <i>4 ГОДА</i></span><span>НАПРАВЛЕНИЙ: <i>5</i></span><span>КОНТУР ЗАКАЗЧИКА: <i>ПОДДЕРЖИВАЕТСЯ</i></span><span>RAG ON-PREMISE: <i>ДОСТУПНО</i></span><span>ВВОДНЫЙ АУДИТ: <em>БЕСПЛАТНО</em></span>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="hero__grid">
+      <div class="rv">
+        <span class="tag">[ AI-ИНТЕГРАТОР ПОЛНОГО ЦИКЛА · РФ ]</span>
+        <h1>Betaline — <span class="m">AI-интегратор</span> полного цикла для среднего и&nbsp;крупного бизнеса<span class="cursor" aria-hidden="true"></span></h1>
+        <p class="hero__sub">Проектируем и внедряем LLM-системы: <b>ассистенты, агентные системы, обработка документов и аналитика</b> — весь цикл внутри одной команды.</p>
+        <div class="btnrow">
+          <a class="btn btn--pri" href="#contact">Записаться на аудит</a>
+          <a class="btn btn--sec" href="#pricing">Смотреть решения</a>
+        </div>
+      </div>
+
+      <figure class="scope rv" style="transition-delay:.15s">
+        <figcaption class="scope__head">
+          <span>FIG.01 — ПОТОК ДАННЫХ / ТРАССЫ ЗАПРОСОВ</span>
+          <span><i>LIVE</i> · CH.A</span>
+        </figcaption>
+        <div class="scope__body">
+          <img src="assets/hero-flow.png" alt="Визуализация потока данных: тысячи трасс частиц и волновые формы" width="1440" height="960">
+          <span class="scan" aria-hidden="true"></span>
+        </div>
+        <div class="scope__foot">
+          <span>ЧАСТИЦ: 6 800 · ШАГОВ: 340</span>
+          <span>СИГНАЛ: <i>СТАБИЛЕН</i></span>
+        </div>
+      </figure>
+    </div>
+
+    <div class="stats rv" role="list" aria-label="Ключевые показатели">
+      <div class="stat" role="listitem"><div class="stat__n"><span data-count="15">0</span><sup>+</sup></div><div class="stat__l">инженеров</div></div>
+      <div class="stat" role="listitem"><div class="stat__n"><span data-count="4">0</span></div><div class="stat__l">года в ML/LLM</div></div>
+      <div class="stat" role="listitem"><div class="stat__n"><span data-count="40">0</span><sup>+</sup></div><div class="stat__l">внедрений</div></div>
+      <div class="stat" role="listitem"><div class="stat__n"><span data-count="5">0</span></div><div class="stat__l">направлений</div></div>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ================================================== УСЛУГИ -->
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="sechead__idx">[01]</span>
+      <h2>Услуги</h2>
+      <span class="sechead__meta">SEC.01 // НАПРАВЛЕНИЯ: <i>5</i> · СТАТУС: <i>ACTIVE</i></span>
+    </div>
+    <div class="svc">
+      <article class="svc__card rv">
+        <div class="svc__top"><span class="svc__idx">[01.1]</span><span class="svc__st">● online</span></div>
+        <h3>AI-ассистенты и корпоративные помощники</h3>
+        <p>RAG-боты со знанием вашего продукта и регламентов. Отвечают по источникам, а не по догадкам.</p>
+        <div class="svc__tags"><span>Сайт</span><span>Telegram</span><span>WhatsApp</span></div>
+      </article>
+      <article class="svc__card rv" style="transition-delay:.06s">
+        <div class="svc__top"><span class="svc__idx">[01.2]</span><span class="svc__st">● online</span></div>
+        <h3>Агентные системы и автоматизация</h3>
+        <p>Агенты с инструментами: сами ведут сделки, пишут письма, ставят задачи и обновляют записи.</p>
+        <div class="svc__tags"><span>CRM</span><span>Почта</span><span>1С</span><span>Внутренние API</span></div>
+      </article>
+      <article class="svc__card rv" style="transition-delay:.12s">
+        <div class="svc__top"><span class="svc__idx">[01.3]</span><span class="svc__st">● online</span></div>
+        <h3>Обработка документов</h3>
+        <p>Извлечение данных, классификация и сверка потока документов с интеграцией в учётные системы.</p>
+        <div class="svc__tags"><span>Извлечение</span><span>Классификация</span><span>Сверка</span></div>
+      </article>
+      <article class="svc__card rv" style="transition-delay:.18s">
+        <div class="svc__top"><span class="svc__idx">[01.4]</span><span class="svc__st">● online</span></div>
+        <h3>Data Science и предиктивная аналитика</h3>
+        <p>Прогноз спроса, скоринг лидов, объяснимые модели — решения с понятными факторами, а не «чёрный ящик».</p>
+        <div class="svc__tags"><span>Прогноз спроса</span><span>Скоринг лидов</span><span>Объяснимость</span></div>
+      </article>
+      <article class="svc__card rv" style="transition-delay:.24s">
+        <div class="svc__top"><span class="svc__idx">[01.5]</span><span class="svc__st">● online</span></div>
+        <h3>AI-аудит и консалтинг</h3>
+        <p>Карта возможностей по вашим процессам, дорожная карта внедрения и оценка ROI до старта разработки.</p>
+        <div class="svc__tags"><span>Карта возможностей</span><span>Дорожная карта</span><span>Оценка ROI</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== КЕЙСЫ -->
+<section class="sec" id="cases">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="sechead__idx">[02]</span>
+      <h2>Кейсы</h2>
+      <span class="sechead__meta">SEC.02 // ЗАПИСЕЙ: <i>3</i> ИЗ <i>40+</i></span>
+    </div>
+    <div class="cases">
+      <article class="case rv">
+        <div class="case__head"><span>LOG.0034 · ПРОДАЖИ</span><span class="case__nda">[NDA]</span></div>
+        <div class="case__body">
+          <div class="case__metric">+34% <small>SQL</small></div>
+          <h3>ИИ-отдел продаж для дистрибьютора стройматериалов</h3>
+          <p>Квалификация входящих лидов в AmoCRM: ассистент задаёт уточняющие вопросы, сегментирует и передаёт менеджеру готовый контекст.</p>
+          <div class="case__delta">КАНАЛ: AMOCRM → <i>КВАЛИФИЦИРОВАННЫЕ ЛИДЫ +34%</i></div>
+        </div>
+      </article>
+      <article class="case rv" style="transition-delay:.08s">
+        <div class="case__head"><span>LOG.0037 · ПОДДЕРЖКА</span><span class="case__nda">[NDA]</span></div>
+        <div class="case__body">
+          <div class="case__metric">2/3 <small>БЕЗ ОПЕРАТОРА</small></div>
+          <h3>RAG-ассистент поддержки для финтех-сервиса</h3>
+          <p>Две трети обращений закрываются без участия оператора — с ответами по базе знаний и ссылками на источники.</p>
+          <div class="case__delta">ВРЕМЯ ОТВЕТА: <b>11 МИН</b> → <i>2 МИН</i></div>
+        </div>
+      </article>
+      <article class="case rv" style="transition-delay:.16s">
+        <div class="case__head"><span>LOG.0041 · ДОКУМЕНТЫ</span><span class="case__nda case__nda--open">[КОММЕРЧЕСКИЙ ПРОЕКТ]</span></div>
+        <div class="case__body">
+          <div class="case__metric">18 000 <small>ДОК/МЕС</small></div>
+          <h3>Обработка первички для логистической компании</h3>
+          <p>18 000 документов в месяц распознаются, классифицируются и попадают в учётную систему без ручного ввода.</p>
+          <div class="case__delta">РУЧНОЙ ВВОД: <b>ДА</b> → <i>0 ОПЕРАЦИЙ</i></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== ПОЧЕМУ МЫ -->
+<section class="sec" id="why">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="sechead__idx">[03]</span>
+      <h2>Почему мы</h2>
+      <span class="sechead__meta">SEC.03 // ПРИНЦИПОВ: <i>3</i></span>
+    </div>
+    <div class="why">
+      <article class="why__item rv">
+        <span class="why__idx">[03.1]</span>
+        <h3>Полный цикл внутри команды</h3>
+        <p>От аудита до сопровождения — <b>без субподряда</b>. Одна команда отвечает за результат на всех этапах.</p>
+      </article>
+      <article class="why__item rv" style="transition-delay:.08s">
+        <span class="why__idx">[03.2]</span>
+        <h3>LLM-системы как инженерные системы</h3>
+        <p>Оценка качества, логирование, тесты — а не <b>«промпт и молитва»</b>. Поведение системы измеримо и воспроизводимо.</p>
+      </article>
+      <article class="why__item rv" style="transition-delay:.16s">
+        <span class="why__idx">[03.3]</span>
+        <h3>Готовность к чувствительным данным</h3>
+        <p>Работа в контуре заказчика, NDA, изолированные базы знаний — <b>RAG on-premise</b> без передачи данных наружу.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== ТЕХНОЛОГИИ -->
+<section class="sec" id="tech">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="sechead__idx">[04]</span>
+      <h2>Технологии</h2>
+      <span class="sechead__meta">SEC.04 // СТЕК: <i>8 МОДУЛЕЙ</i></span>
+    </div>
+    <div class="tech rv">
+      <span class="tech__chip"><i>▸</i>Python</span>
+      <span class="tech__chip"><i>▸</i>Claude</span>
+      <span class="tech__chip"><i>▸</i>GPT</span>
+      <span class="tech__chip"><i>▸</i>GigaChat</span>
+      <span class="tech__chip"><i>▸</i>YandexGPT</span>
+      <span class="tech__chip"><i>▸</i>Mistral</span>
+      <span class="tech__chip"><i>▸</i>Qdrant</span>
+      <span class="tech__chip"><i>▸</i>PostgreSQL</span>
+      <span class="tech__note">МОДЕЛЬ ПОДБИРАЕТСЯ ПОД ЗАДАЧУ И КОНТУР БЕЗОПАСНОСТИ</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== ПРОЦЕСС -->
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="sechead__idx">[05]</span>
+      <h2>Процесс</h2>
+      <span class="sechead__meta">SEC.05 // ЭТАПОВ: <i>4</i> · ПИЛОТ: <i>8–19 НЕД</i></span>
+    </div>
+    <div class="proc__strip rv">
+      <img src="assets/panel-modules.png" alt="Карта модулей: четыре волны активности процесса" width="1800" height="640">
+      <span class="proc__striplab">FIG.02 — КАРТА АКТИВНОСТИ ЭТАПОВ</span>
+    </div>
+    <div class="proc">
+      <article class="step rv">
+        <div class="step__n">01</div>
+        <div class="step__bar"><i></i></div>
+        <h3>Аудит и стратегия</h3>
+        <p>Разбор процессов, карта AI-возможностей, приоритизация по эффекту и стоимости.</p>
+        <span class="step__t">▸ 1–2 недели</span>
+      </article>
+      <article class="step rv" style="transition-delay:.07s">
+        <div class="step__n">02</div>
+        <div class="step__bar"><i></i></div>
+        <h3>Проектирование</h3>
+        <p>Архитектура решения, выбор моделей, метрики качества, план интеграций.</p>
+        <span class="step__t">▸ 2–3 недели</span>
+      </article>
+      <article class="step rv" style="transition-delay:.14s">
+        <div class="step__n">03</div>
+        <div class="step__bar"><i></i></div>
+        <h3>Разработка</h3>
+        <p>Итерации с демо каждые 1–2 недели, тесты, оценка качества на ваших данных.</p>
+        <span class="step__t">▸ 4–12 недель</span>
+      </article>
+      <article class="step rv" style="transition-delay:.21s">
+        <div class="step__n">04</div>
+        <div class="step__bar"><i></i></div>
+        <h3>Запуск и развитие</h3>
+        <p>Вывод в эксплуатацию, обучение команды, мониторинг и план развития.</p>
+        <span class="step__t">▸ 1–2 недели + сопровождение</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== ЦЕНЫ -->
+<section class="sec" id="pricing">
+  <div class="wrap">
+    <div class="sechead rv">
+      <span class="sechead__idx">[06]</span>
+      <h2>Цены</h2>
+      <span class="sechead__meta">SEC.06 // ФОРМАТ: <i>ПИЛОТ → МАСШТАБИРОВАНИЕ</i></span>
+    </div>
+    <p class="seclead rv">Стоимость зависит от объёма интеграций и требований к контуру. Ниже — стартовые уровни пилотных проектов; точную оценку даём после вводного аудита.</p>
+
+    <div class="intro-audit rv">
+      <div>
+        <span class="tag tag--amber">[ ШАГ 0 · 30-МИНУТНЫЙ ЗВОНОК ]</span>
+        <h3>Вводный AI-аудит</h3>
+        <p>Разбор ваших процессов, карта возможностей, оценка бюджета и сроков. Без обязательств — вы получаете план, даже если не продолжите с нами.</p>
+      </div>
+      <div class="intro-audit__price">
+        <span class="p">БЕСПЛАТНО</span>
+        <a class="btn btn--pri" href="#contact">Записаться</a>
+      </div>
+    </div>
+
+    <div class="prices">
+      <article class="price rv">
+        <div class="price__top"><span class="price__idx">[06.1]</span></div>
+        <h3>AI-аудит и консалтинг</h3>
+        <div class="price__p">от 150 000 ₽</div>
+        <ul>
+          <li>интервью с командой</li>
+          <li>карта AI-возможностей</li>
+          <li>дорожная карта внедрения</li>
+        </ul>
+      </article>
+      <article class="price rv" style="transition-delay:.05s">
+        <div class="price__top"><span class="price__idx">[06.2]</span><span class="price__pilot">пилот</span></div>
+        <h3>Обработка документов</h3>
+        <div class="price__p">от 600 000 ₽</div>
+        <ul>
+          <li>извлечение данных</li>
+          <li>классификация и сверка</li>
+          <li>интеграция с одной системой</li>
+        </ul>
+      </article>
+      <article class="price rv" style="transition-delay:.1s">
+        <div class="price__top"><span class="price__idx">[06.3]</span><span class="price__pilot">пилот</span></div>
+        <h3>AI-ассистенты</h3>
+        <div class="price__p">от 700 000 ₽</div>
+        <ul>
+          <li>поиск по смыслу со ссылками на источники</li>
+          <li>один канал</li>
+          <li>оценка качества ответов</li>
+        </ul>
+      </article>
+      <article class="price rv" style="transition-delay:.15s">
+        <div class="price__top"><span class="price__idx">[06.4]</span><span class="price__pilot">пилот</span></div>
+        <h3>Data Science и аналитика</h3>
+        <div class="price__p">от 800 000 ₽</div>
+        <ul>
+          <li>одна прогнозная модель</li>
+          <li>объяснение факторов</li>
+          <li>интеграция в CRM</li>
+        </ul>
+      </article>
+      <article class="price rv" style="transition-delay:.2s">
+        <div class="price__top"><span class="price__idx">[06.5]</span><span class="price__pilot">пилот</span></div>
+        <h3>Агентные системы</h3>
+        <div class="price__p">от 1 000 000 ₽</div>
+        <ul>
+          <li>агент на один сценарий</li>
+          <li>интеграции с внешними системами</li>
+          <li>логирование действий</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="included rv">
+      <h3><i>▸</i> Включено во все решения</h3>
+      <ul>
+        <li>исходный код в вашем репозитории</li>
+        <li>документация</li>
+        <li>обучение команды</li>
+        <li>мониторинг</li>
+        <li>план развития</li>
+        <li>прямая связь с инженерами</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================================================== CTA / ФОРМА -->
+<section class="cta" id="contact">
+  <div class="cta__bg" aria-hidden="true"><img src="assets/wave-strip.png" alt=""></div>
+  <div class="cta__in">
+    <div class="rv">
+      <span class="tag">[07] // КАНАЛ СВЯЗИ ОТКРЫТ</span>
+      <h2>Начните с <span class="m">бесплатного аудита</span></h2>
+      <p class="cta__note">30 минут: разберём процессы, покажем, где AI даст эффект, и оценим бюджет. Ответим в течение рабочего дня.</p>
+      <ul class="cta__facts">
+        <li><i>[✓]</i> БЕЗ ОБЯЗАТЕЛЬСТВ И ПРЕДОПЛАТ</li>
+        <li><i>[✓]</i> NDA ПО ЗАПРОСУ — ДО ОБСУЖДЕНИЯ ДЕТАЛЕЙ</li>
+        <li><i>[✓]</i> ГОВОРИТЬ БУДЕТЕ С ИНЖЕНЕРОМ, НЕ С ПРОДАВЦОМ</li>
+      </ul>
+    </div>
+    <div class="term rv" style="transition-delay:.12s">
+      <div class="term__bar">BETALINE.REQUEST — НОВАЯ ЗАЯВКА</div>
+      <form id="leadForm" novalidate>
+        <div class="field">
+          <label for="f-name">Имя <i>*</i></label>
+          <input id="f-name" name="name" type="text" placeholder="Иван Петров" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="f-company">Компания</label>
+          <input id="f-company" name="company" type="text" placeholder="ООО «Компания»" autocomplete="organization">
+        </div>
+        <div class="field field--full">
+          <label for="f-contact">Email / телефон <i>*</i></label>
+          <input id="f-contact" name="contact" type="text" placeholder="you@company.ru · +7 900 000-00-00" required>
+        </div>
+        <div class="field field--full">
+          <label for="f-task">Описание задачи</label>
+          <textarea id="f-task" name="task" placeholder="Например: 2 000 обращений в поддержку в месяц, хотим автоматизировать первую линию…"></textarea>
+        </div>
+        <button class="btn btn--pri" type="submit">Отправить заявку ▸</button>
+      </form>
+      <div class="form-ok" id="formOk" role="status">
+        <p class="ln"><i>▸ 200 OK</i> — ЗАЯВКА ПРИНЯТА В ОБРАБОТКУ</p>
+        <p class="big">Сигнал получен.</p>
+        <p class="ln">Инженер свяжется с вами <em>в течение рабочего дня</em>, чтобы согласовать время вводного аудита.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ================================================== FOOTER -->
+<footer>
+  <div class="foot">
+    <span class="foot__logo">BETALINE<b>_AI</b></span>
+    <a href="mailto:info@betaline.ai">info@betaline.ai</a>
+    <a href="tel:+74951234567">+7 (495) 123-45-67</a>
+    <a href="#top">Telegram ↗</a>
+    <div class="foot__right">
+      <span class="foot__sys">SYS.ONLINE <i>●</i> UPLINK STABLE</span>
+      <span>© 2026 Betaline AI</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  /* -------- reveal при скролле -------- */
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  },{threshold:.12, rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
+
+  /* страховка: если элемент так и не наблюдался (печать, экспорт,
+     сбой IO) — показать всё спустя короткую паузу после загрузки */
+  window.addEventListener('load', function(){
+    setTimeout(function(){
+      document.querySelectorAll('.rv:not(.in)').forEach(function(el){
+        el.classList.add('in');
+      });
+      if(!counted){
+        counted = true;
+        document.querySelectorAll('[data-count]').forEach(function(el){
+          el.textContent = el.getAttribute('data-count');
+        });
+      }
+    }, 1600);
+  });
+
+  /* -------- счётчики в hero -------- */
+  var counted = false;
+  var statsIO = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting && !counted){
+        counted = true;
+        document.querySelectorAll('[data-count]').forEach(function(el){
+          var target = parseInt(el.getAttribute('data-count'),10);
+          var t0 = null, dur = 1100;
+          function tick(ts){
+            if(!t0) t0 = ts;
+            var p = Math.min((ts-t0)/dur,1);
+            el.textContent = Math.round(target*(1-Math.pow(1-p,3)));
+            if(p<1) requestAnimationFrame(tick);
+          }
+          requestAnimationFrame(tick);
+        });
+        statsIO.disconnect();
+      }
+    });
+  },{threshold:.4});
+  var statsEl = document.querySelector('.stats');
+  if(statsEl) statsIO.observe(statsEl);
+
+  /* -------- бесшовный цикл бегущей строки -------- */
+  var rail = document.getElementById('tickerRail');
+  if(rail) rail.innerHTML += rail.innerHTML;
+
+  /* -------- мобильное меню -------- */
+  var burger = document.getElementById('burger');
+  var mnav = document.getElementById('mnav');
+  burger.addEventListener('click', function(){
+    var open = mnav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    burger.textContent = open ? '✕' : '☰';
+  });
+  mnav.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      mnav.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+      burger.textContent = '☰';
+    });
+  });
+
+  /* -------- плавный скролл с учётом фиксированного навбара -------- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(ev){
+      var id = a.getAttribute('href').slice(1);
+      var t = id ? document.getElementById(id) : null;
+      if(t){ ev.preventDefault(); t.scrollIntoView({behavior:'smooth'}); }
+      else if(a.getAttribute('href') === '#top'){ ev.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); }
+    });
+  });
+
+  /* -------- форма -------- */
+  var form = document.getElementById('leadForm');
+  var ok = document.getElementById('formOk');
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var name = document.getElementById('f-name');
+    var contact = document.getElementById('f-contact');
+    var valid = true;
+    [name, contact].forEach(function(f){
+      if(!f.value.trim()){ f.style.borderColor = 'var(--amber)'; valid = false; }
+      else { f.style.borderColor = ''; }
+    });
+    if(!valid) return;
+    form.style.display = 'none';
+    ok.classList.add('show');
+  });
+})();
+</script>
+</body>
+</html>
