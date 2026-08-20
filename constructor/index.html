@@ -1,0 +1,3117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BetaLine AI — Бот, который продаёт за тебя</title>
+  <meta name="description" content="Собери ИИ-ассистента для своего сайта за 5 минут. Триал 7 дней / 100 сообщений бесплатно.">
+  <link rel="stylesheet" href="/assets/css/saas-tokens.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--bg-cream); color: var(--text-ink); font: var(--t-body); }
+    .container { max-width: var(--container); margin: 0 auto; padding: 0 var(--s-5); }
+    /* ── Navbar (Iteration 2) ── */
+    header.sb-navbar { position: fixed; top: 0; left: 0; right: 0; height: 64px; z-index: 100; background: rgba(255,251,245,0.65); backdrop-filter: blur(18px) saturate(180%); border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; }
+    header.sb-navbar .nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: var(--s-5); }
+    header.sb-navbar .logo { font: 800 18px/1 var(--font-sans); letter-spacing: -0.5px; color: var(--text-ink); display: inline-flex; align-items: center; gap: 8px; text-decoration: none; flex-shrink: 0; }
+    header.sb-navbar .logo svg { width: 28px; height: 20px; color: var(--orange); }
+    /* Desktop nav links */
+    .bl-nav-links { display: flex; align-items: center; gap: var(--s-4); list-style: none; margin: 0; padding: 0; }
+    .bl-nav-links a { font: 600 15px/1 var(--font-sans); color: var(--text-body); text-decoration: none; padding: 6px 10px; border-radius: var(--r-sm); transition: color 0.2s; }
+    .bl-nav-links a:hover { color: var(--orange); }
+    /* Nav action buttons */
+    .bl-nav-actions { display: flex; align-items: center; gap: var(--s-3); flex-shrink: 0; }
+    .btn-ghost { display: inline-flex; align-items: center; padding: 10px 18px; font: 600 15px/1 var(--font-sans); border-radius: var(--r-md); background: transparent; color: var(--text-ink); text-decoration: none; border: 1px solid var(--border-soft); transition: border-color 0.2s, background 0.2s; cursor: pointer; }
+    .btn-ghost:hover { border-color: var(--orange-soft); background: var(--orange-tint); }
+    /* Hide nav links on mobile — show CTAs only (MVP) */
+    @media (max-width: 768px) { .bl-nav-links { display: none; } }
+
+    .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 22px; font: 700 16px/1 var(--font-sans); border-radius: var(--r-md); background: var(--orange); color: #fff; text-decoration: none; box-shadow: var(--shadow-cta); transition: transform var(--dur) var(--ease-out), background var(--dur) var(--ease-out), box-shadow var(--dur) var(--ease-out); border: none; cursor: pointer; }
+    .btn-primary:hover { background: var(--orange-dark); transform: translateY(-3px); box-shadow: var(--shadow-cta-hover); }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; font: 600 16px/1 var(--font-sans); border-radius: var(--r-md); background: transparent; color: var(--text-ink); text-decoration: none; border: 1px solid var(--orange-soft); cursor: pointer; }
+    .btn-secondary:hover { background: var(--orange-tint); }
+
+    /* ── Hero (Iteration 2) ── */
+    section#bl-hero { padding: 128px 0 var(--s-9); position: relative; background: var(--gradient-hero-bg, var(--bg-cream)); }
+    section#bl-hero .hero-content { display: grid; gap: var(--s-8); }
+    @media (min-width: 900px) { section#bl-hero .hero-content { grid-template-columns: 1fr 1fr; align-items: start; } }
+    section#bl-hero .eyebrow { font: var(--t-eyebrow); letter-spacing: var(--t-eyebrow-tracking); text-transform: uppercase; color: var(--orange); margin-bottom: var(--s-4); }
+    section#bl-hero h1 { font: 900 clamp(32px,7.5vw,76px)/1.15 var(--font-display, var(--font-sans)); letter-spacing: var(--t-display-tracking); margin: 0 0 var(--s-5); color: var(--text-ink); }
+    section#bl-hero h1 .accent { color: var(--orange); }
+    section#bl-hero p.lead { font: var(--t-lead); color: var(--text-mute); max-width: 640px; margin: 0 0 var(--s-6); }
+    section#bl-hero .cta-row { display: flex; gap: var(--s-4); flex-wrap: wrap; margin-bottom: var(--s-8); }
+    section#bl-hero img { max-width: 100%; height: auto; border-radius: var(--r-2xl); box-shadow: var(--shadow-glow-amber-lg); display: block; }
+    /* Stat cards */
+    .bl-stat-row { display: flex; gap: var(--s-5); flex-wrap: wrap; }
+    .bl-stat-card { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--r-xl); padding: var(--s-5) var(--s-6); min-width: 160px; flex: 1; box-shadow: var(--shadow-card); transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); cursor: default; }
+    .bl-stat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-glow-amber); }
+    .bl-stat-card .stat-label { font: var(--t-eyebrow); letter-spacing: var(--t-eyebrow-tracking); text-transform: uppercase; color: var(--text-faint); margin-bottom: var(--s-2); display: block; }
+    .bl-stat-card .stat-value { font: 900 clamp(28px,4vw,48px)/1.1 var(--font-mono); color: var(--orange); }
+    @media (max-width: 720px) { section#bl-hero { padding: 96px 0 var(--s-8); } .bl-stat-row { gap: var(--s-3); } .bl-stat-card { min-width: 120px; } }
+    @media (prefers-reduced-motion: reduce) { .bl-stat-card { transition: none; } }
+
+    /* ── Social-proof toast ── */
+    .bl-toast { position: fixed; bottom: 24px; left: 24px; z-index: 80; max-width: 300px; background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--r-lg); padding: 12px 16px; font: var(--t-small); color: var(--text-body); box-shadow: var(--shadow-lift); opacity: 1; transition: opacity 0.4s ease; pointer-events: none; }
+    .bl-toast.fading { opacity: 0; }
+    /* Hide toast on very small viewports — reduces clutter on mobile */
+    @media (max-width: 479px) { .bl-toast { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .bl-toast { transition: none; } }
+
+    /* ── Callback Modal (Iteration 2) ── */
+    #callback-modal {
+      border: none;
+      padding: 0;
+      border-radius: var(--r-2xl);
+      background: var(--bg-card);
+      box-shadow: var(--shadow-glow-amber-lg, var(--shadow-lift));
+      max-width: min(480px, calc(100vw - 32px));
+      width: 100%;
+      overflow: visible;
+    }
+    #callback-modal::backdrop {
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+    }
+    @supports not (backdrop-filter: blur(4px)) {
+      #callback-modal::backdrop { background: rgba(0,0,0,0.65); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #callback-modal { animation: none; }
+    }
+    .cb-modal-inner { padding: var(--s-7) var(--s-7) var(--s-6); position: relative; }
+    .cb-modal-close {
+      position: absolute; top: var(--s-4); right: var(--s-4);
+      width: 32px; height: 32px;
+      background: transparent; border: 1px solid var(--border-soft);
+      border-radius: var(--r-full, 50%); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 18px; line-height: 1; color: var(--text-mute);
+      transition: background 0.2s, color 0.2s;
+    }
+    .cb-modal-close:hover { background: var(--orange-tint); color: var(--orange); }
+    .cb-modal-title { font: 800 clamp(20px,4vw,26px)/1.2 var(--font-sans); color: var(--text-ink); margin: 0 0 var(--s-2); padding-right: 40px; }
+    .cb-modal-subtitle { font: var(--t-small); color: var(--text-mute); margin: 0 0 var(--s-6); }
+    .cb-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: var(--s-5); }
+    .cb-field label { font: 600 14px/1 var(--font-sans); color: var(--text-body); }
+    .cb-field input {
+      padding: 12px 14px; border: 1px solid var(--border-soft); border-radius: var(--r-md);
+      background: var(--bg-cream); color: var(--text-ink); font: var(--t-body);
+      transition: border-color 0.2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .cb-field input:focus { outline: none; border-color: var(--orange); }
+    .cb-error { color: #dc2626; font: var(--t-small); min-height: 20px; margin-bottom: var(--s-3); }
+    .cb-success { text-align: center; padding: var(--s-6) var(--s-4); }
+    .cb-success-icon { font-size: 40px; margin-bottom: var(--s-4); display: block; }
+    .cb-success-text { font: 700 18px/1.4 var(--font-sans); color: var(--text-ink); margin-bottom: var(--s-3); }
+    .cb-success-sub { font: var(--t-small); color: var(--text-mute); margin-bottom: var(--s-5); }
+
+    /* Keep legacy sb-hero styles for any residual references */
+    section#sb-hero { padding: calc(var(--s-9) + 64px) 0 var(--s-9); position: relative; }
+    section#sb-hero .eyebrow { font: var(--t-eyebrow); letter-spacing: var(--t-eyebrow-tracking); text-transform: uppercase; color: var(--orange); margin-bottom: var(--s-4); }
+    section#sb-hero h1 { font: var(--t-display); letter-spacing: var(--t-display-tracking); margin: 0 0 var(--s-5); }
+    section#sb-hero h1 .accent { color: var(--orange); }
+    section#sb-hero p.lead { font: var(--t-lead); color: var(--text-mute); max-width: 720px; margin: 0 0 var(--s-6); }
+    section#sb-hero .cta-row { display: flex; gap: var(--s-4); flex-wrap: wrap; }
+    @media (max-width: 720px) { section#sb-hero { padding: calc(var(--s-8) + 64px) 0 var(--s-8); } }
+    section#sb-url-capture { padding: var(--s-8) 0; background: var(--bg-warm); }
+    section#sb-url-capture .card { background: var(--bg-card); border-radius: var(--r-2xl); padding: var(--s-7); box-shadow: var(--shadow-card); max-width: var(--container-narrow); margin: 0 auto; }
+    section#sb-url-capture h2 { font: var(--t-h1); letter-spacing: var(--t-h1-tracking); margin: 0 0 var(--s-3); }
+    section#sb-url-capture p.t-lead { color: var(--text-mute); margin: 0 0 var(--s-5); }
+    section#sb-url-capture form { display: flex; gap: var(--s-3); flex-wrap: wrap; align-items: stretch; }
+    section#sb-url-capture input { flex: 1; min-width: 240px; padding: 16px 18px; font: var(--t-body); border-radius: var(--r-sm); border: 1px solid var(--orange-soft); background: var(--bg-card); }
+    section#sb-url-capture input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-tint); }
+    section#sb-url-capture #urlCaptureError { color: var(--red-text); font: var(--t-small); margin-top: var(--s-2); display: none; }
+    section#sb-url-capture #urlCaptureError.show { display: block; }
+    section { padding: var(--s-9) 0; }
+    section h2 { font: var(--t-h1); letter-spacing: var(--t-h1-tracking); margin: 0 0 var(--s-6); }
+    section .eyebrow-section { font: var(--t-eyebrow); letter-spacing: var(--t-eyebrow-tracking); text-transform: uppercase; color: var(--orange); margin-bottom: var(--s-3); }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+    @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+
+    section#sb-problems { background: var(--bg-cream); }
+    section#sb-problems .card { background: var(--bg-card); border-radius: var(--r-xl); padding: var(--s-6); box-shadow: var(--shadow-staircase); border: 1px solid var(--border-soft); }
+    section#sb-problems .card h3 { font: var(--t-h3); margin: 0 0 var(--s-3); }
+    section#sb-problems .card p { font: var(--t-body); color: var(--text-body); margin: 0; }
+
+    section#sb-how { background: var(--bg-warm); }
+    section#sb-how .step { background: var(--bg-card); border-radius: var(--r-xl); padding: var(--s-6); border: 1px solid var(--border-soft); }
+    section#sb-how .step .num { font: 800 14px/1 var(--font-mono); color: var(--orange); margin-bottom: var(--s-3); }
+    section#sb-how .step h3 { font: var(--t-h3); margin: 0 0 var(--s-2); }
+
+    /* ── Problems ──────────────────────────────────────── */
+    section#problems { background: var(--bg-cream); }
+    .problem-card { background: var(--bg-card); border-radius: var(--r-2xl); padding: var(--s-7); box-shadow: var(--shadow-card); border: 1px solid var(--border-soft); transition: transform 0.2s var(--ease-out); }
+    .problem-card:hover { transform: translateY(-2px); }
+    .problem-card .pc-icon { font-size: 36px; margin-bottom: var(--s-4); display: block; line-height: 1; }
+    .problem-card h3 { font: 700 20px/1.3 var(--font-display, var(--font-sans)); margin: 0 0 var(--s-3); color: var(--text-ink); }
+    .problem-card p { font: var(--t-body); color: var(--text-body); margin: 0; }
+
+    /* ── Solution ──────────────────────────────────────── */
+    section#solution { background: var(--bg-warm); padding: var(--s-9) 0; }
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; }
+    @media (max-width: 900px) { .solution-grid { grid-template-columns: 1fr; } }
+    .solution-text .eyebrow { font: var(--t-eyebrow); letter-spacing: var(--t-eyebrow-tracking); text-transform: uppercase; color: var(--orange); margin-bottom: var(--s-4); display: block; }
+    .solution-text h2 { font: 900 clamp(28px,4vw,48px)/1.2 var(--font-display, var(--font-sans)); letter-spacing: var(--t-h1-tracking); margin: 0 0 var(--s-5); color: var(--text-ink); }
+    .solution-text p.lead { font: var(--t-lead); color: var(--text-mute); margin: 0 0 var(--s-5); }
+    .solution-text ul { list-style: none; padding: 0; margin: 0 0 var(--s-6); display: grid; gap: var(--s-3); }
+    .solution-text ul li { font: var(--t-body); color: var(--text-body); display: flex; gap: var(--s-3); align-items: flex-start; }
+    .solution-text ul li .check { color: var(--orange); font-weight: 900; flex-shrink: 0; }
+    .solution-img img { border-radius: var(--r-2xl); box-shadow: var(--shadow-glow-amber-lg); max-width: 100%; height: auto; display: block; }
+    @media (max-width: 900px) { section#solution { padding: var(--s-7) 0; } }
+
+    /* ── How-it-works (replaced by #sb-plan scroll-spy timeline) ── */
+
+    section#sb-pricing .card { background: var(--bg-card); border-radius: var(--r-xl); padding: var(--s-7); border: 1px solid var(--border-soft); display: flex; flex-direction: column; }
+    section#sb-pricing .card.featured { border: 2px solid var(--orange); background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg-card) 100%); box-shadow: var(--shadow-orange); }
+    section#sb-pricing .card h3 { font: var(--t-h3); margin: 0 0 var(--s-3); }
+    section#sb-pricing .card .price { font: 900 36px/1.1 var(--font-sans); letter-spacing: -1px; margin: 0 0 var(--s-4); }
+    section#sb-pricing .card ul { list-style: none; padding: 0; margin: 0 0 var(--s-5); display: grid; gap: var(--s-2); }
+    section#sb-pricing .card ul li::before { content: "✓ "; color: var(--orange); font-weight: 800; }
+    section#sb-pricing .card .cta { margin-top: auto; }
+
+    section#sb-faq { background: var(--bg-cream); }
+    section#sb-faq .wrap { max-width: var(--container-prose); margin: 0 auto; }
+    section#sb-faq details { background: var(--bg-card); border-radius: var(--r-lg); padding: var(--s-4) var(--s-5); border: 1px solid var(--border-soft); margin-bottom: var(--s-3); }
+    section#sb-faq summary { cursor: pointer; list-style: none; font: 700 18px/1.4 var(--font-sans); color: var(--text-ink-2); display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); }
+    section#sb-faq summary::after { content: "+"; font: 700 24px/1 var(--font-mono); color: var(--orange); transition: transform var(--dur) var(--ease-out); }
+    section#sb-faq details[open] summary::after { transform: rotate(45deg); }
+    section#sb-faq details > p { font: var(--t-body); color: var(--text-body); margin: var(--s-3) 0 0; }
+
+    section#sb-final-cta { background: var(--bg-ink); color: #fff; text-align: center; }
+    section#sb-final-cta h2 { color: #fff; }
+    section#sb-final-cta p { color: var(--text-on-dark); max-width: 640px; margin: 0 auto var(--s-6); font: var(--t-lead); }
+
+    footer.sb-footer { background: var(--bg-ink); color: var(--text-on-dark); padding: var(--s-7) 0; border-top: 1px solid rgba(255,255,255,0.06); }
+    footer.sb-footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: var(--s-5); }
+    footer.sb-footer a { color: #fff; text-decoration: none; }
+    footer.sb-footer .legal { font: var(--t-caption); color: var(--text-on-dark); }
+    section#demo-section { padding: var(--s-9) 0; background: var(--bg-warm); }
+    section#demo-section .demo-card { max-width: 720px; margin: 0 auto; background: var(--bg-card); border-radius: var(--r-2xl); box-shadow: var(--shadow-lift); overflow: hidden; position: relative; border: 1px solid var(--border-soft); }
+    section#demo-section .demo-head { padding: var(--s-4) var(--s-5); background: var(--bg-warm); border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; gap: var(--s-3); }
+    section#demo-section .demo-head .avatar { width: 40px; height: 40px; border-radius: 999px; background: var(--orange-tint); display: grid; place-items: center; font-size: 22px; }
+    section#demo-section .demo-head .who { font: 700 16px/1.2 var(--font-sans); color: var(--text-ink); }
+    section#demo-section .demo-head .status { font: var(--t-caption); color: var(--green-dark); }
+    section#demo-section .demo-msgs { height: 360px; overflow-y: auto; padding: var(--s-5); display: grid; gap: var(--s-3); align-content: start; }
+    section#demo-section .msg { max-width: 80%; padding: 10px 14px; border-radius: 16px; font: var(--t-body); white-space: pre-wrap; word-wrap: break-word; }
+    section#demo-section .msg.bot { background: var(--bg-warm); color: var(--text-ink); align-self: flex-start; border-bottom-left-radius: 4px; }
+    section#demo-section .msg.user { background: var(--orange); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; margin-left: auto; }
+    section#demo-section .demo-form { padding: var(--s-4) var(--s-5); border-top: 1px solid var(--border-soft); display: flex; gap: var(--s-3); }
+    section#demo-section .demo-form input { flex: 1; padding: 12px 16px; border-radius: var(--r-sm); border: 1px solid var(--orange-soft); font: var(--t-body); }
+    section#demo-section .demo-form input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-tint); }
+    #demoLockOverlay { position: absolute; inset: 0; display: none; flex-direction: column; align-items: center; justify-content: center; padding: var(--s-6); text-align: center; background: rgba(255,255,255,0.92); backdrop-filter: blur(6px); }
+    #demoLockOverlay.show { display: flex; }
+    #demoLockOverlay h3 { font: var(--t-h2); margin: 0 0 var(--s-3); }
+    #demoLockOverlay p { color: var(--text-mute); max-width: 420px; margin: 0 0 var(--s-5); }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    }
+
+    /* Navbar — phone / MAX / Telegram / callback (legacy port) */
+    .sb-navbar .nav-phone { display: inline-flex; flex-direction: column; align-items: flex-end; gap: 2px; padding: 4px 8px; border-radius: 8px; text-decoration: none; transition: background 0.2s; }
+    .sb-navbar .nav-phone:hover { background: var(--bg-warm); }
+    .sb-navbar .nav-phone-num { font: 700 15px/1 var(--font-sans); color: var(--text-ink); transition: color 0.2s; }
+    .sb-navbar .nav-phone:hover .nav-phone-num { color: var(--orange); }
+    .sb-navbar .nav-phone-free { font: 500 11px/1 var(--font-sans); color: var(--text-mute); }
+
+    .sb-navbar .nav-social { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 999px; background: var(--bg-warm); color: var(--text-ink); transition: background 0.2s, color 0.2s, transform 0.2s; text-decoration: none; }
+    .sb-navbar .nav-social:hover { transform: translateY(-2px); }
+    .sb-navbar .nav-social svg { width: 18px; height: 18px; fill: currentColor; }
+    .sb-navbar .nav-social.max { overflow: visible; background: none; position: relative; width: 32px; height: 32px; }
+    .sb-navbar .nav-social.max svg { width: 32px; height: 32px; }
+    .sb-navbar .nav-social.max .max-icon-default { transition: opacity 0.3s; }
+    .sb-navbar .nav-social.max .max-icon-hover { position: absolute; top: 0; left: 0; opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+    .sb-navbar .nav-social.max:hover .max-icon-default { opacity: 0; }
+    .sb-navbar .nav-social.max:hover .max-icon-hover { opacity: 1; }
+    .sb-navbar .nav-tg { background: #229ED9; color: #fff; }
+    .sb-navbar .nav-tg:hover { background: #1c8bc0; }
+
+    .sb-navbar .nav-callback-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 999px; background: var(--orange); color: #fff; border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; }
+    .sb-navbar .nav-callback-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+    .sb-navbar .nav-callback-btn svg { width: 18px; height: 18px; fill: #fff; }
+    .sb-navbar .nav-callback-btn::before, .sb-navbar .nav-callback-btn::after { content: ""; position: absolute; inset: -4px; border-radius: 999px; border: 2px solid var(--orange); opacity: 0; animation: nav-cb-pulse 2s infinite; }
+    .sb-navbar .nav-callback-btn::after { animation-delay: 1s; }
+    @keyframes nav-cb-pulse { 0% { opacity: 0.7; transform: scale(1); } 100% { opacity: 0; transform: scale(1.4); } }
+    @media (prefers-reduced-motion: reduce) { .sb-navbar .nav-callback-btn::before, .sb-navbar .nav-callback-btn::after { animation: none; } }
+
+    @media (max-width: 768px) {
+      .sb-navbar .nav-phone, .sb-navbar .nav-social, .sb-navbar .nav-callback-btn { display: none; }
+    }
+
+    /* ── Quiz Router (Iteration 2) ── */
+    section#quiz { padding: var(--s-9) 0; }
+    @media (max-width: 720px) { section#quiz { padding: var(--s-7) 0; } }
+    section#quiz h2 { font: 900 clamp(28px,5vw,48px)/1.2 var(--font-display, var(--font-sans)); letter-spacing: var(--t-display-tracking); text-align: center; margin: 0 0 var(--s-8); color: var(--text-ink); }
+    .quiz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-6); }
+    @media (max-width: 720px) { .quiz-grid { grid-template-columns: 1fr; } }
+    .quiz-card { background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: var(--r-2xl); padding: var(--s-7); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: var(--s-4); transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out); }
+    .quiz-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-glow-amber); }
+    @media (prefers-reduced-motion: reduce) { .quiz-card { transition: none; } }
+    .quiz-card--popular { border-color: var(--orange); position: relative; }
+    .quiz-card .quiz-icon { width: 100%; aspect-ratio: 1; max-width: 220px; margin: 0 auto; border-radius: var(--r-xl); overflow: hidden; background: var(--bg-warm); }
+    .quiz-card .quiz-icon img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .quiz-card h3 { font: 700 20px/1.3 var(--font-display, var(--font-sans)); color: var(--text-ink); margin: 0; }
+    .quiz-card p { font: var(--t-body); color: var(--text-mute); margin: 0; flex: 1; }
+    .quiz-eyebrow { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: var(--orange-tint); border: 1px solid var(--orange-soft); border-radius: 999px; font: 700 11px/1 var(--font-sans); letter-spacing: 0.05em; text-transform: uppercase; color: var(--orange); margin-bottom: var(--s-2); width: fit-content; }
+
+    /* ── Builder (Iteration 2) ── */
+    section#builder { padding: var(--s-9) 0; }
+    @media (max-width: 720px) { section#builder { padding: var(--s-7) 0; } }
+    section#builder h2.bl-builder-heading { font: 900 clamp(28px,5vw,48px)/1.2 var(--font-display, var(--font-sans)); letter-spacing: var(--t-display-tracking); text-align: center; margin: 0 0 var(--s-7); color: var(--text-ink); }
+    /* Stepper */
+    .bl-stepper { display: flex; gap: var(--s-2); list-style: none; margin: 0 0 var(--s-7); padding: 0; flex-wrap: wrap; }
+    .bl-stepper-item { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: var(--r-pill); background: var(--bg-warm); border: 1px solid var(--border-soft); font: 600 13px/1 var(--font-sans); color: var(--text-mute); cursor: default; }
+    .bl-stepper-item .bl-step-num { width: 22px; height: 22px; border-radius: 999px; background: var(--bg-card); display: grid; place-items: center; font: 700 12px/1 var(--font-sans); flex-shrink: 0; }
+    .bl-stepper-item.active { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .bl-stepper-item.active .bl-step-num { background: rgba(255,255,255,0.25); }
+    .bl-stepper-item.done { background: var(--bg-warm); color: var(--orange-dark); border-color: var(--orange-soft); }
+    @media (max-width: 600px) { .bl-stepper-item span:not(.bl-step-num) { display: none; } .bl-stepper-item { padding: 8px 10px; } }
+    /* Step card */
+    .bl-builder-step { background: var(--bg-card); border-radius: var(--r-2xl); padding: var(--s-7); box-shadow: var(--shadow-card); border: 1px solid var(--border-soft); }
+    @media (max-width: 720px) { .bl-builder-step { padding: var(--s-5); } }
+    .bl-builder-step h3 { font: 700 clamp(20px,3vw,28px)/1.3 var(--font-display, var(--font-sans)); margin: 0 0 var(--s-2); }
+    .bl-builder-step p.bl-step-sub { color: var(--text-mute); margin: 0 0 var(--s-5); }
+    .bl-builder-step .bl-field { display: grid; gap: 8px; margin-bottom: var(--s-4); }
+    .bl-builder-step .bl-field label { font: 600 14px/1.2 var(--font-sans); color: var(--text-body); }
+    .bl-builder-step input[type="url"], .bl-builder-step input[type="text"], .bl-builder-step textarea, .bl-builder-step input[type="tel"] { width: 100%; padding: 14px 16px; font: var(--t-body); font-family: var(--font-sans); border-radius: var(--r-sm); border: 1px solid var(--orange-soft); background: var(--bg-card); }
+    .bl-builder-step input:focus, .bl-builder-step textarea:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-tint); }
+    /* Analyze row */
+    .bl-analyze-row { display: flex; gap: var(--s-3); flex-wrap: wrap; }
+    .bl-analyze-row input { flex: 1; min-width: 200px; }
+    /* Progress bar */
+    .bl-progress { height: 6px; background: var(--bg-warm); border-radius: 999px; overflow: hidden; margin-top: var(--s-3); }
+    .bl-progress-bar { display: block; height: 100%; background: var(--orange); width: 0%; transition: width 0.3s ease; }
+    /* Parsed card */
+    .bl-parsed-card { background: var(--bg-warm); border-radius: var(--r-xl); padding: var(--s-5); border: 1px solid var(--orange-soft); margin-top: var(--s-4); }
+    .bl-parsed-card .bl-parsed-title { font: 700 16px/1.3 var(--font-sans); margin: 0 0 var(--s-2); }
+    .bl-parsed-card .bl-parsed-excerpt { color: var(--text-mute); margin: 0; font: var(--t-small); }
+    /* Manual alt */
+    .bl-manual-alt { margin-top: var(--s-5); padding-top: var(--s-5); border-top: 1px dashed var(--border-soft); }
+    .bl-manual-alt p { font: var(--t-small); color: var(--text-mute); margin: 0 0 var(--s-3); }
+    /* Tone chips */
+    .bl-chips { display: flex; gap: var(--s-2); flex-wrap: wrap; }
+    .bl-chip { display: inline-flex; align-items: center; padding: 10px 16px; border-radius: var(--r-pill); border: 1px solid var(--orange-soft); cursor: pointer; font: 600 14px/1 var(--font-sans); transition: background 0.15s, color 0.15s; }
+    .bl-chip input { position: absolute; opacity: 0; pointer-events: none; }
+    .bl-chip:has(input:checked) { background: var(--orange); color: #fff; border-color: var(--orange); }
+    /* Color swatches */
+    .bl-color-swatches { display: flex; gap: var(--s-2); flex-wrap: wrap; }
+    .bl-swatch { width: 36px; height: 36px; border-radius: 999px; cursor: pointer; border: 3px solid transparent; transition: border-color 0.15s, transform 0.15s; }
+    .bl-swatch.selected, .bl-swatch:hover { border-color: var(--text-ink); transform: scale(1.15); }
+    .bl-swatch[data-color="orange"] { background: #E8602E; }
+    .bl-swatch[data-color="blue"] { background: #3B82F6; }
+    .bl-swatch[data-color="green"] { background: #22C55E; }
+    .bl-swatch[data-color="pink"] { background: #EC4899; }
+    .bl-swatch[data-color="dark"] { background: #1E1E2E; }
+    /* Step nav */
+    .bl-step-nav { display: flex; gap: var(--s-3); justify-content: space-between; margin-top: var(--s-6); }
+    @media (max-width: 480px) { .bl-step-nav { flex-direction: column-reverse; } .bl-step-nav button { width: 100%; } }
+    /* Expanded chat */
+    .bl-chat-box { width: 100%; max-width: 480px; background: var(--bg-warm); border-radius: var(--r-xl); border: 1px solid var(--border-soft); overflow: hidden; }
+    .bl-chat-head { padding: var(--s-3) var(--s-4); background: var(--bg-card); border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; gap: var(--s-3); }
+    .bl-chat-avatar { width: 36px; height: 36px; border-radius: 999px; background: var(--orange-tint); display: grid; place-items: center; font-size: 20px; }
+    .bl-chat-msgs { height: 260px; overflow-y: auto; padding: var(--s-4); display: grid; gap: var(--s-3); align-content: start; }
+    .bl-msg { max-width: 80%; padding: 10px 14px; border-radius: 16px; font: var(--t-body); white-space: pre-wrap; word-wrap: break-word; }
+    .bl-msg.bot { background: var(--bg-card); color: var(--text-ink); align-self: flex-start; border-bottom-left-radius: 4px; }
+    .bl-msg.user { background: var(--orange); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; margin-left: auto; }
+    .bl-chat-form { display: flex; gap: var(--s-2); padding: var(--s-3) var(--s-4); border-top: 1px solid var(--border-soft); }
+    .bl-chat-form input { flex: 1; padding: 10px 14px; border-radius: var(--r-sm); border: 1px solid var(--orange-soft); font: var(--t-body); }
+    .bl-chat-form input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px var(--orange-tint); }
+    .bl-chat-limit-badge { margin: var(--s-3) var(--s-4); padding: var(--s-2) var(--s-3); background: #FEF3C7; border: 1px solid #FCD34D; border-radius: var(--r-sm); font: var(--t-small); color: #92400E; text-align: center; }
+    .bl-chat-limit-badge a { color: #92400E; font-weight: 700; text-decoration: underline; cursor: pointer; }
+    /* Features (step 4) */
+    .bl-features-free { background: var(--bg-card); border: 2px solid var(--green, #22C55E); border-radius: var(--r-xl); padding: var(--s-5); margin-bottom: var(--s-5); display: flex; align-items: center; gap: var(--s-4); }
+    .bl-free-badge { display: inline-flex; padding: 4px 10px; background: var(--green, #22C55E); color: #fff; border-radius: 999px; font: 700 11px/1 var(--font-sans); letter-spacing: 0.05em; text-transform: uppercase; }
+    .bl-locked-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-4); }
+    @media (max-width: 720px) { .bl-locked-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .bl-locked-grid { grid-template-columns: 1fr; } }
+    .bl-locked-card { background: var(--bg-warm); border: 1px solid var(--border-soft); border-radius: var(--r-xl); padding: var(--s-5); cursor: pointer; position: relative; transition: border-color 0.2s, box-shadow 0.2s; }
+    .bl-locked-card:hover { border-color: var(--orange-soft); box-shadow: var(--shadow-card); }
+    .bl-locked-card .bl-lock-icon { font-size: 20px; margin-bottom: var(--s-2); display: block; }
+    .bl-locked-card h4 { font: 700 16px/1.3 var(--font-sans); margin: 0 0 var(--s-1); color: var(--text-ink); }
+    .bl-locked-card .bl-card-price { font: 700 14px/1 var(--font-sans); color: var(--text-mute); }
+    .bl-countdown-badge { display: inline-flex; gap: 6px; align-items: center; padding: 6px 12px; background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 999px; font: 700 12px/1 var(--font-sans); color: #92400E; margin-bottom: var(--s-4); }
+    /* Locked tooltip */
+    .bl-locked-tooltip { background: var(--bg-card); border: 1px solid var(--orange-soft); border-radius: var(--r-xl); padding: var(--s-5); margin-bottom: var(--s-4); box-shadow: var(--shadow-lift); }
+    .bl-locked-tooltip p { margin: 0 0 var(--s-3); color: var(--text-mute); font: var(--t-small); }
+    .bl-locked-tooltip-close { float: right; background: none; border: none; font-size: 18px; cursor: pointer; color: var(--text-mute); margin-top: -4px; }
+    /* Step 5 lead capture */
+    .bl-lead-form { display: grid; gap: var(--s-4); max-width: 480px; }
+    .bl-success-state { text-align: center; padding: var(--s-8) var(--s-5); }
+    .bl-success-state .bl-success-icon { font-size: 64px; margin-bottom: var(--s-4); }
+    .bl-success-state h3 { font: 700 clamp(20px,3vw,28px)/1.3 var(--font-display, var(--font-sans)); margin: 0 0 var(--s-3); }
+    .bl-success-state p { color: var(--text-mute); margin: 0 0 var(--s-5); }
+
+    /* ── Cases (Iteration 2) ── */
+    section#cases { background: var(--bg-warm); }
+    .bl-cases-tabs { display: flex; gap: var(--s-2); flex-wrap: wrap; margin-bottom: var(--s-6); list-style: none; padding: 0; }
+    .bl-cases-tab { padding: 10px 20px; border-radius: var(--r-pill); border: 1px solid var(--border-soft); background: var(--bg-card); font: 600 15px/1 var(--font-sans); color: var(--text-body); cursor: pointer; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+    .bl-cases-tab:hover { border-color: var(--orange-soft); background: var(--orange-tint); }
+    .bl-cases-tab.active, .bl-cases-tab[aria-selected="true"] { background: var(--orange); color: #fff; border-color: var(--orange); }
+    .bl-cases-panel { display: none; }
+    .bl-cases-panel.active, .bl-cases-panel:not([hidden]) { display: block; }
+    .bl-cases-card { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-8); align-items: center; background: var(--bg-card); border-radius: var(--r-2xl); padding: var(--s-7); box-shadow: var(--shadow-card); border: 1px solid var(--border-soft); }
+    @media (max-width: 720px) { .bl-cases-card { grid-template-columns: 1fr; } }
+    .bl-cases-img { width: 100%; height: auto; border-radius: var(--r-xl); display: block; }
+    .bl-cases-metrics { display: flex; flex-wrap: wrap; gap: var(--s-4); margin-bottom: var(--s-5); }
+    .bl-cases-metric { background: var(--orange-tint); border: 1px solid var(--orange-soft); border-radius: var(--r-lg); padding: var(--s-3) var(--s-4); font: var(--t-body); color: var(--text-ink); }
+    .bl-cases-metric strong { color: var(--orange); font-size: 1.1em; }
+    .bl-cases-quote { margin: 0; font: italic var(--t-lead); color: var(--text-mute); border-left: 3px solid var(--orange); padding-left: var(--s-4); }
+
+    /* ── Pricing (Iteration 2) ── */
+    section#pricing { background: var(--bg-cream); }
+    .bl-pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); margin-bottom: var(--s-9); }
+    @media (max-width: 900px) { .bl-pricing-grid { grid-template-columns: 1fr; } }
+    .bl-pricing-card { background: var(--bg-card); border-radius: var(--r-xl); padding: var(--s-7); border: 1px solid var(--border-soft); display: flex; flex-direction: column; position: relative; box-shadow: var(--shadow-card); }
+    .bl-pricing-card--featured { border: 2px solid var(--orange); background: linear-gradient(180deg, var(--bg-warm) 0%, var(--bg-card) 100%); box-shadow: var(--shadow-orange, 0 4px 24px rgba(249,115,22,0.25)); }
+    .bl-pricing-badge { display: inline-flex; padding: 4px 12px; background: var(--orange); color: #fff; border-radius: 999px; font: 700 11px/1 var(--font-sans); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: var(--s-3); width: fit-content; }
+    .bl-pricing-card h3 { font: var(--t-h3); margin: 0 0 var(--s-3); }
+    .bl-pricing-price { font: 900 36px/1.1 var(--font-sans); letter-spacing: -1px; margin: 0 0 var(--s-4); color: var(--text-ink); }
+    .bl-pricing-price span { font: 600 18px/1 var(--font-sans); color: var(--text-mute); letter-spacing: 0; }
+    .bl-pricing-features { list-style: none; padding: 0; margin: 0 0 var(--s-5); display: grid; gap: var(--s-2); flex: 1; }
+    .bl-pricing-features li::before { content: "✓ "; color: var(--orange); font-weight: 800; }
+    .bl-pricing-features li { font: var(--t-body); color: var(--text-body); }
+    .bl-pricing-cta { margin-top: auto; }
+    .bl-pricing-integrations { background: var(--bg-warm); border-radius: var(--r-2xl); padding: var(--s-7); border: 1px solid var(--border-soft); box-shadow: var(--shadow-card); }
+    .bl-pricing-integrations-title { font: var(--t-h2); margin: 0 0 var(--s-5); }
+    .bl-pricing-table { width: 100%; border-collapse: collapse; }
+    .bl-pricing-table th, .bl-pricing-table td { text-align: left; padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--border-soft); font: var(--t-body); }
+    .bl-pricing-table th { font: 700 14px/1 var(--font-sans); color: var(--text-mute); text-transform: uppercase; letter-spacing: 0.05em; }
+    .bl-pricing-table tr:last-child td { border-bottom: none; }
+    .bl-pricing-table td:last-child { font-weight: 700; color: var(--orange); }
+
+    /* ── Guarantees (Iteration 2) ── */
+    section#guarantees { background: var(--bg-warm); }
+    .bl-guarantees-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-9); align-items: center; }
+    @media (max-width: 900px) { .bl-guarantees-inner { grid-template-columns: 1fr; } .bl-guarantees-img-wrap { order: -1; } }
+    .bl-guarantees-list { list-style: none; padding: 0; margin: 0 0 var(--s-6); display: grid; gap: var(--s-4); }
+    .bl-guarantees-list li { font: var(--t-body); color: var(--text-body); padding-left: var(--s-6); position: relative; }
+    .bl-guarantees-list li::before { content: "✓"; position: absolute; left: 0; color: var(--orange); font-weight: 900; font-size: 18px; }
+    .bl-guarantees-img { max-width: 100%; height: auto; display: block; border-radius: var(--r-2xl); box-shadow: var(--shadow-glow-amber-lg, var(--shadow-lift)); }
+
+    /* ── FAQ (Iteration 2) ── */
+    section#faq { background: var(--bg-cream); }
+    .bl-faq-wrap { max-width: var(--container-prose, 720px); margin: 0 auto; }
+    .bl-faq-item { background: var(--bg-card); border-radius: var(--r-xl); border: 1px solid var(--border-soft); margin-bottom: var(--s-3); overflow: hidden; }
+    .bl-faq-summary { cursor: pointer; list-style: none; font: 700 18px/1.4 var(--font-sans); color: var(--text-ink); display: flex; justify-content: space-between; align-items: center; gap: var(--s-3); padding: var(--s-4) var(--s-5); }
+    .bl-faq-summary::-webkit-details-marker { display: none; }
+    .bl-faq-summary::after { content: "+"; font: 700 24px/1 var(--font-sans); color: var(--orange); transition: transform var(--dur, 0.2s) ease; flex-shrink: 0; }
+    .bl-faq-item[open] .bl-faq-summary::after { transform: rotate(45deg); }
+    .bl-faq-item:hover { border-color: var(--orange-soft); background: var(--bg-warm); }
+    .bl-faq-body { margin: 0; padding: 0 var(--s-5) var(--s-5); font: var(--t-body); color: var(--text-body); }
+
+    /* ── Footer (Iteration 2) ── */
+    .bl-footer { background: var(--bg-ink, #1a1a2e); color: var(--text-on-dark, rgba(255,255,255,0.7)); padding: var(--s-8) 0 104px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .bl-footer-inner { display: flex; flex-wrap: wrap; gap: var(--s-6); justify-content: space-between; align-items: flex-start; }
+    .bl-footer-logo { font: 800 20px/1 var(--font-sans); color: #fff; margin-bottom: var(--s-3); }
+    .bl-footer-legal { font: var(--t-caption, 12px/1.5 sans-serif); color: var(--text-on-dark, rgba(255,255,255,0.5)); margin: 0; }
+    .bl-footer-legal a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .bl-footer-legal a:hover { color: var(--orange); }
+    .bl-footer-nav { display: flex; flex-direction: column; gap: var(--s-2); }
+    .bl-footer-nav a { font: 600 14px/1 var(--font-sans); color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
+    .bl-footer-nav a:hover { color: var(--orange); }
+    .bl-footer-contacts { display: flex; flex-direction: column; gap: var(--s-2); }
+    .bl-footer-contacts a { font: 14px/1 var(--font-sans); color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
+    .bl-footer-contacts a:hover { color: var(--orange); }
+    .bl-footer-tg { color: #fff !important; font-weight: 700 !important; }
+    @media (max-width: 600px) { .bl-footer-inner { flex-direction: column; gap: var(--s-5); } }
+
+    /* ── Sticky Bottom CTA (Task 9) ── */
+    .bl-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; background: var(--orange); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 -4px 20px rgba(249,115,22,0.3); }
+    .bl-sticky-cta[hidden] { display: none; }
+    .bl-sticky-cta span { font: 600 15px/1.4 var(--font-sans); }
+    .bl-sticky-cta button { background: #fff; color: var(--orange); border: none; padding: 10px 20px; border-radius: 999px; font: 700 14px/1 var(--font-sans); cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+    .bl-sticky-cta button:hover { opacity: 0.9; }
+    @media (max-width: 480px) { .bl-sticky-cta { flex-direction: column; align-items: flex-start; padding: 10px 16px; } }
+
+    /* ── Exit-Intent Dialog (Task 9) ── */
+    #exit-intent-dialog { border: none; border-radius: 20px; padding: 0; max-width: 440px; width: calc(100% - 32px); box-shadow: 0 24px 64px rgba(0,0,0,0.18); }
+    #exit-intent-dialog::backdrop { background: rgba(0,0,0,0.45); }
+    .exit-intent-inner { padding: 32px 28px 28px; text-align: center; }
+    .exit-intent-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 22px; line-height: 1; cursor: pointer; color: #999; padding: 4px; }
+    .exit-intent-heading { font: 900 28px/1.2 var(--font-display, var(--font-sans)); color: var(--orange); margin: 0 0 12px; }
+    .exit-intent-body { font: 16px/1.5 var(--font-sans); color: var(--text-body, #444); margin: 0 0 24px; }
+    .exit-intent-cta { background: var(--orange); color: #fff; border: none; padding: 14px 28px; border-radius: 999px; font: 700 16px/1 var(--font-sans); cursor: pointer; width: 100%; }
+    .exit-intent-cta:hover { opacity: 0.9; }
+
+    /* Hero phone-mockup carousel */
+    .phone-frame { position: relative; width: 320px; height: 640px; margin: 0 auto; background: #1a1a1a; border-radius: 36px; padding: 12px; box-shadow: 0 24px 48px rgba(249,115,22,0.15), 0 8px 24px rgba(0,0,0,0.12); }
+    .phone-frame::before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 120px; height: 24px; background: #1a1a1a; border-radius: 0 0 16px 16px; z-index: 2; }
+    .phone-screen { position: relative; width: 100%; height: 100%; background: #FFFBF5; border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; }
+    .phone-header { padding: 36px 16px 12px; border-bottom: 1px solid var(--border-soft); display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .phone-avatar { width: 36px; height: 36px; border-radius: 999px; background: var(--orange); display: grid; place-items: center; font-size: 18px; }
+    .phone-name { font: 700 14px/1.2 var(--font-sans); color: var(--text-ink); }
+    .phone-status { font: 500 11px/1 var(--font-sans); color: #10b981; }
+    .chat-stack { position: relative; flex: 1; overflow: hidden; padding: 12px; }
+    .scenario { position: absolute; inset: 12px; opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; pointer-events: none; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+    .scenario.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .msg { max-width: 80%; padding: 8px 12px; border-radius: 14px; font: 400 13px/1.4 var(--font-sans); }
+    .msg.bot { align-self: flex-start; background: var(--bg-warm); color: var(--text-ink); border-bottom-left-radius: 4px; }
+    .msg.user { align-self: flex-end; background: var(--orange); color: #fff; border-bottom-right-radius: 4px; }
+    .msg.typing { background: var(--bg-warm); padding: 10px 14px; }
+    .msg.typing span { display: inline-block; width: 6px; height: 6px; border-radius: 999px; background: var(--text-mute); margin: 0 2px; animation: typing-bounce 1.2s infinite; }
+    .msg.typing span:nth-child(2) { animation-delay: 0.2s; }
+    .msg.typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: 0.4; } 30% { transform: translateY(-4px); opacity: 1; } }
+    .phone-input { padding: 10px 12px; border-top: 1px solid var(--border-soft); display: flex; gap: 8px; flex-shrink: 0; }
+    .phone-input input { flex: 1; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--border-soft); background: var(--bg-warm); font: 400 12px/1 var(--font-sans); }
+    .phone-input .phone-send { width: 32px; height: 32px; border-radius: 999px; background: var(--orange); color: #fff; border: none; font-size: 16px; }
+    .scenario-dots { display: flex; gap: 8px; justify-content: center; margin-top: 16px; }
+    .scenario-dots .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--border-soft); border: none; cursor: pointer; padding: 0; transition: background 0.2s, width 0.2s; }
+    .scenario-dots .dot.active { background: var(--orange); width: 24px; }
+    @media (max-width: 768px) {
+      .phone-frame { width: 280px; height: 560px; padding: 10px; }
+      .phone-frame::before { width: 100px; height: 20px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .scenario { transition: none; }
+      .msg.typing span { animation: none; opacity: 0.6; }
+      .scenario-dots .dot { transition: none; }
+    }
+
+    /* Problems staircase */
+    .problems-staircase { padding: var(--s-7) 0; }
+    .problems-head { text-align: center; max-width: 720px; margin: 0 auto var(--s-6); }
+    .problems-head h2 { font: 800 clamp(28px, 4vw, 44px)/1.15 var(--font-display, var(--font-sans)); color: var(--text-ink); margin: 12px 0; }
+    .problems-head .subtitle { font: 400 17px/1.5 var(--font-sans); color: var(--text-mute); margin: 0; }
+    .staircase { display: flex; flex-direction: column; gap: var(--s-5); }
+    .staircase-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-5); align-items: center; background: var(--bg-card); border-radius: var(--r-xl); padding: var(--s-5); box-shadow: var(--shadow-soft, 0 4px 20px rgba(0,0,0,0.06)); width: min(80%, 880px); }
+    .staircase-card.staircase-left { align-self: flex-start; }
+    .staircase-card.staircase-right { align-self: flex-end; }
+    .staircase-card + .staircase-card { margin-top: -32px; }
+    .staircase-img { aspect-ratio: 1; border-radius: var(--r-lg); overflow: hidden; background: var(--bg-warm); }
+    .staircase-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .staircase-card.staircase-right .staircase-img { order: 2; }
+    .staircase-text h3 { font: 700 22px/1.2 var(--font-sans); color: var(--text-ink); margin: 0 0 12px; }
+    .staircase-text p { font: 400 16px/1.55 var(--font-sans); color: var(--text-body, var(--text-ink)); margin: 0; }
+    .staircase-text mark { background: var(--orange-soft); color: var(--text-ink); padding: 0 4px; border-radius: 4px; }
+    .z-reveal-left, .z-reveal-right { opacity: 0; transform: translateX(-32px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .z-reveal-right { transform: translateX(32px); }
+    .z-reveal-left.is-visible, .z-reveal-right.is-visible { opacity: 1; transform: translateX(0); }
+    @media (max-width: 768px) {
+      .staircase-card { grid-template-columns: 1fr; width: 100%; padding: var(--s-4); }
+      .staircase-card + .staircase-card { margin-top: 0; }
+      .staircase-card.staircase-right .staircase-img { order: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .z-reveal-left, .z-reveal-right { opacity: 1; transform: none; transition: none; }
+    }
+
+    /* === BetaLine Chat Widget (from legacy) === */
+    #bl-chat-btn {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #F97316, #EA580C);
+        border: none;
+        cursor: pointer;
+        z-index: 99998;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 24px rgba(249,115,22,0.35);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #bl-chat-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 8px 32px rgba(249,115,22,0.5);
+    }
+    #bl-chat-btn svg { width: 28px; height: 28px; fill: #fff; }
+    #bl-chat-btn .bl-badge {
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 16px;
+        height: 16px;
+        background: #10b981;
+        border-radius: 50%;
+        border: 2px solid #fff;
+    }
+
+    #bl-chat-window {
+        display: none;
+        position: fixed;
+        bottom: 96px;
+        right: 24px;
+        width: 380px;
+        height: 520px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        z-index: 99999;
+        flex-direction: column;
+        overflow: hidden;
+        font-family: 'Inter', sans-serif;
+    }
+    #bl-chat-window.open { display: flex; }
+
+    #bl-chat-header {
+        background: linear-gradient(135deg, #F97316, #EA580C);
+        color: #fff;
+        padding: 16px 20px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-shrink: 0;
+    }
+    #bl-chat-header .bl-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: 800;
+    }
+    #bl-chat-header .bl-info { flex: 1; }
+    #bl-chat-header .bl-info h4 { margin: 0; font-size: 15px; font-weight: 700; }
+    #bl-chat-header .bl-info span { font-size: 12px; opacity: 0.8; }
+    #bl-chat-header .bl-close {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(255,255,255,0.2);
+        color: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    #bl-chat-header .bl-close:hover { background: rgba(255,255,255,0.3); }
+
+    #bl-chat-messages {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .bl-msg {
+        max-width: 85%;
+        padding: 12px 16px;
+        border-radius: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-wrap: anywhere;
+    }
+    .bl-msg.bot {
+        background: #f1f5f9;
+        color: #1e293b;
+        align-self: flex-start;
+        border-bottom-left-radius: 4px;
+    }
+    .bl-msg.user {
+        background: #F97316;
+        color: #fff;
+        align-self: flex-end;
+        border-bottom-right-radius: 4px;
+    }
+    .bl-msg.system {
+        background: #f0fdf4;
+        color: #166534;
+        align-self: center;
+        font-size: 13px;
+        text-align: center;
+        border-radius: 12px;
+    }
+    .bl-msg.bl-typing {
+        font-weight: 700;
+        letter-spacing: 2px;
+        color: #64748b;
+        animation: blTypingPulse 1.1s ease-in-out infinite;
+    }
+    @keyframes blTypingPulse {
+        0%, 100% { opacity: 0.45; }
+        50% { opacity: 1; }
+    }
+
+    .bl-quick-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 0 20px 12px;
+    }
+    .bl-quick-btn {
+        padding: 8px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 100px;
+        background: #fff;
+        color: #475569;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        transition: all 0.2s;
+    }
+    .bl-quick-btn:hover {
+        border-color: #F97316;
+        color: #F97316;
+    }
+
+    #bl-chat-input-wrap {
+        padding: 12px 16px;
+        border-top: 1px solid #f1f5f9;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        flex-shrink: 0;
+    }
+    #bl-chat-input {
+        flex: 1;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 24px;
+        padding: 10px 16px;
+        font-size: 14px;
+        outline: none;
+        font-family: 'Inter', sans-serif;
+    }
+    #bl-chat-input:focus { border-color: #F97316; }
+    #bl-chat-send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: #F97316;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    #bl-chat-send:hover { background: #EA580C; }
+    #bl-chat-send svg { width: 18px; height: 18px; fill: #fff; }
+
+    #bl-chat-footer {
+        text-align: center;
+        padding: 8px;
+        font-size: 11px;
+        color: #94a3b8;
+        border-top: 1px solid #f1f5f9;
+        flex-shrink: 0;
+    }
+    #bl-chat-footer a { color: #F97316; text-decoration: none; font-weight: 600; }
+
+    #bl-callback-form {
+        display: none;
+        padding: 0 20px 12px;
+    }
+    #bl-callback-form input {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 12px;
+        font-size: 13px;
+        margin-bottom: 8px;
+        outline: none;
+        font-family: 'Inter', sans-serif;
+        box-sizing: border-box;
+    }
+    #bl-callback-form input:focus { border-color: #F97316; }
+    #bl-callback-form button {
+        width: 100%;
+        padding: 10px;
+        background: #F97316;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+    }
+
+    @media (max-width: 480px) {
+        #bl-chat-window {
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 0;
+        }
+        #bl-chat-btn { bottom: 16px; right: 16px; width: 52px; height: 52px; }
+        #bl-chat-btn svg { width: 24px; height: 24px; }
+    }
+
+    /* z-index overrides — must sit above #sticky-cta (z=90) */
+    #bl-chat-btn { z-index: 99998; }
+    #bl-chat-window { z-index: 99999; }
+    /* smooth bottom-offset animation */
+    #bl-chat-btn { transition: transform 0.3s, box-shadow 0.3s, bottom 0.3s ease; }
+    #bl-chat-window { transition: bottom 0.3s ease; }
+    /* ── #sb-plan scroll-spy timeline (legacy port) ── */
+        /* JetBrains Mono loaded via <link> in <head> */
+
+        #sb-plan {
+            background: #FFFBF5;
+            padding: 100px 20px 100px;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        #sb-plan .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        #sb-plan .header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+
+        #sb-plan .badge {
+            display: inline-block;
+            background: #fff;
+            border: 1px solid #fed7aa;
+            color: #EA580C;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 8px 18px;
+            border-radius: 99px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.06);
+        }
+
+        #sb-plan .header h2 {
+            font-size: clamp(32px, 4.5vw, 52px);
+            font-weight: 900;
+            color: #1a1a1a;
+            margin: 0 0 12px;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+        }
+
+        #sb-plan .header p {
+            font-size: 20px;
+            line-height: 1.6;
+            color: #6b7280;
+            margin: 0 auto;
+            font-weight: 500;
+            max-width: 600px;
+        }
+
+        /* Main two-column layout */
+        #sb-plan .plan-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        /* Left: Steps with timeline */
+        #sb-plan .steps-col {
+            position: relative;
+            padding-left: 48px;
+        }
+
+        #sb-plan .timeline-track {
+            position: absolute;
+            left: 8px;
+            top: 12px;
+            width: 4px;
+            background: #e5e7eb;
+            border-radius: 2px;
+            height: 0;
+        }
+
+        #sb-plan .timeline-fill {
+            position: absolute;
+            left: 8px;
+            top: 12px;
+            width: 4px;
+            background: #F97316;
+            border-radius: 2px;
+            height: 0;
+            transition: height 0.5s ease-out;
+        }
+
+        /* Step block */
+        #sb-plan .step-block {
+            position: relative;
+            margin-bottom: 72px; /* Increased for better vertical rhythm */
+            opacity: 0.3;
+            transform: scale(0.9) translateX(-10px);
+            filter: blur(1px);
+            transition: all 0.7s cubic-bezier(0.2, 1, 0.3, 1);
+            transform-origin: left center;
+        }
+
+        #sb-plan .step-block.is-active {
+            opacity: 1;
+            transform: scale(1.1) translateX(15px);
+            filter: blur(0);
+        }
+
+        /* Step dot */
+        #sb-plan .step-dot {
+            position: absolute;
+            left: -48px;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            border: 4px solid #d1d5db;
+            transition: all 0.4s ease;
+            z-index: 2;
+            margin-left: 0;
+        }
+
+        #sb-plan .step-dot.is-active {
+            border-color: #F97316;
+            background: #F97316;
+            box-shadow: 0 0 12px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Step content */
+        #sb-plan .step-num {
+            color: #F97316;
+            font-size: 20px;
+            font-weight: 900;
+            font-family: 'JetBrains Mono', monospace;
+            letter-spacing: -1px;
+            margin-right: 12px;
+        }
+
+        #sb-plan .step-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin: 0 0 8px;
+            display: flex;
+            align-items: center;
+            line-height: 1.3;
+        }
+
+        #sb-plan .step-desc {
+            font-size: 15px;
+            color: #6b7280;
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* Right: Sticky asset panel */
+        #sb-plan .asset-col {
+            position: sticky;
+            top: 10vh;
+            height: fit-content;
+        }
+
+        #sb-plan .asset-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1/1;
+            border-radius: 32px;
+            overflow: hidden;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Individual assets */
+        #sb-plan .card-asset {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transform: scale(1.03);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        #sb-plan .card-asset.is-active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+            z-index: 20;
+        }
+
+        #sb-plan .card-asset img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Terminal block for step 6 */
+        #sb-plan .terminal-block {
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: 'JetBrains Mono', 'Fira Code', monospace;
+            padding: 32px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            font-size: 0.85rem;
+            box-sizing: border-box;
+        }
+
+        #sb-plan .terminal-header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        #sb-plan .terminal-circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        #sb-plan .tc-r {
+            background: #ef4444;
+        }
+
+        #sb-plan .tc-y {
+            background: #f59e0b;
+        }
+
+        #sb-plan .tc-g {
+            background: #10b981;
+        }
+
+        #sb-plan .code-line {
+            margin-bottom: 5px;
+        }
+
+        #sb-plan .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 18px;
+            background: #F97316;
+            border-radius: 1px;
+            animation: sb-blink 0.8s step-end infinite;
+            margin-top: 4px;
+        }
+
+        @keyframes sb-blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Scroll hint (desktop only) */
+        #sb-plan .scroll-hint {
+            text-align: center;
+            margin-top: 24px;
+            color: #9ca3af;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            animation: sb-bounce 2s infinite;
+        }
+
+        #sb-plan .scroll-hint svg {
+            width: 20px;
+            height: 20px;
+            stroke: #9ca3af;
+            fill: none;
+            stroke-width: 2;
+        }
+
+        @keyframes sb-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(6px);
+            }
+        }
+
+        /* Bottom spacer for scroll-spy to work */
+        #sb-plan .scroll-spacer {
+            height: 0;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width:960px) {
+            #sb-plan .plan-layout {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            /* On mobile: image shows once at top, no sticky */
+            #sb-plan .asset-col {
+                position: static;
+                order: -1;
+                margin-bottom: 32px;
+            }
+
+            #sb-plan .asset-frame {
+                aspect-ratio: 16/9;
+                border-radius: 20px;
+                max-width: 100%;
+                margin: 0 auto;
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.10);
+            }
+
+            #sb-plan .scroll-hint {
+                display: none;
+            }
+
+            #sb-plan .steps-col {
+                padding-left: 40px;
+            }
+
+            #sb-plan .step-dot {
+                left: -40px;
+            }
+
+            #sb-plan .step-block {
+                margin-bottom: 48px;
+                opacity: 0.35;
+                transform: scale(0.95);
+                filter: blur(0.5px);
+                transition: all 0.5s ease;
+                transform-origin: center center;
+            }
+
+            #sb-plan .step-block.is-active {
+                opacity: 1;
+                transform: scale(1.05);
+                filter: blur(0);
+            }
+
+            #sb-plan .scroll-spacer {
+                height: 0;
+            }
+        }
+
+        @media (max-width:600px) {
+            #sb-plan {
+                padding: 80px 16px 60px;
+            }
+
+            #sb-plan .header h2 {
+                font-size: 28px;
+            }
+
+            #sb-plan .step-title {
+                font-size: 18px;
+            }
+
+            #sb-plan .step-desc {
+                font-size: 14px;
+            }
+
+            #sb-plan .steps-col {
+                padding-left: 32px;
+            }
+
+            #sb-plan .step-dot {
+                left: -32px;
+                width: 16px;
+                height: 16px;
+                border-width: 3px;
+            }
+
+            #sb-plan .asset-frame {
+                border-radius: 20px;
+            }
+
+            #sb-plan .terminal-block {
+                padding: 20px;
+                font-size: 0.75rem;
+            }
+        }
+
+    /* ── Right-rail section nav (sb-sidebar-nav, ported from legacy) ── */
+    .sb-sidebar-nav { position: fixed; right: 32px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 16px; z-index: 9000; padding: 10px; }
+    @media (max-width: 960px) { .sb-sidebar-nav { display: none !important; } }
+    .sb-nav-dot { width: 10px; height: 10px; background: rgba(0,0,0,0.1); border-radius: 2px; transition: all 0.4s cubic-bezier(0.16,1,0.3,1); position: relative; cursor: pointer; text-decoration: none; border: 1px solid rgba(0,0,0,0.05); }
+    .sb-nav-dot:hover { transform: scale(1.4); background: rgba(0,0,0,0.2); }
+    .sb-nav-dot.active { background: var(--orange); width: 12px; height: 12px; border-radius: 3px; box-shadow: 0 0 15px rgba(249,115,22,0.4); border-color: rgba(249,115,22,0.2); }
+    .sb-nav-dot::after { content: attr(data-title); position: absolute; right: 28px; top: 50%; transform: translateY(-50%) translateX(12px); background: var(--orange); color: #fff; padding: 8px 14px; border-radius: 10px; font: 700 13px/1 var(--font-sans); opacity: 0; pointer-events: none; transition: all 0.3s cubic-bezier(0.16,1,0.3,1); white-space: nowrap; box-shadow: 0 8px 20px rgba(249,115,22,0.3); }
+    .sb-nav-dot:hover::after { opacity: 1; transform: translateY(-50%) translateX(0); }
+    @media (prefers-reduced-motion: reduce) { .sb-nav-dot, .sb-nav-dot::after { transition: none; } }
+  </style>
+</head>
+<body>
+  <!-- Right-rail section nav -->
+  <nav class="sb-sidebar-nav" aria-label="Навигация по разделам">
+    <a href="#bl-hero" class="sb-nav-dot active" data-title="Главная"></a>
+    <a href="#quiz" class="sb-nav-dot" data-title="Что вам нужно"></a>
+    <a href="#problems" class="sb-nav-dot" data-title="Проблемы"></a>
+    <a href="#solution" class="sb-nav-dot" data-title="Наше решение"></a>
+    <a href="#sb-plan" class="sb-nav-dot" data-title="Как это работает"></a>
+    <a href="#builder" class="sb-nav-dot" data-title="Конструктор"></a>
+    <a href="#cases" class="sb-nav-dot" data-title="Кейсы"></a>
+    <a href="#pricing" class="sb-nav-dot" data-title="Цены"></a>
+    <a href="#guarantees" class="sb-nav-dot" data-title="Гарантии"></a>
+    <a href="#faq" class="sb-nav-dot" data-title="Вопросы"></a>
+  </nav>
+
+  <!-- Navbar (Iteration 2): sticky glass bar, 64px, z-index 100 -->
+  <header class="sb-navbar">
+    <nav class="container nav-inner" aria-label="Основная навигация">
+      <a href="/" class="logo" aria-label="BetaLine AI — на главную">
+        <svg viewBox="0 0 56 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M2 10 H10 L13 4 L18 16 L23 7 L27 12 H54"/>
+        </svg>
+        BetaLine AI
+      </a>
+      <!-- Desktop nav links (hidden on mobile via CSS — CTAs remain visible) -->
+      <ul class="bl-nav-links" aria-label="Разделы">
+        <li><a href="#builder">Конструктор</a></li>
+        <li><a href="#pricing">Цены</a></li>
+        <li><a href="#cases">Кейсы</a></li>
+      </ul>
+      <div class="bl-nav-actions">
+        <a href="tel:88002001849" class="nav-phone" aria-label="Позвонить: 8 800 200-18-49">
+          <span class="nav-phone-num">8 800 200-18-49</span>
+          <span class="nav-phone-free">Звонок бесплатный</span>
+        </a>
+        <a href="https://max.ru/u/f9LHodD0cOLQLtSbV0V9IwDNBp6QjF1wQaNjsT31EBK9RPr4nC0Rh5zIBQU" target="_blank" rel="noopener noreferrer" class="nav-social max" title="MAX" aria-label="Связаться через MAX">
+          <svg class="max-icon-default" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#F97316"/><text x="16" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">M</text></svg>
+          <svg class="max-icon-hover" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="maxGrad" x1="0" y1="0" x2="32" y2="32"><stop offset="0" stop-color="#3b82f6"/><stop offset="1" stop-color="#1e40af"/></linearGradient></defs><circle cx="16" cy="16" r="15" fill="url(#maxGrad)"/><text x="16" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="900" font-size="14" fill="#fff">M</text></svg>
+        </a>
+        <a href="https://t.me/Andrei_Stanislavovich" target="_blank" rel="noopener noreferrer" class="nav-social nav-tg" title="Telegram" aria-label="Связаться в Telegram">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71L12.6 16.3l-1.99 1.93c-.23.23-.42.42-.83.42z"/></svg>
+        </a>
+        <a href="/cabinet/" class="btn-ghost">Войти</a>
+        <button class="btn-primary" data-open-callback type="button">Заказать звонок</button>
+        <button class="nav-callback-btn" data-open-callback type="button" aria-label="Заказать обратный звонок">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 15.5c-1.25 0-2.45-.2-3.57-.57-.35-.11-.74-.03-1.02.24l-2.2 2.2c-2.83-1.44-5.15-3.75-6.59-6.59l2.2-2.21c.28-.26.36-.65.25-1C8.7 6.45 8.5 5.25 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1z"/></svg>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+
+  <!-- Hero (Iteration 2): new design with stat cards -->
+  <section id="bl-hero">
+    <div class="container">
+      <div class="hero-content">
+        <div>
+          <div class="eyebrow">7 дней бесплатно · 100 сообщений</div>
+          <h1>Создай <span class="accent">ИИ-ассистента</span> для бизнеса за 5 минут</h1>
+          <p class="lead">Без кода. Бот обучается на твоём сайте.</p>
+          <div class="cta-row">
+            <a href="#builder" class="btn-primary">Создать бесплатно →</a>
+            <button class="btn-secondary" data-open-callback type="button">Заказать звонок</button>
+          </div>
+        </div>
+        <div class="phone-frame">
+          <div class="phone-screen" role="img" aria-label="Демонстрация работы ИИ-ассистента: запись, продажи, поддержка">
+            <div class="phone-header">
+              <div class="phone-avatar">🤖</div>
+              <div>
+                <div class="phone-name">Ваш ИИ-ассистент</div>
+                <div class="phone-status">в сети</div>
+              </div>
+            </div>
+            <div class="chat-stack" id="hero-chat-stack">
+              <div class="scenario active" data-scenario="booking" aria-label="Сценарий: запись">
+                <div class="msg bot">Здравствуйте! Чем могу помочь?</div>
+                <div class="msg user">Запись на завтра</div>
+                <div class="msg bot">Свободно в 10:00 и 14:30. Записать?</div>
+              </div>
+              <div class="scenario" data-scenario="sales" aria-label="Сценарий: продажи">
+                <div class="msg user">Сколько стоит?</div>
+                <div class="msg bot">От 990₽/мес. Подобрать тариф под ваш бизнес?</div>
+                <div class="msg user">Да</div>
+                <div class="msg bot">Оставьте телефон — перезвоним за 5 мин.</div>
+              </div>
+              <div class="scenario" data-scenario="support" aria-label="Сценарий: поддержка">
+                <div class="msg user">Заказ #4521 не пришёл</div>
+                <div class="msg bot">Проверяю… Нашёл — задержка курьера, доставка до 18:00.</div>
+                <div class="msg user">Спасибо!</div>
+              </div>
+            </div>
+            <div class="phone-input">
+              <input placeholder="Сообщение…" disabled aria-hidden="true" />
+              <button class="phone-send" disabled aria-hidden="true" tabindex="-1">→</button>
+            </div>
+          </div>
+          <div class="scenario-dots" role="group" aria-label="Выбор сценария">
+            <button class="dot active" data-target="booking" aria-label="Сценарий: запись"></button>
+            <button class="dot" data-target="sales" aria-label="Сценарий: продажи"></button>
+            <button class="dot" data-target="support" aria-label="Сценарий: поддержка"></button>
+          </div>
+        </div>
+      </div>
+      <div class="bl-stat-row">
+        <div class="bl-stat-card" data-stat-card>
+          <span class="stat-label">Ботов запущено</span>
+          <div class="stat-value">500+</div>
+        </div>
+        <div class="bl-stat-card" data-stat-card>
+          <span class="stat-label">Довольных клиентов</span>
+          <div class="stat-value">98%</div>
+        </div>
+        <div class="bl-stat-card" data-stat-card>
+          <span class="stat-label">До запуска</span>
+          <div class="stat-value">24ч</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legacy hero (sb-hero) kept for backward compatibility with other tests — hidden visually -->
+  <section id="sb-hero" style="display:none;" aria-hidden="true">
+    <div class="container">
+      <div class="eyebrow">// 7 ДНЕЙ БЕСПЛАТНО</div>
+      <h1>Бот, который продаёт <span class="accent">за тебя</span> — собери сам за 5 минут</h1>
+      <p class="lead">Введи адрес сайта — мы изучим твой бизнес и соберём ИИ-ассистента под твою тематику. Триал 100 сообщений / 7 дней. Без регистрации.</p>
+      <div class="cta-row">
+        <a href="/platform/" class="btn-primary">Создать бота бесплатно →</a>
+        <a href="#demo-section" class="btn-secondary">Посмотреть демо</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quiz Router (Iteration 2): 3-way routing section -->
+  <section id="quiz">
+    <div class="container">
+      <h2>Что вам нужно?</h2>
+      <div class="quiz-grid">
+
+        <!-- Card A — Simple site bot -->
+        <div class="quiz-card" data-quiz-card>
+          <div class="quiz-icon"><img src="images/quiz1-isometric.png" alt="Простой бот для сайта" loading="lazy" width="400" height="400"></div>
+          <div>
+            <h3>Простой бот для сайта</h3>
+          </div>
+          <p>Виджет на сайт. Отвечает по информации с твоего лендинга.</p>
+          <button
+            type="button"
+            class="btn-primary"
+            data-quiz-action="builder"
+            data-quiz-target="#builder"
+            aria-label="Создать простого бота бесплатно"
+          >Создать бесплатно</button>
+        </div>
+
+        <!-- Card B — Bot with integrations (popular) -->
+        <div class="quiz-card quiz-card--popular" data-quiz-card>
+          <div class="quiz-eyebrow">⭐ Популярно</div>
+          <div class="quiz-icon"><img src="images/quiz2-isometric.png" alt="Бот с интеграциями: Telegram, WhatsApp, CRM" loading="lazy" width="400" height="400"></div>
+          <div>
+            <h3>Бот с интеграциями</h3>
+          </div>
+          <p>Telegram, WhatsApp, CRM. Подключаем после регистрации.</p>
+          <button
+            type="button"
+            class="btn-primary"
+            data-quiz-action="cabinet-integrations"
+            aria-label="Перейти в кабинет — бот с интеграциями"
+          >В кабинет</button>
+        </div>
+
+        <!-- Card C — Custom dev -->
+        <div class="quiz-card" data-quiz-card>
+          <div class="quiz-icon"><img src="images/quiz3-isometric.png" alt="Кастомная разработка с менеджером" loading="lazy" width="400" height="400"></div>
+          <div>
+            <h3>Кастомная разработка</h3>
+          </div>
+          <p>Сложные сценарии, нестандартные интеграции. Менеджер свяжется.</p>
+          <button
+            type="button"
+            class="btn-primary"
+            data-quiz-action="callback"
+            data-open-callback
+            aria-label="Заказать звонок — кастомная разработка"
+          >Заказать звонок</button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Problems ── -->
+  <section id="problems" class="problems-staircase">
+    <div class="container">
+      <div class="problems-head">
+        <div class="eyebrow-section">⚠ ЗНАКОМЫЕ СИТУАЦИИ?</div>
+        <h2>Пока вы отвечаете вручную — клиенты уходят к конкурентам</h2>
+        <p class="subtitle">Четыре проблемы, которые убивают продажи в 90% бизнесов</p>
+      </div>
+      <div class="staircase">
+        <article class="staircase-card staircase-left z-reveal-left">
+          <div class="staircase-img">
+            <img src="images/zz1-isometric.png" alt="Долгое ожидание ответа: клиент с телефоном и истекающие песочные часы" data-isometric="zz1" loading="lazy" width="480" height="480">
+          </div>
+          <div class="staircase-text">
+            <h3>Долгое ожидание</h3>
+            <p>Клиенты уходят, потому что <mark>слишком долго ждут</mark> ответа. Каждая минута молчания — это деньги, подаренные конкурентам.</p>
+          </div>
+        </article>
+        <article class="staircase-card staircase-right z-reveal-right">
+          <div class="staircase-img">
+            <img src="images/zz2-isometric.png" alt="Менеджер тонет в повторяющихся вопросах" data-isometric="zz2" loading="lazy" width="480" height="480">
+          </div>
+          <div class="staircase-text">
+            <h3>Потеря времени</h3>
+            <p>Менеджеры тратят <mark>80% времени</mark> на повторяющиеся вопросы вместо закрытия тёплых сделок.</p>
+          </div>
+        </article>
+        <article class="staircase-card staircase-left z-reveal-left">
+          <div class="staircase-img">
+            <img src="images/zz3-isometric.png" alt="ИИ-конкурент опережает медленного человека" data-isometric="zz3" loading="lazy" width="480" height="480">
+          </div>
+          <div class="staircase-text">
+            <h3>Конкуренты с ИИ</h3>
+            <p>Они уже отвечают за 2 секунды 24/7. <mark>Вы — нет.</mark> Технологический разрыв растёт каждый день.</p>
+          </div>
+        </article>
+        <article class="staircase-card staircase-right z-reveal-right">
+          <div class="staircase-img">
+            <img src="images/zz4-isometric.png" alt="Уставший менеджер ночью пропускает заявку" data-isometric="zz4" loading="lazy" width="480" height="480">
+          </div>
+          <div class="staircase-text">
+            <h3>Лиды теряются ночью</h3>
+            <p>Заявка в 22:00, реакция в 9:00 — клиент уже у конкурента. <mark>Каждая упущенная заявка</mark> — минус выручка.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Solution ── -->
+  <section id="solution">
+    <div class="container">
+      <div class="solution-grid">
+        <div class="solution-text">
+          <span class="eyebrow">ОДНО РЕШЕНИЕ</span>
+          <h2>Один бот — все каналы</h2>
+          <p class="lead">Подключи один раз — отвечает 24/7 на сайте, в Telegram, WhatsApp, Avito. Учится на твоей информации, не выдумывает.</p>
+          <ul>
+            <li><span class="check">✓</span> Отвечает за 2 секунды</li>
+            <li><span class="check">✓</span> Не теряет лиды ночью и в выходные</li>
+            <li><span class="check">✓</span> Учится на твоём сайте — не несёт чушь</li>
+          </ul>
+          <a href="#builder" class="btn-primary">Создать бесплатно</a>
+        </div>
+        <div class="solution-img">
+          <img src="images/solution-isometric.png" alt="ИИ-ассистент в центре, связан с сайтом, Telegram, WhatsApp и Avito" loading="lazy" width="1024" height="1024">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── How-it-works (sb-plan scroll-spy timeline ported from legacy) ── -->
+    <div id="sb-plan">
+        <div class="container">
+            <div class="header sb-reveal">
+                <div class="badge">Как это работает</div>
+                <h2>Бот за 3 шага</h2>
+                <p>От ссылки на сайт до подключённого ассистента — за 5 минут. Без программистов и брифов.</p>
+            </div>
+
+            <div class="plan-layout">
+                <!-- Left: Steps with vertical timeline -->
+                <div class="steps-col" id="sb-steps-container">
+                    <div class="timeline-track" id="sb-timeline-track"></div>
+                    <div class="timeline-fill" id="sb-timeline-fill"></div>
+
+                    <div class="step-block" data-step="1">
+                        <div class="step-dot" id="sb-dot-1"></div>
+                        <h3 class="step-title"><span class="step-num">01</span> Укажи сайт</h3>
+                        <p class="step-desc">Вставь URL — за 30 секунд бот изучит контент, FAQ, цены и условия. Никаких ручных брифов.</p>
+                    </div>
+
+                    <div class="step-block" data-step="2">
+                        <div class="step-dot" id="sb-dot-2"></div>
+                        <h3 class="step-title"><span class="step-num">02</span> Настрой</h3>
+                        <p class="step-desc">Имя, тон общения, цвет виджета — пара кликов. Сразу видишь живое превью и можешь поговорить с ботом до публикации.</p>
+                    </div>
+
+                    <div class="step-block" data-step="3">
+                        <div class="step-dot" id="sb-dot-3"></div>
+                        <h3 class="step-title"><span class="step-num">03</span> Подключи</h3>
+                        <p class="step-desc">Скопируй сниппет на сайт или открой в Telegram по deep-link. Бот в работе 24/7 — без серверов и DevOps.</p>
+                    </div>
+
+                    <div class="scroll-spacer"></div>
+                </div>
+
+                <!-- Right: Sticky asset panel -->
+                <div class="asset-col" id="sb-asset-col">
+                    <div class="asset-frame">
+                        <div class="card-asset is-active" id="sb-asset-1"><img loading="lazy"
+                                src="images/step1-isometric.png" alt="Шаг 1: бот изучает сайт по URL" width="400" height="400">
+                        </div>
+                        <div class="card-asset" id="sb-asset-2"><img loading="lazy"
+                                src="images/step2-isometric.png" alt="Шаг 2: настройка имени, тона и цвета виджета" width="400" height="400"></div>
+                        <div class="card-asset" id="sb-asset-3"><img loading="lazy"
+                                src="images/step3-isometric.png" alt="Шаг 3: подключение через сниппет или Telegram" width="400" height="400"></div>
+                    </div>
+
+                    <div class="scroll-hint">
+                        <svg viewBox="0 0 24 24">
+                            <rect x="6" y="3" width="12" height="18" rx="6" ry="6"></rect>
+                            <line x1="12" y1="7" x2="12" y2="10"></line>
+                        </svg>
+                        Листайте вниз
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- ── Builder (Iteration 2) ── -->
+  <section id="builder" class="bl-builder">
+    <div class="container">
+      <h2 class="bl-builder-heading">Соберём твоего ИИ-ассистента</h2>
+      <!-- Stepper -->
+      <ol class="bl-stepper" aria-label="Шаги конструктора">
+        <li class="bl-stepper-item active" data-stepper-step="1"><span class="bl-step-num">1</span><span>Анализ</span></li>
+        <li class="bl-stepper-item" data-stepper-step="2"><span class="bl-step-num">2</span><span>Настройка</span></li>
+        <li class="bl-stepper-item" data-stepper-step="3"><span class="bl-step-num">3</span><span>Превью</span></li>
+        <li class="bl-stepper-item" data-stepper-step="4"><span class="bl-step-num">4</span><span>Возможности</span></li>
+        <li class="bl-stepper-item" data-stepper-step="5"><span class="bl-step-num">5</span><span>Получить</span></li>
+      </ol>
+
+      <!-- Step 1: Site analysis -->
+      <div class="bl-builder-step" data-step="1">
+        <h3>Анализ сайта <span style="font-size:13px;color:var(--green,#22C55E);font-weight:700;margin-left:8px;">FREE</span></h3>
+        <p class="bl-step-sub">Вставь URL сайта — за 30 секунд изучим контент. Или расскажи про бизнес сам.</p>
+        <div class="bl-field">
+          <label for="bl-site-url">Адрес сайта</label>
+          <div class="bl-analyze-row">
+            <input id="bl-site-url" type="url" placeholder="https://ваш-сайт.ru" autocomplete="url" inputmode="url">
+            <button id="bl-analyze-btn" type="button" class="btn-primary" aria-label="Анализировать сайт">Анализировать</button>
+          </div>
+          <div id="bl-analyze-progress" hidden>
+            <div class="bl-progress"><span id="bl-progress-bar" class="bl-progress-bar"></span></div>
+          </div>
+        </div>
+        <div id="bl-parsed-card" class="bl-parsed-card" hidden>
+          <p class="bl-parsed-title" id="bl-parsed-title"></p>
+          <p class="bl-parsed-excerpt" id="bl-parsed-excerpt"></p>
+        </div>
+        <div class="bl-manual-alt">
+          <p>Или расскажи про свой бизнес сам:</p>
+          <div class="bl-field">
+            <label for="bl-manual-desc">Описание бизнеса</label>
+            <textarea id="bl-manual-desc" rows="4" placeholder="Чем занимается компания, что продаёт, кто клиенты..."></textarea>
+          </div>
+        </div>
+        <div class="bl-step-nav">
+          <span></span>
+          <button id="bl-step1-next" type="button" class="btn-primary" disabled aria-label="Перейти к шагу 2">Далее →</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Bot settings -->
+      <div class="bl-builder-step" data-step="2" hidden>
+        <h3>Настройка бота <span style="font-size:13px;color:var(--green,#22C55E);font-weight:700;margin-left:8px;">FREE</span></h3>
+        <p class="bl-step-sub">Задай имя, тон и приветствие. Выбери цвет виджета.</p>
+        <div class="bl-field">
+          <label for="bl-bot-name">Имя бота</label>
+          <input id="bl-bot-name" type="text" placeholder="Алиса" value="Алиса">
+        </div>
+        <fieldset class="bl-field" style="border:none;padding:0;margin:0 0 var(--s-4);">
+          <legend style="font:600 14px/1.2 var(--font-sans);color:var(--text-body);margin-bottom:8px;">Тон общения</legend>
+          <div class="bl-chips">
+            <label class="bl-chip"><input type="radio" name="tone" value="friendly" checked> Дружелюбный</label>
+            <label class="bl-chip"><input type="radio" name="tone" value="professional"> Профессиональный</label>
+            <label class="bl-chip"><input type="radio" name="tone" value="neutral"> Нейтральный</label>
+          </div>
+        </fieldset>
+        <div class="bl-field">
+          <label for="bl-greeting">Приветственное сообщение</label>
+          <textarea id="bl-greeting" rows="3">Привет! Я ассистент компании. Чем могу помочь?</textarea>
+        </div>
+        <div class="bl-field">
+          <label>Цвет виджета</label>
+          <div class="bl-color-swatches">
+            <button type="button" class="bl-swatch selected" data-color="orange" aria-label="Оранжевый"></button>
+            <button type="button" class="bl-swatch" data-color="blue" aria-label="Синий"></button>
+            <button type="button" class="bl-swatch" data-color="green" aria-label="Зелёный"></button>
+            <button type="button" class="bl-swatch" data-color="pink" aria-label="Розовый"></button>
+            <button type="button" class="bl-swatch" data-color="dark" aria-label="Тёмный"></button>
+          </div>
+        </div>
+        <div class="bl-step-nav">
+          <button id="bl-step2-back" type="button" class="btn-secondary" aria-label="Назад к шагу 1">← Назад</button>
+          <button id="bl-step2-next" type="button" class="btn-primary" aria-label="Перейти к шагу 3">Далее →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Chat preview -->
+      <div class="bl-builder-step" data-step="3" hidden>
+        <h3>Превью чата <span style="font-size:13px;color:var(--green,#22C55E);font-weight:700;margin-left:8px;">FREE</span></h3>
+        <p class="bl-step-sub">Попробуй бота в деле. Задай 2 вопроса.</p>
+        <div class="bl-chat-box" id="bl-chat-box">
+            <div class="bl-chat-head">
+              <div class="bl-chat-avatar">🤖</div>
+              <div>
+                <div style="font:700 15px/1.2 var(--font-sans);" id="bl-chat-bot-name">Алиса</div>
+                <div style="font:var(--t-caption);color:var(--green-dark);">● онлайн</div>
+              </div>
+            </div>
+            <div id="bl-chat-msgs" class="bl-chat-msgs" aria-live="polite"></div>
+            <div id="bl-chat-limit" class="bl-chat-limit-badge" hidden>
+              Получи полную версию — <a href="#bl-step5" id="bl-limit-cta">войди в кабинет</a>
+            </div>
+            <form id="bl-chat-form" class="bl-chat-form">
+              <input id="bl-chat-input" type="text" placeholder="Напиши вопрос..." autocomplete="off">
+              <button type="submit" class="btn-primary" style="padding:10px 16px;" aria-label="Отправить">→</button>
+            </form>
+          </div>
+        <div class="bl-step-nav">
+          <button id="bl-step3-back" type="button" class="btn-secondary" aria-label="Назад к шагу 2">← Назад</button>
+          <button id="bl-step3-next" type="button" class="btn-primary" aria-label="Перейти к шагу 4">Далее →</button>
+        </div>
+      </div>
+
+      <!-- Step 4: Features showcase -->
+      <div class="bl-builder-step" data-step="4" hidden>
+        <h3>Возможности</h3>
+        <p class="bl-step-sub">Виджет на сайт — уже включён бесплатно. Дополнительные каналы подключаются после регистрации.</p>
+        <div class="bl-features-free">
+          <span style="font-size:28px;">🌐</span>
+          <div>
+            <span class="bl-free-badge">FREE</span>
+            <h4 style="margin:var(--s-1) 0 0;font:700 16px/1.3 var(--font-sans);">Бот на сайте (виджет)</h4>
+          </div>
+        </div>
+        <div id="bl-countdown-badge" class="bl-countdown-badge" data-countdown-badge>
+          🔥 Акция до <span id="bl-countdown-end"></span> — 5 000₽ вместо 10 000₽ — осталось <strong id="bl-countdown-timer">…</strong>
+        </div>
+        <div id="bl-locked-tooltip" class="bl-locked-tooltip" data-locked-tooltip hidden>
+          <button class="bl-locked-tooltip-close" id="bl-tooltip-close" aria-label="Закрыть">×</button>
+          <p id="bl-tooltip-text"></p>
+          <button type="button" class="btn-primary" id="bl-tooltip-cta" aria-label="Перейти к регистрации">Перейти к регистрации →</button>
+        </div>
+        <div class="bl-locked-grid">
+          <div class="bl-locked-card" data-locked="true" data-price="5000">
+            <span class="bl-lock-icon">🔒</span>
+            <h4>Telegram</h4>
+            <span class="bl-card-price">5 000₽</span>
+          </div>
+          <div class="bl-locked-card" data-locked="true" data-price="10000">
+            <span class="bl-lock-icon">🔒</span>
+            <h4>WhatsApp</h4>
+            <span class="bl-card-price">10 000₽</span>
+          </div>
+          <div class="bl-locked-card" data-locked="true" data-price="15000">
+            <span class="bl-lock-icon">🔒</span>
+            <h4>Avito</h4>
+            <span class="bl-card-price">15 000₽</span>
+          </div>
+          <div class="bl-locked-card" data-locked="true" data-price="10000">
+            <span class="bl-lock-icon">🔒</span>
+            <h4>ВКонтакте</h4>
+            <span class="bl-card-price">10 000₽</span>
+          </div>
+          <div class="bl-locked-card" data-locked="true" data-price="15000">
+            <span class="bl-lock-icon">🔒</span>
+            <h4>AmoCRM</h4>
+            <span class="bl-card-price">15 000₽</span>
+          </div>
+          <div class="bl-locked-card" data-locked="true" data-price="25000">
+            <span class="bl-lock-icon">🔒</span>
+            <h4>Bitrix24</h4>
+            <span class="bl-card-price">25 000₽</span>
+          </div>
+        </div>
+        <div class="bl-step-nav">
+          <button id="bl-step4-back" type="button" class="btn-secondary" aria-label="Назад к шагу 3">← Назад</button>
+          <button id="bl-step4-next" type="button" class="btn-primary" aria-label="Перейти к шагу 5">Далее →</button>
+        </div>
+      </div>
+
+      <!-- Step 5: Lead capture -->
+      <div id="bl-step5" class="bl-builder-step" data-step="5" hidden>
+        <h3>Получи доступ</h3>
+        <p class="bl-step-sub">Укажи Telegram или телефон — пришлём инструкцию и пароль для кабинета.</p>
+        <div id="bl-step5-form">
+          <div class="bl-lead-form">
+            <div class="bl-field">
+              <label for="bl-lead-input">Telegram или телефон</label>
+              <input id="bl-lead-input" type="tel" placeholder="@username или +7..." autocomplete="tel">
+            </div>
+            <button id="bl-lead-submit" type="button" class="btn-primary" aria-label="Создать бота бесплатно">Создать бесплатно →</button>
+          </div>
+        </div>
+        <div id="bl-step5-success" class="bl-success-state" data-builder-success hidden>
+          <div class="bl-success-icon">✅</div>
+          <h3>Бот создаётся!</h3>
+          <p>Проверь Telegram — отправили инструкцию и пароль для кабинета.</p>
+          <a href="/cabinet/" class="btn-primary" aria-label="Открыть кабинет">Открыть кабинет →</a>
+        </div>
+        <div class="bl-step-nav" id="bl-step5-nav">
+          <button id="bl-step5-back" type="button" class="btn-secondary" aria-label="Назад к шагу 4">← Назад</button>
+          <span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Cases (Iteration 2) ── -->
+  <section id="cases">
+    <div class="container">
+      <div class="eyebrow-section">КЕЙСЫ</div>
+      <h2>Боты, которые уже работают</h2>
+      <div role="tablist" class="bl-cases-tabs" aria-label="Отрасли">
+        <button role="tab" data-tab="retail"    aria-selected="true"  aria-controls="panel-retail"    class="bl-cases-tab active">Ритейл</button>
+        <button role="tab" data-tab="medicine"  aria-selected="false" aria-controls="panel-medicine"  class="bl-cases-tab">Медицина</button>
+        <button role="tab" data-tab="realty"    aria-selected="false" aria-controls="panel-realty"    class="bl-cases-tab">Недвижимость</button>
+        <button role="tab" data-tab="it"        aria-selected="false" aria-controls="panel-it"        class="bl-cases-tab">IT</button>
+      </div>
+      <div class="bl-cases-panels">
+        <div role="tabpanel" data-panel="retail" id="panel-retail" class="bl-cases-panel active">
+          <div class="bl-cases-card">
+            <img src="images/zz1.png" alt="Ритейл-бот" class="bl-cases-img">
+            <div class="bl-cases-info">
+              <div class="bl-cases-metrics">
+                <span class="bl-cases-metric"><strong>+34%</strong> конверсий в корзину</span>
+                <span class="bl-cases-metric"><strong>−60%</strong> нагрузки на поддержку</span>
+              </div>
+              <blockquote class="bl-cases-quote">«Бот отвечает 24/7 — клиенты больше не ждут менеджера.»</blockquote>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" data-panel="medicine" id="panel-medicine" class="bl-cases-panel" hidden>
+          <div class="bl-cases-card">
+            <img src="images/zz2.png" alt="Медицина-бот" class="bl-cases-img">
+            <div class="bl-cases-info">
+              <div class="bl-cases-metrics">
+                <span class="bl-cases-metric"><strong>+45%</strong> онлайн-записей</span>
+                <span class="bl-cases-metric"><strong>−40%</strong> звонков в регистратуру</span>
+              </div>
+              <blockquote class="bl-cases-quote">«Пациенты записываются в Telegram — администраторы разгружены.»</blockquote>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" data-panel="realty" id="panel-realty" class="bl-cases-panel" hidden>
+          <div class="bl-cases-card">
+            <img src="images/zz3.png" alt="Недвижимость-бот" class="bl-cases-img">
+            <div class="bl-cases-info">
+              <div class="bl-cases-metrics">
+                <span class="bl-cases-metric"><strong>+28%</strong> целевых заявок</span>
+                <span class="bl-cases-metric"><strong>2× быстрее</strong> квалификация</span>
+              </div>
+              <blockquote class="bl-cases-quote">«Бот фильтрует нецелевые запросы — агенты работают с готовыми клиентами.»</blockquote>
+            </div>
+          </div>
+        </div>
+        <div role="tabpanel" data-panel="it" id="panel-it" class="bl-cases-panel" hidden>
+          <div class="bl-cases-card">
+            <img src="images/zz4.png" alt="IT-бот" class="bl-cases-img">
+            <div class="bl-cases-info">
+              <div class="bl-cases-metrics">
+                <span class="bl-cases-metric"><strong>−70%</strong> тикетов в поддержку</span>
+                <span class="bl-cases-metric"><strong>+52%</strong> удовлетворённость</span>
+              </div>
+              <blockquote class="bl-cases-quote">«Первая линия поддержки автоматизирована — команда занимается реальными задачами.»</blockquote>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Pricing (Iteration 2) ── -->
+  <section id="pricing">
+    <div class="container">
+      <div class="eyebrow-section">ТАРИФЫ</div>
+      <h2>Простая модель: попробуй → оставайся</h2>
+
+      <!-- Block 1: Subscription cards -->
+      <div class="bl-pricing-grid">
+        <div class="bl-pricing-card">
+          <h3>Base</h3>
+          <div class="bl-pricing-price">1 990 ₽<span>/мес</span></div>
+          <ul class="bl-pricing-features">
+            <li>100 сообщений</li>
+            <li>7 дней пробный период</li>
+            <li>Базовый виджет</li>
+          </ul>
+          <a href="#builder" class="btn-primary bl-pricing-cta">Начать бесплатно</a>
+        </div>
+        <div class="bl-pricing-card bl-pricing-card--featured">
+          <div class="bl-pricing-badge">Популярный</div>
+          <h3>Pro</h3>
+          <div class="bl-pricing-price">3 990 ₽<span>/мес</span></div>
+          <ul class="bl-pricing-features">
+            <li>500 сообщений</li>
+            <li>30 дней</li>
+            <li>Виджет + Email-инструкция</li>
+            <li>Базовая поддержка</li>
+          </ul>
+          <a href="#builder" class="btn-primary bl-pricing-cta">Начать бесплатно</a>
+        </div>
+        <div class="bl-pricing-card">
+          <h3>Business</h3>
+          <div class="bl-pricing-price">7 990 ₽<span>/мес</span></div>
+          <ul class="bl-pricing-features">
+            <li>2 000 сообщений</li>
+            <li>Персональный менеджер</li>
+            <li>Полная настройка под бизнес</li>
+          </ul>
+          <a href="#builder" class="btn-primary bl-pricing-cta">Начать бесплатно</a>
+        </div>
+      </div>
+
+      <!-- Block 2: One-time integrations table -->
+      <div class="bl-pricing-integrations">
+        <h3 class="bl-pricing-integrations-title">Единоразовые интеграции</h3>
+        <table class="bl-pricing-table">
+          <thead>
+            <tr><th>Интеграция</th><th>Стоимость</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Telegram</td><td>5 000 ₽</td></tr>
+            <tr><td>WhatsApp</td><td>10 000 ₽</td></tr>
+            <tr><td>Avito</td><td>15 000 ₽</td></tr>
+            <tr><td>ВКонтакте</td><td>10 000 ₽</td></tr>
+            <tr><td>AmoCRM</td><td>15 000 ₽</td></tr>
+            <tr><td>Bitrix24</td><td>25 000 ₽</td></tr>
+          </tbody>
+        </table>
+        <a href="#builder" class="btn-primary" style="margin-top: var(--s-5); display: inline-flex;">Начать бесплатно</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Guarantees (Iteration 2) ── -->
+  <section id="guarantees">
+    <div class="container bl-guarantees-inner">
+      <div class="bl-guarantees-text">
+        <div class="eyebrow-section">ГАРАНТИИ</div>
+        <h2>Работает или вернём деньги</h2>
+        <ul class="bl-guarantees-list">
+          <li>Запуск бота за 24 часа или возвращаем оплату</li>
+          <li>30-дневная гарантия качества — не понравится, вернём деньги</li>
+          <li>Бесплатные правки в первые 14 дней после запуска</li>
+        </ul>
+        <a href="#builder" class="btn-primary">Попробовать бесплатно →</a>
+      </div>
+      <div class="bl-guarantees-img-wrap">
+        <img src="assets/guarantees_v5.png" alt="Гарантия BetaLine AI" class="bl-guarantees-img">
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FAQ (Iteration 2) ── -->
+  <section id="faq">
+    <div class="container bl-faq-wrap">
+      <div class="eyebrow-section">ЧАСТЫЕ ВОПРОСЫ</div>
+      <h2>Что часто спрашивают</h2>
+      <details class="bl-faq-item">
+        <summary class="bl-faq-summary">Бот будет отвечать глупости?</summary>
+        <p class="bl-faq-body">Бот опирается на содержимое твоего сайта и заданные правила. На триале можно его «прокачать» — и довести качество до боевого.</p>
+      </details>
+      <details class="bl-faq-item">
+        <summary class="bl-faq-summary">Сколько по времени собирается бот?</summary>
+        <p class="bl-faq-body">Демо — 60 секунд после ввода URL. Полноценный бот с инструкцией — до 24 часов.</p>
+      </details>
+      <details class="bl-faq-item">
+        <summary class="bl-faq-summary">Как установить бота на сайт?</summary>
+        <p class="bl-faq-body">Мы пришлём &lt;script&gt;-тег. Вставляешь его перед &lt;/body&gt; — виджет появится в правом нижнем углу.</p>
+      </details>
+      <details class="bl-faq-item">
+        <summary class="bl-faq-summary">Что входит в кастом?</summary>
+        <p class="bl-faq-body">Сценарии продаж, интеграции (AmoCRM, Bitrix24, Telegram), кастомный тон, доработка базы знаний, персональный менеджер.</p>
+      </details>
+      <details class="bl-faq-item">
+        <summary class="bl-faq-summary">Что если у меня нет сайта?</summary>
+        <p class="bl-faq-body">Заполнишь информацию вручную в конструкторе — бот соберётся по описанию.</p>
+      </details>
+      <details class="bl-faq-item">
+        <summary class="bl-faq-summary">Можно ли изменить бота после запуска?</summary>
+        <p class="bl-faq-body">Да, в любой момент. В кабинете можно изменить базу знаний, тон и приветствие. Технические правки — через поддержку.</p>
+      </details>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- ── Footer (Iteration 2) ── -->
+  <footer class="bl-footer">
+    <div class="container bl-footer-inner">
+      <div class="bl-footer-brand">
+        <div class="bl-footer-logo">BetaLine AI</div>
+        <p class="bl-footer-legal">© 2024–2026 Betaline AI. Все права защищены.<br>ИП Ромащенко Сергей Николаевич<br>ИНН 143302699808<br>ОГРНИП 316213000103371<br><a href="tel:88002001849">8 800 200-18-49</a><br><a href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a></p>
+      </div>
+      <nav class="bl-footer-nav" aria-label="Разделы сайта">
+        <a href="#builder">Конструктор</a>
+        <a href="#pricing">Тарифы</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="bl-footer-contacts">
+        <a href="https://t.me/Andrei_Stanislavovich" class="bl-footer-tg">Telegram оператора →</a>
+        <a href="/legal/policy.html">Политика конфиденциальности</a>
+        <a href="/legal/oferta.html">Оферта</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    const form = document.getElementById('urlCaptureForm');
+    const input = document.getElementById('urlCaptureInput');
+    const err = document.getElementById('urlCaptureError');
+    if (!form) return;
+
+    function normalize(raw) {
+      let v = (raw || '').trim();
+      if (!v) return '';
+      if (!/^https?:\/\//i.test(v)) v = 'https://' + v;
+      try { new URL(v); return v; } catch { return ''; }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      err.classList.remove('show');
+      const url = normalize(input.value);
+      if (!url) { err.classList.add('show'); return; }
+
+      try {
+        await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ source: 'url-capture', phone: url, name: '', niche: url }),
+        });
+      } catch (e) { /* non-blocking */ }
+
+      try { localStorage.setItem('betaline_captured_url', url); } catch {}
+      window.location.href = '/platform/?url=' + encodeURIComponent(url);
+    });
+  })();
+
+  (function () {
+    const form = document.getElementById('demoForm');
+    const input = document.getElementById('demoInput');
+    const list = document.getElementById('demoMessages');
+    const overlay = document.getElementById('demoLockOverlay');
+    const cta = document.getElementById('demoLockCta');
+    if (!form) return;
+
+    const visitorId = (crypto.randomUUID && crypto.randomUUID()) || ('v' + Date.now() + Math.random());
+    const history = [];
+    let userTurns = 0;
+    const MAX_TURNS = 2;
+
+    try {
+      const captured = localStorage.getItem('betaline_captured_url');
+      if (captured) cta.href = '/platform/?url=' + encodeURIComponent(captured);
+    } catch {}
+
+    function append(role, text) {
+      const el = document.createElement('div');
+      el.className = 'msg ' + role;
+      el.textContent = text;
+      list.appendChild(el);
+      list.scrollTop = list.scrollHeight;
+      return el;
+    }
+
+    async function send(message) {
+      append('user', message);
+      history.push({ role: 'user', content: message });
+      const botEl = append('bot', '...');
+      botEl.textContent = '';
+
+      let resp;
+      try {
+        resp = await fetch('/api/chat-ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ visitorId, message, history, page: '/landing/demo' }),
+        });
+      } catch {
+        botEl.textContent = 'Связь прервалась. Попробуй ещё раз.';
+        return;
+      }
+
+      if (!resp.ok || !resp.body) { botEl.textContent = 'Сервис недоступен.'; return; }
+
+      const reader = resp.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = '';
+      let full = '';
+
+      while (true) {
+        const { value, done } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const events = buf.split('\n\n');
+        buf = events.pop();
+        for (const ev of events) {
+          const dataLine = ev.split('\n').find(l => l.startsWith('data:'));
+          if (!dataLine) continue;
+          try {
+            const payload = JSON.parse(dataLine.slice(5).trim());
+            if (payload.text) { full += payload.text; botEl.textContent = full; list.scrollTop = list.scrollHeight; }
+            else if (payload.reply) { full = payload.reply; botEl.textContent = full; }
+          } catch {}
+        }
+      }
+      history.push({ role: 'assistant', content: full });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const v = input.value.trim();
+      if (!v || userTurns >= MAX_TURNS) return;
+      input.value = '';
+      userTurns += 1;
+      await send(v);
+      if (userTurns >= MAX_TURNS) {
+        overlay.classList.add('show');
+        input.disabled = true;
+        document.getElementById('demoSend').disabled = true;
+      }
+    });
+  })();
+
+  </script>
+
+  <!-- Social-proof toast (Iteration 2) — cycles every 4 sec, fixed bottom-left -->
+  <div class="bl-toast" role="status" aria-live="polite" aria-atomic="true">
+    Иван из Москвы создал бота 2 мин назад
+  </div>
+  <script>
+  (function () {
+    var messages = [
+      'Иван из Москвы создал бота 2 мин назад',
+      'Мария подключила Telegram-бота',
+      'ООО Ромашка: 147 лидов за месяц',
+      'Сергей из Казани запустил триал'
+    ];
+    var toast = document.querySelector('.bl-toast');
+    if (!toast) return;
+    var idx = 0;
+    var reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function rotate() {
+      idx = (idx + 1) % messages.length;
+      if (reducedMotion) {
+        toast.textContent = messages[idx];
+      } else {
+        toast.classList.add('fading');
+        setTimeout(function () {
+          toast.textContent = messages[idx];
+          toast.classList.remove('fading');
+        }, 420);
+      }
+    }
+
+    setInterval(rotate, 4000);
+  })();
+  </script>
+
+  <!-- ── Callback Popup Modal (Iteration 2) ── -->
+  <dialog id="callback-modal" aria-modal="true" aria-labelledby="cb-modal-title">
+    <div class="cb-modal-inner">
+      <button class="cb-modal-close" data-close-callback type="button" aria-label="Закрыть">&#215;</button>
+      <!-- Form area -->
+      <div data-form-area>
+        <h2 id="cb-modal-title" class="cb-modal-title">Закажите звонок</h2>
+        <p class="cb-modal-subtitle">Перезвоним в течение 1 часа в рабочее время</p>
+        <form novalidate>
+          <div class="cb-field">
+            <label for="cb-name">Ваше имя</label>
+            <input type="text" id="cb-name" name="name" placeholder="Иван" autocomplete="given-name">
+          </div>
+          <div class="cb-field">
+            <label for="cb-phone">Телефон <span aria-hidden="true">*</span></label>
+            <input type="tel" id="cb-phone" name="phone" placeholder="+7 (900) 123-45-67" inputmode="tel" required autocomplete="tel">
+          </div>
+          <p class="cb-error" data-error role="alert" aria-live="polite"></p>
+          <button type="submit" class="btn-primary" style="width:100%">Жду звонка</button>
+        </form>
+      </div>
+      <!-- Success area (hidden by default) -->
+      <div data-success-area hidden class="cb-success">
+        <span class="cb-success-icon" aria-hidden="true">✅</span>
+        <p class="cb-success-text">Спасибо! Перезвоним в течение 1 часа.</p>
+        <p class="cb-success-sub">Менеджер уже получил вашу заявку.</p>
+        <button type="button" class="btn-primary" data-close-success style="width:100%">Закрыть</button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Quiz Router JS (Iteration 2) -->
+  <script>
+  (function () {
+    document.querySelectorAll('#quiz [data-quiz-action]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        var action = btn.dataset.quizAction;
+        if (action === 'builder') {
+          e.preventDefault();
+          document.querySelector('#builder')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else if (action === 'cabinet-integrations') {
+          e.preventDefault();
+          window.location.href = '/cabinet/?flow=integrations';
+        }
+        // 'callback' action: do NOT preventDefault — the [data-open-callback] wiring (below) handles it.
+      });
+    });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    var modal = document.getElementById('callback-modal');
+    if (!modal) return;
+
+    // Open modal on any [data-open-callback] click
+    document.querySelectorAll('[data-open-callback]').forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        e.preventDefault();
+        // Reset to form state on each open
+        var formArea = modal.querySelector('[data-form-area]');
+        var successArea = modal.querySelector('[data-success-area]');
+        var errEl = modal.querySelector('[data-error]');
+        var form = modal.querySelector('form');
+        if (formArea) formArea.hidden = false;
+        if (successArea) successArea.hidden = true;
+        if (errEl) errEl.textContent = '';
+        if (form) form.reset();
+        modal.showModal();
+      });
+    });
+
+    // Close on × button
+    modal.querySelector('[data-close-callback]')?.addEventListener('click', function () {
+      modal.close();
+    });
+
+    // Close success "Закрыть"
+    modal.querySelector('[data-close-success]')?.addEventListener('click', function () {
+      modal.close();
+    });
+
+    // Close on backdrop click (click outside dialog box)
+    modal.addEventListener('click', function (e) {
+      var rect = modal.getBoundingClientRect();
+      var insideDialog = (
+        e.clientX >= rect.left && e.clientX <= rect.right &&
+        e.clientY >= rect.top  && e.clientY <= rect.bottom
+      );
+      if (!insideDialog) modal.close();
+    });
+
+    // Form submit → POST /api/callback
+    var form = modal.querySelector('form');
+    form && form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      var submitBtn = form.querySelector('button[type="submit"]');
+      var fd = new FormData(form);
+      var body = { name: (fd.get('name') || '').trim(), phone: (fd.get('phone') || '').trim() };
+      if (!body.phone) return; // HTML required attr handles this, but guard anyway
+      var errEl = modal.querySelector('[data-error]');
+      if (errEl) errEl.textContent = '';
+      if (submitBtn) submitBtn.disabled = true;
+      try {
+        var res = await fetch('/api/callback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        // Show success state
+        modal.querySelector('[data-form-area]').hidden = true;
+        modal.querySelector('[data-success-area]').hidden = false;
+      } catch (err) {
+        if (errEl) errEl.textContent = 'Не получилось отправить. Попробуйте ещё раз.';
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  })();
+  </script>
+
+  <!-- ── Builder JS (Iteration 2) ── -->
+  <script>
+  (function () {
+    // ── State ──────────────────────────────────────────────────────────────
+    var blState = { step: 1, siteData: {}, config: { botName: 'Алиса', tone: 'friendly', greeting: '', color: 'orange' }, questionCount: 0, maxQuestions: 2 };
+
+    // ── Stepper UI ─────────────────────────────────────────────────────────
+    function blGoToStep(n) {
+      blState.step = n;
+      document.querySelectorAll('.bl-builder-step').forEach(function (el) {
+        var s = parseInt(el.dataset.step, 10);
+        if (s === n) { el.removeAttribute('hidden'); }
+        else { el.setAttribute('hidden', ''); }
+      });
+      document.querySelectorAll('[data-stepper-step]').forEach(function (el) {
+        var s = parseInt(el.dataset.stepperStep, 10);
+        el.classList.remove('active', 'done');
+        if (s === n) el.classList.add('active');
+        else if (s < n) el.classList.add('done');
+      });
+      // Scroll into view on mobile
+      var section = document.getElementById('builder');
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Step 1: Analyze ────────────────────────────────────────────────────
+    var analyzeBtn = document.getElementById('bl-analyze-btn');
+    var siteUrlInput = document.getElementById('bl-site-url');
+    var progressWrap = document.getElementById('bl-analyze-progress');
+    var progressBar = document.getElementById('bl-progress-bar');
+    var parsedCard = document.getElementById('bl-parsed-card');
+    var parsedTitle = document.getElementById('bl-parsed-title');
+    var parsedExcerpt = document.getElementById('bl-parsed-excerpt');
+    var step1Next = document.getElementById('bl-step1-next');
+    var manualDesc = document.getElementById('bl-manual-desc');
+
+    function enableStep1Next() { if (step1Next) step1Next.removeAttribute('disabled'); }
+
+    if (manualDesc) {
+      manualDesc.addEventListener('input', function () {
+        if (manualDesc.value.trim().length > 0) {
+          blState.siteData = { title: 'Ручное описание', excerpt: manualDesc.value.trim() };
+          enableStep1Next();
+        }
+      });
+    }
+
+    if (analyzeBtn && siteUrlInput) {
+      analyzeBtn.addEventListener('click', async function () {
+        var url = siteUrlInput.value.trim();
+        if (!url) return;
+        if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+
+        // Animate progress
+        progressWrap && progressWrap.removeAttribute('hidden');
+        if (progressBar) {
+          progressBar.style.width = '0%';
+          requestAnimationFrame(function () { progressBar.style.width = '40%'; });
+        }
+        analyzeBtn.disabled = true;
+
+        try {
+          var resp = await fetch('/api/parse-site?url=' + encodeURIComponent(url));
+          var data = resp.ok ? await resp.json() : {};
+          blState.siteData = data;
+
+          if (progressBar) progressBar.style.width = '100%';
+          if (parsedTitle) parsedTitle.textContent = data.title || url;
+          if (parsedExcerpt) parsedExcerpt.textContent = data.excerpt || 'Сайт успешно проанализирован.';
+          if (parsedCard) parsedCard.removeAttribute('hidden');
+          enableStep1Next();
+        } catch (e) {
+          // Fallback — still allow continuing
+          blState.siteData = { title: url, excerpt: '' };
+          if (parsedTitle) parsedTitle.textContent = url;
+          if (parsedExcerpt) parsedExcerpt.textContent = 'Данные получены.';
+          if (parsedCard) parsedCard.removeAttribute('hidden');
+          enableStep1Next();
+        } finally {
+          analyzeBtn.disabled = false;
+          setTimeout(function () { progressWrap && progressWrap.setAttribute('hidden', ''); }, 600);
+        }
+      });
+    }
+
+    // Step 1 → 2
+    step1Next && step1Next.addEventListener('click', function () { blGoToStep(2); });
+
+    // ── Step 2: Config ─────────────────────────────────────────────────────
+    var step2Back = document.getElementById('bl-step2-back');
+    var step2Next = document.getElementById('bl-step2-next');
+    step2Back && step2Back.addEventListener('click', function () { blGoToStep(1); });
+    step2Next && step2Next.addEventListener('click', function () {
+      var nameEl = document.getElementById('bl-bot-name');
+      var greetEl = document.getElementById('bl-greeting');
+      var toneEl = document.querySelector('[name="tone"]:checked');
+      blState.config.botName = nameEl ? nameEl.value.trim() || 'Алиса' : 'Алиса';
+      blState.config.tone = toneEl ? toneEl.value : 'friendly';
+      blState.config.greeting = greetEl ? greetEl.value.trim() : '';
+      // Update chat bot name
+      var chatBotName = document.getElementById('bl-chat-bot-name');
+      if (chatBotName) chatBotName.textContent = blState.config.botName;
+      blGoToStep(3);
+    });
+
+    // Color swatches
+    document.querySelectorAll('[data-color]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-color]').forEach(function (b) { b.classList.remove('selected'); });
+        btn.classList.add('selected');
+        blState.config.color = btn.dataset.color;
+      });
+    });
+
+    // ── Step 3: Chat Preview ───────────────────────────────────────────────
+    var step3Back = document.getElementById('bl-step3-back');
+    var step3Next = document.getElementById('bl-step3-next');
+    step3Back && step3Back.addEventListener('click', function () { blGoToStep(2); });
+    step3Next && step3Next.addEventListener('click', function () { blGoToStep(4); });
+
+    var chatBox = document.getElementById('bl-chat-box');
+    var chatMsgs = document.getElementById('bl-chat-msgs');
+    var chatForm = document.getElementById('bl-chat-form');
+    var chatInput = document.getElementById('bl-chat-input');
+    var chatLimit = document.getElementById('bl-chat-limit');
+
+    if (chatForm && chatInput) {
+      chatForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        var msg = chatInput.value.trim();
+        if (!msg || blState.questionCount >= blState.maxQuestions) return;
+        chatInput.value = '';
+        blState.questionCount += 1;
+
+        // User message
+        var userEl = document.createElement('div');
+        userEl.className = 'bl-msg user';
+        userEl.textContent = msg;
+        chatMsgs && chatMsgs.appendChild(userEl);
+        chatMsgs && (chatMsgs.scrollTop = chatMsgs.scrollHeight);
+
+        // Bot typing indicator
+        var botEl = document.createElement('div');
+        botEl.className = 'bl-msg bot';
+        botEl.textContent = '…';
+        chatMsgs && chatMsgs.appendChild(botEl);
+        chatMsgs && (chatMsgs.scrollTop = chatMsgs.scrollHeight);
+
+        try {
+          var resp = await fetch('/api/chat-ai', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              message: msg,
+              context: { botName: blState.config.botName, tone: blState.config.tone, siteData: blState.siteData },
+              page: '/landing/builder'
+            })
+          });
+          if (resp.ok) {
+            var data = await resp.json();
+            botEl.textContent = (data && (data.reply || data.text)) || 'Понял, записал!';
+          } else {
+            botEl.textContent = 'Подключусь в полной версии.';
+          }
+        } catch {
+          botEl.textContent = 'Подключусь в полной версии.';
+        }
+        chatMsgs && (chatMsgs.scrollTop = chatMsgs.scrollHeight);
+
+        if (blState.questionCount >= blState.maxQuestions) {
+          if (chatInput) chatInput.disabled = true;
+          if (chatForm) chatForm.querySelector('button[type="submit"]') && (chatForm.querySelector('button[type="submit"]').disabled = true);
+          if (chatLimit) chatLimit.removeAttribute('hidden');
+        }
+      });
+    }
+
+    // ── Step 4: Features ───────────────────────────────────────────────────
+    var step4Back = document.getElementById('bl-step4-back');
+    var step4Next = document.getElementById('bl-step4-next');
+    step4Back && step4Back.addEventListener('click', function () { blGoToStep(3); });
+    step4Next && step4Next.addEventListener('click', function () { blGoToStep(5); });
+
+    // Countdown to end of month
+    var countdownEnd = document.getElementById('bl-countdown-end');
+    var countdownTimer = document.getElementById('bl-countdown-timer');
+    if (countdownEnd || countdownTimer) {
+      var now = new Date();
+      var endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1, 0, 0, 0, 0);
+      endOfMonth.setTime(endOfMonth.getTime() - 1000); // last second of month
+      var endDay = endOfMonth.getDate();
+      var monthNames = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+      if (countdownEnd) countdownEnd.textContent = endDay + ' ' + monthNames[endOfMonth.getMonth()];
+
+      function updateTimer() {
+        var diff = endOfMonth - new Date();
+        if (diff <= 0) { if (countdownTimer) countdownTimer.textContent = 'Акция завершена'; return; }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        if (countdownTimer) countdownTimer.textContent = (d > 0 ? d + ' дн ' : '') + String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+      }
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    // Locked card tooltip
+    var tooltip = document.getElementById('bl-locked-tooltip');
+    var tooltipText = document.getElementById('bl-tooltip-text');
+    var tooltipClose = document.getElementById('bl-tooltip-close');
+    var tooltipCta = document.getElementById('bl-tooltip-cta');
+
+    document.querySelectorAll('[data-locked="true"]').forEach(function (card) {
+      card.addEventListener('click', function () {
+        var name = card.querySelector('h4') ? card.querySelector('h4').textContent : '';
+        var price = card.dataset.price ? parseInt(card.dataset.price, 10).toLocaleString('ru-RU') + ' ₽' : '';
+        if (tooltipText) tooltipText.textContent = name + ' подключается после регистрации. Цена: ' + price;
+        if (tooltip) tooltip.removeAttribute('hidden');
+      });
+    });
+    tooltipClose && tooltipClose.addEventListener('click', function () { tooltip && tooltip.setAttribute('hidden', ''); });
+    tooltipCta && tooltipCta.addEventListener('click', function () {
+      tooltip && tooltip.setAttribute('hidden', '');
+      blGoToStep(5);
+    });
+
+    // ── Step 5: Lead capture ───────────────────────────────────────────────
+    var step5Back = document.getElementById('bl-step5-back');
+    step5Back && step5Back.addEventListener('click', function () { blGoToStep(4); });
+
+    var leadInput = document.getElementById('bl-lead-input');
+    var leadSubmit = document.getElementById('bl-lead-submit');
+    var step5Form = document.getElementById('bl-step5-form');
+    var step5Success = document.getElementById('bl-step5-success');
+    var step5Nav = document.getElementById('bl-step5-nav');
+
+    leadSubmit && leadSubmit.addEventListener('click', async function () {
+      var contact = leadInput ? leadInput.value.trim() : '';
+      if (!contact) return;
+      leadSubmit.disabled = true;
+
+      var phone = /^\+?[\d\s()-]{7,}/.test(contact) ? contact : '';
+      var tg = !phone ? contact : '';
+
+      try {
+        var resp = await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            source: 'platform',
+            phone: phone || contact,
+            name: tg || '',
+            niche: blState.siteData.title || '',
+            task: blState.config.botName,
+            platform: blState.config.tone,
+          })
+        });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        if (step5Form) step5Form.setAttribute('hidden', '');
+        if (step5Nav) step5Nav.setAttribute('hidden', '');
+        if (step5Success) step5Success.removeAttribute('hidden');
+      } catch {
+        leadSubmit.disabled = false;
+      }
+    });
+  })();
+  </script>
+
+  <!-- ── Cases tabs JS (Iteration 2) ── -->
+  <script>
+  (function () {
+    var tablist = document.querySelector('[role="tablist"]');
+    if (!tablist) return;
+    var tabs = Array.from(tablist.querySelectorAll('[role="tab"]'));
+    var panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+
+    function activate(tab) {
+      tabs.forEach(function (t) {
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+        t.classList.toggle('active', t === tab);
+      });
+      var targetPanel = tab.getAttribute('data-tab');
+      panels.forEach(function (p) {
+        if (p.getAttribute('data-panel') === targetPanel) {
+          p.removeAttribute('hidden');
+          p.classList.add('active');
+        } else {
+          p.setAttribute('hidden', '');
+          p.classList.remove('active');
+        }
+      });
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () { activate(tab); });
+    });
+  })();
+  </script>
+
+  <!-- ── Sticky Bottom CTA (Task 9) ── -->
+  <div id="sticky-cta" class="bl-sticky-cta" hidden aria-label="Призыв к действию">
+    <span>Создайте бесплатного ИИ-ассистента</span>
+    <button type="button">Начать бесплатно →</button>
+  </div>
+
+  <!-- ── Exit-Intent Popup (Task 9) ── -->
+  <dialog id="exit-intent-dialog" aria-modal="true" aria-labelledby="exit-intent-title">
+    <div class="exit-intent-inner" style="position:relative;">
+      <button type="button" class="exit-intent-close" data-close-exit aria-label="Закрыть">×</button>
+      <p class="exit-intent-heading" id="exit-intent-title">Подождите!</p>
+      <p class="exit-intent-body">Создайте бесплатного ИИ-ассистента прямо сейчас</p>
+      <button type="button" class="exit-intent-cta" data-exit-cta>Начать бесплатно →</button>
+    </div>
+  </dialog>
+
+  <script>
+  (function () {
+    /* ── Sticky CTA ── */
+    var stickyCta = document.getElementById('sticky-cta');
+    var hero = document.getElementById('bl-hero');
+
+    if (stickyCta && hero) {
+      var heroObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            stickyCta.setAttribute('hidden', '');
+          } else {
+            stickyCta.removeAttribute('hidden');
+          }
+        });
+      }, { threshold: 0 });
+      heroObs.observe(hero);
+
+      var ctaBtn = stickyCta.querySelector('button');
+      if (ctaBtn) {
+        ctaBtn.addEventListener('click', function () {
+          var builder = document.getElementById('builder');
+          if (builder) { builder.scrollIntoView({ behavior: 'smooth' }); }
+        });
+      }
+    }
+
+    /* ── Exit-Intent Popup ── */
+    var dialog = document.getElementById('exit-intent-dialog');
+    if (!dialog) return;
+
+    function closeDialog() { dialog.close(); }
+
+    // Close button
+    var closeBtn = dialog.querySelector('[data-close-exit]');
+    if (closeBtn) { closeBtn.addEventListener('click', closeDialog); }
+
+    // CTA button
+    var ctaDialogBtn = dialog.querySelector('[data-exit-cta]');
+    if (ctaDialogBtn) {
+      ctaDialogBtn.addEventListener('click', function () {
+        closeDialog();
+        var builder = document.getElementById('builder');
+        if (builder) { builder.scrollIntoView({ behavior: 'smooth' }); }
+      });
+    }
+
+    // Backdrop click
+    dialog.addEventListener('click', function (e) {
+      if (e.target === dialog) { closeDialog(); }
+    });
+
+    // Mouseleave exit-intent trigger
+    var exitShownKey = 'exitShown';
+    document.addEventListener('mouseleave', function handler(e) {
+      if (e.clientY >= 10) return;
+      if (sessionStorage.getItem(exitShownKey)) return;
+      sessionStorage.setItem(exitShownKey, '1');
+      dialog.showModal();
+    });
+  })();
+  </script>
+  <script>
+    // Hero phone-mockup carousel
+    (function () {
+      var stack = document.getElementById('hero-chat-stack');
+      if (!stack) return;
+      var scenarios = stack.querySelectorAll('.scenario');
+      var dots = document.querySelectorAll('.scenario-dots .dot');
+      var order = ['booking', 'sales', 'support'];
+      var idx = 0;
+      var timer = null;
+      var paused = false;
+      var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function show(target) {
+        scenarios.forEach(function (s) { s.classList.toggle('active', s.dataset.scenario === target); });
+        dots.forEach(function (d) { d.classList.toggle('active', d.dataset.target === target); });
+      }
+
+      function next() {
+        idx = (idx + 1) % order.length;
+        show(order[idx]);
+      }
+
+      function start() {
+        if (reduced || paused) return;
+        stop();
+        timer = setInterval(next, 6000);
+      }
+
+      function stop() {
+        if (timer) { clearInterval(timer); timer = null; }
+      }
+
+      dots.forEach(function (d) {
+        d.addEventListener('click', function () {
+          var target = d.dataset.target;
+          var i = order.indexOf(target);
+          if (i >= 0) { idx = i; show(target); stop(); paused = false; start(); }
+        });
+      });
+
+      var frame = stack.closest('.phone-frame');
+      if (frame && window.matchMedia('(hover: hover)').matches) {
+        frame.addEventListener('mouseenter', function () { paused = true; stop(); });
+        frame.addEventListener('mouseleave', function () { paused = false; start(); });
+      }
+
+      if (reduced) {
+        show('booking');
+      } else {
+        start();
+      }
+    })();
+  </script>
+  <script>
+    // Problems staircase reveal-on-scroll
+    (function () {
+      var els = document.querySelectorAll('.staircase .z-reveal-left, .staircase .z-reveal-right');
+      if (!els.length) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      els.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+  <!-- === BetaLine Chat Widget === -->
+  <button id="bl-chat-btn" onclick="toggleChat()">
+      <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+      <div class="bl-badge"></div>
+  </button>
+
+  <div id="bl-chat-window">
+      <div id="bl-chat-header">
+          <div class="bl-avatar">B</div>
+          <div class="bl-info">
+              <div style="font-size:16px;font-weight:700;margin:0;">BetaLine AI</div>
+              <span>Онлайн</span>
+          </div>
+          <button class="bl-close" onclick="toggleChat()">&times;</button>
+      </div>
+      <div id="bl-chat-messages"></div>
+      <div class="bl-quick-actions" id="bl-quick-actions">
+          <button class="bl-quick-btn" onclick="blQuick('Хочу узнать стоимость')">Узнать стоимость</button>
+          <button class="bl-quick-btn" onclick="blQuick('Как работает ваш бот?')">Как работает?</button>
+          <button class="bl-quick-btn" onclick="blShowCallback()">Обратный звонок</button>
+      </div>
+      <div id="bl-callback-form">
+          <input type="text" id="bl-cb-name" placeholder="Ваше имя">
+          <input type="tel" id="bl-cb-phone" placeholder="+7 (___) ___-__-__">
+          <button onclick="blSendCallback()">Заказать звонок</button>
+      </div>
+      <div id="bl-chat-input-wrap">
+          <input type="text" id="bl-widget-chat-input" placeholder="Напишите любой вопрос..." onkeydown="if(event.key==='Enter')blSend()">
+          <button id="bl-chat-send" onclick="blSend()">
+              <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
+      </div>
+      <div id="bl-chat-footer">Сделано в <a href="https://t.me/BetalineAI_bot" target="_blank" rel="noopener noreferrer">BetaLine AI</a></div>
+  </div>
+
+  <script>
+      (function() {
+          var chatState = {
+              open: false,
+              visitorId: localStorage.getItem('bl_visitor_id') || null,
+              topicId: localStorage.getItem('bl_topic_id') || null,
+              inited: false
+          };
+
+          if (!chatState.visitorId) {
+              chatState.visitorId = 'v' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+              localStorage.setItem('bl_visitor_id', chatState.visitorId);
+          }
+
+          window.toggleChat = function() {
+              chatState.open = !chatState.open;
+              var win = document.getElementById('bl-chat-window');
+              var btn = document.getElementById('bl-chat-btn');
+              if (chatState.open) {
+                  win.classList.add('open');
+                  btn.style.display = 'none';
+                  if (!chatState.inited) {
+                      chatState.inited = true;
+                      blAddMsg('bot', 'Привет! Я ассистент BetaLine AI. Чем могу помочь?');
+                      setTimeout(function() {
+                          blAddMsg('bot', 'Можете задать любой вопрос, или выберите действие ниже.');
+                      }, 800);
+                  }
+                  document.getElementById('bl-widget-chat-input').focus();
+              } else {
+                  win.classList.remove('open');
+                  btn.style.display = 'flex';
+              }
+          };
+
+          function stripMarkdown(s) {
+              if (typeof s !== 'string') return s;
+              return s
+                  .replace(/\*\*(.+?)\*\*/g, '$1')   // **bold**
+                  .replace(/__(.+?)__/g, '$1')       // __bold__
+                  .replace(/(^|[\s(])\*(?!\s)([^*\n]+?)\*(?=[\s).,!?;:]|$)/g, '$1$2') // *italic*
+                  .replace(/(^|[\s(])_(?!\s)([^_\n]+?)_(?=[\s).,!?;:]|$)/g, '$1$2')   // _italic_
+                  .replace(/`([^`]+?)`/g, '$1')      // `code`
+                  .replace(/^#{1,6}\s+/gm, '')       // # headings
+                  .replace(/^\s*[-*+]\s+/gm, '• ')   // list bullets → •
+                  .replace(/\n{3,}/g, '\n\n');        // collapse extra blanks
+          }
+
+          window.blAddMsg = function(type, text) {
+              var msgs = document.getElementById('bl-chat-messages');
+              var div = document.createElement('div');
+              div.className = 'bl-msg ' + type;
+              div.textContent = type === 'bot' ? stripMarkdown(text) : text;
+              msgs.appendChild(div);
+              msgs.scrollTop = msgs.scrollHeight;
+          };
+
+          // Collect UTM params once
+          var _utmParams = (function() {
+              var p = new URLSearchParams(location.search);
+              return {
+                  source: p.get('utm_source') || '',
+                  medium: p.get('utm_medium') || '',
+                  campaign: p.get('utm_campaign') || '',
+                  term: p.get('utm_term') || '',
+                  content: p.get('utm_content') || ''
+              };
+          })();
+
+          // Chat history for AI context
+          chatState.history = JSON.parse(localStorage.getItem('bl_chat_history') || '[]');
+
+          // Create a streaming bot bubble
+          function blOpenBotBubble() {
+              var msgs = document.getElementById('bl-chat-messages');
+              var div = document.createElement('div');
+              div.className = 'bl-msg bot';
+              div.textContent = '';
+              msgs.appendChild(div);
+              msgs.scrollTop = msgs.scrollHeight;
+              return div;
+          }
+
+          // Render a typing-dots placeholder bubble
+          function blTypingBubble() {
+              var msgs = document.getElementById('bl-chat-messages');
+              var div = document.createElement('div');
+              div.className = 'bl-msg bot bl-typing';
+              div.textContent = '•••';
+              msgs.appendChild(div);
+              msgs.scrollTop = msgs.scrollHeight;
+              return div;
+          }
+
+          window.blSend = function() {
+              var input = document.getElementById('bl-widget-chat-input');
+              var msg = input.value.trim();
+              if (!msg) return;
+              input.value = '';
+              blAddMsg('user', msg);
+
+              // Hide quick actions after first message
+              var qa = document.getElementById('bl-quick-actions');
+              if (qa) qa.style.display = 'none';
+              var cbf = document.getElementById('bl-callback-form');
+              if (cbf) cbf.style.display = 'none';
+
+              // Show typing indicator
+              var typing = blTypingBubble();
+
+              // Build payload with history
+              var payload = {
+                  visitorId: chatState.visitorId,
+                  topicId: chatState.topicId,
+                  message: msg,
+                  history: chatState.history.slice(-10),
+                  page: location.pathname + location.search
+              };
+              if (!chatState.topicId) {
+                  payload.utm = _utmParams;
+                  payload.referrer = document.referrer || '';
+                  payload.userAgent = navigator.userAgent || '';
+                  payload.screen = screen.width + 'x' + screen.height;
+                  payload.lang = navigator.language || '';
+              }
+
+              var msgsEl = document.getElementById('bl-chat-messages');
+
+              fetch('/api/chat-ai', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Accept': 'text/event-stream' },
+                  body: JSON.stringify(payload)
+              }).then(function(resp) {
+                  if (!resp.ok || !resp.body) {
+                      if (typing && typing.parentNode) typing.remove();
+                      blAddMsg('system', 'Ошибка. Попробуйте позже или напишите в Telegram.');
+                      return;
+                  }
+                  var reader = resp.body.getReader();
+                  var decoder = new TextDecoder('utf-8');
+                  var sseBuffer = '';
+                  var typingRemoved = false;
+                  var currentBubble = null;
+                  var bubbleBuffer = '';   // text already committed to visible bubble
+                  var pendingPart = '';    // text waiting between paragraph splits
+
+                  // Paragraph-split state machine:
+                  // Server streams tokens. When we see "\n\n" we finalize current bubble and start new one.
+                  // Single "\n" inside a paragraph stays as a soft line break.
+                  function feedChunk(text) {
+                      if (!text) return;
+                      if (!currentBubble) {
+                          if (!typingRemoved && typing && typing.parentNode) { typing.remove(); typingRemoved = true; }
+                          currentBubble = blOpenBotBubble();
+                          bubbleBuffer = '';
+                      }
+                      pendingPart += text;
+                      // Split off any complete paragraphs
+                      while (true) {
+                          var idx = pendingPart.indexOf('\n\n');
+                          if (idx === -1) break;
+                          var head = pendingPart.slice(0, idx);
+                          pendingPart = pendingPart.slice(idx + 2);
+                          bubbleBuffer += head;
+                          currentBubble.textContent = stripMarkdown(bubbleBuffer.trim());
+                          // start a new bubble after a small delay for "печатает по частям" feel
+                          currentBubble = null;
+                          bubbleBuffer = '';
+                          // the next feedChunk will create a new bubble via the `if (!currentBubble)` branch above.
+                          // But we still have text in pendingPart — start bubble immediately so it keeps streaming.
+                          if (pendingPart.length) {
+                              currentBubble = blOpenBotBubble();
+                          }
+                      }
+                      // Append remaining (non-finalized) text to current bubble for live display
+                      if (currentBubble) {
+                          bubbleBuffer += pendingPart;
+                          pendingPart = '';
+                          currentBubble.textContent = stripMarkdown(bubbleBuffer);
+                          msgsEl.scrollTop = msgsEl.scrollHeight;
+                      }
+                  }
+
+                  function finishStream(final) {
+                      if (typing && typing.parentNode) typing.remove();
+                      // Flush any leftover pendingPart
+                      if (pendingPart) {
+                          if (!currentBubble) currentBubble = blOpenBotBubble();
+                          bubbleBuffer += pendingPart;
+                          pendingPart = '';
+                          currentBubble.textContent = stripMarkdown(bubbleBuffer.trim());
+                      } else if (currentBubble) {
+                          currentBubble.textContent = stripMarkdown(bubbleBuffer.trim());
+                      }
+
+                      if (final) {
+                          if (final.topicId && !chatState.topicId) {
+                              chatState.topicId = final.topicId;
+                              localStorage.setItem('bl_topic_id', final.topicId);
+                          }
+                          if (final.reply) {
+                              chatState.history.push({ role: 'user', content: msg });
+                              chatState.history.push({ role: 'assistant', content: final.reply });
+                              localStorage.setItem('bl_chat_history', JSON.stringify(chatState.history.slice(-20)));
+                          }
+                          if (typeof ym !== 'undefined') ym(108480715, 'reachGoal', 'chat_message');
+                          if (final.contactDetected && typeof ym !== 'undefined') ym(108480715, 'reachGoal', 'chat_lead');
+                      }
+                      msgsEl.scrollTop = msgsEl.scrollHeight;
+                  }
+
+                  function handleSSEBlock(block) {
+                      var event = 'message', data = '';
+                      block.split('\n').forEach(function(line) {
+                          if (line.indexOf('event:') === 0) event = line.slice(6).trim();
+                          else if (line.indexOf('data:') === 0) data += (data ? '\n' : '') + line.slice(5).trim();
+                      });
+                      if (!data) return;
+                      var parsed;
+                      try { parsed = JSON.parse(data); } catch (e) { return; }
+                      if (event === 'chunk') {
+                          feedChunk(parsed.text || '');
+                      } else if (event === 'meta') {
+                          if (parsed.topicId && !chatState.topicId) {
+                              chatState.topicId = parsed.topicId;
+                              localStorage.setItem('bl_topic_id', parsed.topicId);
+                          }
+                      } else if (event === 'done') {
+                          finishStream(parsed);
+                      } else if (event === 'error') {
+                          if (typing && typing.parentNode) typing.remove();
+                          if (currentBubble && !bubbleBuffer) currentBubble.remove();
+                          blAddMsg('system', 'Ошибка. Попробуйте позже или напишите в Telegram.');
+                      }
+                  }
+
+                  function pump() {
+                      return reader.read().then(function(r) {
+                          if (r.done) {
+                              if (sseBuffer.trim()) handleSSEBlock(sseBuffer);
+                              return;
+                          }
+                          sseBuffer += decoder.decode(r.value, { stream: true });
+                          var idx;
+                          while ((idx = sseBuffer.indexOf('\n\n')) !== -1) {
+                              var block = sseBuffer.slice(0, idx);
+                              sseBuffer = sseBuffer.slice(idx + 2);
+                              handleSSEBlock(block);
+                          }
+                          return pump();
+                      });
+                  }
+                  return pump();
+              }).catch(function() {
+                  if (typing && typing.parentNode) typing.remove();
+                  blAddMsg('system', 'Не удалось отправить. Попробуйте позже или напишите в Telegram.');
+              });
+          };
+
+          window.blQuick = function(text) {
+              document.getElementById('bl-widget-chat-input').value = text;
+              blSend();
+          };
+
+          window.blShowCallback = function() {
+              var qa = document.getElementById('bl-quick-actions');
+              if (qa) qa.style.display = 'none';
+              document.getElementById('bl-callback-form').style.display = 'block';
+              blAddMsg('bot', 'Оставьте имя и номер — перезвоним за 24 секунды!');
+          };
+
+          window.blSendCallback = function() {
+              var name = document.getElementById('bl-cb-name').value.trim();
+              var phone = document.getElementById('bl-cb-phone').value.trim();
+              if (!phone || phone.length < 5) { alert('Введите номер телефона'); return; }
+
+              fetch('/api/lead', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ source: 'callback', name: name, phone: phone })
+              })
+              .then(function(r) {
+                  if (!r.ok) throw new Error('err');
+                  document.getElementById('bl-callback-form').style.display = 'none';
+                  blAddMsg('system', '✅ Заявка принята! Перезвоним в ближайшее время.');
+                  if (typeof ym !== 'undefined') ym(108480715, 'reachGoal', 'callback_chat');
+              })
+              .catch(function() {
+                  blAddMsg('system', 'Ошибка. Попробуйте позже.');
+              });
+          };
+
+          // Auto-open after 30 seconds on first visit
+          if (!sessionStorage.getItem('bl_chat_shown')) {
+              setTimeout(function() {
+                  if (!chatState.open) {
+                      var badge = document.querySelector('#bl-chat-btn .bl-badge');
+                      if (badge) badge.style.animation = 'bl-pulse 1.5s infinite';
+                  }
+              }, 30000);
+          }
+      })();
+  </script>
+
+  <script>
+    // Dynamic bottom-offset: lift chat widget above #sticky-cta when it appears
+    (function () {
+      var bar = document.getElementById('sticky-cta');
+      var btn = document.getElementById('bl-chat-btn');
+      var win = document.getElementById('bl-chat-window');
+      if (!bar || !btn || !win) return;
+
+      function applyOffset(active) {
+        var base = window.matchMedia('(max-width: 768px)').matches ? 16 : 24;
+        var offset = active ? (bar.offsetHeight + base) : base;
+        btn.style.bottom = offset + 'px';
+        win.style.bottom = (offset + (window.matchMedia('(max-width: 768px)').matches ? 64 : 72)) + 'px';
+      }
+
+      applyOffset(!bar.hasAttribute('hidden') && bar.offsetHeight > 0);
+
+      var mo = new MutationObserver(function () {
+        applyOffset(!bar.hasAttribute('hidden') && bar.offsetHeight > 0);
+      });
+      mo.observe(bar, { attributes: true, attributeFilter: ['hidden', 'style', 'class'] });
+
+      window.addEventListener('resize', function () {
+        applyOffset(!bar.hasAttribute('hidden') && bar.offsetHeight > 0);
+      });
+    })();
+  </script>
+  <script>
+        (function () {
+            const steps = Array.from(document.querySelectorAll('#sb-plan .step-block'));
+            const dots = document.querySelectorAll('#sb-plan .step-dot');
+            const assets = document.querySelectorAll('#sb-plan .card-asset');
+            const timelineFill = document.getElementById('sb-timeline-fill');
+            const timelineTrack = document.getElementById('sb-timeline-track');
+            const stepsContainer = document.getElementById('sb-steps-container');
+            const assetCol = document.getElementById('sb-asset-col');
+
+            // Terminal animation
+            let codeAnimated = false;
+            const codeContainer = document.getElementById('sb-code-container');
+            const codeLines = [
+                "<span style='color:#7dd3fc'>import</span> { AIAgent } <span style='color:#7dd3fc'>from</span> <span style='color:#a3e635'>'@betaline/core'</span>;",
+                "<span style='color:#7dd3fc'>import</span> { AMOCrm } <span style='color:#7dd3fc'>from</span> <span style='color:#a3e635'>'@integrations/amo'</span>;",
+                "",
+                "<span style='color:#64748b'>// Инициализация бизнес-нейросети</span>",
+                "<span style='color:#7dd3fc'>const</span> agent = <span style='color:#f472b6'>new</span> <span style='color:#fcd34d'>AIAgent</span>({",
+                "  model: <span style='color:#a3e635'>'gpt-4o'</span>,",
+                "  niche: <span style='color:#a3e635'>'client_business'</span>,",
+                "  memory: <span style='color:#a3e635'>'persistent'</span>",
+                "});",
+                "",
+                "<span style='color:#64748b'>// Запуск обработки клиентских заявок</span>",
+                "<span style='color:#fcd34d'>await</span> agent.<span style='color:#60a5fa'>connect</span>(<span style='color:#f472b6'>new</span> <span style='color:#fcd34d'>AMOCrm</span>(process.env.API_KEY));",
+                "<span style='color:#fcd34d'>await</span> agent.<span style='color:#60a5fa'>listenWebhooks</span>();",
+                "",
+                "<span style='color:#f97316'>▸ System Online. 100% SLA.</span>"
+            ];
+
+            async function typeCode() {
+                if (codeAnimated) return;
+                codeAnimated = true;
+                for (let i = 0; i < codeLines.length; i++) {
+                    if (codeLines[i] === "") { codeContainer.innerHTML += "<br>"; continue; }
+                    const p = document.createElement('div');
+                    p.className = 'code-line';
+                    p.innerHTML = codeLines[i];
+                    codeContainer.appendChild(p);
+                    await new Promise(r => setTimeout(r, codeLines[i].includes('System Online') ? 500 : 200));
+                }
+            }
+
+            // Check if mobile
+            function isMobile() { return window.innerWidth <= 960; }
+
+            function handleScroll() {
+                // Update track height to end at the last dot
+                const lastDot = dots[dots.length - 1];
+                if (lastDot && stepsContainer) {
+                    const containerTop = stepsContainer.getBoundingClientRect().top;
+                    const lastDotTop = lastDot.getBoundingClientRect().top;
+                    timelineTrack.style.height = (lastDotTop - containerTop) + 'px';
+                }
+
+                if (isMobile()) {
+                    // On mobile we still want to spy and change images.
+                    // We just adjust triggerY to be slightly lower since the image takes up the top half
+                    var mobileTriggerY = window.innerHeight * 0.7;
+                }
+                const triggerY = isMobile() ? window.innerHeight * 0.7 : window.innerHeight * 0.5;
+                let activeIdx = 0;
+                let minDist = Infinity;
+
+                steps.forEach((step, i) => {
+                    const rect = step.getBoundingClientRect();
+                    const stepCenter = rect.top + rect.height / 2;
+                    const dist = Math.abs(stepCenter - triggerY);
+
+                    if (dist < minDist) {
+                        minDist = dist;
+                        activeIdx = i;
+                    }
+                });
+
+                const activeNum = activeIdx + 1;
+
+                // Sticky behavior is handled by CSS position: sticky
+
+                // Update step classes
+                steps.forEach(el => el.classList.remove('is-active'));
+                steps[activeIdx].classList.add('is-active');
+
+                // Update assets
+                assets.forEach(a => a.classList.remove('is-active'));
+                const activeAsset = document.getElementById('sb-asset-' + activeNum);
+                if (activeAsset) activeAsset.classList.add('is-active');
+
+                // Update dots
+                dots.forEach((dot, i) => {
+                    if (i <= activeIdx) dot.classList.add('is-active');
+                    else dot.classList.remove('is-active');
+                });
+
+                // Timeline fill height
+                const activeDot = dots[activeIdx];
+                if (activeDot && stepsContainer) {
+                    const containerTop = stepsContainer.getBoundingClientRect().top;
+                    const dotTop = activeDot.getBoundingClientRect().top;
+                    timelineFill.style.height = (dotTop - containerTop) + 'px';
+                }
+
+                // Terminal animation on step 6
+                if (activeNum === 6) typeCode();
+
+                // Hide scroll hint when at step 5+
+                const hint = document.querySelector('#sb-plan .scroll-hint');
+                if (hint) hint.style.opacity = activeNum >= 5 ? '0' : '1';
+            }
+
+            let planRafPending = false;
+            function throttledHandleScroll() {
+                if (planRafPending) return;
+                planRafPending = true;
+                requestAnimationFrame(function () {
+                    planRafPending = false;
+                    handleScroll();
+                });
+            }
+            window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+            window.addEventListener('resize', throttledHandleScroll);
+            requestAnimationFrame(handleScroll);
+
+            // IntersectionObserver for header reveal
+            const obs = new IntersectionObserver(e => {
+                e.forEach(en => { if (en.isIntersecting) en.target.classList.add('visible'); });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+            document.querySelectorAll('#sb-plan .sb-reveal').forEach(el => obs.observe(el));
+        })();
+  </script>
+  <script>
+    /* Right-rail section nav scroll-spy + smooth scroll (legacy port) */
+    (function () {
+      const dots = document.querySelectorAll('.sb-nav-dot');
+      if (!dots.length) return;
+      const sections = Array.from(dots).map(d => document.querySelector(d.getAttribute('href'))).filter(Boolean);
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            const id = e.target.getAttribute('id');
+            dots.forEach(function (d) { d.classList.toggle('active', d.getAttribute('href') === '#' + id); });
+          }
+        });
+      }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+      sections.forEach(function (s) { io.observe(s); });
+      dots.forEach(function (d) {
+        d.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          const t = document.querySelector(d.getAttribute('href'));
+          if (t) window.scrollTo({ top: t.offsetTop - 64, behavior: 'smooth' });
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
