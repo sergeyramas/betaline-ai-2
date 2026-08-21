@@ -402,20 +402,34 @@
     .bl-faq-body { margin: 0; padding: 0 var(--s-5) var(--s-5); font: var(--t-body); color: var(--text-body); }
 
     /* ── Footer (Iteration 2) ── */
-    .bl-footer { background: var(--bg-ink, #1a1a2e); color: var(--text-on-dark, rgba(255,255,255,0.7)); padding: var(--s-8) 0 104px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .bl-footer { background: var(--bg-ink, #1a1a2e); color: var(--text-on-dark, rgba(255,255,255,0.7)); padding: var(--s-8) 0 96px; border-top: 1px solid rgba(255,255,255,0.06); }
     .bl-footer-inner { display: flex; flex-wrap: wrap; gap: var(--s-6); justify-content: space-between; align-items: flex-start; }
     .bl-footer-logo { font: 800 20px/1 var(--font-sans); color: #fff; margin-bottom: var(--s-3); }
-    .bl-footer-legal { font: var(--t-caption, 12px/1.5 sans-serif); color: var(--text-on-dark, rgba(255,255,255,0.5)); margin: 0; }
-    .bl-footer-legal a { color: inherit; text-decoration: none; transition: color 0.2s; }
-    .bl-footer-legal a:hover { color: var(--orange); }
+    .bl-footer-tagline { font: var(--t-small, 500 14px/1.5 sans-serif); color: rgba(255,255,255,0.5); margin: 0; max-width: 260px; }
+    .bl-footer-title { font: 700 13px/1 var(--font-sans); letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: var(--s-2); }
     .bl-footer-nav { display: flex; flex-direction: column; gap: var(--s-2); }
     .bl-footer-nav a { font: 600 14px/1 var(--font-sans); color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
     .bl-footer-nav a:hover { color: var(--orange); }
     .bl-footer-contacts { display: flex; flex-direction: column; gap: var(--s-2); }
     .bl-footer-contacts a { font: 14px/1 var(--font-sans); color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s; }
     .bl-footer-contacts a:hover { color: var(--orange); }
+    .bl-footer-phone { font: 800 20px/1.2 var(--font-sans) !important; color: #fff !important; letter-spacing: -0.5px; }
+    .bl-footer-hours { font: var(--t-caption, 12px/1.5 sans-serif); color: rgba(255,255,255,0.4); }
     .bl-footer-tg { color: #fff !important; font-weight: 700 !important; }
-    @media (max-width: 600px) { .bl-footer-inner { flex-direction: column; gap: var(--s-5); } }
+    .bl-footer-bottom { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-6); justify-content: space-between; align-items: flex-end; margin-top: var(--s-7); padding-top: var(--s-5); border-top: 1px solid rgba(255,255,255,0.08); }
+    /* справа висит плавающая кнопка чата — освобождаем под неё место, иначе она накрывает «Оферту» */
+    @media (min-width: 601px) { .bl-footer-bottom { padding-right: 96px; } }
+    .bl-footer-legal { font: var(--t-caption, 12px/1.5 sans-serif); color: rgba(255,255,255,0.5); margin: 0; }
+    .bl-footer-legal a { color: inherit; text-decoration: none; transition: color 0.2s; }
+    .bl-footer-legal a:hover { color: var(--orange); }
+    .bl-footer-links { display: flex; flex-wrap: wrap; gap: var(--s-5); }
+    .bl-footer-links a { font: var(--t-caption, 12px/1.5 sans-serif); color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+    .bl-footer-links a:hover { color: var(--orange); }
+    @media (max-width: 600px) {
+      .bl-footer { padding-bottom: 128px; }
+      .bl-footer-inner { flex-direction: column; gap: var(--s-5); }
+      .bl-footer-bottom { flex-direction: column; align-items: flex-start; gap: var(--s-3); }
+    }
 
     /* ── Sticky Bottom CTA (Task 9) ── */
     .bl-sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; z-index: 90; background: var(--orange); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; box-shadow: 0 -4px 20px rgba(249,115,22,0.3); }
@@ -1847,15 +1861,25 @@
     <div class="container bl-footer-inner">
       <div class="bl-footer-brand">
         <div class="bl-footer-logo">BetaLine AI</div>
-        <p class="bl-footer-legal">© 2024–2026 Betaline AI. Все права защищены.<br>ИП Ромащенко Сергей Николаевич<br>ИНН 143302699808<br>ОГРНИП 316213000103371<br><a href="tel:88002001849">8 800 200-18-49</a><br><a href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a></p>
+        <p class="bl-footer-tagline">Конструктор ИИ-ассистентов для бизнеса — без кода, за 5 минут.</p>
       </div>
       <nav class="bl-footer-nav" aria-label="Разделы сайта">
+        <div class="bl-footer-title">Меню</div>
         <a href="#builder">Конструктор</a>
         <a href="#pricing">Тарифы</a>
         <a href="#faq">FAQ</a>
       </nav>
       <div class="bl-footer-contacts">
+        <div class="bl-footer-title">Контакты</div>
+        <a href="tel:88002001849" class="bl-footer-phone">8 800 200-18-49</a>
+        <a href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a>
         <a href="https://t.me/Andrei_Stanislavovich" class="bl-footer-tg">Telegram оператора →</a>
+        <div class="bl-footer-hours">Ежедневно 10:00 — 17:00</div>
+      </div>
+    </div>
+    <div class="container bl-footer-bottom">
+      <p class="bl-footer-legal">© 2024–2026 Betaline AI. Все права защищены.<br>ИП Ромащенко Сергей Николаевич · ИНН 143302699808 · ОГРНИП 316213000103371</p>
+      <div class="bl-footer-links">
         <a href="/legal/policy.html">Политика конфиденциальности</a>
         <a href="/legal/oferta.html">Оферта</a>
       </div>
