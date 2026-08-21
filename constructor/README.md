@@ -82,6 +82,52 @@ cd constructor && python3 -m http.server 8899
 
 ## Деплой
 
+Проект на Vercel уже существует и связан — деплоить из этой папки.
+
+| Параметр | Значение |
+|---|---|
+| Vercel-проект | `betaline-saas-deploy` |
+| `VERCEL_PROJECT_ID` | `prj_c7AUARnK1yw8JEq8Xcb1hCKVRblv` |
+| `VERCEL_ORG_ID` (scope) | `team_IQe20O57hTH99URRYtc0FvFt` (`sergeyramas-projects`) |
+| Продакшн-домены | `betaline-saas-deploy.vercel.app`, `constructor.betaline-ai.ru` |
+
+ID проекта и команды — не секрет, их можно держать в репозитории. Секрет только токен.
+
 ```bash
-npx vercel --prod   # из этой папки, в проект betaline-saas-deploy
+cd constructor
+export VERCEL_TOKEN=...        # см. «Где лежит токен» ниже
+export VERCEL_ORG_ID=team_IQe20O57hTH99URRYtc0FvFt
+export VERCEL_PROJECT_ID=prj_c7AUARnK1yw8JEq8Xcb1hCKVRblv
+npx --yes vercel@latest deploy --prod --yes
 ```
+
+### Где лежит токен
+
+**Единственное место — секрет репозитория `VERCEL_TOKEN`:**
+GitHub → `sergeyramas/betaline-ai-2` → Settings → Secrets and variables → Actions.
+
+Оттуда его берёт готовый workflow `.github/workflows/deploy-vercel.yml`, который деплоит
+на каждый push в `master`. Ничего больше настраивать не нужно — агентам достаточно знать
+это имя и путь.
+
+**Токен не хранится в файлах репозитория и не должен туда попадать.** В git его коммитить
+нельзя: он остаётся в истории навсегда, даже если файл потом удалить.
+
+### Домен constructor.betaline-ai.ru
+
+Домен уже добавлен в проект `betaline-saas-deploy` и подтверждён (`verified: true`).
+Осталась одна DNS-запись в зоне `betaline-ai.ru` (NS у Beget, Vercel зоной не управляет —
+`serviceType: external`):
+
+```
+Тип A · Имя constructor · Значение 76.76.21.21
+```
+
+`76.76.21.21` выбран для единообразия — на него уже указывают `crm`, `zvonok` и апекс
+`betaline-ai.ru`. Vercel сейчас рекомендует также `216.198.79.1` / `64.29.17.1`, но старый
+адрес поддерживается и в этой зоне проверен.
+
+Грабли панели Beget (из `betaline-voice-ai/AGENT_ACTIVITY.md`, при заведении `zvonok`):
+поле **Name** в «Быстром добавлении» — Vuetify-combobox. `Escape` стирает введённое,
+нужно кликнуть пункт выпадашки, иначе форма уйдёт с пустым Name. Остальные записи зоны
+(`www`, `crm`, `autoconfig`, `autodiscover`, MX) не трогать.
