@@ -1,0 +1,36 @@
+{
+  "_comment": "Project-level Claude Code settings (agent-fleet template, adapted). Секреты сюда НЕ класть — только в Vercel env.",
+
+  "permissions": {
+    "allow": [
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git fetch:*)",
+      "Bash(git pull --rebase)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Bash(git branch:*)",
+      "Bash(git checkout:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(find:*)",
+      "Bash(node --check:*)",
+      "Bash(python3 -m http.server:*)",
+      "Bash(python3 mockups/design/shot.py:*)"
+    ],
+    "deny": [
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(rm -rf:*)",
+      "Bash(npx vercel remove:*)"
+    ]
+  },
+
+  "env": {
+    "_comment": "Боевые ключи (TELEGRAM_BOT_TOKEN, OPENAI_API_KEY, …) живут только в Vercel project env."
+  }
+}
