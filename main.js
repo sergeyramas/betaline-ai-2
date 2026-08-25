@@ -140,6 +140,14 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
         els.forEach(function (el) { obs.observe(el); });
+        /* Failsafe: контент не должен остаться невидимым, если IO не сработал
+           (печать, якорный прыжок, элементы внутри свёрнутых панелей, боты) */
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                els.forEach(function (el) { el.classList.add('visible'); });
+                obs.disconnect();
+            }, 5000);
+        });
     })();
 
     /* ─────────────────────────────────────────────
