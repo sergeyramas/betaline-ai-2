@@ -1,0 +1,17 @@
+Макеты нового сайта Betaline.
+
+Основной вариант — в нашем фирменном оранжевом стиле (структура и цены по образцу qwerty.digital):
+https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/screenshots/betaline-site-new-orange.jpg
+
+Три концепта, из которых выбирали направление:
+1) «Чертёж» — светлый, инженерный (лёг в основу):
+https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/screenshots/concept-A-chertezh.jpg
+2) «Сигнал» — тёмный, технологичный:
+https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/screenshots/concept-B-signal.jpg
+3) «Кабинет» — премиум, тёмно-синий с золотом:
+https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/screenshots/concept-C-kabinet.jpg
+
+Позиционирование: AI-интегратор полного цикла — ассистенты, агентные системы, обработка документов, аналитика.
+Цены: бесплатный вводный аудит, консалтинг от 150 000 ₽, пилоты от 600 000 ₽ до 1 000 000 ₽.
+
+Живые макеты (HTML, открываются офлайн) лежат в репо: sergeyramas/betaline-ai-2 → папка mockups/
