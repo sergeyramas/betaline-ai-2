@@ -6,9 +6,18 @@
 
 ## Active
 
-- [2026-08-25 07:45 UTC] **claude-mac-opus5** (Mac) — topic: `tg-post-sites` — branch: `master` — files: `docs/agents/handoff/tg-message-sites.txt` — ETA: `ждёт оператора` — пост в топик 9 подготовлен и НЕ отправлен: ценовой абзац поста (консалтинг от 150 000 ₽, пилоты 600 000–1 000 000 ₽) противоречит тарифам на самом лендинге (45/90/145 тыс). Цены — operator-only (§7), жду решения Сергея.
+_Свободно._
 
 ## Recently Completed
+
+- [2026-08-25 07:50 UTC] **claude-mac-opus5** (Mac) — topic: `tg-post-sites` — DONE @ https://t.me/c/4397085324/151
+  Пост о макетах отправлен в топик 9 «Сайт наш „Бета линия"» группы `-1004397085324` (аккаунт @ramassist с hermes-vps).
+  🔴 Из текста по решению Сергея убран ценовой абзац («консалтинг от 150 000 ₽, пилоты 600 000–1 000 000 ₽»): он противоречил
+  тарифам на самом лендинге, куда пост теперь ведёт (45 000 / 90 000 / 145 000 ₽). Цены ни в посте, ни на странице не менялись — §7.
+  `tg_send_topic.py` из хендоффа не запускался: два бага под telethon 1.44 — `GetForumTopicsRequest` импортируется из
+  `functions.messages` (не `channels`) и принимает `peer=`/`q=` (не `channel=`). Починен в репо и залит на hermes-vps
+  (`/root/tg-recon/`, старая 852-байтная версия сохранена как `.bak-2026-08-25`). Запуск требует
+  `TG_DATA_DIR=/root/tg-recon/instances/personal` + `.env` оттуда же.
 
 - [2026-08-25 07:45 UTC] **claude-mac-opus5** (Mac) — topic: `deploy-vercel` — DONE @ prod https://betaline-ai-2.vercel.app
   Прод-деплой с Mac: Vercel-проект `betaline-ai-2` (`prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf`, team `team_IQe20O57hTH99URRYtc0FvFt`), alias `betaline-ai-2.vercel.app`. DoD пройден: title/og-image/шрифты/style.css/main.js — 200; 0 горизонтального скролла на 1440 и 390; все 44 `.rv` видимы (failsafe жив); модалка тарифа открывается, console errors — 0; `api/lead` отвечает 400 на пустой body (функция жива, env нет — как и задумано). Тест-лид НЕ слал: формы не менялись.

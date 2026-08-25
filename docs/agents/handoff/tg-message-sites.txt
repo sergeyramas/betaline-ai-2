@@ -12,7 +12,6 @@ https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/scree
 https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/screenshots/concept-C-kabinet.jpg
 
 Позиционирование: AI-интегратор полного цикла — ассистенты, агентные системы, обработка документов, аналитика.
-Цены: бесплатный вводный аудит, консалтинг от 150 000 ₽, пилоты от 600 000 ₽ до 1 000 000 ₽.
 
 Живые макеты (HTML, открываются офлайн) лежат в репо: sergeyramas/betaline-ai-2 → папка mockups/
 
