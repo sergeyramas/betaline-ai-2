@@ -1,0 +1,283 @@
+/* ════════════════════════════════════════════════════════════
+   BETALINE AI — LANDING V3 — widgets.css
+   Чат-виджет (порт с боевого betaline-ai.ru) + вспомогательные
+   стили обвязки: якорный отступ под шапку, инлайн-подсказки форм,
+   скрытие popup-UI CallbackFire.
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Якоря: поправка на fixed-шапку 72px ─── */
+section[id], [id="top"] { scroll-margin-top: 84px; }
+
+/* ─── Инлайн-подсказка ошибки у полей (вместо alert) ─── */
+.field-hint {
+    display: none;
+    margin-top: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ef4444;
+    line-height: 1.4;
+}
+
+/* ─── Кнопка чата ─── */
+#bl-chat-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F97316, #EA580C);
+    border: none;
+    cursor: pointer;
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 24px rgba(249,115,22,0.35);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+#bl-chat-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 32px rgba(249,115,22,0.5);
+}
+#bl-chat-btn svg { width: 28px; height: 28px; fill: #fff; }
+#bl-chat-btn .bl-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    background: #10b981;
+    border-radius: 50%;
+    border: 2px solid #fff;
+}
+@keyframes bl-pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.7; }
+}
+
+/* ─── Окно чата ─── */
+#bl-chat-window {
+    display: none;
+    position: fixed;
+    bottom: 96px;
+    right: 24px;
+    width: 380px;
+    height: 520px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    z-index: 99999;
+    flex-direction: column;
+    overflow: hidden;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+#bl-chat-window.open { display: flex; }
+
+#bl-chat-header {
+    background: linear-gradient(135deg, #F97316, #EA580C);
+    color: #fff;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+#bl-chat-header .bl-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 800;
+}
+#bl-chat-header .bl-info { flex: 1; }
+#bl-chat-header .bl-info h4 { margin: 0; font-size: 15px; font-weight: 700; }
+#bl-chat-header .bl-info span { font-size: 12px; opacity: 0.8; }
+#bl-chat-header .bl-close {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    cursor: pointer;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#bl-chat-header .bl-close:hover { background: rgba(255,255,255,0.3); }
+
+/* ─── Сообщения ─── */
+#bl-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.bl-msg {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: 16px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.bl-msg.bot {
+    background: #f1f5f9;
+    color: #1e293b;
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+.bl-msg.user {
+    background: #F97316;
+    color: #fff;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+.bl-msg.system {
+    background: #f0fdf4;
+    color: #166534;
+    align-self: center;
+    font-size: 13px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+/* ─── Быстрые действия ─── */
+.bl-quick-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 0 20px 12px;
+}
+.bl-quick-btn {
+    padding: 8px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 100px;
+    background: #fff;
+    color: #475569;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', -apple-system, sans-serif;
+    transition: all 0.2s;
+}
+.bl-quick-btn:hover {
+    border-color: #F97316;
+    color: #F97316;
+}
+
+/* ─── Поле ввода ─── */
+#bl-chat-input-wrap {
+    padding: 12px 16px;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-shrink: 0;
+}
+#bl-chat-input {
+    flex: 1;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 24px;
+    padding: 10px 16px;
+    font-size: 14px;
+    outline: none;
+    font-family: 'Inter', -apple-system, sans-serif;
+    width: auto;
+    background: #fff;
+    color: #1e293b;
+    transition: border-color 0.2s;
+}
+#bl-chat-input:focus { border-color: #F97316; }
+#bl-chat-send {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    background: #F97316;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+#bl-chat-send:hover { background: #EA580C; }
+#bl-chat-send svg { width: 18px; height: 18px; fill: #fff; }
+
+/* ─── Футер виджета ─── */
+#bl-chat-footer {
+    text-align: center;
+    padding: 8px;
+    font-size: 11px;
+    color: #94a3b8;
+    border-top: 1px solid #f1f5f9;
+    flex-shrink: 0;
+}
+#bl-chat-footer a { color: #F97316; text-decoration: none; font-weight: 600; }
+
+/* ─── Callback-форма внутри чата ─── */
+#bl-callback-form {
+    display: none;
+    padding: 0 20px 12px;
+}
+#bl-callback-form input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 13px;
+    margin-bottom: 8px;
+    outline: none;
+    font-family: 'Inter', -apple-system, sans-serif;
+    box-sizing: border-box;
+    background: #fff;
+    color: #1e293b;
+}
+#bl-callback-form input:focus { border-color: #F97316; }
+#bl-callback-form input.err { border-color: #ef4444; }
+#bl-callback-form button {
+    width: 100%;
+    padding: 10px;
+    background: #F97316;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+#bl-callback-form .field-hint { margin: -4px 0 8px; }
+
+/* ─── Мобильная версия чата ─── */
+@media (max-width: 480px) {
+    #bl-chat-window {
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+    }
+    #bl-chat-btn { bottom: 16px; right: 16px; width: 52px; height: 52px; }
+    #bl-chat-btn svg { width: 24px; height: 24px; }
+}
+
+/* ─── CallbackFire: прячем popup-UI, оставляем триггер ─── */
+div[class*="wcb"], div[class*="cbk"],
+div[id*="wcb"], div[id*="cbk"],
+div[class*="callback-widget"] {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    position: fixed !important;
+    left: -9999px !important;
+    top: -9999px !important;
+    z-index: -1 !important;
+}
