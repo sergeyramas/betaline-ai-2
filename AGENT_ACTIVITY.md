@@ -6,6 +6,7 @@
 
 ## Active
 
+- [2026-08-25 06:40 UTC] **claude-mac-opus5** (Mac) — topic: `mac-handoff-1-3` — branch: `master` — files: `AGENT_ACTIVITY.md`, `CLAUDE.md`, `vercel.json`, `docs/agents/handoff/tg-message-sites.txt` + vault `Jarvis/wiki/` — ETA: `60` — выполняю MAC_TASK.md задачи 1–3: прод-деплой на Vercel + VERCEL_TOKEN в secrets, регистрация в vault, пост в тему «Сайты». Задача 4 (revoke токена) передана оператору.
 - [2026-08-25 06:40 UTC] **TODO для claude-mac** — topic: `wiki-registration` — зарегистрировать проект в vault: запись в `obsidian-ramos/index.md` → Projects + папка `projects/betaline-ai-2/index.md` (из облачной сессии vault недоступен)
 
 ## Recently Completed
