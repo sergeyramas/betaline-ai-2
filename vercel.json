@@ -1,6 +1,9 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "crons": [
+    { "path": "/api/close-stale", "schedule": "0 9 * * *" }
+  ],
   "headers": [
     {
       "source": "/assets/fonts/(.*)",
@@ -9,7 +12,7 @@
       ]
     },
     {
-      "source": "/assets/(.*)\\.(png|svg|jpg|webp)",
+      "source": "/assets/(.*)\\.(png|svg|jpg|webp|avif)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=604800" }
       ]

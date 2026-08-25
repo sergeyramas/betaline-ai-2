@@ -1,446 +1,71 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Betaline — AI-интегратор полного цикла</title>
-<meta name="description" content="Betaline — AI-интегратор полного цикла: проектируем и внедряем LLM-системы под ключ — ассистенты, агентные системы, обработка документов и предиктивная аналитика. Бесплатный вводный аудит.">
-<meta property="og:title" content="Betaline — AI-интегратор полного цикла">
-<meta property="og:description" content="Проектируем и внедряем LLM-системы под ключ: ассистенты, агентные системы, обработка документов и аналитика. Бесплатный вводный аудит.">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="ru_RU">
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link rel="stylesheet" href="assets/fonts/fonts.css">
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BetaLine AI — агенты внутри ваших бизнес-процессов</title>
+    <meta name="description" content="Не продаём шаблонных ботов — проектируем агентов внутри ваших процессов. Агент читает заявку, создаёт сделку в CRM и отвечает клиенту 24/7. Диагностика бесплатно.">
+    <link rel="canonical" href="https://betaline-ai.ru/">
+    <meta property="og:title" content="BetaLine AI — агенты внутри ваших бизнес-процессов">
+    <meta property="og:description" content="Агент читает заявку, создаёт сделку в CRM и отвечает клиенту 24/7. Разбор вашего процесса — бесплатно, 30 минут.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:url" content="https://betaline-ai.ru/">
+    <meta property="og:image" content="https://betaline-ai.ru/assets/img/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://betaline-ai.ru/assets/img/og-image.png">
+    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+    <link rel="preload" href="/assets/fonts/inter-700-cyr.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/assets/fonts/inter-900-cyr.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="/assets/fonts/fonts.css">
+    <link rel="stylesheet" href="/style.css">
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript">
+        (function(m,e,t,r,i,k,a){
+            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108480715', 'ym');
+        ym(108480715, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/108480715" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
 </head>
 <body>
 
-<!-- ================= НАВБАР ================= -->
 <header class="nav" id="nav">
-  <div class="nav-in">
-    <a class="logo" href="#top" aria-label="Betaline AI — на главную">
-      <i></i>Betaline&nbsp;<span class="ai">AI</span> <span>// интегратор</span>
-    </a>
-    <nav class="nav-links" aria-label="Основная навигация">
-      <a href="#services">Услуги</a>
-      <a href="#cases">Кейсы</a>
-      <a href="#why">Почему мы</a>
-      <a href="#process">Процесс</a>
-      <a href="#pricing">Цены</a>
-    </nav>
-    <a class="btn btn-solid btn-sm nav-cta" href="#contact">Записаться на аудит</a>
-    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+    <div class="nav-in">
+        <a class="nav-logo" href="#top">Betaline<span>AI</span></a>
+        <nav class="nav-links" aria-label="Основное меню">
+            <a href="#pains">Затыки</a>
+            <a href="#cases">Кейсы</a>
+            <a href="#process">Процесс</a>
+            <a href="#pricing">Цены</a>
+            <a href="#faq">FAQ</a>
+        </nav>
+        <a class="nav-phone" href="tel:88002001849">8 800 200-18-49</a>
+        <a class="btn btn-primary btn-sm nav-cta" href="#audit">Разбор процесса</a>
+        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
+    </div>
 </header>
-<nav class="m-menu" id="mmenu" aria-label="Мобильная навигация">
-  <a href="#services">Услуги</a>
-  <a href="#cases">Кейсы</a>
-  <a href="#why">Почему мы</a>
-  <a href="#process">Процесс</a>
-  <a href="#pricing">Цены</a>
-  <a href="#contact" class="acc">Записаться на аудит</a>
+<nav class="m-menu" id="mmenu" aria-label="Мобильное меню">
+    <a href="#pains">Затыки</a>
+    <a href="#cases">Кейсы</a>
+    <a href="#process">Процесс</a>
+    <a href="#pricing">Цены</a>
+    <a href="#faq">FAQ</a>
+    <a href="#audit" class="btn btn-primary" style="margin-top:12px">Разбор процесса</a>
 </nav>
 
 <main id="top">
-
-  <!-- ================= HERO ================= -->
-  <section class="hero" aria-label="Главный экран">
-    <div class="wrap">
-      <div class="hero-top ld">
-        <p class="sec-mark"><b>00</b> / Betaline AI</p>
-        <p class="coord">LLM-СИСТЕМЫ ПОД КЛЮЧ · РФ</p>
-      </div>
-      <h1 class="ld ld1">AI-интегратор <span class="acc">полного цикла</span> для среднего и&nbsp;крупного бизнеса</h1>
-      <p class="hero-sub ld ld2">Проектируем и внедряем LLM-системы: ассистенты, агентные системы,
-        обработка документов и аналитика — весь цикл внутри одной команды.</p>
-      <div class="hero-cta ld ld3">
-        <a class="btn btn-solid" href="#contact">Записаться на аудит <span class="arr">→</span></a>
-        <a class="btn btn-ghost" href="#pricing">Смотреть решения <span class="arr">↓</span></a>
-      </div>
-      <figure class="hero-fig ld ld4">
-        <img src="assets/hero-diagram.png" alt="Чертёж: топология агентной системы — изолинии поля плотности задач, сеть узлов и траектории данных" width="1800" height="1200">
-        <figcaption class="fig-cap">
-          <span><b>рис. 01</b> — топология агентной системы</span>
-          <span>изолинии · узлы · траектории данных</span>
-        </figcaption>
-      </figure>
-    </div>
-    <div class="wrap hero-stats-wrap">
-      <div class="stats ld ld5" role="list" aria-label="Ключевые цифры">
-        <div class="stat" role="listitem"><div class="num">15<sup>+</sup></div><div class="lbl">инженеров в&nbsp;команде</div></div>
-        <div class="stat" role="listitem"><div class="num">4</div><div class="lbl">года в&nbsp;ML&nbsp;/&nbsp;LLM</div></div>
-        <div class="stat" role="listitem"><div class="num">40<sup>+</sup></div><div class="lbl">внедрений</div></div>
-        <div class="stat" role="listitem"><div class="num">5</div><div class="lbl">направлений работы</div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= УСЛУГИ ================= -->
-  <section class="sec" id="services">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>01</b> / Услуги</p>
-      <h2 class="rv">Пять направлений — одна инженерная команда</h2>
-      <div class="svc-grid">
-        <article class="svc rv">
-          <p class="idx">01</p>
-          <h3>AI-ассистенты и корпоративные помощники</h3>
-          <p>RAG-боты со знанием вашего продукта и регламентов. Отвечают клиентам и сотрудникам со ссылками на источники.</p>
-          <ul class="tags"><li>Сайт</li><li>Telegram</li><li>WhatsApp</li></ul>
-        </article>
-        <article class="svc rv">
-          <p class="idx">02</p>
-          <h3>Агентные системы и автоматизация</h3>
-          <p>Агенты с инструментами, которые действуют сами: ставят задачи, пишут письма, обновляют данные в системах.</p>
-          <ul class="tags"><li>CRM</li><li>Почта</li><li>1С</li><li>Внутренние API</li></ul>
-        </article>
-        <article class="svc rv">
-          <p class="idx">03</p>
-          <h3>Обработка документов</h3>
-          <p>Извлечение данных, классификация и сверка первички без ручного ввода — с записью в учётные системы.</p>
-          <ul class="tags"><li>Извлечение</li><li>Классификация</li><li>Сверка</li></ul>
-        </article>
-        <article class="svc rv">
-          <p class="idx">04</p>
-          <h3>Data Science и предиктивная аналитика</h3>
-          <p>Прогноз спроса, скоринг лидов, объяснимые модели — решения, которые показывают, почему они так считают.</p>
-          <ul class="tags"><li>Прогноз спроса</li><li>Скоринг</li><li>Explainable&nbsp;ML</li></ul>
-        </article>
-        <article class="svc rv">
-          <p class="idx">05</p>
-          <h3>AI-аудит и консалтинг</h3>
-          <p>Карта AI-возможностей вашего бизнеса, дорожная карта внедрения и честная оценка ROI до старта разработки.</p>
-          <ul class="tags"><li>Карта возможностей</li><li>Дорожная карта</li><li>Оценка ROI</li></ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= КЕЙСЫ ================= -->
-  <section class="sec" id="cases">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>02</b> / Кейсы</p>
-      <h2 class="rv">Измеренные эффекты, а&nbsp;не обещания</h2>
-      <div class="cases-list">
-        <article class="case rv">
-          <div class="meta">
-            <p class="dom">Дистрибуция стройматериалов</p>
-            <p class="tag">NDA</p>
-          </div>
-          <div>
-            <h3>ИИ-отдел продаж для дистрибьютора</h3>
-            <p>Ассистент квалифицирует входящие лиды прямо в AmoCRM: задаёт уточняющие вопросы,
-               сегментирует и передаёт менеджеру только готовых к разговору клиентов.</p>
-          </div>
-          <div class="res">
-            <p class="num">+34&thinsp;%</p>
-            <p class="cap">SQL — квалифицированных лидов</p>
-          </div>
-        </article>
-        <article class="case rv">
-          <div class="meta">
-            <p class="dom">Финтех-сервис</p>
-            <p class="tag">NDA</p>
-          </div>
-          <div>
-            <h3>RAG-ассистент поддержки</h3>
-            <p>Две трети обращений закрываются без оператора: ассистент отвечает по базе знаний
-               со ссылками на источники, сложные случаи передаёт человеку.</p>
-          </div>
-          <div class="res">
-            <p class="num">11&thinsp;→&thinsp;2&nbsp;мин</p>
-            <p class="cap">время ответа · 2/3 без оператора</p>
-          </div>
-        </article>
-        <article class="case rv">
-          <div class="meta">
-            <p class="dom">Логистика</p>
-            <p class="tag">Коммерческий проект</p>
-          </div>
-          <div>
-            <h3>Обработка первички для логистической компании</h3>
-            <p>Счета, УПД и транспортные накладные распознаются, сверяются и попадают
-               в учётную систему без участия операторов.</p>
-          </div>
-          <div class="res">
-            <p class="num">18&thinsp;000</p>
-            <p class="cap">документов в месяц без ручного ввода</p>
-          </div>
-        </article>
-      </div>
-      <figure class="case-fig rv">
-        <img src="assets/field-study.png" alt="Чертёж: карта измеренных эффектов — изолинии плотности наблюдений с отметками результатов трёх проектов" width="1400" height="1000">
-        <figcaption class="fig-cap">
-          <span><b>рис. 03</b> — карта измеренных эффектов</span>
-          <span>M-1…M-3 · контрольные точки проектов</span>
-        </figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <!-- ================= ПОЧЕМУ МЫ ================= -->
-  <section class="sec" id="why">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>03</b> / Почему мы</p>
-      <h2 class="rv">LLM-системы как инженерные системы</h2>
-      <div class="why-grid">
-        <article class="why rv">
-          <p class="idx">03.1</p>
-          <h3>Полный цикл внутри команды</h3>
-          <p>От аудита до сопровождения — без субподряда. Аналитики, ML-инженеры и разработчики
-             сидят в одной команде и отвечают за результат вместе.</p>
-        </article>
-        <article class="why rv">
-          <p class="idx">03.2</p>
-          <h3>Качество измеряется, а&nbsp;не предполагается</h3>
-          <p>Оценка качества ответов, логирование, автотесты и мониторинг —
-             а не «промпт и молитва». Каждый релиз проверяется на эталонных наборах.</p>
-        </article>
-        <article class="why rv">
-          <p class="idx">03.3</p>
-          <h3>Готовность к чувствительным данным</h3>
-          <p>Работаем в контуре заказчика, подписываем NDA, разворачиваем изолированные базы
-             знаний — RAG on-premise, когда данные не должны покидать периметр.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ТЕХНОЛОГИИ ================= -->
-  <section class="sec" id="tech">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>04</b> / Технологии</p>
-      <h2 class="rv">Стек подбирается под задачу, а&nbsp;не наоборот</h2>
-      <div class="tech-grid rv" role="list">
-        <div class="tech" role="listitem"><b>Python</b><span>t-01</span></div>
-        <div class="tech" role="listitem"><b>Claude</b><span>t-02</span></div>
-        <div class="tech" role="listitem"><b>GPT</b><span>t-03</span></div>
-        <div class="tech" role="listitem"><b>GigaChat</b><span>t-04</span></div>
-        <div class="tech" role="listitem"><b>YandexGPT</b><span>t-05</span></div>
-        <div class="tech" role="listitem"><b>Mistral</b><span>t-06</span></div>
-        <div class="tech" role="listitem"><b>Qdrant</b><span>t-07</span></div>
-        <div class="tech" role="listitem"><b>PostgreSQL</b><span>t-08</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ПРОЦЕСС ================= -->
-  <section class="sec" id="process">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>05</b> / Процесс</p>
-      <h2 class="rv">Четыре этапа — от гипотезы до работающей системы</h2>
-      <figure class="proc-fig rv">
-        <img src="assets/process-band.png" alt="Чертёж: траектория внедрения по четырём этапам — аудит, проектирование, разработка, запуск — с кобальтовой петлёй обратной связи" width="2200" height="700">
-      </figure>
-      <div class="proc-grid">
-        <article class="proc rv">
-          <p class="idx">01</p>
-          <h3>Аудит и стратегия</h3>
-          <p class="dur">1–2 недели</p>
-          <p>Погружаемся в процессы, находим точки применения AI и считаем ожидаемый эффект.</p>
-        </article>
-        <article class="proc rv">
-          <p class="idx">02</p>
-          <h3>Проектирование</h3>
-          <p class="dur">2–3 недели</p>
-          <p>Архитектура решения, источники данных, метрики качества и план интеграций.</p>
-        </article>
-        <article class="proc rv">
-          <p class="idx">03</p>
-          <h3>Разработка</h3>
-          <p class="dur">4–12 недель</p>
-          <p>Итерации с регулярными демо: система растёт на ваших данных и ваших сценариях.</p>
-        </article>
-        <article class="proc rv">
-          <p class="idx">04</p>
-          <h3>Запуск и развитие</h3>
-          <p class="dur">1–2 недели + сопровождение</p>
-          <p>Внедрение в контур, обучение команды, мониторинг и план развития системы.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= ЦЕНЫ ================= -->
-  <section class="sec" id="pricing">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>06</b> / Цены</p>
-      <h2 class="rv">Прозрачные уровни — старт с&nbsp;бесплатного аудита</h2>
-      <p class="sec-lead rv">Каждый проект начинается с вводного разговора: смотрим на процессы
-         и честно говорим, где AI окупится, а где — нет.</p>
-
-      <div class="price-free rv">
-        <p class="k">Точка входа</p>
-        <div>
-          <h3>Вводный AI-аудит — 30-минутный звонок</h3>
-          <p>Разбираем ваши процессы и показываем, что можно автоматизировать уже сейчас.</p>
-          <ul class="inc">
-            <li>разбор процессов</li>
-            <li>карта возможностей</li>
-            <li>оценка бюджета и сроков</li>
-          </ul>
-        </div>
-        <div class="side">
-          <p class="val">0 ₽<small>бесплатно · без обязательств</small></p>
-          <a class="btn btn-solid" href="#contact">Записаться <span class="arr">→</span></a>
-        </div>
-      </div>
-
-      <div class="price-list">
-        <article class="price rv">
-          <div class="n">
-            <h3 class="t">AI-аудит и консалтинг</h3>
-            <p class="pi">Полный аудит</p>
-          </div>
-          <ul class="inc">
-            <li>интервью с командой</li>
-            <li>карта AI-возможностей</li>
-            <li>дорожная карта внедрения</li>
-          </ul>
-          <div class="v"><p class="val"><i>от</i>150&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
-        </article>
-        <article class="price rv">
-          <div class="n">
-            <h3 class="t">Обработка документов</h3>
-            <p class="pi">Пилот</p>
-          </div>
-          <ul class="inc">
-            <li>извлечение данных</li>
-            <li>классификация и сверка</li>
-            <li>интеграция с одной системой</li>
-          </ul>
-          <div class="v"><p class="val"><i>от</i>600&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
-        </article>
-        <article class="price rv">
-          <div class="n">
-            <h3 class="t">AI-ассистенты</h3>
-            <p class="pi">Пилот</p>
-          </div>
-          <ul class="inc">
-            <li>поиск по смыслу со ссылками на источники</li>
-            <li>один канал</li>
-            <li>оценка качества ответов</li>
-          </ul>
-          <div class="v"><p class="val"><i>от</i>700&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
-        </article>
-        <article class="price rv">
-          <div class="n">
-            <h3 class="t">Data Science и аналитика</h3>
-            <p class="pi">Пилот</p>
-          </div>
-          <ul class="inc">
-            <li>одна прогнозная модель</li>
-            <li>объяснение факторов</li>
-            <li>интеграция в CRM</li>
-          </ul>
-          <div class="v"><p class="val"><i>от</i>800&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
-        </article>
-        <article class="price rv">
-          <div class="n">
-            <h3 class="t">Агентные системы</h3>
-            <p class="pi">Пилот</p>
-          </div>
-          <ul class="inc">
-            <li>агент на один сценарий</li>
-            <li>интеграции с внешними системами</li>
-            <li>логирование действий</li>
-          </ul>
-          <div class="v"><p class="val"><i>от</i>1&thinsp;000&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
-        </article>
-      </div>
-
-      <div class="included rv">
-        <p class="h">Включено во все решения</p>
-        <ul>
-          <li>исходный код в вашем репозитории</li>
-          <li>документация</li>
-          <li>обучение команды</li>
-          <li>мониторинг</li>
-          <li>план развития</li>
-          <li>прямая связь с инженерами</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= CTA / ФОРМА ================= -->
-  <section class="sec" id="contact">
-    <div class="rule"></div>
-    <div class="wrap">
-      <p class="sec-mark rv"><b>07</b> / Контакт</p>
-      <h2 class="rv">Начните с&nbsp;бесплатного аудита</h2>
-      <div class="cta-grid">
-        <div class="rv">
-          <p class="cta-note">Расскажите о задаче — вернёмся в течение рабочего дня
-             и предложим время для 30-минутного разговора с инженером, а не менеджером по продажам.</p>
-          <ul class="cta-facts">
-            <li><b>Формат</b><span>30-минутный видеозвонок</span></li>
-            <li><b>Результат</b><span>карта возможностей и оценка бюджета</span></li>
-            <li><b>Стоимость</b><span>бесплатно, без обязательств</span></li>
-            <li><b>Почта</b><span><a class="cta-link" href="mailto:info@betaline.ai">info@betaline.ai</a></span></li>
-            <li><b>Телефон</b><span><a class="cta-link" href="tel:+74951234567">+7 (495) 123-45-67</a></span></li>
-          </ul>
-        </div>
-        <div class="rv">
-          <form class="form" id="lead-form" novalidate>
-            <div class="row2">
-              <div class="field">
-                <label for="f-name">Имя</label>
-                <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name" required>
-              </div>
-              <div class="field">
-                <label for="f-company">Компания</label>
-                <input id="f-company" name="company" type="text" placeholder="Название компании" autocomplete="organization">
-              </div>
-            </div>
-            <div class="field">
-              <label for="f-contact">Email или телефон</label>
-              <input id="f-contact" name="contact" type="text" placeholder="Куда написать или позвонить" autocomplete="email" required>
-            </div>
-            <div class="field">
-              <label for="f-task">Описание задачи</label>
-              <textarea id="f-task" name="task" placeholder="Пара предложений: какой процесс хочется автоматизировать"></textarea>
-            </div>
-            <div class="form-foot">
-              <button class="btn btn-solid" type="submit">Отправить заявку <span class="arr">→</span></button>
-              <p class="hint">Отвечаем в течение рабочего дня</p>
-            </div>
-          </form>
-          <div class="form-ok" id="form-ok" role="status">
-            <p class="mk">Заявка № принята</p>
-            <h3>Спасибо — мы на связи</h3>
-            <p>Вернёмся в течение рабочего дня и предложим время для вводного аудита —
-               или напишите на <a class="cta-link" href="mailto:info@betaline.ai">info@betaline.ai</a>.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+<!-- @FRAGMENT:top -->
+<!-- @FRAGMENT:bottom -->
 </main>
 
-<!-- ================= ФУТЕР ================= -->
-<footer class="footer">
-  <div class="wrap">
-    <div class="foot-grid">
-      <p class="fl"><i></i>Betaline&nbsp;<span class="ai">AI</span></p>
-      <div class="foot-links">
-        <a href="mailto:info@betaline.ai">info@betaline.ai</a>
-        <a href="tel:+74951234567">+7 (495) 123-45-67</a>
-        <a href="#top">Telegram ↗</a>
-      </div>
-      <p class="foot-copy">© 2026 · чертёж&nbsp;a-01</p>
-    </div>
-  </div>
-</footer>
+<!-- @FRAGMENT:widgets -->
 
-<script src="main.js"></script>
+<script src="/main.js" defer></script>
 </body>
 </html>

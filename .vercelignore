@@ -1,0 +1,8 @@
+mockups/
+.agent/
+.github/
+bot/*.py
+bot/Dockerfile
+bot/setup_vps.sh
+bot/requirements.txt
+bot/env_template.txt
