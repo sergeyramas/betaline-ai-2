@@ -20,7 +20,7 @@ import os
 import sys
 
 from telethon.sync import TelegramClient
-from telethon.tl.functions.channels import GetForumTopicsRequest
+from telethon.tl.functions.messages import GetForumTopicsRequest  # telethon 1.44: в messages, не channels
 
 DATA = os.environ.get("TG_DATA_DIR", os.path.dirname(os.path.abspath(__file__)))
 SESSION = os.path.join(DATA, "personal")
@@ -58,8 +58,8 @@ def main():
 
         if args.list_topics:
             res = client(GetForumTopicsRequest(
-                channel=entity, offset_date=None, offset_id=0,
-                offset_topic=0, limit=100,
+                peer=entity, offset_date=None, offset_id=0,
+                offset_topic=0, limit=100, q=None,
             ))
             for t in res.topics:
                 print(f"{getattr(t, 'id', '?'):>10}  {getattr(t, 'title', '(General)')}")

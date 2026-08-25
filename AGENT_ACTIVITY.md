@@ -6,10 +6,16 @@
 
 ## Active
 
-- [2026-08-25 06:40 UTC] **claude-mac-opus5** (Mac) — topic: `mac-handoff-1-3` — branch: `master` — files: `AGENT_ACTIVITY.md`, `CLAUDE.md`, `vercel.json`, `docs/agents/handoff/tg-message-sites.txt` + vault `Jarvis/wiki/` — ETA: `60` — выполняю MAC_TASK.md задачи 1–3: прод-деплой на Vercel + VERCEL_TOKEN в secrets, регистрация в vault, пост в тему «Сайты». Задача 4 (revoke токена) передана оператору.
-- [2026-08-25 06:40 UTC] **TODO для claude-mac** — topic: `wiki-registration` — зарегистрировать проект в vault: запись в `obsidian-ramos/index.md` → Projects + папка `projects/betaline-ai-2/index.md` (из облачной сессии vault недоступен)
+- [2026-08-25 07:45 UTC] **claude-mac-opus5** (Mac) — topic: `tg-post-sites` — branch: `master` — files: `docs/agents/handoff/tg-message-sites.txt` — ETA: `ждёт оператора` — пост в топик 9 подготовлен и НЕ отправлен: ценовой абзац поста (консалтинг от 150 000 ₽, пилоты 600 000–1 000 000 ₽) противоречит тарифам на самом лендинге (45/90/145 тыс). Цены — operator-only (§7), жду решения Сергея.
 
 ## Recently Completed
+
+- [2026-08-25 07:45 UTC] **claude-mac-opus5** (Mac) — topic: `deploy-vercel` — DONE @ prod https://betaline-ai-2.vercel.app
+  Прод-деплой с Mac: Vercel-проект `betaline-ai-2` (`prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf`, team `team_IQe20O57hTH99URRYtc0FvFt`), alias `betaline-ai-2.vercel.app`. DoD пройден: title/og-image/шрифты/style.css/main.js — 200; 0 горизонтального скролла на 1440 и 390; все 44 `.rv` видимы (failsafe жив); модалка тарифа открывается, console errors — 0; `api/lead` отвечает 400 на пустой body (функция жива, env нет — как и задумано). Тест-лид НЕ слал: формы не менялись.
+  🔴 CI-деплой НЕ включён. Токен CLI короткоживущий, `POST /v3/user/tokens` c ним → `forbidden`; обход «нативная Git-интеграция вместо секрета» тоже закрыт — `vercel git connect` падает, GitHub App Vercel в режиме «selected repositories» и этого репо не видит. Нужен токен с vercel.com/account/tokens руками → `gh secret set VERCEL_TOKEN`. Workflow до тех пор падает со своим явным сообщением — оставлен как маркер. `crons` в vercel.json не трогал: на превью падает безвредно, а при переезде на боевой домен он там нужен.
+
+- [2026-08-25 07:45 UTC] **claude-mac-opus5** (Mac) — topic: `wiki-registration` — DONE (закрывает TODO из облачной сессии)
+  Vault оказался НЕ `~/obsidian-ramos`, а `~/Documents/Jarvis/wiki/` — путь в MAC_TASK.md был устаревший. Заведена `wiki/projects/betaline-ai-2/index.md`, строка в `wiki/index.md` → Projects (сразу под материнским BetaLine), запись в `wiki/log.md`. Указатели на vault в CLAUDE.md §1/§11 и таблица External IDs синхронизированы с фактом.
 
 - [2026-08-25 06:30 UTC] **claude-web-fable5** (claude.ai/code) — topic: `landing-v3` — DONE @ b4634db
   Landing v3 собран и замержен в master: 11 секций «продукт-герой» (hero с CSS-мокапом amoCRM, затыки 3+2, диагностика @BetalineAI_bot, кейсы metrics-first, два трека цен), api/ перенесён с боевого с фиксами lead.js (plan доходит до TG/Sheets/CRM/email), Метрика 108480715 + цели diag_bot_click/pains_expand, чат-виджет, Inter woff2. Caveats: index.html/style.css собраны из partials/ — правь оба; reveal-failsafe не удалять; деплой ждёт секрет VERCEL_TOKEN (workflow починен — было YAML-двоеточие в echo).

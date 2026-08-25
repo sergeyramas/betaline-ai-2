@@ -6,7 +6,7 @@
 - **Зачем:** заменить текущий betaline-ai.ru; принимать лиды в Telegram/Sheets/CRM/почту.
 - **Статус:** active — превью-деплой на Vercel, после одобрения оператора переезд на betaline-ai.ru.
 - **Дедлайн / милейстоны:** превью → правки партнёра → замена боевого index.html.
-- **Vault:** [[wiki/projects/betaline-ai-2/index]] (страницу в obsidian-ramos ещё НЕ завели — TODO для mac-агента)
+- **Vault:** `~/Documents/Jarvis/wiki/projects/betaline-ai-2/index.md` — заведена 2026-08-25
 
 ## 2. External IDs & URLs
 
@@ -14,8 +14,8 @@
 |---|---|
 | GitHub repo | `sergeyramas/betaline-ai-2` |
 | Production URL | будущий: `https://betaline-ai.ru` (сейчас там старый сайт из репо betaline-landing) |
-| Staging URL | Vercel-проект из этого репо (создаётся workflow'ом при наличии секрета `VERCEL_TOKEN`) |
-| Vercel project | создаёт `vercel deploy --prod --yes` при первом запуске workflow |
+| Prod-превью | `https://betaline-ai-2.vercel.app` — живой с 2026-08-25 |
+| Vercel project | `betaline-ai-2` (`prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf`, team `team_IQe20O57hTH99URRYtc0FvFt`) |
 | Боевой API | `https://betaline-ai.ru/api/lead`, `/api/chat-ai` (CORS `*`; превью постит кросс-доменно) |
 | External APIs | Telegram Bot API, Google Sheets, PocketBase CRM, Resend, OpenAI (см. `api/`) |
 | Operator / клиент | Сергей — TG `@Sergeyramas`; партнёр-заказчик правок: Андрей — TG `@Andrei_Stanislavovich` (см. `docs/agents/ANDREY.md`) |
@@ -57,7 +57,7 @@ betaline-ai-2/
 | скриншот QA | `python3 mockups/design/shot.py <file.html> <out.png> [width]` |
 | js-синтаксис | `node --check main.js && node --check api/lead.js` |
 | сборка из partials | заменить фрагменты между маркерами `<!-- built from partials/... -->` (см. gotcha #1) |
-| deploy prod | push в `master` → GitHub Actions → Vercel (нужен секрет `VERCEL_TOKEN`) |
+| deploy prod | `vercel deploy --prod --yes` с Mac. CI (push в master) ждёт секрет `VERCEL_TOKEN` — см. gotcha про токен |
 | тест лид-пайплайна | `curl -X POST https://betaline-ai.ru/api/lead -H 'Content-Type: application/json' -d '{"source":"callback","name":"ТЕСТ — не звонить","phone":"70000000000"}'` |
 
 ## 6. Verification — Definition of Done
@@ -98,6 +98,7 @@ betaline-ai-2/
 - **Reveal-гонка:** .rv контент мог оставаться невидимым (печать, якоря, боты) — стоит failsafe: через 5 с после load всё принудительно visible. Не удалять.
 - **file:// не работает** — пути абсолютные (/style.css). QA только через http.server.
 - **На боевом репо betaline-landing:** `08_audit_form.html` содержит утёкший bot-токен и деплоится статикой. При переезде v3 — исключить файл и отозвать токен через BotFather.
+- **`VERCEL_TOKEN` нельзя добыть с Mac автоматически.** Токен CLI (`com.vercel.cli/auth.json`) короткоживущий, и `POST /v3/user/tokens` c ним отдаёт `forbidden` — нужен токен с vercel.com/account/tokens руками. Обходной путь «нативная Git-интеграция вместо секрета» тоже закрыт: `vercel git connect` падает, GitHub App Vercel стоит в режиме «selected repositories» и этого репо не видит. До появления секрета workflow падает с явным «Секрет VERCEL_TOKEN не задан» — это маркер, а не поломка.
 - **chat-ai.js читает `bot/betaline_kb.txt`** по жёсткому пути — файл обязан деплоиться (не добавлять bot/ целиком в .vercelignore).
 
 ## 10. Skills routing
@@ -112,4 +113,4 @@ betaline-ai-2/
 - **Инциденты:** [`docs/agents/incidents.md`](docs/agents/incidents.md)
 - **Правки от партнёра Андрея:** [`docs/agents/ANDREY.md`](docs/agents/ANDREY.md)
 - **Контент-канон:** `mockups/design/CONTENT.md` (устаревший бриф «Чертежа») + план v3 в PR #6
-- **Vault page:** `obsidian-ramos/projects/betaline-ai-2/` — НЕ создана, TODO mac-агенту
+- **Vault page:** `~/Documents/Jarvis/wiki/projects/betaline-ai-2/index.md` (vault = Jarvis, не obsidian-ramos)

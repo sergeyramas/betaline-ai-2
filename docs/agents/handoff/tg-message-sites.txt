@@ -15,3 +15,5 @@ https://raw.githubusercontent.com/sergeyramas/betaline-ai-2/master/mockups/scree
 Цены: бесплатный вводный аудит, консалтинг от 150 000 ₽, пилоты от 600 000 ₽ до 1 000 000 ₽.
 
 Живые макеты (HTML, открываются офлайн) лежат в репо: sergeyramas/betaline-ai-2 → папка mockups/
+
+Живое превью: https://betaline-ai-2.vercel.app
