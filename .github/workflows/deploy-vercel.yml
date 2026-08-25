@@ -38,4 +38,5 @@ jobs:
           echo "Production: $url"
 
       - name: Summary
-        run: echo "### Задеплоено: ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
+        run: |
+          echo "### Production URL — ${{ steps.deploy.outputs.url }}" >> "$GITHUB_STEP_SUMMARY"
