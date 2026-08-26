@@ -27,12 +27,15 @@ jobs:
         id: deploy
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          # Не секреты (публично в CLAUDE.md §2). Без них CLI в CI линкуется
+          # по имени каталога и может завести ДУБЛЬ проекта вместо betaline-ai-2.
+          VERCEL_ORG_ID: team_IQe20O57hTH99URRYtc0FvFt
+          VERCEL_PROJECT_ID: prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf
         run: |
           if [ -z "$VERCEL_TOKEN" ]; then
             echo "::error::Секрет VERCEL_TOKEN не задан. Settings → Secrets and variables → Actions."
             exit 1
           fi
-          # --yes создаёт проект при первом запуске без интерактивных вопросов
           url=$(npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
           echo "Production: $url"
