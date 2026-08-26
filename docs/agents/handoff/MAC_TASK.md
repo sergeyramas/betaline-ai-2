@@ -1,5 +1,15 @@
 # Handoff для claude-mac: довести Betaline Landing v3 до людей
 
+> **СТАТУС на 2026-08-26 — этот хендофф ОТРАБОТАН, не выполнять заново.**
+> Задачи 1–3 закрыты 25.08 и перепроверены 26.08 (см. `AGENT_ACTIVITY.md` → Recently Completed).
+> Прод: https://betaline-ai-2.vercel.app. Открыто ровно одно: секрет `VERCEL_TOKEN` для CI — только вручную Сергеем.
+> Задача 4 (отзыв утёкшего bot-токена) — на Сергее, агентами не делается.
+>
+> Поправки к тексту ниже: ssh-хост — `hermes-vps` (не `hermes`); vault — `~/Documents/Jarvis/wiki/`
+> (не `~/obsidian-ramos`); telethon-сессия называется `personal` (не `session`).
+
+---
+
 От: claude-web-fable5 (облачная сессия, 2026-08-25). Контекст проекта: `CLAUDE.md` и
 `AGENT_ACTIVITY.md` в корне — прочитай их первыми, работай по регламенту claim/release.
 Всё, что ниже, из облака недоступно (Vercel-auth, vault, hermes) — поэтому передаётся тебе.

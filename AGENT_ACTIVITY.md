@@ -6,9 +6,35 @@
 
 ## Active
 
-- [2026-08-26 08:05 UTC] **claude-mac-opus5** (Mac) — topic: `verify-handoff-ci` — branch: `master` — files: `AGENT_ACTIVITY.md`, Vercel/GH-настройки проекта — ETA: `30`
+_Свободно._
 
 ## Recently Completed
+
+- [2026-08-26 08:10 UTC] **claude-mac-opus5** (Mac) — topic: `verify-handoff-ci` — DONE @ 563c690
+  Перепроверка хендоффа MAC_TASK.md (задачи 1–3 были закрыты 2026-08-25) + починка CI-воркфлоу.
+  **Задача 1 — деплой:** жив. `betaline-ai-2.vercel.app`: title/og-image/style.css/main.js — 200; `api/lead` → 400 на пустой
+  body (функция жива, env нет — как задумано). Прод-деплой 1-дневной давности актуален: после него в master менялись только
+  AGENT_ACTIVITY.md / CLAUDE.md / docs/handoff — код страницы не трогали. Визуальный DoD пройден заново на 1440 и 390:
+  горизонтального скролла нет (scrollW == clientW), все 44 `.rv` видимы после failsafe на обоих ширинах, console errors — 0,
+  hero-мокап amoCRM и оранжевая кнопка чата на месте, 4 формы в DOM.
+  **Задача 2 — vault:** подтверждена. `~/Documents/Jarvis/wiki/projects/betaline-ai-2/index.md` есть, строка в `wiki/index.md`
+  → Projects есть, запись в `wiki/log.md` есть. TODO `wiki-registration` в Active отсутствует.
+  **Задача 3 — пост в тему:** подтверждён вычиткой из Telegram. msg `151` в группе `-1004397085324`, `reply_to_msg_id=9`
+  (топик 9), 2026-08-25 08:37 UTC, последняя строка «Живое превью: https://betaline-ai-2.vercel.app» на месте.
+  ⚠️ В MAC_TASK.md ssh-хост указан как `root@hermes` — на Mac такого алиаса нет, рабочий: `hermes-vps` (104.252.77.253).
+  Сессия telethon называется `personal`, не `session` (`SESSION = os.path.join(TG_DATA_DIR, "personal")`).
+  **Починено (новое):** `.vercel/` лежит в `.gitignore`, поэтому в CI не было project-линка — `vercel deploy --prod --yes`
+  линковался по имени каталога и мог завести ДУБЛЬ Vercel-проекта вместо `betaline-ai-2`. В шаг деплоя проставлены
+  `VERCEL_ORG_ID` / `VERCEL_PROJECT_ID` (не секреты, уже публично в CLAUDE.md §2). Прогон 32945738691: YAML парсится,
+  джоб есть, env инжектится, падение ровно на штатном «Секрет VERCEL_TOKEN не задан».
+  🔴 **CI по-прежнему ждёт Сергея** и это подтверждено независимо, а не переписано из прошлой записи: `POST /v3/user/tokens`
+  токеном CLI → `forbidden: Cannot create tokens for this app`; `vercel git connect` → `Failed to connect… to project`;
+  `GET /user/installations` → 403 (OAuth-токен gh не авторизован для App). Плюс новый факт: **ни один** из ~40 проектов
+  команды `team_IQe20O57hTH99URRYtc0FvFt` не имеет git-линка — весь аккаунт живёт на схеме «Actions + VERCEL_TOKEN»
+  (так же сделаны npz-tactical-map и betaline-voice-ai), так что путь с токеном — не костыль, а конвенция аккаунта.
+  Готового токена нигде на Mac нет (grep по `~/Documents` — пусто), из GH-секретов чужих репо значение не читается.
+  Остаётся один ручной шаг: vercel.com/account/tokens → Create Token → `gh secret set VERCEL_TOKEN --repo sergeyramas/betaline-ai-2`.
+  **Задача 4 (утёкший bot-токен в `08_audit_form.html` боевого betaline-landing) — не выполнялась, передана Сергею.**
 
 - [2026-08-25 07:50 UTC] **claude-mac-opus5** (Mac) — topic: `tg-post-sites` — DONE @ https://t.me/c/4397085324/151
   Пост о макетах отправлен в топик 9 «Сайт наш „Бета линия"» группы `-1004397085324` (аккаунт @ramassist с hermes-vps).

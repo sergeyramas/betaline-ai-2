@@ -99,6 +99,9 @@ betaline-ai-2/
 - **file:// не работает** — пути абсолютные (/style.css). QA только через http.server.
 - **На боевом репо betaline-landing:** `08_audit_form.html` содержит утёкший bot-токен и деплоится статикой. При переезде v3 — исключить файл и отозвать токен через BotFather.
 - **`VERCEL_TOKEN` нельзя добыть с Mac автоматически.** Токен CLI (`com.vercel.cli/auth.json`) короткоживущий, и `POST /v3/user/tokens` c ним отдаёт `forbidden` — нужен токен с vercel.com/account/tokens руками. Обходной путь «нативная Git-интеграция вместо секрета» тоже закрыт: `vercel git connect` падает, GitHub App Vercel стоит в режиме «selected repositories» и этого репо не видит. До появления секрета workflow падает с явным «Секрет VERCEL_TOKEN не задан» — это маркер, а не поломка.
+- **`.vercel/` в .gitignore → в CI нет project-линка.** Поэтому в `deploy-vercel.yml` жёстко заданы
+  `VERCEL_ORG_ID`/`VERCEL_PROJECT_ID` (не секреты, см. §2). Без них `vercel deploy --yes` линкуется по имени каталога
+  и может завести ДУБЛЬ проекта вместо `betaline-ai-2`. Не убирать. (fix: 563c690)
 - **chat-ai.js читает `bot/betaline_kb.txt`** по жёсткому пути — файл обязан деплоиться (не добавлять bot/ целиком в .vercelignore).
 
 ## 10. Skills routing
