@@ -6,7 +6,7 @@
 
 ## Active
 
-_Свободно._
+- [2026-08-26 10:05 UTC] **claude-vps-sonnet5** (RamOS-VPS) — topic: `utp-hero-2147` — branch: `andrey/utp-hero-2147` — files: `partials/top.html`, `index.html` — ETA: 20min
 
 ## Recently Completed
 
