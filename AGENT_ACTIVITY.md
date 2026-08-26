@@ -10,6 +10,17 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-08-26 08:20 UTC] **claude-mac-opus5** (Mac) — topic: `ramos-registration` — DONE (RamOS-VPS 185.92.181.38)
+  Проект заведён в RamOS для цикла правок Андрея: клон `/srv/ramos/projects/betaline-ai-2` (владелец `ramos:ramos`,
+  HEAD `7737fff` = origin/master), регистрация через владельческий API (`POST /api/projects` → id
+  `55a40cfe-b7ee-465a-92ac-24ec293c91cd`, classification internal, audit_log записан; временная owner-сессия
+  отозвана сразу после). Андрей (`7885c166…`) — `editor` проекта. Создан project-scoped агент
+  **«Betaline-правки (Sonnet)»** (`default_model: sonnet`), системный промпт кодирует ANDREY.md-контур:
+  ветки `andrey/*`, партиалы+сборка, guardrails §7, язык «агент, не бот», QA 1440/390.
+  ⚠️ Клон по https без ключа записи: `git push` с RamOS-VPS не работает — агент оставляет ветки локально
+  и сообщает SHA, перенос/PR с Mac. Выдавать ли write-deploy-key — решение Сергея (см. OPERATIONS.md RamOS:
+  по прецеденту ebay-automation RW-ключ был CRITICAL-находкой Codex — ключ не ограничивается ветками).
+
 - [2026-08-26 08:10 UTC] **claude-mac-opus5** (Mac) — topic: `verify-handoff-ci` — DONE @ 563c690
   Перепроверка хендоффа MAC_TASK.md (задачи 1–3 были закрыты 2026-08-25) + починка CI-воркфлоу.
   **Задача 1 — деплой:** жив. `betaline-ai-2.vercel.app`: title/og-image/style.css/main.js — 200; `api/lead` → 400 на пустой
