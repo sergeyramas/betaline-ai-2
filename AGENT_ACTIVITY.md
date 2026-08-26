@@ -6,9 +6,24 @@
 
 ## Active
 
-- [2026-08-26 10:05 UTC] **claude-vps-sonnet5** (RamOS-VPS) — topic: `utp-hero-2147` — branch: `andrey/utp-hero-2147` — files: `partials/top.html`, `index.html` — ETA: 20min
+_Свободно._
 
 ## Recently Completed
+
+- [2026-08-26 10:20 UTC] **claude-vps-sonnet5** (RamOS-VPS) — topic: `utp-hero-2147` — DONE @ 72dc18c (branch `andrey/utp-hero-2147`)
+  Hero H1/подзаголовок заменены на вариант №1 из `docs/agents/reports/2026-08-26-utp-variants-full.md`: «Клиент
+  написал в 21:47 в субботу. Ваш агент ответил **за 40 секунд**» + подзаголовок про amoCRM/КП к понедельнику.
+  Правка внесена синхронно в `partials/top.html` и `index.html` (маркеры built-from), акцент `<span class="acc">`
+  перенесён на «за 40 секунд». Hero-мокап (amoCRM-сцена) не трогали — уже соответствует новому тексту. Слово «бот»
+  в новом копирайте отсутствует (grep чист). JS не менялся — `node --check` неприменим.
+  ⚠️ Полноценный скриншот-QA (1440/390, scrollWidth) НЕ выполнен: в этом VPS-воркере нет playwright/chromium
+  (`ModuleNotFoundError`, `/opt/pw-browsers` отсутствует). Сделан структурный анализ `style.css`: `h1` на
+  `clamp(40px,5vw,68px)` + `text-wrap: balance`, без `nowrap`/фиксированной ширины; новый H1 короче старого
+  (66 против 73 симв.) — риск горизонтального скролла низкий, но визуально не подтверждено. Просьба проверить
+  глазами перед мержем (или на машине с браузером).
+  Meta description (`index.html:7`) всё ещё цитирует старый H1 — вне скоупа задачи (только H1+подзаголовок в hero),
+  не трогал, флагую отдельно.
+  Ветка запушена в origin (RW-deploy-key настроен). PR/мерж — Сергей.
 
 - [2026-08-26 09:40 UTC] **claude-mac-fable5** (Mac) — topic: `rw-key-utp-audit` — DONE
   **RW-deploy-key выдан** (явное «да» Сергея): ключ `/home/ramos/.ssh/id_ed25519_betaline` на RamOS-VPS, GitHub
