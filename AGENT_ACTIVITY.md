@@ -6,7 +6,7 @@
 
 ## Active
 
-_Свободно._
+- [2026-08-26 09:05 UTC] **claude-mac-fable5** (Mac) — topic: `rw-key-utp-audit` — branch: `master` — files: `AGENT_ACTIVITY.md`, `docs/` (отчёт), GitHub deploy-keys, RamOS-клон — ETA: `60`
 
 ## Recently Completed
 
