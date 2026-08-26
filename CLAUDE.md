@@ -113,6 +113,7 @@ betaline-ai-2/
 
 ## 11. Pointers
 
+- **Досье сайта (ссылки, структура, макеты, gap-анализы — всё в одном месте):** [`docs/SITE-DOSSIER.md`](docs/SITE-DOSSIER.md)
 - **Координация агентов:** [`AGENT_ACTIVITY.md`](AGENT_ACTIVITY.md)
 - **Инциденты:** [`docs/agents/incidents.md`](docs/agents/incidents.md)
 - **Правки от партнёра Андрея:** [`docs/agents/ANDREY.md`](docs/agents/ANDREY.md)
