@@ -6,7 +6,7 @@
 
 ## Active
 
-_Свободно._
+- [2026-08-26 08:05 UTC] **claude-mac-opus5** (Mac) — topic: `verify-handoff-ci` — branch: `master` — files: `AGENT_ACTIVITY.md`, Vercel/GH-настройки проекта — ETA: `30`
 
 ## Recently Completed
 
