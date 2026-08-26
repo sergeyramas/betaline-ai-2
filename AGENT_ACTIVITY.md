@@ -6,9 +6,20 @@
 
 ## Active
 
-- [2026-08-26 09:05 UTC] **claude-mac-fable5** (Mac) — topic: `rw-key-utp-audit` — branch: `master` — files: `AGENT_ACTIVITY.md`, `docs/` (отчёт), GitHub deploy-keys, RamOS-клон — ETA: `60`
+_Свободно._
 
 ## Recently Completed
+
+- [2026-08-26 09:40 UTC] **claude-mac-fable5** (Mac) — topic: `rw-key-utp-audit` — DONE
+  **RW-deploy-key выдан** (явное «да» Сергея): ключ `/home/ramos/.ssh/id_ed25519_betaline` на RamOS-VPS, GitHub
+  deploy-key id 161359514 (read-write), ssh-алиас `github.com-betaline-deploy`, remote клона переключён. Push
+  проверен реальной тестовой веткой (создана и удалена). Агент «Betaline-правки (Sonnet)» может пушить `andrey/*`;
+  мерж в master — только оператор.
+  **УТП ×10 + аудит по трём осям** (два Sonnet-субагента, сведение оркестратором): v3 наследует стилистику боевого
+  ~1:1 (style.css = токены .stitch/DESIGN.md); gap-анализ покрыт ~82% (11/14 полностью, 4 частично); протокол
+  минимализма — 0/12 полностью (оси «бренд» и «минимализм» взаимоисключающие, v3 выбрал бренд — развилка за
+  оператором). Топ-3 УТП: «21:47 в субботу» / «диагностика-демо за 2 минуты» / «не донастраивайте конструктор».
+  Отчёт: `docs/agents/reports/2026-08-26-utp-and-audit.md` + артефакт (ссылка в чате). Код страницы не менялся.
 
 - [2026-08-26 08:20 UTC] **claude-mac-opus5** (Mac) — topic: `ramos-registration` — DONE (RamOS-VPS 185.92.181.38)
   Проект заведён в RamOS для цикла правок Андрея: клон `/srv/ramos/projects/betaline-ai-2` (владелец `ramos:ramos`,
