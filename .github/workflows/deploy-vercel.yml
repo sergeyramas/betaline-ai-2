@@ -32,9 +32,13 @@ jobs:
           VERCEL_ORG_ID: team_IQe20O57hTH99URRYtc0FvFt
           VERCEL_PROJECT_ID: prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf
         run: |
+          # ponytail: без секрета — тихий skip, а не failure. Токен нельзя
+          # добыть автоматически (см. CLAUDE.md §gotchas), а падающий на каждый
+          # push workflow заваливал почту письмами "Run failed".
           if [ -z "$VERCEL_TOKEN" ]; then
-            echo "::error::Секрет VERCEL_TOKEN не задан. Settings → Secrets and variables → Actions."
-            exit 1
+            echo "::warning::Секрет VERCEL_TOKEN не задан — деплой пропущен. Settings → Secrets and variables → Actions."
+            echo "url=(skipped: no VERCEL_TOKEN)" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
           url=$(npx --yes vercel@latest deploy --prod --yes --token="$VERCEL_TOKEN")
           echo "url=$url" >> "$GITHUB_OUTPUT"
