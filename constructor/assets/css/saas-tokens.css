@@ -1,0 +1,147 @@
+/* BetaLine AI — Colors & Type tokens
+   Sourced from production landing (betaline-ai.ru) and DESIGN.md */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap');
+
+:root {
+  /* === Surfaces === */
+  --bg-cream:   #FFFBF5;   /* page bg, warmest */
+  --bg-warm:    #FFF7ED;   /* secondary surface, cards-on-cream */
+  --bg-card:    #FFFFFF;   /* primary card surface */
+  --bg-ink:     #0A0A0F;   /* footer / dark CTA */
+
+  /* === Brand orange === */
+  --orange:        #F97316; /* primary CTA, accent */
+  --orange-dark:   #EA580C; /* hover, headline gradient end */
+  --orange-soft:   #FED7AA; /* borders, dividers */
+  --orange-tint:   #FFEDD5; /* mark/highlight bg */
+
+  /* === Semantic === */
+  --green:      #10B981;   /* success, positive metric */
+  --green-dark: #059669;
+  --red:        #EF4444;   /* alert, problem accent */
+  --red-soft:   #FEE2E2;
+  --red-text:   #DC2626;
+  --blue:       #3B82F6;   /* link, info */
+
+  /* === Ink === */
+  --text-ink:    #1A1A1A;  /* H1, primary text */
+  --text-ink-2:  #1A1A2E;  /* alt headline (slightly cooler, used on FAQ/nav) */
+  --text-body:   #374151;  /* body strong */
+  --text-mute:   #6B7280;  /* body secondary */
+  --text-faint:  #9CA3AF;  /* captions */
+  --text-on-dark:#6B7280;  /* footer body on ink */
+  --border:      #F3F4F6;  /* hairline */
+  --border-soft: rgba(0,0,0,.06);
+
+  /* === Radii === */
+  --r-pill: 999px;
+  --r-sm:   12px;          /* small chips, inputs */
+  --r-md:   16px;          /* buttons, inner panels */
+  --r-lg:   20px;          /* faq item */
+  --r-xl:   24px;          /* card */
+  --r-2xl:  32px;          /* large card */
+  --r-3xl:  40px;          /* hero card */
+  --r-phone:48px;          /* phone mockup bezel */
+
+  /* === Shadows === */
+  --shadow-hairline: 0 4px 24px rgba(0,0,0,0.06);
+  --shadow-card:     0 4px 16px rgba(249,115,22,0.10);
+  --shadow-lift:     0 12px 40px rgba(0,0,0,0.10);
+  --shadow-cta:      0 8px 32px rgba(249,115,22,0.25);
+  --shadow-cta-hover:0 12px 40px rgba(249,115,22,0.35);
+  --shadow-orange:   0 20px 48px rgba(249,115,22,0.18);
+  --shadow-staircase:0 24px 80px rgba(0,0,0,0.06);
+
+  /* === Spacing scale === */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  40px;
+  --s-8:  60px;
+  --s-9:  100px;          /* section padding */
+  --s-10: 120px;          /* generous section padding */
+
+  --container: 1280px;
+  --container-narrow: 1100px;
+  --container-prose: 900px;
+
+  /* === Type === */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+
+  /* Display / hero */
+  --t-display: 900 clamp(32px, 7.5vw, 76px)/1.15 var(--font-sans);
+  --t-display-tracking: -2px;
+
+  /* Section heading */
+  --t-h1: 900 clamp(36px, 5vw, 56px)/1.1 var(--font-sans);
+  --t-h1-tracking: -2px;
+
+  /* Card / sub heading */
+  --t-h2: 900 clamp(28px, 3.5vw, 36px)/1.2 var(--font-sans);
+  --t-h2-tracking: -1px;
+
+  --t-h3: 800 24px/1.25 var(--font-sans);
+  --t-h3-tracking: -0.5px;
+
+  /* Body */
+  --t-lead:  500 22px/1.4 var(--font-sans);
+  --t-body:  400 17px/1.6 var(--font-sans);
+  --t-body-strong: 600 17px/1.6 var(--font-sans);
+  --t-small: 500 14px/1.5 var(--font-sans);
+  --t-caption: 500 13px/1.4 var(--font-sans);
+
+  /* Eyebrow / badge — JetBrains Mono per spec for new SaaS landing,
+     legacy site uses Inter for badges. Both supported. */
+  --t-eyebrow:    700 12px/1 var(--font-mono);
+  --t-eyebrow-tracking: 2px;
+  --t-eyebrow-alt: 800 14px/1 var(--font-sans);
+
+  /* Mono / code */
+  --t-mono: 500 14px/1.5 var(--font-mono);
+
+  /* Easings */
+  --ease-out:  cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.25s;
+  --dur:      0.4s;
+  --dur-slow: 0.8s;
+
+  /* === Iteration 2 additions === */
+  --font-display: 'Outfit', var(--font-sans);
+  --accent-emerald: var(--green);
+  --accent-emerald-dark: var(--green-dark);
+  --shadow-glow-amber: 0 8px 32px rgba(249,115,22,0.25);
+  --shadow-glow-amber-lg: 0 20px 60px rgba(249,115,22,0.30);
+  --gradient-brand: linear-gradient(135deg, #F97316 0%, #EA580C 50%, #FBBF24 100%);
+  --gradient-hero-bg: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(249,115,22,0.08) 0%, transparent 70%);
+  --pulse-ring-color: rgba(249,115,22,0.35);
+}
+
+/* === Semantic role classes === */
+.h-display  { font: var(--t-display);  letter-spacing: var(--t-display-tracking); color: var(--text-ink); }
+.h-1        { font: var(--t-h1);       letter-spacing: var(--t-h1-tracking);      color: var(--text-ink); }
+.h-2        { font: var(--t-h2);       letter-spacing: var(--t-h2-tracking);      color: var(--text-ink); }
+.h-3        { font: var(--t-h3);       letter-spacing: var(--t-h3-tracking);      color: var(--text-ink); }
+.t-lead     { font: var(--t-lead);     color: var(--text-mute); }
+.t-body     { font: var(--t-body);     color: var(--text-body); }
+.t-small    { font: var(--t-small);    color: var(--text-mute); }
+.t-caption  { font: var(--t-caption);  color: var(--text-faint); }
+.t-eyebrow  { font: var(--t-eyebrow);  letter-spacing: var(--t-eyebrow-tracking); text-transform: uppercase; color: var(--orange); }
+.t-mono     { font: var(--t-mono);     color: var(--text-body); }
+
+mark.brand-mark {
+  background: var(--orange-tint);
+  color: var(--orange-dark);
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
