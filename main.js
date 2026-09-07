@@ -11,7 +11,10 @@
     /* ─────────────────────────────────────────────
        0. Конфиг и утилиты
        ───────────────────────────────────────────── */
-    var API_BASE = location.hostname.endsWith('betaline-ai.ru') ? '' : 'https://betaline-ai.ru';
+    /* Точное совпадение, не endsWith: поддомены (custom./zvonok.) тоже оканчиваются
+       на betaline-ai.ru, но своих env не имеют — их формы должны идти на боевой API. */
+    var PROD_HOSTS = ['betaline-ai.ru', 'www.betaline-ai.ru'];
+    var API_BASE = PROD_HOSTS.indexOf(location.hostname) !== -1 ? '' : 'https://betaline-ai.ru';
     var YM_ID = 108480715;
 
     function goal(name, params) {
