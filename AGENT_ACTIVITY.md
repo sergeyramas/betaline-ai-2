@@ -10,6 +10,28 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-07 06:30 UTC] **claude-mac-opus5** (Mac) — topic: `custom-subdomain` — ЧАСТИЧНО @ 0399db1 (ветка `custom-subdomain`)
+  Подготовка выката v3 на поддомен **custom.betaline-ai.ru** (решение оператора 07.09).
+  **Найдено и починено:** `main.js` определял API_BASE через `location.hostname.endsWith('betaline-ai.ru')` —
+  это true и для `custom.betaline-ai.ru`, поэтому формы поддомена ушли бы на same-origin `/api/lead`
+  проекта betaline-ai-2, где НЕТ env. Лиды терялись бы молча, с зелёным success для пользователя.
+  Заменено на точное совпадение с боевыми хостами (`betaline-ai.ru`, `www.`); все прочие хосты постят
+  на боевой API. `node --check main.js` — зелёный.
+  **Проверено фактами, а не предположением:** allowlist источников на боевом
+  `api/lead.js` = `quiz|audit|callback|pricing|url-capture|platform` — надмножество четырёх, что шлёт v3;
+  CORS-preflight с `Origin: https://custom.betaline-ai.ru` → 200 `allow-origin: *`;
+  `/api/lead` и `/api/chat-ai` на проде отвечают 400 на пустой body (живы).
+  Вывод: поддомену НЕ нужны свои env и копии секретов — лиды идут в тот же Telegram/Sheets/CRM.
+  **DNS-прецедент:** `zvonok.` и `constructor.betaline-ai.ru` подключены через A-запись `76.76.21.21`
+  в панели Beget + `vercel domains add`. Оба отдают 200.
+  🔴 **Заблокировано на операторе (3 шага):** 1) проект `betaline-ai-2` живёт на команде
+  `sergeyramas-projects`, она целиком в 402 DEPLOYMENT_DISABLED (проверено: npz-tactical-map,
+  pcmarket-ai-seller, eurasia-map, rama-docs-hub — все 402) → нужен Transfer в `npz-avod` через UI;
+  2) A-запись `custom → 76.76.21.21` в Beget (кредов на Маке нет);
+  3) новый счётчик Метрики под поддомен (решение оператора; API-токен на парке read-only и от чужого
+  аккаунта `richardsonbihoeki` — создать можно только руками). После переноса обновить
+  VERCEL_ORG_ID/PROJECT_ID в `.github/workflows/deploy-vercel.yml`.
+
 - [2026-08-26 09:40 UTC] **claude-mac-fable5** (Mac) — topic: `rw-key-utp-audit` — DONE
   **RW-deploy-key выдан** (явное «да» Сергея): ключ `/home/ramos/.ssh/id_ed25519_betaline` на RamOS-VPS, GitHub
   deploy-key id 161359514 (read-write), ssh-алиас `github.com-betaline-deploy`, remote клона переключён. Push
