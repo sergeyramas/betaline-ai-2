@@ -1,1067 +1,597 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BetaLine AI — агенты внутри ваших бизнес-процессов</title>
-    <meta name="description" content="Не продаём шаблонных ботов — проектируем агентов внутри ваших процессов. Агент читает заявку, создаёт сделку в CRM и отвечает клиенту 24/7. Диагностика бесплатно.">
-    <link rel="canonical" href="https://betaline-ai.ru/">
-    <meta property="og:title" content="BetaLine AI — агенты внутри ваших бизнес-процессов">
-    <meta property="og:description" content="Агент читает заявку, создаёт сделку в CRM и отвечает клиенту 24/7. Разбор вашего процесса — бесплатно, 30 минут.">
-    <meta property="og:type" content="website">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:url" content="https://betaline-ai.ru/">
-    <meta property="og:image" content="https://betaline-ai.ru/assets/img/og-image.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content="https://betaline-ai.ru/assets/img/og-image.png">
-    <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
-    <link rel="preload" href="/assets/fonts/inter-700-cyr.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/assets/fonts/inter-900-cyr.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="stylesheet" href="/assets/fonts/fonts.css">
-    <link rel="stylesheet" href="/style.css">
-    <!-- Yandex.Metrika counter -->
-    <script type="text/javascript">
-        (function(m,e,t,r,i,k,a){
-            m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-            m[i].l=1*new Date();
-            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-        })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=108480715', 'ym');
-        ym(108480715, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
-    </script>
-    <noscript><div><img src="https://mc.yandex.ru/watch/108480715" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-    <!-- /Yandex.Metrika counter -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Betaline — AI-интегратор полного цикла</title>
+<meta name="description" content="Betaline — AI-интегратор полного цикла: проектируем и внедряем LLM-системы под ключ — ассистенты, агентные системы, обработка документов и предиктивная аналитика. Бесплатный вводный аудит.">
+<link rel="canonical" href="https://custom.betaline-ai.ru/">
+<meta property="og:title" content="Betaline — AI-интегратор полного цикла">
+<meta property="og:description" content="Проектируем и внедряем LLM-системы под ключ: ассистенты, агентные системы, обработка документов и аналитика. Бесплатный вводный аудит.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:url" content="https://custom.betaline-ai.ru/">
+<meta property="og:image" content="https://custom.betaline-ai.ru/assets/img/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://custom.betaline-ai.ru/assets/img/og-image.png">
+<link rel="icon" type="image/svg+xml" href="/assets/img/favicon.svg">
+<link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+<link rel="preload" href="/assets/fonts/GolosText-600.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/IBMPlexMono-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<link rel="stylesheet" href="/style.css">
+<!-- Yandex.Metrika: отдельный счётчик под custom.betaline-ai.ru (решение оператора 07.09).
+     ID ещё не заведён — пока 0, счётчик не грузится. Вписать ID сюда и в noscript ниже. -->
+<script>window.YM_ID = 0;</script>
+<script>
+(function (id) {
+    if (!id) return;
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id='+id, 'ym');
+    ym(id, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce:true, trackLinks:true});
+})(window.YM_ID);
+</script>
+<!-- <noscript><div><img src="https://mc.yandex.ru/watch/__YM_ID__" style="position:absolute; left:-9999px;" alt="" /></div></noscript> -->
 </head>
 <body>
 
+<!-- ================= НАВБАР ================= -->
 <header class="nav" id="nav">
-    <div class="nav-in">
-        <a class="nav-logo" href="#top">Betaline<span>AI</span></a>
-        <nav class="nav-links" aria-label="Основное меню">
-            <a href="#pains">Затыки</a>
-            <a href="#cases">Кейсы</a>
-            <a href="#process">Процесс</a>
-            <a href="#pricing">Цены</a>
-            <a href="#faq">FAQ</a>
-        </nav>
-        <a class="nav-phone" href="tel:88002001849">8 800 200-18-49</a>
-        <a class="btn btn-primary btn-sm nav-cta" href="#audit">Разбор процесса</a>
-        <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false"><i></i></button>
-    </div>
+  <div class="nav-in">
+    <a class="logo" href="#top" aria-label="Betaline AI — на главную">
+      <i></i>Betaline&nbsp;<span class="ai">AI</span> <span>// интегратор</span>
+    </a>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <a href="#services">Услуги</a>
+      <a href="#cases">Кейсы</a>
+      <a href="#why">Почему мы</a>
+      <a href="#process">Процесс</a>
+      <a href="#pricing">Цены</a>
+    </nav>
+    <a class="btn btn-solid btn-sm nav-cta" href="#contact">Записаться на аудит</a>
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </header>
-<nav class="m-menu" id="mmenu" aria-label="Мобильное меню">
-    <a href="#pains">Затыки</a>
-    <a href="#cases">Кейсы</a>
-    <a href="#process">Процесс</a>
-    <a href="#pricing">Цены</a>
-    <a href="#faq">FAQ</a>
-    <a href="#audit" class="btn btn-primary" style="margin-top:12px">Разбор процесса</a>
+<nav class="m-menu" id="mmenu" aria-label="Мобильная навигация">
+  <a href="#services">Услуги</a>
+  <a href="#cases">Кейсы</a>
+  <a href="#why">Почему мы</a>
+  <a href="#process">Процесс</a>
+  <a href="#pricing">Цены</a>
+  <a href="#contact" class="acc">Записаться на аудит</a>
 </nav>
 
 <main id="top">
-<!-- built from partials/top.html -->
-<!-- ═══════════ FRAGMENT:top — hero · pains · diag · cases (агент A) ═══════════ -->
 
-<!-- ─────────────── 1. HERO ─────────────── -->
-<section class="hero" id="hero" aria-labelledby="hero-title">
+  <!-- ================= HERO ================= -->
+  <section class="hero" aria-label="Главный экран">
     <div class="wrap">
-        <div class="hero-head">
-            <div class="badge">AI-интеграция под ключ · 152-ФЗ</div>
-            <h1 id="hero-title">Не продаём шаблонных ботов — <span class="acc">проектируем агентов</span> внутри ваших процессов</h1>
-            <p class="lead hero-lead">Агент читает заявку, сам создаёт сделку в amoCRM и отвечает клиенту. Результат вы видите в своей системе, а не в чате.</p>
-            <div class="hero-cta">
-                <a class="btn btn-tg" href="https://t.me/BetalineAI_bot?start=diag_hero" data-goal="diag_bot_click">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.6 18.9 19c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-.9.5l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.2 13.1 2.7 11.7c-1-.3-1-1 .2-1.4l17.7-6.8c.8-.3 1.5.2 1.3 1.1z"/></svg>
-                    Пройти диагностику в Telegram
-                </a>
-                <a class="btn btn-secondary" href="#cases">Смотреть кейсы</a>
-            </div>
-            <ul class="hero-stats" role="list">
-                <li><span class="hero-stat-v num">40+</span><span class="hero-stat-l">внедрений</span></li>
-                <li><span class="hero-stat-v num">от 2 недель</span><span class="hero-stat-l">до запуска</span></li>
-                <li><span class="hero-stat-v num">24/7</span><span class="hero-stat-l">работа агентов</span></li>
-                <li><span class="hero-stat-v num">152-ФЗ</span><span class="hero-stat-l">контур данных</span></li>
-            </ul>
-        </div>
-
-        <!-- Живой мокап: диалог → сделка в amoCRM -->
-        <div class="hero-demo" role="img" aria-label="Пример работы: клиент пишет в WhatsApp в субботу в 21:47, агент отвечает через 40 секунд, уточняет задачу и создаёт сделку в amoCRM со стадией «Квалифицирован»">
-            <div class="hero-chat">
-                <div class="hero-win-head">
-                    <span class="hero-win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                    <span class="hero-win-title">WhatsApp · диалог с клиентом</span>
-                    <span class="hero-win-tag">Сб, вечер</span>
-                </div>
-                <div class="hero-chat-body">
-                    <div class="hero-msg hero-msg-client">
-                        <span class="hero-ava" aria-hidden="true">АС</span>
-                        <div class="hero-bubble">
-                            <p>Добрый вечер! Нужно 120 стульев для конференц-зала до 15-го. Успеете посчитать?</p>
-                            <span class="hero-msg-meta">клиент · 21:47</span>
-                        </div>
-                    </div>
-                    <div class="hero-msg hero-msg-agent">
-                        <span class="hero-ava hero-ava-agent" aria-hidden="true">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-                        </span>
-                        <div class="hero-bubble">
-                            <p>Добрый вечер, Андрей! Успеем. Уточните: с подлокотниками или без? Пришлю расчёт в двух вариантах.</p>
-                            <span class="hero-msg-meta">агент · 21:48 · ответ за 40 сек</span>
-                        </div>
-                    </div>
-                    <div class="hero-msg hero-msg-client">
-                        <span class="hero-ava" aria-hidden="true">АС</span>
-                        <div class="hero-bubble">
-                            <p>Без подлокотников. Хорошо, жду расчёт 👍</p>
-                            <span class="hero-msg-meta">клиент · 21:49</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="hero-link" aria-hidden="true">
-                <svg class="hero-link-arrow" viewBox="0 0 64 24" fill="none" aria-hidden="true">
-                    <path d="M2 12h52" stroke="currentColor" stroke-width="2" stroke-dasharray="5 5" stroke-linecap="round"/>
-                    <path d="M48 4l12 8-12 8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="hero-link-cap">сделка создана автоматически</span>
-            </div>
-
-            <div class="hero-deal">
-                <div class="hero-win-head hero-win-head-crm">
-                    <span class="hero-win-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                    <span class="hero-win-title">amoCRM · Воронка продаж</span>
-                </div>
-                <div class="hero-deal-body">
-                    <div class="hero-deal-top">
-                        <span class="hero-deal-badge">
-                            <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg>
-                            Создано агентом
-                        </span>
-                        <span class="hero-deal-time num">Сб 21:48</span>
-                    </div>
-                    <div class="hero-deal-name">Андрей Соколов</div>
-                    <div class="hero-deal-sum num">168 000 ₽</div>
-                    <dl class="hero-deal-rows">
-                        <div class="hero-deal-row"><dt>Стадия</dt><dd><span class="hero-deal-stage">Квалифицирован</span></dd></div>
-                        <div class="hero-deal-row"><dt>Источник</dt><dd>WhatsApp</dd></div>
-                        <div class="hero-deal-row"><dt>Задача агента</dt><dd>Отправить КП — 2 варианта</dd></div>
-                    </dl>
-                </div>
-            </div>
-        </div>
+      <div class="hero-top ld">
+        <p class="sec-mark"><b>00</b> / Betaline AI</p>
+        <p class="coord">LLM-СИСТЕМЫ ПОД КЛЮЧ · РФ</p>
+      </div>
+      <h1 class="ld ld1">AI-интегратор <span class="acc">полного цикла</span> для среднего и&nbsp;крупного бизнеса</h1>
+      <p class="hero-sub ld ld2">Проектируем и внедряем LLM-системы: ассистенты, агентные системы,
+        обработка документов и аналитика — весь цикл внутри одной команды.</p>
+      <div class="hero-cta ld ld3">
+        <a class="btn btn-solid" href="#contact">Записаться на аудит <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#pricing">Смотреть решения <span class="arr">↓</span></a>
+      </div>
+      <figure class="hero-fig ld ld4">
+        <img src="/assets/img/hero-diagram.webp" alt="Чертёж: топология агентной системы — изолинии поля плотности задач, сеть узлов и траектории данных" width="1800" height="1200" fetchpriority="high">
+        <figcaption class="fig-cap">
+          <span><b>рис. 01</b> — топология агентной системы</span>
+          <span>изолинии · узлы · траектории данных</span>
+        </figcaption>
+      </figure>
     </div>
-</section>
-
-<!-- ─────────────── 2. PAINS ─────────────── -->
-<section class="pains" id="pains" aria-labelledby="pains-title">
-    <div class="wrap">
-        <div class="sec-head rv">
-            <div class="badge fill">Узнаёте ситуацию?</div>
-            <h2 id="pains-title">Три затыка, из-за которых бизнес теряет деньги каждый день</h2>
-        </div>
-
-        <div class="pains-grid" id="painsGrid">
-            <article class="card pains-card rv">
-                <blockquote class="pains-quote"><p>«Клиент написал в субботу вечером — ответили в понедельник. Он уже купил у других.»</p></blockquote>
-                <div class="pains-action">
-                    <span class="pains-action-ico" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                    </span>
-                    <p>Агент ответил за 40 секунд, уточнил задачу и создал сделку в amoCRM с полной сводкой.</p>
-                </div>
-                <div class="pains-num num">+30% <span class="pains-num-l">заявок вне рабочих часов</span></div>
-            </article>
-
-            <article class="card pains-card rv">
-                <blockquote class="pains-quote"><p>«Авито, WhatsApp, сайт — три чата на двух менеджеров. Заявки теряются и дублируются.»</p></blockquote>
-                <div class="pains-action">
-                    <span class="pains-action-ico" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h18l-7 8v6l-4 2v-8L3 4z"/></svg>
-                    </span>
-                    <p>Агент сводит все каналы в одну воронку: один клиент — одна сделка, история переписки внутри карточки.</p>
-                </div>
-                <div class="pains-num num">0 <span class="pains-num-l">потерянных и задвоенных обращений</span></div>
-            </article>
-
-            <article class="card pains-card rv">
-                <blockquote class="pains-quote"><p>«Менеджеры по 2–4 часа в день отвечают на одни и те же вопросы вместо продаж.»</p></blockquote>
-                <div class="pains-action">
-                    <span class="pains-action-ico" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13h8M8 9h8M21 12a9 9 0 1 1-3.5-7.1"/><path d="M21 3v5h-5"/></svg>
-                    </span>
-                    <p>Агент закрывает типовые вопросы сам, а менеджеру передаёт только тёплых клиентов — с готовой сводкой.</p>
-                </div>
-                <div class="pains-num num">+2–4 часа <span class="pains-num-l">продаж у каждого менеджера в день</span></div>
-            </article>
-
-            <article class="card pains-card pains-hidden" hidden>
-                <blockquote class="pains-quote"><p>«Чтобы найти условия по клиенту, менеджер полчаса роется в почте, чатах и 1С.»</p></blockquote>
-                <div class="pains-action">
-                    <span class="pains-action-ico" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-                    </span>
-                    <p>Агент ищет по всей базе знаний и истории сделок — отвечает точной выдержкой со ссылкой на источник.</p>
-                </div>
-                <div class="pains-num num">30 мин → 10 сек <span class="pains-num-l">на поиск по базе</span></div>
-            </article>
-
-            <article class="card pains-card pains-hidden" hidden>
-                <blockquote class="pains-quote"><p>«Каждое КП собираем вручную по прайсу — три часа на документ, клиент успевает остыть.»</p></blockquote>
-                <div class="pains-action">
-                    <span class="pains-action-ico" aria-hidden="true">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
-                    </span>
-                    <p>Агент генерирует КП из прайса 1С по шаблону компании и сразу отправляет клиенту на согласование.</p>
-                </div>
-                <div class="pains-num num">3 часа → минуты <span class="pains-num-l">на одно коммерческое предложение</span></div>
-            </article>
-        </div>
-
-        <div class="pains-more-row rv">
-            <button type="button" class="btn btn-secondary btn-sm" id="painsMore" data-goal="pains_expand" aria-controls="painsGrid" aria-expanded="false">
-                Показать ещё 2 ситуации
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-            </button>
-        </div>
-
-        <div class="pains-wildcard rv">
-            <div class="pains-wildcard-txt">
-                <h3>Ваш затык — другой?</h3>
-                <p>Опишите его — за пару минут скажем, решается ли это агентом.</p>
-            </div>
-            <button type="button" class="btn btn-secondary btn-sm" id="painsWildcard">Описать в чате</button>
-        </div>
-
-        <p class="pains-integrations rv">Работаем внутри ваших систем: <span class="num">amoCRM · Bitrix24 · 1С · Telegram · WhatsApp · МойСклад · API</span></p>
+    <div class="wrap hero-stats-wrap">
+      <div class="stats ld ld5" role="list" aria-label="Ключевые цифры">
+        <div class="stat" role="listitem"><div class="num">15<sup>+</sup></div><div class="lbl">инженеров в&nbsp;команде</div></div>
+        <div class="stat" role="listitem"><div class="num">4</div><div class="lbl">года в&nbsp;ML&nbsp;/&nbsp;LLM</div></div>
+        <div class="stat" role="listitem"><div class="num">40<sup>+</sup></div><div class="lbl">внедрений</div></div>
+        <div class="stat" role="listitem"><div class="num">5</div><div class="lbl">направлений работы</div></div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ─────────────── 3. DIAG (конверсионный центр) ─────────────── -->
-<section class="diag" id="diag" aria-labelledby="diag-title">
+  <!-- ================= УСЛУГИ ================= -->
+  <section class="sec" id="services">
+    <div class="rule"></div>
     <div class="wrap">
-        <div class="diag-grid">
-            <div class="diag-info rv">
-                <div class="badge">Бесплатная диагностика</div>
-                <h2 id="diag-title">Разберите ваш процесс — прямо сейчас, в Telegram</h2>
-                <p class="lead diag-lead">Опишите задачу агенту @BetalineAI_bot — он задаст три вопроса и покажет, как автоматизация будет работать именно у вас.</p>
-                <p class="diag-note">Это тот же движок, который мы ставим клиентам: <strong>диагностика и есть демо</strong>.</p>
-                <div class="diag-cta">
-                    <a class="btn btn-tg" href="https://t.me/BetalineAI_bot?start=diag_center" data-goal="diag_bot_click">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.6 18.9 19c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.3.3-.5.5-.9.5l.3-4.6 8.4-7.6c.4-.3-.1-.5-.6-.2L7.2 13.1 2.7 11.7c-1-.3-1-1 .2-1.4l17.7-6.8c.8-.3 1.5.2 1.3 1.1z"/></svg>
-                        Открыть @BetalineAI_bot
-                    </a>
-                    <a class="btn btn-secondary" href="#quiz">Пройти оценку на сайте</a>
-                </div>
-            </div>
-            <div class="diag-qr rv">
-                <div class="diag-qr-card">
-                    <img src="/assets/img/qr-bot.svg" width="180" height="180" alt="QR-код @BetalineAI_bot" loading="lazy">
-                </div>
-                <p class="diag-qr-cap">Наведите камеру</p>
-            </div>
-        </div>
-
-        <!-- Квиз-оценка (fallback для тех, кто не хочет в Telegram) -->
-        <div id="quiz" class="diag-quiz rv">
-            <div class="diag-quiz-head">
-                <h3 class="diag-quiz-title">Оценка автоматизации за 5 шагов</h3>
-                <p class="diag-quiz-sub">Ответьте на четыре вопроса — покажем предварительную смету и сроки. Точный расчёт пришлём после разбора.</p>
-            </div>
-            <div class="diag-quiz-grid">
-                <!-- Левая колонка: шаги -->
-                <div class="diag-quiz-left">
-                    <div class="step-counter">Шаг <span id="qStepNum" class="num">1</span> из 4</div>
-                    <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="qProgress"></div></div>
-
-                    <form id="calcQuizForm">
-                        <!-- Шаг 1: ниша -->
-                        <div class="quiz-step active" data-step="1">
-                            <h4 class="step-title">В какой сфере работает бизнес?</h4>
-                            <p class="step-subtitle">От сферы зависит логика агента и набор интеграций</p>
-                            <div class="options-grid" role="listbox" aria-label="Сфера бизнеса">
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'niche', 50000)"><div class="opt-icon" aria-hidden="true">🛍️</div><div class="opt-title">Интернет-магазин</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'niche', 45000)"><div class="opt-icon" aria-hidden="true">✂️</div><div class="opt-title">Услуги / Салон</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'niche', 60000)"><div class="opt-icon" aria-hidden="true">🏢</div><div class="opt-title">Недвижимость</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'niche', 55000)"><div class="opt-icon" aria-hidden="true">💼</div><div class="opt-title">B2B / IT</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'niche', 40000)"><div class="opt-icon" aria-hidden="true">🎓</div><div class="opt-title">Обучение</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'niche', 45000)"><div class="opt-icon" aria-hidden="true">🤔</div><div class="opt-title">Другое</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Шаг 2: задача -->
-                        <div class="quiz-step" data-step="2">
-                            <h4 class="step-title">Какая главная задача агента?</h4>
-                            <p class="step-subtitle">Что система должна делать в первую очередь</p>
-                            <div class="options-grid" role="listbox" aria-label="Главная задача">
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'task', 30000)"><div class="opt-icon" aria-hidden="true">💬</div><div class="opt-title">Ответы на частые вопросы</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'task', 50000)"><div class="opt-icon" aria-hidden="true">🛒</div><div class="opt-title">Продажа и оформление</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'task', 40000)"><div class="opt-icon" aria-hidden="true">📅</div><div class="opt-title">Квалификация и запись</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'task', 65000)"><div class="opt-icon" aria-hidden="true">🔄</div><div class="opt-title">Сложная интеграция с CRM/API</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Шаг 3: платформа -->
-                        <div class="quiz-step" data-step="3">
-                            <h4 class="step-title">Где агент будет общаться с клиентами?</h4>
-                            <p class="step-subtitle">Дополнительные площадки подключим на внедрении</p>
-                            <div class="options-grid" role="listbox" aria-label="Платформа">
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'platform', 0)"><div class="opt-icon" aria-hidden="true">✈️</div><div class="opt-title">Telegram</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'platform', 15000)"><div class="opt-icon" aria-hidden="true">📞</div><div class="opt-title">WhatsApp</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'platform', 20000)"><div class="opt-icon" aria-hidden="true">🌐</div><div class="opt-title">Виджет на сайте</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'platform', 25000)"><div class="opt-icon" aria-hidden="true">📱</div><div class="opt-title">Instagram / VK</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Шаг 4: скорость -->
-                        <div class="quiz-step" data-step="4">
-                            <h4 class="step-title">Насколько быстро нужно запуститься?</h4>
-                            <p class="step-subtitle">От срока зависит состав команды проекта</p>
-                            <div class="options-grid" role="listbox" aria-label="Сроки запуска">
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'speed', 30000)"><div class="opt-icon" aria-hidden="true">🔥</div><div class="opt-title">Срочно, до 7 дней</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'speed', 0)"><div class="opt-icon" aria-hidden="true">📆</div><div class="opt-title">В рабочем темпе (2–4 нед)</div></div>
-                                <div class="opt-card" role="option" tabindex="0" aria-selected="false" onclick="selectOpt(this, 'speed', -10000)"><div class="opt-icon" aria-hidden="true">☕</div><div class="opt-title">Не срочно (1–2 мес)</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Шаг 5: телефон + смета -->
-                        <div class="quiz-step" data-step="5">
-                            <div class="final-form">
-                                <div class="ff-icon" aria-hidden="true">✅</div>
-                                <h4 class="step-title">Расчёт готов</h4>
-                                <p class="step-subtitle">Оставьте телефон — пришлём точную смету и примеры похожих решений в WhatsApp или Telegram.</p>
-                                <label class="diag-quiz-visually-hidden" for="qPhone">Телефон</label>
-                                <input type="tel" id="qPhone" class="ff-input num" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>
-                                <button type="button" class="btn-submit" onclick="submitQuiz()">Получить расчёт →</button>
-                                <p class="consent diag-quiz-consent">Нажимая кнопку, вы соглашаетесь с <a href="#" data-modal="privacy">политикой обработки персональных данных</a></p>
-                            </div>
-                        </div>
-                    </form>
-
-                    <div class="nav-buttons" id="qNav">
-                        <button type="button" class="btn-prev" onclick="qPrev()" style="visibility:hidden;">← Назад</button>
-                        <button type="button" class="btn-next" id="qNextBtn" onclick="qNext()" disabled>Далее →</button>
-                    </div>
-                </div>
-
-                <!-- Правая колонка: сводка -->
-                <aside class="diag-quiz-right" aria-label="Сводка по вашим ответам">
-                    <div class="check-title">Параметры решения</div>
-                    <ul class="check-list">
-                        <li class="check-item" id="ci-niche">
-                            <div class="ci-label">Сфера</div>
-                            <div class="ci-val"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span class="v">…</span></div>
-                        </li>
-                        <li class="check-item" id="ci-task">
-                            <div class="ci-label">Главная задача</div>
-                            <div class="ci-val"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span class="v">…</span></div>
-                        </li>
-                        <li class="check-item" id="ci-platform">
-                            <div class="ci-label">Платформа</div>
-                            <div class="ci-val"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span class="v">…</span></div>
-                        </li>
-                        <li class="check-item" id="ci-speed">
-                            <div class="ci-label">Сроки</div>
-                            <div class="ci-val"><svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg><span class="v">…</span></div>
-                        </li>
-                    </ul>
-                    <div class="estimation">
-                        <div class="est-label">Предварительная оценка</div>
-                        <div class="est-price num" id="qPrice">~ --- ₽</div>
-                        <div class="est-time" id="qTime">Сроки: уточняются</div>
-                    </div>
-                </aside>
-            </div>
-        </div>
+      <p class="sec-mark rv"><b>01</b> / Услуги</p>
+      <h2 class="rv">Пять направлений — одна инженерная команда</h2>
+      <div class="svc-grid">
+        <article class="svc rv">
+          <p class="idx">01</p>
+          <h3>AI-ассистенты и корпоративные помощники</h3>
+          <p>RAG-боты со знанием вашего продукта и регламентов. Отвечают клиентам и сотрудникам со ссылками на источники.</p>
+          <ul class="tags"><li>Сайт</li><li>Telegram</li><li>WhatsApp</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">02</p>
+          <h3>Агентные системы и автоматизация</h3>
+          <p>Агенты с инструментами, которые действуют сами: ставят задачи, пишут письма, обновляют данные в системах.</p>
+          <ul class="tags"><li>CRM</li><li>Почта</li><li>1С</li><li>Внутренние API</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">03</p>
+          <h3>Обработка документов</h3>
+          <p>Извлечение данных, классификация и сверка первички без ручного ввода — с записью в учётные системы.</p>
+          <ul class="tags"><li>Извлечение</li><li>Классификация</li><li>Сверка</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">04</p>
+          <h3>Data Science и предиктивная аналитика</h3>
+          <p>Прогноз спроса, скоринг лидов, объяснимые модели — решения, которые показывают, почему они так считают.</p>
+          <ul class="tags"><li>Прогноз спроса</li><li>Скоринг</li><li>Explainable&nbsp;ML</li></ul>
+        </article>
+        <article class="svc rv">
+          <p class="idx">05</p>
+          <h3>AI-аудит и консалтинг</h3>
+          <p>Карта AI-возможностей вашего бизнеса, дорожная карта внедрения и честная оценка ROI до старта разработки.</p>
+          <ul class="tags"><li>Карта возможностей</li><li>Дорожная карта</li><li>Оценка ROI</li></ul>
+        </article>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ─────────────── 4. CASES ─────────────── -->
-<section class="cases" id="cases" aria-labelledby="cases-title">
+  <!-- ================= КЕЙСЫ ================= -->
+  <section class="sec" id="cases">
+    <div class="rule"></div>
     <div class="wrap">
-        <div class="sec-head rv">
-            <div class="badge good">Измеренные эффекты</div>
-            <h2 id="cases-title">Цифры вперёд — обещания потом</h2>
-            <p class="lead">Каждая цифра снята с работающего внедрения — с указанием кейса, периода и метода измерения.</p>
-        </div>
-
-        <div class="cases-grid">
-            <article class="card cases-card rv">
-                <div class="cases-val num cases-val-green">+23%</div>
-                <h3 class="cases-what">конверсии в продажу</h3>
-                <p class="cases-legend">кейс: B2B-продажи · период: 45 дней · метод: агент-квалификатор в amoCRM</p>
-            </article>
-            <article class="card cases-card rv">
-                <div class="cases-val num cases-val-green">−1,44 млн ₽</div>
-                <h3 class="cases-what">ФОТ в год</h3>
-                <p class="cases-legend">кейс: закупки и листинги · период: 6 мес · метод: агент обработки заявок поставщиков</p>
-            </article>
-            <article class="card cases-card rv">
-                <div class="cases-val num cases-val-orange">3 ч → минуты</div>
-                <h3 class="cases-what">на одно КП</h3>
-                <p class="cases-legend">кейс: оптовая торговля · метод: генерация КП из прайса 1С</p>
-            </article>
-            <article class="card cases-card rv">
-                <div class="cases-val num cases-val-orange">24/7</div>
-                <h3 class="cases-what">без выходных и праздников</h3>
-                <p class="cases-legend">кейс: клиентская поддержка · период: внедрение за 2 недели · метод: RAG-агент на базе знаний</p>
-            </article>
-        </div>
-
-        <div class="cases-cta rv">
-            <a class="btn btn-primary" href="#audit">Хочу такой же результат</a>
-        </div>
+      <p class="sec-mark rv"><b>02</b> / Кейсы</p>
+      <h2 class="rv">Измеренные эффекты, а&nbsp;не обещания</h2>
+      <div class="cases-list">
+        <article class="case rv">
+          <div class="meta">
+            <p class="dom">Дистрибуция стройматериалов</p>
+            <p class="tag">NDA</p>
+          </div>
+          <div>
+            <h3>ИИ-отдел продаж для дистрибьютора</h3>
+            <p>Ассистент квалифицирует входящие лиды прямо в AmoCRM: задаёт уточняющие вопросы,
+               сегментирует и передаёт менеджеру только готовых к разговору клиентов.</p>
+          </div>
+          <div class="res">
+            <p class="num">+34&thinsp;%</p>
+            <p class="cap">SQL — квалифицированных лидов</p>
+          </div>
+        </article>
+        <article class="case rv">
+          <div class="meta">
+            <p class="dom">Финтех-сервис</p>
+            <p class="tag">NDA</p>
+          </div>
+          <div>
+            <h3>RAG-ассистент поддержки</h3>
+            <p>Две трети обращений закрываются без оператора: ассистент отвечает по базе знаний
+               со ссылками на источники, сложные случаи передаёт человеку.</p>
+          </div>
+          <div class="res">
+            <p class="num">11&thinsp;→&thinsp;2&nbsp;мин</p>
+            <p class="cap">время ответа · 2/3 без оператора</p>
+          </div>
+        </article>
+        <article class="case rv">
+          <div class="meta">
+            <p class="dom">Логистика</p>
+            <p class="tag">Коммерческий проект</p>
+          </div>
+          <div>
+            <h3>Обработка первички для логистической компании</h3>
+            <p>Счета, УПД и транспортные накладные распознаются, сверяются и попадают
+               в учётную систему без участия операторов.</p>
+          </div>
+          <div class="res">
+            <p class="num">18&thinsp;000</p>
+            <p class="cap">документов в месяц без ручного ввода</p>
+          </div>
+        </article>
+      </div>
+      <figure class="case-fig rv">
+        <img src="/assets/img/field-study.webp" alt="Чертёж: карта измеренных эффектов — изолинии плотности наблюдений с отметками результатов трёх проектов" width="1400" height="1000" loading="lazy">
+        <figcaption class="fig-cap">
+          <span><b>рис. 03</b> — карта измеренных эффектов</span>
+          <span>M-1…M-3 · контрольные точки проектов</span>
+        </figcaption>
+      </figure>
     </div>
-</section>
+  </section>
 
-<!-- built from partials/bottom.html -->
-<!-- ═══════════════ АГЕНТ B · НИЖНЯЯ ПОЛОВИНА ═══════════════ -->
-
-<!-- ─── 5. SERVICES: что мы строим ─── -->
-<section class="svc" id="services">
+  <!-- ================= ПОЧЕМУ МЫ ================= -->
+  <section class="sec" id="why">
+    <div class="rule"></div>
     <div class="wrap">
-        <div class="sec-head rv">
-            <span class="badge">Что мы строим</span>
-            <h2>Агенты внутри ваших систем, а&nbsp;не&nbsp;рядом с&nbsp;ними</h2>
-            <p class="lead">Не отдельное окошко с ответами, а участник процесса: агент читает и пишет данные там же, где работает ваша команда.</p>
-        </div>
-        <div class="svc-grid">
-            <article class="card svc-card rv">
-                <div class="svc-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h5"/></svg>
-                </div>
-                <h3>Агенты продаж и&nbsp;квалификации</h3>
-                <p>Отвечает на заявку за минуту, задаёт квалифицирующие вопросы и создаёт сделку в CRM с заполненными полями.</p>
-                <ul class="svc-tags">
-                    <li>amoCRM</li><li>Bitrix24</li><li>квалификация</li>
-                </ul>
-            </article>
-            <article class="card svc-card rv">
-                <div class="svc-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 13h6M9 17h6"/></svg>
-                </div>
-                <h3>Обработка документов и&nbsp;КП</h3>
-                <p>Собирает коммерческое предложение из номенклатуры 1С и отправляет клиенту готовый документ — без ручного копирования.</p>
-                <ul class="svc-tags">
-                    <li>1С</li><li>КП и счета</li><li>PDF</li>
-                </ul>
-            </article>
-            <article class="card svc-card rv">
-                <div class="svc-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
-                </div>
-                <h3>Поддержка клиентов 24/7</h3>
-                <p>Отвечает в мессенджерах по вашей базе знаний ночью и в выходные, сложные вопросы передаёт человеку.</p>
-                <ul class="svc-tags">
-                    <li>Telegram</li><li>WhatsApp</li><li>эскалация</li>
-                </ul>
-            </article>
-            <article class="card svc-card rv">
-                <div class="svc-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="9" width="6" height="6" rx="1"/><rect x="16" y="3" width="6" height="6" rx="1"/><rect x="16" y="15" width="6" height="6" rx="1"/><path d="M8 12h4m0 0V6h4m-4 6v6h4"/></svg>
-                </div>
-                <h3>Интеграции</h3>
-                <p>Читает и пишет данные напрямую в ваших системах: сделки, товары, статусы, оплаты — без ручного переноса.</p>
-                <ul class="svc-tags">
-                    <li>CRM</li><li>1С</li><li>мессенджеры</li><li>API</li>
-                </ul>
-            </article>
-            <article class="card svc-card rv">
-                <div class="svc-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-5 3 3 5-7"/></svg>
-                </div>
-                <h3>Аналитика и&nbsp;отчёты</h3>
-                <p>Собирает данные из CRM и присылает отчёт в Telegram — по расписанию или по запросу руководителя.</p>
-                <ul class="svc-tags">
-                    <li>отчёты</li><li>дашборды</li><li>Telegram</li>
-                </ul>
-            </article>
-        </div>
+      <p class="sec-mark rv"><b>03</b> / Почему мы</p>
+      <h2 class="rv">LLM-системы как инженерные системы</h2>
+      <div class="why-grid">
+        <article class="why rv">
+          <p class="idx">03.1</p>
+          <h3>Полный цикл внутри команды</h3>
+          <p>От аудита до сопровождения — без субподряда. Аналитики, ML-инженеры и разработчики
+             сидят в одной команде и отвечают за результат вместе.</p>
+        </article>
+        <article class="why rv">
+          <p class="idx">03.2</p>
+          <h3>Качество измеряется, а&nbsp;не предполагается</h3>
+          <p>Оценка качества ответов, логирование, автотесты и мониторинг —
+             а не «промпт и молитва». Каждый релиз проверяется на эталонных наборах.</p>
+        </article>
+        <article class="why rv">
+          <p class="idx">03.3</p>
+          <h3>Готовность к чувствительным данным</h3>
+          <p>Работаем в контуре заказчика, подписываем NDA, разворачиваем изолированные базы
+             знаний — RAG on-premise, когда данные не должны покидать периметр.</p>
+        </article>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ─── 6. TRUST: полоса доверия + инженер ─── -->
-<section class="trust" id="trust">
+  <!-- ================= ТЕХНОЛОГИИ ================= -->
+  <section class="sec" id="tech">
+    <div class="rule"></div>
     <div class="wrap">
-        <ul class="trust-strip rv">
-            <li class="trust-item">
-                <span class="trust-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-                </span>
-                <span>Работаем по&nbsp;152-ФЗ, подписываем NDA</span>
-            </li>
-            <li class="trust-item">
-                <span class="trust-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 18h.01M10 18h.01"/><path d="M5 14V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"/></svg>
-                </span>
-                <span>Российские LLM или контур клиента</span>
-            </li>
-            <li class="trust-item">
-                <span class="trust-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                </span>
-                <span>Данные не покидают вашу инфраструктуру</span>
-            </li>
-            <li class="trust-item">
-                <span class="trust-ico" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
-                </span>
-                <span>ИП&nbsp;Ромащенко&nbsp;С.&nbsp;Н. · ИНН&nbsp;<span class="num">143302699808</span></span>
-            </li>
+      <p class="sec-mark rv"><b>04</b> / Технологии</p>
+      <h2 class="rv">Стек подбирается под задачу, а&nbsp;не наоборот</h2>
+      <div class="tech-grid rv" role="list">
+        <div class="tech" role="listitem"><b>Python</b><span>t-01</span></div>
+        <div class="tech" role="listitem"><b>Claude</b><span>t-02</span></div>
+        <div class="tech" role="listitem"><b>GPT</b><span>t-03</span></div>
+        <div class="tech" role="listitem"><b>GigaChat</b><span>t-04</span></div>
+        <div class="tech" role="listitem"><b>YandexGPT</b><span>t-05</span></div>
+        <div class="tech" role="listitem"><b>Mistral</b><span>t-06</span></div>
+        <div class="tech" role="listitem"><b>Qdrant</b><span>t-07</span></div>
+        <div class="tech" role="listitem"><b>PostgreSQL</b><span>t-08</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ПРОЦЕСС ================= -->
+  <section class="sec" id="process">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>05</b> / Процесс</p>
+      <h2 class="rv">Четыре этапа — от гипотезы до работающей системы</h2>
+      <figure class="proc-fig rv">
+        <img src="/assets/img/process-band.webp" alt="Чертёж: траектория внедрения по четырём этапам — аудит, проектирование, разработка, запуск — с петлёй обратной связи" width="2200" height="700" loading="lazy">
+      </figure>
+      <div class="proc-grid">
+        <article class="proc rv">
+          <p class="idx">01</p>
+          <h3>Аудит и стратегия</h3>
+          <p class="dur">1–2 недели</p>
+          <p>Погружаемся в процессы, находим точки применения AI и считаем ожидаемый эффект.</p>
+        </article>
+        <article class="proc rv">
+          <p class="idx">02</p>
+          <h3>Проектирование</h3>
+          <p class="dur">2–3 недели</p>
+          <p>Архитектура решения, источники данных, метрики качества и план интеграций.</p>
+        </article>
+        <article class="proc rv">
+          <p class="idx">03</p>
+          <h3>Разработка</h3>
+          <p class="dur">4–12 недель</p>
+          <p>Итерации с регулярными демо: система растёт на ваших данных и ваших сценариях.</p>
+        </article>
+        <article class="proc rv">
+          <p class="idx">04</p>
+          <h3>Запуск и развитие</h3>
+          <p class="dur">1–2 недели + сопровождение</p>
+          <p>Внедрение в контур, обучение команды, мониторинг и план развития системы.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ЦЕНЫ ================= -->
+  <section class="sec" id="pricing">
+    <div class="rule"></div>
+    <div class="wrap">
+      <p class="sec-mark rv"><b>06</b> / Цены</p>
+      <h2 class="rv">Прозрачные уровни — старт с&nbsp;бесплатного аудита</h2>
+      <p class="sec-lead rv">Каждый проект начинается с вводного разговора: смотрим на процессы
+         и честно говорим, где AI окупится, а где — нет.</p>
+
+      <div class="price-free rv">
+        <p class="k">Точка входа</p>
+        <div>
+          <h3>Вводный AI-аудит — 30-минутный звонок</h3>
+          <p>Разбираем ваши процессы и показываем, что можно автоматизировать уже сейчас.</p>
+          <ul class="inc">
+            <li>разбор процессов</li>
+            <li>карта возможностей</li>
+            <li>оценка бюджета и сроков</li>
+          </ul>
+        </div>
+        <div class="side">
+          <p class="val">0 ₽<small>бесплатно · без обязательств</small></p>
+          <a class="btn btn-solid" href="#contact">Записаться <span class="arr">→</span></a>
+        </div>
+      </div>
+
+      <div class="price-list">
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">AI-аудит и консалтинг</h3>
+            <p class="pi">Полный аудит</p>
+          </div>
+          <ul class="inc">
+            <li>интервью с командой</li>
+            <li>карта AI-возможностей</li>
+            <li>дорожная карта внедрения</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>150&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">Обработка документов</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>извлечение данных</li>
+            <li>классификация и сверка</li>
+            <li>интеграция с одной системой</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>600&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">AI-ассистенты</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>поиск по смыслу со ссылками на источники</li>
+            <li>один канал</li>
+            <li>оценка качества ответов</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>700&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">Data Science и аналитика</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>одна прогнозная модель</li>
+            <li>объяснение факторов</li>
+            <li>интеграция в CRM</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>800&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+        <article class="price rv">
+          <div class="n">
+            <h3 class="t">Агентные системы</h3>
+            <p class="pi">Пилот</p>
+          </div>
+          <ul class="inc">
+            <li>агент на один сценарий</li>
+            <li>интеграции с внешними системами</li>
+            <li>логирование действий</li>
+          </ul>
+          <div class="v"><p class="val"><i>от</i>1&thinsp;000&thinsp;000&nbsp;<span class="cur">₽</span></p></div>
+        </article>
+      </div>
+
+      <div class="included rv">
+        <p class="h">Включено во все решения</p>
+        <ul>
+          <li>исходный код в вашем репозитории</li>
+          <li>документация</li>
+          <li>обучение команды</li>
+          <li>мониторинг</li>
+          <li>план развития</li>
+          <li>прямая связь с инженерами</li>
         </ul>
-
-        <div class="trust-eng rv">
-            <img class="trust-photo" src="/assets/img/engineer-sergey.webp" width="120" height="120" alt="Сергей Ромащенко" loading="lazy">
-            <div class="trust-eng-text">
-                <h3>Сергей Ромащенко — ведущий инженер внедрения</h3>
-                <p>Проектирует каждую систему лично и остаётся на связи после запуска. Никаких «менеджеров-прокладок» между вами и тем, кто строит агента.</p>
-            </div>
-            <button class="btn btn-primary trust-cta" id="trustChat" type="button">Написать инженеру</button>
-        </div>
+      </div>
     </div>
-</section>
+  </section>
 
-<!-- ─── 7. PROCESS: как идёт проект ─── -->
-<section class="proc" id="process">
+  <!-- ================= CTA / ФОРМА ================= -->
+  <section class="sec" id="contact">
+    <div class="rule"></div>
     <div class="wrap">
-        <div class="sec-head rv">
-            <span class="badge">Как идёт проект</span>
-            <h2>От разбора до работающего агента — по&nbsp;регламенту</h2>
-            <p class="lead">Каждый этап заканчивается тем, что можно посмотреть и потрогать, — а не отчётом о проделанной работе.</p>
+      <p class="sec-mark rv"><b>07</b> / Контакт</p>
+      <h2 class="rv">Начните с&nbsp;бесплатного аудита</h2>
+      <div class="cta-grid">
+        <div class="rv">
+          <p class="cta-note">Расскажите о задаче — вернёмся в течение рабочего дня
+             и предложим время для 30-минутного разговора с инженером, а не менеджером по продажам.</p>
+          <ul class="cta-facts">
+            <li><b>Формат</b><span>30-минутный видеозвонок</span></li>
+            <li><b>Результат</b><span>карта возможностей и оценка бюджета</span></li>
+            <li><b>Стоимость</b><span>бесплатно, без обязательств</span></li>
+            <li><b>Почта</b><span><a class="cta-link" href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a></span></li>
+            <li><b>Телефон</b><span><a class="cta-link" href="tel:88002001849">8 800 200-18-49</a></span></li>
+          </ul>
         </div>
-        <ol class="proc-grid">
-            <li class="proc-step rv">
-                <div class="proc-num num" aria-hidden="true">01</div>
-                <h3>Разбор процесса</h3>
-                <p class="proc-term">Бесплатно · 30 минут</p>
-                <p class="proc-desc">Смотрим, как заявка идёт по вашей воронке, и где она застревает.</p>
-                <p class="proc-get"><span>Что получаете:</span> карта возможностей и оценка эффекта в деньгах.</p>
-            </li>
-            <li class="proc-step rv">
-                <div class="proc-num num" aria-hidden="true">02</div>
-                <h3>Прототип на&nbsp;ваших данных</h3>
-                <p class="proc-term">5–10 дней</p>
-                <p class="proc-desc">Собираем агента на реальных заявках и документах, а не на демо-примерах.</p>
-                <p class="proc-get"><span>Что получаете:</span> работающий сценарий в тестовом контуре.</p>
-            </li>
-            <li class="proc-step rv">
-                <div class="proc-num num" aria-hidden="true">03</div>
-                <h3>Внедрение</h3>
-                <p class="proc-term">2–6 недель</p>
-                <p class="proc-desc">Подключаем агента к боевой CRM и каналам, настраиваем права и эскалации.</p>
-                <p class="proc-get"><span>Что получаете:</span> агент в вашей CRM и каналах, обучение команды.</p>
-            </li>
-            <li class="proc-step rv">
-                <div class="proc-num num" aria-hidden="true">04</div>
-                <h3>Сопровождение</h3>
-                <p class="proc-term">Постоянно</p>
-                <p class="proc-desc">Следим за качеством ответов и развиваем систему вместе с процессом.</p>
-                <p class="proc-get"><span>Что получаете:</span> мониторинг качества, дообучение, развитие.</p>
-            </li>
-        </ol>
-    </div>
-</section>
-
-<!-- ─── 8. PRICING: два трека ─── -->
-<section class="price" id="pricing">
-    <div class="wrap">
-        <div class="sec-head rv">
-            <span class="badge">Цены</span>
-            <h2>Готовые решения — по&nbsp;тарифу. Агент под&nbsp;процесс — по&nbsp;проекту</h2>
-            <p class="lead">Типовые задачи закрываются тарифом с фиксированной ценой. Нестандартный процесс сначала разбираем — бесплатно.</p>
-        </div>
-
-        <div class="price-grid">
-            <article class="card price-card rv">
-                <h3 class="price-name">Старт</h3>
-                <p class="price-sum"><span class="num">45 000</span> <span class="price-cur">₽</span></p>
-                <p class="price-per">единоразово</p>
-                <ul class="price-feats">
-                    <li>Базовый агент-консультант</li>
-                    <li>1 мессенджер</li>
-                    <li>До 500 диалогов в месяц</li>
-                    <li>Настройка за 5 дней</li>
-                    <li>Поддержка 30 дней</li>
-                </ul>
-                <button class="btn btn-primary" data-plan="Старт" type="button">Выбрать</button>
-            </article>
-            <article class="card price-card price-card--pop rv">
-                <p class="price-pop">Популярный</p>
-                <h3 class="price-name">Бизнес</h3>
-                <p class="price-sum"><span class="num">90 000</span> <span class="price-cur">₽</span></p>
-                <p class="price-per">единоразово</p>
-                <ul class="price-feats">
-                    <li>Агент с CRM-интеграцией</li>
-                    <li>3 мессенджера + сайт</li>
-                    <li>Безлимитные диалоги</li>
-                    <li>AI-аналитика диалогов</li>
-                    <li>Поддержка 90 дней</li>
-                </ul>
-                <button class="btn btn-primary" data-plan="Бизнес" type="button">Выбрать</button>
-            </article>
-            <article class="card price-card rv">
-                <h3 class="price-name">Премиум</h3>
-                <p class="price-sum"><span class="num">145 000</span> <span class="price-cur">₽</span></p>
-                <p class="price-per">единоразово</p>
-                <ul class="price-feats">
-                    <li>Полный ИИ-комплекс</li>
-                    <li>Все каналы связи</li>
-                    <li>Прогноз спроса</li>
-                    <li>Мультиканальный запуск</li>
-                    <li>Обучение команды</li>
-                    <li>Поддержка 6 месяцев</li>
-                </ul>
-                <button class="btn btn-primary" data-plan="Премиум" type="button">Выбрать</button>
-            </article>
-        </div>
-
-        <div class="price-custom rv">
-            <div class="price-custom-text">
-                <span class="badge fill">Нестандартный процесс</span>
-                <h3>Агент под ваш процесс</h3>
-                <p>Цена — по проекту, после бесплатного разбора. Сначала считаем эффект, потом называем стоимость.</p>
-                <ul class="price-custom-list">
-                    <li>Карта ваших процессов</li>
-                    <li>Оценка эффекта в деньгах</li>
-                    <li>План внедрения по этапам</li>
-                </ul>
+        <div class="rv">
+          <form class="form" id="lead-form" novalidate>
+            <div class="row2">
+              <div class="field">
+                <label for="f-name">Имя</label>
+                <input id="f-name" name="name" type="text" placeholder="Как к вам обращаться" autocomplete="name" required>
+              </div>
+              <div class="field">
+                <label for="f-company">Компания</label>
+                <input id="f-company" name="company" type="text" placeholder="Название компании" autocomplete="organization">
+              </div>
             </div>
-            <div class="price-custom-cta">
-                <a class="btn btn-primary" href="#audit">Начать с бесплатного разбора</a>
-                <p class="price-custom-note">30 минут · онлайн · без обязательств</p>
+            <div class="field">
+              <label for="f-contact">Email или телефон</label>
+              <input id="f-contact" name="contact" type="text" placeholder="Куда написать или позвонить" autocomplete="email" required>
             </div>
-        </div>
-    </div>
-</section>
-
-<!-- ─── 9. FAQ ─── -->
-<section class="faq" id="faq">
-    <div class="wrap">
-        <div class="sec-head rv">
-            <span class="badge">FAQ</span>
-            <h2>Вопросы, которые задают до&nbsp;старта</h2>
-        </div>
-        <div class="faq-list">
-            <details class="faq-item rv">
-                <summary>Чем агент отличается от бота из конструктора?<span class="faq-x" aria-hidden="true"></span></summary>
-                <div class="faq-a">
-                    <p>Конструктор упирается в шаблон: несколько сценариев, кнопки, ответы по скрипту. Агент проектируется внутри вашего процесса — он сам действует в CRM и 1С: создаёт сделки, заполняет поля, готовит документы, а не только отвечает на сообщения. К нам обычно приходят, когда коробка упёрлась — и нужен кастом.</p>
-                </div>
-            </details>
-            <details class="faq-item rv">
-                <summary>Что с нашими данными и 152-ФЗ?<span class="faq-x" aria-hidden="true"></span></summary>
-                <div class="faq-a">
-                    <p>Работаем по 152-ФЗ. Систему разворачиваем в контуре клиента или в российском облаке, базы изолированы — данные одного клиента недоступны другим. Перед стартом подписываем NDA.</p>
-                </div>
-            </details>
-            <details class="faq-item rv">
-                <summary>Что если агент ошибётся в переписке с клиентом?<span class="faq-x" aria-hidden="true"></span></summary>
-                <div class="faq-a">
-                    <p>Для этого проектируются сценарии эскалации: в спорной ситуации агент передаёт диалог живому сотруднику, а не импровизирует. Каждое действие логируется, качество ответов контролируем на сопровождении.</p>
-                </div>
-            </details>
-            <details class="faq-item rv">
-                <summary>Сколько времени до запуска?<span class="faq-x" aria-hidden="true"></span></summary>
-                <div class="faq-a">
-                    <p>Прототип на ваших данных — 5–10 дней. Полное внедрение в CRM и каналы — 2–6 недель в зависимости от числа интеграций.</p>
-                </div>
-            </details>
-            <details class="faq-item rv">
-                <summary>Какие системы интегрируете?<span class="faq-x" aria-hidden="true"></span></summary>
-                <div class="faq-a">
-                    <p>amoCRM, Bitrix24, 1С, МойСклад, Telegram, WhatsApp. Если у системы есть API — агент сможет с ней работать.</p>
-                </div>
-            </details>
-            <details class="faq-item rv">
-                <summary>С чего начать, если процесс нестандартный?<span class="faq-x" aria-hidden="true"></span></summary>
-                <div class="faq-a">
-                    <p>С бесплатного разбора: за 30 минут смотрим процесс, показываем, что автоматизируется, и оцениваем эффект. А как агент понимает свободные вопросы — <a href="https://t.me/BetalineAI_bot?start=diag_faq" data-goal="diag_bot_click" target="_blank" rel="noopener noreferrer">проверьте сами в @BetalineAI_bot</a>.</p>
-                </div>
-            </details>
-        </div>
-    </div>
-</section>
-
-<!-- ─── 10. AUDIT: финальный CTA + формы ─── -->
-<section class="audit" id="audit">
-    <div class="wrap">
-        <div class="sec-head audit-head rv">
-            <span class="badge fill">Бесплатно · 30 минут</span>
-            <h2>Разберём ваш процесс и&nbsp;покажем, где агент окупится</h2>
-            <p class="lead">Онлайн-разбор с инженером: карта возможностей, оценка эффекта, план внедрения. Без продажи «в лоб».</p>
-        </div>
-
-        <div class="audit-grid">
-            <div class="card audit-card rv">
-                <form id="auditForm" onsubmit="return submitAuditForm(event)">
-                    <div class="audit-row">
-                        <div class="audit-field">
-                            <label for="auditName">Ваше имя</label>
-                            <input type="text" name="name" id="auditName" placeholder="Андрей" autocomplete="given-name">
-                        </div>
-                        <div class="audit-field">
-                            <label for="auditPhone">Телефон <span class="acc">*</span></label>
-                            <input type="tel" name="phone" id="auditPhone" placeholder="+7 (___) ___-__-__" required autocomplete="tel">
-                        </div>
-                    </div>
-
-                    <div class="opt-toggles">
-                        <button type="button" class="opt-toggle" onclick="toggleOpt(this,'auditNichePanel')" aria-controls="auditNichePanel">
-                            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5l4 4 4-4"/></svg>
-                            Выбрать вашу сферу
-                        </button>
-                        <button type="button" class="opt-toggle" onclick="toggleOpt(this,'auditTaskPanel')" aria-controls="auditTaskPanel">
-                            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5l4 4 4-4"/></svg>
-                            Описать задачу
-                        </button>
-                        <button type="button" class="opt-toggle" onclick="toggleOpt(this,'auditDatePanel')" aria-controls="auditDatePanel">
-                            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5l4 4 4-4"/></svg>
-                            Дата и время
-                        </button>
-                    </div>
-
-                    <div class="opt-panel" id="auditNichePanel">
-                        <select name="niche" id="auditNiche" aria-label="Ваша сфера">
-                            <option value="" selected>Выберите сферу</option>
-                            <option>Малый бизнес / Торговля</option>
-                            <option>Ритейл и Услуги</option>
-                            <option>IT Компании</option>
-                            <option>Медицина</option>
-                            <option>Образование</option>
-                            <option>Недвижимость</option>
-                            <option>Другое</option>
-                        </select>
-                    </div>
-
-                    <div class="opt-panel" id="auditTaskPanel">
-                        <textarea name="task" rows="3" placeholder="Расскажите о вашем процессе и задачах" aria-label="Описание задачи"></textarea>
-                    </div>
-
-                    <div class="opt-panel" id="auditDatePanel">
-                        <div class="wheel-picker">
-                            <div class="wheel-col">
-                                <div class="wheel-label">День</div>
-                                <div class="wheel-col-wrap">
-                                    <div class="wheel-scroll" id="wheelDay"></div>
-                                    <div class="wheel-highlight"></div>
-                                </div>
-                                <input type="hidden" name="date" id="auditDateHidden">
-                            </div>
-                            <div class="wheel-col">
-                                <div class="wheel-label">Время</div>
-                                <div class="wheel-col-wrap">
-                                    <div class="wheel-scroll" id="wheelTime"></div>
-                                    <div class="wheel-highlight"></div>
-                                </div>
-                                <input type="hidden" name="time" id="auditTimeHidden">
-                            </div>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary submit-btn">Получить аудит бесплатно</button>
-                </form>
-
-                <div class="success-msg" id="auditSuccess">
-                    <div class="audit-success-emoji" aria-hidden="true">✅</div>
-                    <h3>Заявка отправлена!</h3>
-                    <p>Мы свяжемся с вами в ближайшее время</p>
-                </div>
-
-                <p class="consent">Нажимая кнопку, вы соглашаетесь с <a data-modal="policy">политикой обработки персональных данных</a></p>
+            <div class="field">
+              <label for="f-task">Описание задачи</label>
+              <textarea id="f-task" name="task" placeholder="Пара предложений: какой процесс хочется автоматизировать"></textarea>
             </div>
-
-            <aside class="audit-side rv">
-                <div class="card audit-call">
-                    <h3>Удобнее голосом?</h3>
-                    <p class="audit-call-sub">Оставьте номер — перезвоним и обсудим задачу.</p>
-                    <div id="cbFormWrap">
-                        <form id="callbackForm" onsubmit="return submitCallback(event)">
-                            <div class="audit-field">
-                                <label for="cbName">Имя</label>
-                                <input type="text" name="name" id="cbName" placeholder="Андрей" autocomplete="given-name">
-                            </div>
-                            <div class="audit-field">
-                                <label for="cbPhone">Телефон <span class="acc">*</span></label>
-                                <input type="tel" name="phone" id="cbPhone" placeholder="+7 (___) ___-__-__" required autocomplete="tel">
-                            </div>
-                            <button type="submit" class="btn btn-secondary cb-submit">Заказать звонок</button>
-                        </form>
-                        <p class="consent">Нажимая кнопку, вы соглашаетесь с <a data-modal="policy">политикой обработки персональных данных</a></p>
-                    </div>
-                    <div class="cb-success-msg" id="cbSuccess">
-                        <div class="audit-success-emoji" aria-hidden="true">📞</div>
-                        <h3>Спасибо!</h3>
-                        <p>Перезвоним в ближайшее рабочее время</p>
-                    </div>
-                </div>
-                <ul class="audit-contacts">
-                    <li><a href="tel:88002001849" class="num">8 800 200-18-49</a><span>звонок по России бесплатный</span></li>
-                    <li><a href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a><span>ответим в течение дня</span></li>
-                </ul>
-            </aside>
-        </div>
-    </div>
-</section>
-
-<!-- ─── 11. FOOTER ─── -->
-<footer class="ft" id="footer">
-    <div class="wrap">
-        <div class="ft-grid">
-            <div class="ft-brand">
-                <a class="ft-logo" href="#top">Betaline<span>AI</span></a>
-                <p class="ft-desc">Проектируем ИИ-агентов внутри бизнес-процессов: продажи, поддержка, документы, интеграции с CRM и 1С.</p>
-                <a class="ft-tg" href="https://t.me/BetalineAI_bot" target="_blank" rel="noopener noreferrer" data-goal="diag_bot_click">
-                    <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                    @BetalineAI_bot
-                </a>
+            <div class="form-foot">
+              <button class="btn btn-solid" type="submit">Отправить заявку <span class="arr">→</span></button>
+              <p class="hint">Отвечаем в течение рабочего дня</p>
             </div>
-            <nav class="ft-col" aria-label="Меню в подвале">
-                <p class="ft-title">Меню</p>
-                <ul class="ft-links">
-                    <li><a href="#pains">Затыки</a></li>
-                    <li><a href="#cases">Кейсы</a></li>
-                    <li><a href="#process">Процесс</a></li>
-                    <li><a href="#pricing">Цены</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                </ul>
-            </nav>
-            <div class="ft-col">
-                <p class="ft-title">Контакты</p>
-                <ul class="ft-links">
-                    <li><a class="ft-phone num" href="tel:88002001849">8 800 200-18-49</a></li>
-                    <li><a href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a></li>
-                    <li><span class="ft-hours">Ежедневно 10:00–17:00</span></li>
-                </ul>
-            </div>
+            <p class="consent">Нажимая кнопку, вы соглашаетесь с <a data-modal="policy" href="#" role="button">политикой обработки персональных данных</a></p>
+          </form>
+          <div class="form-ok" id="form-ok" role="status">
+            <p class="mk">Заявка принята</p>
+            <h3>Спасибо — мы на связи</h3>
+            <p>Вернёмся в течение рабочего дня и предложим время для вводного аудита —
+               или напишите на <a class="cta-link" href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a>.</p>
+          </div>
         </div>
-        <div class="ft-bottom">
-            <p class="ft-copy">© 2024–2026 Betaline AI. Все права защищены.<br>
-                ИП Ромащенко Сергей Николаевич · ИНН <span class="num">143302699808</span> · ОГРНИП <span class="num">316213000103371</span></p>
-            <div class="ft-legal">
-                <a data-modal="policy" href="#" role="button">Политика конфиденциальности</a>
-                <a data-modal="oferta" href="#" role="button">Договор оферты</a>
-            </div>
-        </div>
+      </div>
     </div>
-</footer>
-
-<!-- ═══════════════ МОДАЛКИ ═══════════════ -->
-<div class="modal-overlay" id="modalOverlay"></div>
-
-<!-- Plan-модалка (тарифы) -->
-<div class="modal" id="planModal" role="dialog" aria-modal="true" aria-labelledby="pmTitle">
-    <div class="modal-card">
-        <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">&#10005;</button>
-        <div id="pmFormWrap">
-            <h3 class="modal-title" id="pmTitle">Тариф «<span id="pmPlanName"></span>»</h3>
-            <p class="modal-sub">Оставьте контакт — вернёмся с ответами на вопросы по тарифу</p>
-            <form id="pmForm">
-                <input type="hidden" id="pmPlan" name="plan" value="">
-                <div class="modal-field">
-                    <label for="pmName">Имя</label>
-                    <input type="text" id="pmName" name="name" placeholder="Андрей" autocomplete="given-name">
-                </div>
-                <div class="modal-field">
-                    <label for="pmPhone">Телефон <span class="acc">*</span></label>
-                    <input type="tel" id="pmPhone" name="phone" placeholder="+7 (___) ___-__-__" required autocomplete="tel">
-                </div>
-                <button type="submit" class="btn btn-primary modal-submit">Оставить заявку</button>
-            </form>
-            <p class="consent">Нажимая кнопку, вы соглашаетесь с <a data-modal="policy">политикой обработки персональных данных</a></p>
-        </div>
-        <div class="modal-success" id="pmSuccess">
-            <div class="audit-success-emoji" aria-hidden="true">🎉</div>
-            <h3>Заявка принята!</h3>
-            <p>Свяжемся с вами в ближайшее время</p>
-        </div>
-    </div>
-</div>
-
-<!-- Модалка: политика конфиденциальности -->
-<div class="modal modal-doc" id="modalPolicy" role="dialog" aria-modal="true" aria-labelledby="policyTitle">
-    <div class="modal-card modal-card-doc">
-        <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">&#10005;</button>
-        <div class="modal-doc-body">
-            <h2 id="policyTitle">Политика конфиденциальности</h2>
-            <p>Настоящая Политика конфиденциальности описывает, как проект <strong>Betaline AI</strong> (далее — «Исполнитель», «мы», «наш») собирает, использует и защищает личную информацию пользователей (далее — «Пользователь»), оставленную на сайте <em>betaline-ai.ru</em>.</p>
-            <h3>1. Какую информацию мы собираем</h3>
-            <p>Мы собираем только те данные, которые вы добровольно предоставляете при заполнении форм обратной связи, квизов или при общении с нашими ботами:</p>
-            <ul>
-                <li>Имя и фамилия;</li>
-                <li>Контактный номер телефона;</li>
-                <li>Адрес электронной почты;</li>
-                <li>Никнейм в Telegram (или других мессенджерах);</li>
-                <li>Данные о вашей компании для расчета стоимости проекта.</li>
-            </ul>
-            <h3>2. Цели сбора информации</h3>
-            <p>Собранные данные используются исключительно для:</p>
-            <ul>
-                <li>Связи с Пользователем для оказания консультаций;</li>
-                <li>Расчета стоимости услуг и подготовки коммерческого предложения;</li>
-                <li>Заключения и исполнения Договора оферты;</li>
-                <li>Улучшения качества наших услуг и работы сайта.</li>
-            </ul>
-            <h3>3. Защита и передача данных</h3>
-            <p>Мы применяем современные технические средства для защиты ваших данных от несанкционированного доступа. Мы не продаем, не обмениваем и не передаем личные данные Пользователей третьим лицам, за исключением случаев, прямо предусмотренных законодательством РФ.</p>
-            <h3>4. Согласие пользователя</h3>
-            <p>Оставляя свои данные на сайте betaline-ai.ru, Пользователь автоматически дает согласие на их обработку в соответствии с Федеральным законом РФ от 27.07.2006 г. № 152-ФЗ «О персональных данных».</p>
-            <p><em>Реквизиты Исполнителя: Индивидуальный предприниматель Ромащенко Сергей Николаевич, ИНН 143302699808, ОГРНИП 316213000103371.</em></p>
-            <p><em>Email для связи: info@betaline-ai.ru</em></p>
-        </div>
-    </div>
-</div>
-
-<!-- Модалка: договор оферты -->
-<div class="modal modal-doc" id="modalOferta" role="dialog" aria-modal="true" aria-labelledby="ofertaTitle">
-    <div class="modal-card modal-card-doc">
-        <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">&#10005;</button>
-        <div class="modal-doc-body">
-            <h2 id="ofertaTitle">Публичный договор-оферта на оказание услуг</h2>
-            <p>Настоящий документ является публичной офертой Индивидуального предпринимателя Ромащенко Сергея Николаевича (далее — «Исполнитель») и содержит все существенные условия договора на оказание услуг по разработке и внедрению программного обеспечения (чат-ботов на базе ИИ).</p>
-            <h3>1. Предмет договора</h3>
-            <p>1.1. Исполнитель обязуется по заданию Заказчика оказать услуги по разработке, настройке и внедрению автоматизированных систем (чат-ботов), а Заказчик обязуется принять и оплатить эти услуги.<br>
-                1.2. Подробное техническое задание, сроки выполнения и стоимость фиксируются в дополнительных приложениях или счетах.</p>
-            <h3>2. Порядок оказания услуг</h3>
-            <p>2.1. Исполнитель приступает к выполнению работ после поступления предоплаты.<br>
-                2.2. Заказчик обязуется своевременно предоставлять все необходимые доступы и информацию.<br>
-                2.3. В случае задержки предоставления информации сроки сдвигаются соразмерно.</p>
-            <h3>3. Стоимость и порядок расчетов</h3>
-            <p>3.1. Стоимость услуг определяется индивидуально.<br>
-                3.2. Оплата производится путем перечисления средств на расчетный счет Исполнителя.<br>
-                3.3. Услуги считаются оказанными, если в течение 3 рабочих дней Заказчик не предъявил претензий.</p>
-            <h3>4. Ответственность сторон</h3>
-            <p>4.1. Стороны несут ответственность в соответствии с законодательством РФ.<br>
-                4.2. Исполнитель не несет ответственности за сбои в работе сторонних сервисов (Telegram, WhatsApp, AmoCRM и др.).</p>
-            <h3>5. Прочие условия</h3>
-            <p>5.1. Акцептом настоящей оферты считается внесение Заказчиком оплаты.<br>
-                5.2. Исполнитель оставляет за собой право вносить изменения без предварительного уведомления.</p>
-            <h3>Реквизиты Исполнителя</h3>
-            <p>Индивидуальный предприниматель Ромащенко Сергей Николаевич<br>
-                ИНН 143302699808<br>
-                ОГРНИП 316213000103371<br>
-                Телефон: 8 800 200-18-49<br>
-                Email: info@betaline-ai.ru</p>
-        </div>
-    </div>
-</div>
-
-<!-- ═══════════════ JSON-LD ═══════════════ -->
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "BetaLine AI",
-    "url": "https://betaline-ai.ru",
-    "email": "info@betaline-ai.ru",
-    "telephone": "8 800 200-18-49",
-    "contactPoint": {
-        "@type": "ContactPoint",
-        "contactType": "customer service",
-        "telephone": "8 800 200-18-49",
-        "email": "info@betaline-ai.ru",
-        "url": "https://t.me/BetalineAI_bot",
-        "availableLanguage": "ru"
-    }
-}
-</script>
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-        {
-            "@type": "Question",
-            "name": "Чем агент отличается от бота из конструктора?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Конструктор упирается в шаблон: несколько сценариев, кнопки, ответы по скрипту. Агент проектируется внутри вашего процесса — он сам действует в CRM и 1С: создаёт сделки, заполняет поля, готовит документы, а не только отвечает на сообщения. К нам обычно приходят, когда коробка упёрлась — и нужен кастом."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Что с нашими данными и 152-ФЗ?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Работаем по 152-ФЗ. Систему разворачиваем в контуре клиента или в российском облаке, базы изолированы — данные одного клиента недоступны другим. Перед стартом подписываем NDA."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Что если агент ошибётся в переписке с клиентом?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Для этого проектируются сценарии эскалации: в спорной ситуации агент передаёт диалог живому сотруднику, а не импровизирует. Каждое действие логируется, качество ответов контролируем на сопровождении."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Сколько времени до запуска?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Прототип на ваших данных — 5–10 дней. Полное внедрение в CRM и каналы — 2–6 недель в зависимости от числа интеграций."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "Какие системы интегрируете?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "amoCRM, Bitrix24, 1С, МойСклад, Telegram, WhatsApp. Если у системы есть API — агент сможет с ней работать."
-            }
-        },
-        {
-            "@type": "Question",
-            "name": "С чего начать, если процесс нестандартный?",
-            "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "С бесплатного разбора: за 30 минут смотрим процесс, показываем, что автоматизируется, и оцениваем эффект. А как агент понимает свободные вопросы — проверьте сами в @BetalineAI_bot."
-            }
-        }
-    ]
-}
-</script>
-<!-- ═══════════════ /АГЕНТ B ═══════════════ -->
+  </section>
 
 </main>
 
-<!-- built from partials/widgets.html -->
-<!-- ═══ BetaLine Chat Widget (логика в main.js, стили в widgets.css) ═══ -->
-<button id="bl-chat-btn" onclick="toggleChat()" aria-label="Открыть чат">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
-    <div class="bl-badge"></div>
-</button>
+<!-- ================= ФУТЕР ================= -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="foot-grid">
+      <p class="fl"><i></i>Betaline&nbsp;<span class="ai">AI</span></p>
+      <div class="foot-links">
+        <a href="mailto:info@betaline-ai.ru">info@betaline-ai.ru</a>
+        <a href="tel:88002001849">8 800 200-18-49</a>
+        <a href="https://t.me/BetalineAI_bot" target="_blank" rel="noopener noreferrer">Telegram ↗</a>
+      </div>
+      <p class="foot-copy">© 2024–2026 · Betaline AI</p>
+    </div>
+    <div class="foot-legal">
+      <p>ИП Ромащенко Сергей Николаевич · ИНН 143302699808 · ОГРНИП 316213000103371</p>
+      <nav aria-label="Документы">
+        <a data-modal="policy" href="#" role="button">Политика конфиденциальности</a>
+        <a data-modal="oferta" href="#" role="button">Договор оферты</a>
+      </nav>
+    </div>
+  </div>
+</footer>
 
-<div id="bl-chat-window" role="dialog" aria-label="Чат с BetaLine AI">
-    <div id="bl-chat-header">
-        <div class="bl-avatar">B</div>
-        <div class="bl-info">
-            <div style="font-size:16px;font-weight:700;margin:0;">BetaLine AI</div>
-            <span>Онлайн</span>
-        </div>
-        <button class="bl-close" onclick="toggleChat()" aria-label="Закрыть чат">&times;</button>
+<!-- ================= МОДАЛКИ: политика, оферта ================= -->
+<div class="modal-overlay" id="modalOverlay"></div>
+
+<div class="modal" id="modalPolicy" role="dialog" aria-modal="true" aria-labelledby="policyTitle" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">&times;</button>
+    <div class="modal-doc-body">
+      <h2 id="policyTitle">Политика конфиденциальности</h2>
+      <p>Настоящая Политика конфиденциальности описывает, как проект <strong>Betaline AI</strong> (далее — «Исполнитель», «мы», «наш») собирает, использует и защищает личную информацию пользователей (далее — «Пользователь»), оставленную на сайте <em>betaline-ai.ru</em> и его поддоменах.</p>
+      <h3>1. Какую информацию мы собираем</h3>
+      <p>Мы собираем только те данные, которые вы добровольно предоставляете при заполнении форм обратной связи или при общении с нашими ассистентами:</p>
+      <ul>
+        <li>Имя и фамилия;</li>
+        <li>Контактный номер телефона;</li>
+        <li>Адрес электронной почты;</li>
+        <li>Никнейм в Telegram (или других мессенджерах);</li>
+        <li>Данные о вашей компании для расчёта стоимости проекта.</li>
+      </ul>
+      <h3>2. Цели сбора информации</h3>
+      <p>Собранные данные используются исключительно для:</p>
+      <ul>
+        <li>Связи с Пользователем для оказания консультаций;</li>
+        <li>Расчёта стоимости услуг и подготовки коммерческого предложения;</li>
+        <li>Заключения и исполнения Договора оферты;</li>
+        <li>Улучшения качества наших услуг и работы сайта.</li>
+      </ul>
+      <h3>3. Защита и передача данных</h3>
+      <p>Мы применяем современные технические средства для защиты ваших данных от несанкционированного доступа. Мы не продаём, не обмениваем и не передаём личные данные Пользователей третьим лицам, за исключением случаев, прямо предусмотренных законодательством РФ.</p>
+      <h3>4. Согласие пользователя</h3>
+      <p>Оставляя свои данные на сайте, Пользователь даёт согласие на их обработку в соответствии с Федеральным законом РФ от 27.07.2006 г. № 152-ФЗ «О персональных данных».</p>
+      <p><em>Реквизиты Исполнителя: Индивидуальный предприниматель Ромащенко Сергей Николаевич, ИНН 143302699808, ОГРНИП 316213000103371.</em></p>
+      <p><em>Email для связи: info@betaline-ai.ru</em></p>
     </div>
-    <div id="bl-chat-messages"></div>
-    <div class="bl-quick-actions" id="bl-quick-actions">
-        <button class="bl-quick-btn" onclick="blQuick('Хочу узнать стоимость')">Узнать стоимость</button>
-        <button class="bl-quick-btn" onclick="blQuick('Как работает агент?')">Как работает?</button>
-        <button class="bl-quick-btn" onclick="blShowCallback()">Обратный звонок</button>
-    </div>
-    <div id="bl-callback-form">
-        <input type="text" id="bl-cb-name" placeholder="Ваше имя" autocomplete="name">
-        <input type="tel" id="bl-cb-phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
-        <button onclick="blSendCallback()">Заказать звонок</button>
-    </div>
-    <div id="bl-chat-input-wrap">
-        <input type="text" id="bl-chat-input" placeholder="Напишите любой вопрос...">
-        <button id="bl-chat-send" onclick="blSend()" aria-label="Отправить сообщение">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-        </button>
-    </div>
-    <div id="bl-chat-footer">Сделано в <a href="https://t.me/BetalineAI_bot" target="_blank" rel="noopener noreferrer">BetaLine AI</a></div>
+  </div>
 </div>
 
+<div class="modal" id="modalOferta" role="dialog" aria-modal="true" aria-labelledby="ofertaTitle" aria-hidden="true">
+  <div class="modal-card">
+    <button class="modal-close" type="button" data-modal-close aria-label="Закрыть">&times;</button>
+    <div class="modal-doc-body">
+      <h2 id="ofertaTitle">Публичный договор-оферта на оказание услуг</h2>
+      <p>Настоящий документ является публичной офертой Индивидуального предпринимателя Ромащенко Сергея Николаевича (далее — «Исполнитель») и содержит все существенные условия договора на оказание услуг по разработке и внедрению программного обеспечения на базе ИИ.</p>
+      <h3>1. Предмет договора</h3>
+      <p>1.1. Исполнитель обязуется по заданию Заказчика оказать услуги по разработке, настройке и внедрению автоматизированных систем на базе ИИ, а Заказчик обязуется принять и оплатить эти услуги.<br>
+         1.2. Подробное техническое задание, сроки выполнения и стоимость фиксируются в дополнительных приложениях или счетах.</p>
+      <h3>2. Порядок оказания услуг</h3>
+      <p>2.1. Исполнитель приступает к выполнению работ после поступления предоплаты.<br>
+         2.2. Заказчик обязуется своевременно предоставлять все необходимые доступы и информацию.<br>
+         2.3. В случае задержки предоставления информации сроки сдвигаются соразмерно.</p>
+      <h3>3. Стоимость и порядок расчётов</h3>
+      <p>3.1. Стоимость услуг определяется индивидуально.<br>
+         3.2. Оплата производится путём перечисления средств на расчётный счёт Исполнителя.<br>
+         3.3. Услуги считаются оказанными, если в течение 3 рабочих дней Заказчик не предъявил претензий.</p>
+      <h3>4. Ответственность сторон</h3>
+      <p>4.1. Стороны несут ответственность в соответствии с законодательством РФ.<br>
+         4.2. Исполнитель не несёт ответственности за сбои в работе сторонних сервисов (Telegram, WhatsApp, AmoCRM и др.).</p>
+      <h3>5. Прочие условия</h3>
+      <p>5.1. Акцептом настоящей оферты считается внесение Заказчиком оплаты.<br>
+         5.2. Исполнитель оставляет за собой право вносить изменения без предварительного уведомления.</p>
+      <h3>Реквизиты Исполнителя</h3>
+      <p>Индивидуальный предприниматель Ромащенко Сергей Николаевич<br>
+         ИНН 143302699808<br>
+         ОГРНИП 316213000103371<br>
+         Телефон: 8 800 200-18-49<br>
+         Email: info@betaline-ai.ru</p>
+    </div>
+  </div>
+</div>
 
-<script src="/main.js" defer></script>
+<!-- ================= ЧАТ-ВИДЖЕТ (порт с боевого; логика в main.js) ================= -->
+<button id="bl-chat-btn" type="button" aria-label="Открыть чат">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+  <span class="bl-badge" aria-hidden="true"></span>
+</button>
+
+<div id="bl-chat-window" role="dialog" aria-label="Чат с Betaline AI" aria-hidden="true">
+  <div id="bl-chat-header">
+    <div class="bl-avatar" aria-hidden="true">B</div>
+    <div class="bl-info"><b>Betaline AI</b><span>Онлайн</span></div>
+    <button class="bl-close" type="button" id="bl-chat-close" aria-label="Закрыть чат">&times;</button>
+  </div>
+  <div id="bl-chat-messages" aria-live="polite"></div>
+  <div class="bl-quick-actions" id="bl-quick-actions">
+    <button class="bl-quick-btn" type="button" data-quick="Хочу узнать стоимость">Узнать стоимость</button>
+    <button class="bl-quick-btn" type="button" data-quick="Как проходит вводный аудит?">Как проходит аудит?</button>
+    <button class="bl-quick-btn" type="button" id="bl-quick-callback">Обратный звонок</button>
+  </div>
+  <div id="bl-callback-form">
+    <input type="text" id="bl-cb-name" placeholder="Ваше имя" autocomplete="name">
+    <input type="tel" id="bl-cb-phone" placeholder="+7 (___) ___-__-__" autocomplete="tel">
+    <button type="button" id="bl-cb-send">Заказать звонок</button>
+  </div>
+  <div id="bl-chat-input-wrap">
+    <input type="text" id="bl-chat-input" placeholder="Напишите любой вопрос…" aria-label="Сообщение">
+    <button id="bl-chat-send" type="button" aria-label="Отправить сообщение">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+  <div id="bl-chat-footer">Сделано в <a href="https://t.me/BetalineAI_bot" target="_blank" rel="noopener noreferrer">Betaline AI</a></div>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Betaline AI",
+  "url": "https://custom.betaline-ai.ru",
+  "email": "info@betaline-ai.ru",
+  "telephone": "8 800 200-18-49",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "telephone": "8 800 200-18-49",
+    "email": "info@betaline-ai.ru",
+    "url": "https://t.me/BetalineAI_bot",
+    "availableLanguage": "ru"
+  }
+}
+</script>
+<script src="/main.js"></script>
 </body>
 </html>

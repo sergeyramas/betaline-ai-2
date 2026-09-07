@@ -88,8 +88,9 @@ callback_chat, pricing_lead, diag_bot_click, pains_expand.
 | **A «Чертёж»** | `mockups/a-chertezh/` | светлый швейцарско-инженерный минимализм, Golos Text + IBM Plex Mono, кобальт | `mockups/screenshots/concept-A-chertezh.jpg` |
 | **B «Сигнал»** | `mockups/b-signal/` | тёмная «операторская», телеметрия, мятное свечение, Tektur + JetBrains Mono | `mockups/screenshots/concept-B-signal.jpg` |
 | **C «Кабинет»** | `mockups/c-kabinet/` | премиум «частный банк», чернильно-синий + золото, Cormorant Garamond + Onest | `mockups/screenshots/concept-C-kabinet.jpg` |
-| **Blueprint v2** | `mockups/blueprint-v2/` | предыдущая рабочая итерация лендинга (html+css+js+графика) | — |
-| Текущий боевой оранжевый | — | референс стилистики, с которой v3 наследует палитру | `mockups/screenshots/betaline-site-new-orange.jpg` |
+| **1. Оранжевый «Чертёж»** — ✅ **выбран Андреем 26.08** | `mockups/blueprint-v2/` | структура и цены по образцу qwerty.digital, палитра боевого сайта, Golos Text + IBM Plex Mono | `mockups/screenshots/betaline-site-new-orange.jpg` |
+
+**07.09.2026:** по решению оператора сайт пересобран из этого макета 1:1 (см. `CLAUDE.md` §1, §9) — v3 «продукт-герой» осталась в истории git. Ранее в этой таблице макет был ошибочно подписан как «текущий боевой оранжевый — референс стилистики».
 
 Каждый концепт — самодостаточный `index.html` (инлайн-стили, локальные шрифты,
 сгенерированная графика), открывается офлайн двойным кликом.
