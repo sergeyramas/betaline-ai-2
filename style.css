@@ -415,6 +415,36 @@ body.modal-open{overflow:hidden}
   #bl-chat-btn{bottom:16px;right:16px;width:52px;height:52px}
 }
 
+/* ---------- чертежи (инлайн-SVG вместо картинок): hero и кейсы ---------- */
+.dwg svg{display:block;width:100%;height:auto;background:#fff}
+.dwg .fig-m{display:none}
+.dwg .g{stroke:var(--line);stroke-width:1}
+.dwg .ln{stroke:var(--ink);stroke-width:1.5;fill:none}
+.dwg .ln2{stroke:var(--line2);stroke-width:1;fill:none}
+.dwg .dot{stroke:var(--mut);stroke-width:1.6;fill:none;stroke-dasharray:1 9;stroke-linecap:round}
+.dwg .accd{stroke:var(--accent);fill:none;stroke-width:1.6;stroke-dasharray:1 9;stroke-linecap:round}
+.dwg .acc{stroke:var(--accent);fill:none;stroke-width:1.6}
+.dwg .cr{stroke:var(--accent);stroke-width:1.2;opacity:.6}
+.dwg .box{fill:#fff;stroke:var(--ink);stroke-width:1.2}
+.dwg .box2{fill:var(--bg);stroke:var(--line2);stroke-width:1}
+.dwg .nd{fill:#fff;stroke:var(--ink);stroke-width:1.5}
+.dwg .nda{fill:var(--accent);stroke:var(--accent)}
+.dwg .ring{fill:none;stroke:var(--accent);stroke-width:1.2}
+.dwg text{font-family:var(--mono);font-size:21px;letter-spacing:.1em;fill:var(--mut);text-transform:uppercase}
+.dwg text.t{fill:var(--ink);font-weight:500}
+.dwg text.a{fill:var(--accent);font-weight:500}
+.dwg text.h{fill:var(--accent);font-weight:500;font-size:30px}
+.dwg text.s{font-size:17px;fill:var(--soft)}
+.dwg text.b{font-family:var(--sans);font-size:22px;letter-spacing:0;text-transform:none;fill:var(--ink);font-weight:500}
+@media (max-width:720px){
+  .dwg .fig-d{display:none}
+  .dwg .fig-m{display:block}
+  .dwg text{font-size:22px}
+  .dwg text.s{font-size:18px}
+  .dwg text.h{font-size:31px}
+  .dwg text.b{font-size:21px}
+}
+
 /* ============================================================
    АДАПТИВ
    ============================================================ */
