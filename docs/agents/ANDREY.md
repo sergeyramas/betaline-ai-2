@@ -20,8 +20,8 @@
 
 1. Прочитать `CLAUDE.md` (особенно §7 Guardrails и §8 Domain rules) и `AGENT_ACTIVITY.md`.
 2. Claim в `AGENT_ACTIVITY.md` → ветка **`andrey/<slug>`** от `master`.
-3. Правки: секции живут в `partials/`, финальные `index.html`/`style.css` — сборные
-   (править и партиал, и сборку — см. CLAUDE.md gotcha #1).
+3. Правки: `index.html` / `style.css` / `main.js` — единственные файлы, правятся напрямую
+   (партиалы упразднены 07.09). Макет-источник `mockups/blueprint-v2/` после сборки не синхронизируется.
 4. QA по Definition of Done (CLAUDE.md §6): `node --check`, скриншоты 1440/390.
 5. PR в `master` со скриншотами «до/после» в описании.
 6. **Мерж — только оператор (Сергей).** После мержа Vercel передеплоит сам;

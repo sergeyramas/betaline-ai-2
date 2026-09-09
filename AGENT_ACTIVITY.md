@@ -10,6 +10,59 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-09 14:30 UTC] **claude-mac-opus5** (Mac) — topic: `custom-subdomain-live` — DONE @ 4f85e32
+  🟢 **Поддомен https://custom.betaline-ai.ru поднят и отдаёт новый сайт.** Оператор выдал доступ к Beget API
+  (аккаунт `fantroue`, «Управление DNS» включено) — записи заведены программно, без панели:
+  `A custom → 76.76.21.21` и `TXT _vercel → vc-domain-verify=custom.betaline-ai.ru,951a3bc1d415f190b61f`.
+  Домен в Vercel verified, `misconfigured:false`, сертификат Let's Encrypt до 08.12.2026. Прод-деплой
+  `betaline-ai-2-obj240d5r` — теперь и `betaline-ai-2.vercel.app` показывает новый сайт вместо v3.
+  **Апекс не тронут** (проверено до и после): MX mx1/mx2.beget.com, SPF, A 76.76.21.21 на месте; боевой
+  betaline-ai.ru, zvonok. и constructor. — 200.
+  **Тестовый лид с боевого поддомена** через реальную форму → `/api/lead` 200, «ТЕСТ — не звонить» в Telegram/таблице.
+  Перед этим (тот же топик): декоративные топокарты в hero и кейсах заменены на инлайн-SVG — схема агентной
+  системы (рис. 01) и сценарий «заявка в субботу» (рис. 02), каждая в горизонтальной и мобильной версии.
+  ⚠️ Осталось на операторе: **ID отдельного счётчика Метрики** (сейчас `window.YM_ID = 0`, аналитики на поддомене нет),
+  мерж PR #10 и PR #9, и контент-развилки из PR (RAG-боты в услуге 01, hero-цифры без легенды, og-image от v3).
+
+- [2026-09-07 09:30 UTC] **claude-mac-fable51** (Mac) — topic: `blueprint-site` — DONE @ ba3910b (ветка `custom-subdomain`, PR открыт, мерж — оператор)
+  **Сайт собран из утверждённого макета `mockups/blueprint-v2/` 1:1** (решение оператора 07.09: как есть, включая цены
+  150k–1M). Партиалы упразднены — `index.html`/`style.css`/`main.js` единственные файлы (~30 КБ html).
+  Обвязка с боевого без изменения внутренних настроек: форма → боевой `/api/lead` (source=audit), чат-виджет →
+  `/api/chat-ai` + callback, модалки политики/оферты, согласие ПДн, реквизиты, реальные контакты, SEO-голова под
+  `custom.betaline-ai.ru`. Метрика: `window.YM_ID = 0` до появления отдельного счётчика. Шрифты TTF→woff2-сабсеты
+  (515→117 КБ), чертежи PNG→WebP.
+  **Проверки:** Codex (gpt-5.6-terra) — 8 находок, 6 починены и подтверждены Playwright (таймаут AbortController,
+  один запрос в чате, r.ok/тип reply, ловушка+возврат фокуса, Esc для чата, анти-дубль callback); 2 отведены с
+  доказательством (email в `phone` проходит — боевой lead.js проверяет только непустоту; `partials/` удалена).
+  Sonnet-сверщик макет vs сборка: 0 расхождений сверх 7 заявленных (текст/стили/кропы, 10 секций × 1440/390).
+  QA: `node --check`, 1440/390 без горизонтального скролла, 42/42 `.rv`, 0 ошибок консоли; тестовый лид
+  «ТЕСТ — не звонить» через реальную форму → боевой API 200 (оператор предупреждён в чате).
+  Preview: https://betaline-ai-2-po2seui5k-npz-avod.vercel.app (ssoProtection снята с проекта, чтобы Андрей мог открыть).
+  ⚠️ На операторе: DNS в Beget (A `custom`→76.76.21.21, TXT `_vercel`), ID нового счётчика Метрики, решение по
+  «RAG-боты» в услуге 01 (конфликт с правилом «не бот») и по цифрам hero (15+/4/40+/5) без легенды.
+
+- [2026-09-07 06:30 UTC] **claude-mac-opus5** (Mac) — topic: `custom-subdomain` — ЧАСТИЧНО @ 0399db1 (ветка `custom-subdomain`)
+  Подготовка выката v3 на поддомен **custom.betaline-ai.ru** (решение оператора 07.09).
+  **Найдено и починено:** `main.js` определял API_BASE через `location.hostname.endsWith('betaline-ai.ru')` —
+  это true и для `custom.betaline-ai.ru`, поэтому формы поддомена ушли бы на same-origin `/api/lead`
+  проекта betaline-ai-2, где НЕТ env. Лиды терялись бы молча, с зелёным success для пользователя.
+  Заменено на точное совпадение с боевыми хостами (`betaline-ai.ru`, `www.`); все прочие хосты постят
+  на боевой API. `node --check main.js` — зелёный.
+  **Проверено фактами, а не предположением:** allowlist источников на боевом
+  `api/lead.js` = `quiz|audit|callback|pricing|url-capture|platform` — надмножество четырёх, что шлёт v3;
+  CORS-preflight с `Origin: https://custom.betaline-ai.ru` → 200 `allow-origin: *`;
+  `/api/lead` и `/api/chat-ai` на проде отвечают 400 на пустой body (живы).
+  Вывод: поддомену НЕ нужны свои env и копии секретов — лиды идут в тот же Telegram/Sheets/CRM.
+  **DNS-прецедент:** `zvonok.` и `constructor.betaline-ai.ru` подключены через A-запись `76.76.21.21`
+  в панели Beget + `vercel domains add`. Оба отдают 200.
+  🔴 **Заблокировано на операторе (3 шага):** 1) проект `betaline-ai-2` живёт на команде
+  `sergeyramas-projects`, она целиком в 402 DEPLOYMENT_DISABLED (проверено: npz-tactical-map,
+  pcmarket-ai-seller, eurasia-map, rama-docs-hub — все 402) → нужен Transfer в `npz-avod` через UI;
+  2) A-запись `custom → 76.76.21.21` в Beget (кредов на Маке нет);
+  3) новый счётчик Метрики под поддомен (решение оператора; API-токен на парке read-only и от чужого
+  аккаунта `richardsonbihoeki` — создать можно только руками). После переноса обновить
+  VERCEL_ORG_ID/PROJECT_ID в `.github/workflows/deploy-vercel.yml`.
+
 - [2026-08-26 09:40 UTC] **claude-mac-fable5** (Mac) — topic: `rw-key-utp-audit` — DONE
   **RW-deploy-key выдан** (явное «да» Сергея): ключ `/home/ramos/.ssh/id_ed25519_betaline` на RamOS-VPS, GitHub
   deploy-key id 161359514 (read-write), ssh-алиас `github.com-betaline-deploy`, remote клона переключён. Push
