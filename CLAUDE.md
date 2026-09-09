@@ -4,7 +4,7 @@
 
 - **Что это:** сайт Betaline AI «AI-интегратор полного цикла» — одностраничник, собранный 1:1 из утверждённого партнёром макета `mockups/blueprint-v2/` (вариант 1, оранжевый «Чертёж»; выбор Андрея 26.08, решение оператора о сборке 07.09) + serverless-обвязка лидов. Прежняя версия v3 («продукт-герой», 11 секций) — в истории git до 07.09.
 - **Зачем:** жить на поддомене **custom.betaline-ai.ru**; принимать лиды в тот же Telegram/Sheets/CRM/почту, что и боевой сайт.
-- **Статус:** active — собран, ждёт DNS (A `custom` → 76.76.21.21 + TXT `_vercel` в Beget) и ID нового счётчика Метрики.
+- **Статус:** active — **живёт на https://custom.betaline-ai.ru** (DNS и деплой 09.09). Ждёт только ID нового счётчика Метрики.
 - **Дедлайн / милейстоны:** DNS → счётчик → деплой на поддомен → реклама (договорённость с Андреем: первые числа сентября, просрочено).
 - **Vault:** `~/Documents/Jarvis/wiki/projects/betaline-ai-2/index.md` — заведена 2026-08-25
 
@@ -15,11 +15,12 @@
 | GitHub repo | `sergeyramas/betaline-ai-2` |
 | Production URL | будущий: `https://betaline-ai.ru` (сейчас там старый сайт из репо betaline-landing) |
 | Prod-превью | `https://betaline-ai-2.vercel.app` — живой с 2026-08-25 |
-| Поддомен | `https://custom.betaline-ai.ru` — прицеплен к проекту 07.09, ждёт DNS в Beget (A `custom` → 76.76.21.21, TXT `_vercel` — значение в Vercel → Domains) |
+| Поддомен | **`https://custom.betaline-ai.ru` — работает с 09.09** (A `custom` → 76.76.21.21 и TXT `_vercel` заведены через Beget API, домен verified, сертификат до 08.12.2026) |
 | Vercel project | `betaline-ai-2` (`prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf`), с 07.09 в команде **npz-avod** `team_N2rwwC7BNrzVq09nBDmle5EB` (старая `sergeyramas-projects` отключена за неуплату, 402) |
 | Боевой API | `https://betaline-ai.ru/api/lead`, `/api/chat-ai` (CORS `*`; превью постит кросс-доменно) |
 | External APIs | Telegram Bot API, Google Sheets, PocketBase CRM, Resend, OpenAI (см. `api/`) |
 | Operator / клиент | Сергей — TG `@Sergeyramas`; партнёр-заказчик правок: Андрей — TG `@Andrei_Stanislavovich` (см. `docs/agents/ANDREY.md`) |
+| DNS | Beget, аккаунт `fantroue`, зона `betaline-ai.ru`. **Есть API** (вкл. «Управление DNS»): `https://api.beget.com/api/<метод>?login=…&passwd=…&output_format=json`, креды у оператора. 🔴 `dns/changeRecords` ЗАМЕНЯЕТ весь набор записей FQDN — сначала `dns/getData`, и никогда не вызывать на апексе `betaline-ai.ru` (там MX beget + SPF: снесёшь почту). `dns/getData` на несуществующем поддомене отдаёт `METHOD_FAILED` — это норма, проверять надо через `dig @ns1.beget.com` |
 | RamOS | проект `betaline-ai-2` (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd`) на ramos-ai.ru; Андрей — editor; агент «Betaline-правки (Sonnet)»; клон `/srv/ramos/projects/betaline-ai-2` (RW-deploy-key с 2026-08-26, push `andrey/*` работает) |
 | Аналитика | Яндекс.Метрика: под поддомен решено завести **отдельный** счётчик (07.09), ID ещё нет — в `index.html` стоит `window.YM_ID = 0` и счётчик не грузится. Боевой `108480715` остаётся у betaline-ai.ru |
 
