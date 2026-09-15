@@ -158,114 +158,142 @@
   <section class="sec" id="cases">
     <div class="rule"></div>
     <div class="wrap">
-      <p class="sec-mark rv"><b>02</b> / Кейсы</p>
-      <h2 class="rv">Что уже работает у клиентов</h2>
-      <p class="sec-lead rv">Два проекта показываем «было — стало» скриншотами, два — цифрами.
-         Названия компаний не раскрываем: работаем по NDA.</p>
+      <div class="cs-top rv">
+        <div>
+          <p class="sec-mark"><b>02</b> / Кейсы</p>
+          <h2>Что уже работает у клиентов</h2>
+          <p class="sec-lead">Два проекта показываем «было — стало» скриншотами, два — цифрами.
+             Названия компаний не раскрываем: работаем по NDA.</p>
+        </div>
+        <div class="cs-nav" aria-hidden="true">
+          <button class="cs-btn" type="button" data-cs="-1" aria-label="Предыдущий кейс">←</button>
+          <span class="cs-count"><b id="csCur">01</b> / <span id="csTotal">04</span></span>
+          <button class="cs-btn" type="button" data-cs="1" aria-label="Следующий кейс">→</button>
+        </div>
+      </div>
 
-      <!-- ── было → стало: магазин техники ── -->
-      <article class="ba rv">
-        <div class="ba-head">
-          <p class="dom">Розница · компьютерная техника · Ташкент</p>
-          <h3>AI-продавец отвечает по реальному каталогу, а не по скрипту</h3>
-        </div>
-        <div class="ba-grid">
-          <figure class="ba-fig">
-            <p class="ba-k">Было</p>
-            <img src="/assets/img/cases/pcmarket-after.webp" alt="Витрина магазина: вопросы по товару уходят менеджеру" width="1400" height="875" loading="lazy">
-            <figcaption>Витрина на 1&thinsp;979 товаров. Вопрос про совместимость или наличие — только менеджеру, в рабочие часы.</figcaption>
-          </figure>
-          <figure class="ba-fig ba-fig-acc">
-            <p class="ba-k">Стало</p>
-            <img src="/assets/img/cases/bot-demo.webp" alt="AI-консультант на витрине магазина" width="1400" height="875" loading="lazy">
-            <figcaption>Консультант отвечает ценой и наличием из живого каталога, в UZS, USD и RUB. Сложное передаёт оператору.</figcaption>
-          </figure>
-        </div>
-        <div class="ba-grid ba-grid-2">
-          <figure class="ba-fig">
-            <p class="ba-k">Операторская консоль</p>
-            <img src="/assets/img/cases/bot-admin.webp" alt="Операторская консоль: очередь диалогов, статусы, источники" width="1400" height="875" loading="lazy">
-            <figcaption>Все диалоги в одной очереди: что ведёт агент, что ждёт человека, что закрыто. Виджет сайта и Telegram — в одном окне.</figcaption>
-          </figure>
-          <div class="ba-facts">
-            <p class="ba-k">Что это дало</p>
-            <ul>
-              <li><b>18 из 20</b> запросов — товар найден в каталоге<small>контрольный прогон на реальных фразах покупателей</small></li>
-              <li><b>11 из 19</b> обращений пришли вне графика<small>магазин работает 9:00–18:00; в логе есть 19:52, 20:17, 22:54 и 03:58</small></li>
-              <li><b>0</b> выдуманных товаров и цен<small>агент отвечает только тем, что реально есть в каталоге</small></li>
+      <div class="cs rv">
+        <div class="cs-track" id="csTrack" tabindex="0" aria-roledescription="карусель" aria-label="Кейсы">
+
+          <!-- 1 · Ташкент -->
+          <article class="cs-slide" aria-label="Кейс 1 из 4">
+            <div class="cs-head">
+              <p class="dom">Розница · компьютерная техника · Ташкент</p>
+              <h3>AI-продавец отвечает по реальному каталогу, а не по скрипту</h3>
+            </div>
+            <div class="cs-body">
+              <div class="cs-text">
+                <div><p class="k">Было</p><p>Витрина на 1&thinsp;979 товаров. Любой вопрос про совместимость или наличие — только менеджеру и только в рабочие часы, 9:00–18:00.</p></div>
+                <div><p class="k">Сделали</p><p>Консультант в чате витрины и в Telegram: отвечает ценой и наличием из живого каталога в UZS, USD и RUB, сложные вопросы передаёт оператору. Все диалоги — в одной консоли.</p></div>
+                <div class="acc"><p class="k">Стало</p><p>Покупатели получают ответ ночью и в выходные, менеджер видит только те диалоги, где нужен человек. Ни одного выдуманного товара или цены: агент отвечает только тем, что есть в каталоге.</p></div>
+              </div>
+              <div class="cs-media">
+                <div class="cs-pair">
+                  <figure><p class="ba-k">Было</p><img src="/assets/img/cases/pcmarket-after.webp" alt="Витрина магазина без консультанта" width="1400" height="875"></figure>
+                  <figure class="is-acc"><p class="ba-k">Стало</p><img src="/assets/img/cases/bot-demo.webp" alt="Витрина с AI-консультантом" width="1400" height="875"></figure>
+                </div>
+                <figure class="cs-wide"><p class="ba-k">Операторская консоль</p><img src="/assets/img/cases/bot-admin.webp" alt="Операторская консоль: очередь диалогов, статусы, источники" width="1400" height="875"></figure>
+              </div>
+            </div>
+            <ul class="kase-nums">
+              <li><b>18<i>/20</i></b><span>запросов — товар найден</span></li>
+              <li><b>11<i>/19</i></b><span>обращений вне графика</span></li>
+              <li><b>03:58</b><span>самое раннее обращение</span></li>
+              <li><b>0</b><span>выдуманных цен</span></li>
             </ul>
-          </div>
-        </div>
-      </article>
+          </article>
 
-      <!-- ── было → стало: поставщик ЖБИ ── -->
-      <article class="ba rv">
-        <div class="ba-head">
-          <p class="dom">Опт · стройматериалы и ЖБИ · Чебоксары</p>
-          <h3>Свой сайт вместо арендованной витрины на чужой платформе</h3>
-        </div>
-        <div class="ba-grid">
-          <figure class="ba-fig">
-            <p class="ba-k">Было</p>
-            <img src="/assets/img/cases/monolith-before.webp" alt="Старый сайт: типовая витрина на арендованной платформе" width="1400" height="875" loading="lazy">
-            <figcaption>Типовая витрина на чужой платформе: дизайн и структура не в руках владельца, перестань платить — товары уходят в архив. <i>Архивный снимок, 2018.</i></figcaption>
-          </figure>
-          <figure class="ba-fig ba-fig-acc">
-            <p class="ba-k">Стало</p>
-            <img src="/assets/img/cases/monolith-after.webp" alt="Новый сайт: собственный каталог с ценами" width="1400" height="875" loading="lazy">
-            <figcaption>Собственная платформа: 3&thinsp;929 товаров, 218 категорий, 59 статей. Код и данные принадлежат клиенту.</figcaption>
-          </figure>
-        </div>
-        <div class="ba-facts ba-facts-wide">
-          <p class="ba-k">Сколько это стоило</p>
-          <ul class="price-cmp">
-            <li><span>Крупная студия за тот же объём</span><b class="mut">800&thinsp;000 – 2&thinsp;500&thinsp;000&nbsp;₽</b></li>
-            <li><span>Мы, разработка с AI-агентами</span><b>280&thinsp;000 – 450&thinsp;000&nbsp;₽</b></li>
-          </ul>
-          <p class="ba-note">Цены студий — из открытых прайсов на каталог такого размера. Разницу даёт не дешёвая рабочая сила, а то, что рутину вёрстки, миграции и наполнения делают агенты под присмотром инженера.</p>
-        </div>
-      </article>
+          <!-- 2 · Чебоксары -->
+          <article class="cs-slide" aria-label="Кейс 2 из 4">
+            <div class="cs-head">
+              <p class="dom">Опт · стройматериалы и ЖБИ · Чебоксары</p>
+              <h3>Свой сайт вместо арендованной витрины на чужой платформе</h3>
+            </div>
+            <div class="cs-body">
+              <div class="cs-text">
+                <div><p class="k">Было</p><p>Типовая витрина на чужой платформе: дизайн и структура не в руках владельца, перестань платить — товары уходят в архив.</p></div>
+                <div><p class="k">Сделали</p><p>Собственная платформа: 3&thinsp;929 товаров и 218 категорий перенесены и вычищены, 59 статей, заявки, адаптив. Код и данные принадлежат клиенту.</p></div>
+                <div class="acc"><p class="k">Сколько стоило</p>
+                  <ul class="price-cmp">
+                    <li><span>Крупная студия, тот же объём</span><b class="mut">800&thinsp;000 – 2&thinsp;500&thinsp;000&nbsp;₽</b></li>
+                    <li><span>Мы, разработка с AI-агентами</span><b>280&thinsp;000 – 450&thinsp;000&nbsp;₽</b></li>
+                  </ul>
+                  <p class="ba-note">Цены студий — из открытых прайсов на каталог такого размера. Разницу даёт не дешёвая рабочая сила: рутину вёрстки, миграции и наполнения делают агенты под присмотром инженера.</p>
+                </div>
+              </div>
+              <div class="cs-media">
+                <div class="cs-pair cs-pair-v">
+                  <figure><p class="ba-k">Было <i>архивный снимок, 2018</i></p><img src="/assets/img/cases/monolith-before.webp" alt="Старый сайт на арендованной платформе" width="1400" height="875"></figure>
+                  <figure class="is-acc"><p class="ba-k">Стало</p><img src="/assets/img/cases/monolith-after.webp" alt="Новый сайт: собственный каталог с ценами" width="1400" height="875"></figure>
+                </div>
+              </div>
+            </div>
+            <ul class="kase-nums">
+              <li><b>3&thinsp;929</b><span>товаров перенесено</span></li>
+              <li><b>218</b><span>категорий</span></li>
+              <li><b>59</b><span>статей</span></li>
+              <li><b>≈×3</b><span>дешевле студии</span></li>
+            </ul>
+          </article>
 
-      <!-- ── кейсы с метриками ── -->
-      <article class="kase rv">
-        <div class="kase-head">
-          <p class="dom">Услуги · салон красоты</p>
-          <h3>Рост выручки на 23&thinsp;% за 45 дней с внедрением авто-агента</h3>
-        </div>
-        <div class="kase-body">
-          <div><p class="k">Проблема</p><p>Администратор перегружен записями, 30&thinsp;% клиентов забывают о визите. Хаотичные закупки замораживали деньги на складе.</p></div>
-          <div><p class="k">Решение</p><p>Цифровой ассистент в WhatsApp для записи 24/7, предиктивная аналитика спроса и автоматический сбор отзывов.</p></div>
-          <div><p class="k">Результат</p><p>Агент забрал рутину на себя. Отток снизился, проактивные напоминания вернули 15&thinsp;% «спящей» базы.</p></div>
-        </div>
-        <ul class="kase-nums">
-          <li><b>+23<i>%</i></b><span>средний чек</span></li>
-          <li><b>−17<i>%</i></b><span>списания</span></li>
-          <li><b>+15<i>%</i></b><span>удержание</span></li>
-          <li><b>+40<i>%</i></b><span>конверсия</span></li>
-        </ul>
-      </article>
+          <!-- 3 · Салон красоты -->
+          <article class="cs-slide" aria-label="Кейс 3 из 4">
+            <div class="cs-head">
+              <p class="dom">Услуги · салон красоты</p>
+              <h3>Рост выручки на 23&thinsp;% за 45 дней с внедрением авто-агента</h3>
+            </div>
+            <div class="cs-body">
+              <div class="cs-text">
+                <div><p class="k">Проблема</p><p>Администратор перегружен записями, 30&thinsp;% клиентов забывают о визите. Хаотичные закупки замораживали деньги на складе.</p></div>
+                <div><p class="k">Решение</p><p>Цифровой ассистент в WhatsApp для записи 24/7, предиктивная аналитика спроса и автоматический сбор отзывов.</p></div>
+                <div class="acc"><p class="k">Результат</p><p>Агент забрал рутину на себя. Отток снизился, проактивные напоминания вернули 15&thinsp;% «спящей» базы.</p></div>
+              </div>
+              <div class="cs-media">
+                <a class="cs-video" href="https://www.youtube.com/watch?v=_M2vI9K4ZN4" target="_blank" rel="noopener noreferrer" aria-label="Смотреть видео о кейсе на YouTube">
+                  <img src="/assets/img/cases/salon-video.webp" alt="Видео: как салон перестал терять клиентов" width="1280" height="720">
+                  <span class="cs-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+                  <span class="cs-vcap">Видео · 1&thinsp;240 просмотров · YouTube</span>
+                </a>
+              </div>
+            </div>
+            <ul class="kase-nums">
+              <li><b>+23<i>%</i></b><span>средний чек</span></li>
+              <li><b>−17<i>%</i></b><span>списания</span></li>
+              <li><b>+15<i>%</i></b><span>удержание</span></li>
+              <li><b>+40<i>%</i></b><span>конверсия</span></li>
+            </ul>
+          </article>
 
-      <article class="kase rv">
-        <div class="kase-head">
-          <p class="dom">Маркетплейс · eBay</p>
-          <h3>Вышли из операционки: закупки и листинги делают агенты</h3>
+          <!-- 4 · eBay -->
+          <article class="cs-slide" aria-label="Кейс 4 из 4">
+            <div class="cs-head">
+              <p class="dom">Маркетплейс · eBay</p>
+              <h3>Вышли из операционки: закупки и листинги делают агенты</h3>
+            </div>
+            <div class="cs-body">
+              <div class="cs-text">
+                <div><p class="k">Проблема</p><p>Ручная закупка занимала часы каждый день. Листинги выставлялись до ночи, плюс рутина с ответами покупателям и треками.</p></div>
+                <div><p class="k">Решение</p><p>Агенты сами мониторят товар, выкупают его и создают оптимизированные листинги. Человеку остаётся стратегия.</p></div>
+                <div class="acc"><p class="k">Результат</p><p>Освободили 80&thinsp;% времени основателя: только управление и дашборд. Оборот вырос за счёт скорости реакции.</p></div>
+              </div>
+              <div class="cs-media">
+                <blockquote class="kase-quote">
+                  <p>«ИИ не просто помогает — он стал моим лучшим сотрудником, который не спит и не ошибается.»</p>
+                  <footer>Сергей Р. <span>партнёр Betaline · продавец на eBay</span></footer>
+                </blockquote>
+              </div>
+            </div>
+            <ul class="kase-nums">
+              <li><b>+25<i>%</i></b><span>доходность</span></li>
+              <li><b>×3</b><span>скорость листингов</span></li>
+              <li><b>24/7</b><span>время работы</span></li>
+              <li><b>−80<i>%</i></b><span>рутины</span></li>
+            </ul>
+          </article>
+
         </div>
-        <div class="kase-body">
-          <div><p class="k">Проблема</p><p>Ручная закупка занимала часы каждый день. Листинги выставлялись до ночи, плюс рутина с ответами покупателям и треками.</p></div>
-          <div><p class="k">Решение</p><p>Агенты сами мониторят товар, выкупают его и создают оптимизированные листинги. Человеку остаётся стратегия.</p></div>
-          <div><p class="k">Результат</p><p>Освободили 80&thinsp;% времени основателя: только управление и дашборд. Оборот вырос за счёт скорости реакции.</p></div>
-        </div>
-        <ul class="kase-nums">
-          <li><b>+25<i>%</i></b><span>доходность</span></li>
-          <li><b>×3</b><span>скорость листингов</span></li>
-          <li><b>24/7</b><span>время работы</span></li>
-          <li><b>−80<i>%</i></b><span>рутины</span></li>
-        </ul>
-        <blockquote class="kase-quote">
-          <p>«ИИ не просто помогает — он стал моим лучшим сотрудником, который не спит и не ошибается.»</p>
-          <footer>Сергей Р. <span>партнёр Betaline · продавец на eBay</span></footer>
-        </blockquote>
-      </article>
+        <ul class="cs-dots" id="csDots" aria-hidden="true"><li class="on"></li><li></li><li></li><li></li></ul>
+      </div>
     </div>
   </section>
 

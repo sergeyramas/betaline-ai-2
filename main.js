@@ -110,6 +110,48 @@
     }
     if (mmenu) mmenu.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', closeMenu); });
 
+    /* ---------- 2b. Кейсы: слайдер на scroll-snap, JS только для стрелок/счётчика ---------- */
+    (function () {
+        var track = $('csTrack'); if (!track) return;
+        var slides = track.querySelectorAll('.cs-slide');
+        var btns = document.querySelectorAll('.cs-btn[data-cs]');
+        var cur = $('csCur'), dots = $('csDots') ? $('csDots').children : [];
+        var n = slides.length, idx = 0, ticking = false;
+        function pad(i) { return (i < 9 ? '0' : '') + (i + 1); }
+        function render() {
+            track.style.height = slides[idx].offsetHeight + 'px';   /* высота трека = текущий слайд, а не самый высокий */
+            if (cur) cur.textContent = pad(idx);
+            for (var i = 0; i < dots.length; i++) dots[i].classList.toggle('on', i === idx);
+            btns.forEach(function (b) {
+                var d = +b.getAttribute('data-cs');
+                b.disabled = (d < 0 && idx === 0) || (d > 0 && idx === n - 1);
+            });
+        }
+        function goTo(i) {
+            idx = Math.max(0, Math.min(n - 1, i));
+            track.scrollTo({ left: slides[idx].offsetLeft - track.offsetLeft, behavior: 'smooth' });
+            render();
+        }
+        btns.forEach(function (b) { b.addEventListener('click', function () { goTo(idx + (+b.getAttribute('data-cs'))); }); });
+        track.addEventListener('keydown', function (e) {
+            if (e.key === 'ArrowRight') { e.preventDefault(); goTo(idx + 1); }
+            if (e.key === 'ArrowLeft')  { e.preventDefault(); goTo(idx - 1); }
+        });
+        /* свайп/трекпад двигают трек сами — по scroll синхронизируем счётчик */
+        track.addEventListener('scroll', function () {
+            if (ticking) return; ticking = true;
+            requestAnimationFrame(function () {
+                var w = slides[0].getBoundingClientRect().width + 1;
+                var i = Math.round(track.scrollLeft / w);
+                if (i !== idx) { idx = Math.max(0, Math.min(n - 1, i)); render(); }
+                ticking = false;
+            });
+        }, { passive: true });
+        render();
+        window.addEventListener('resize', render);
+        window.addEventListener('load', render);
+    })();
+
     /* ---------- 3. Форма аудита → /api/lead (source=audit) ---------- */
     (function () {
         var form = $('lead-form'), ok = $('form-ok');
