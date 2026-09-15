@@ -4,7 +4,7 @@
 
 - **Что это:** сайт Betaline AI «AI-интегратор полного цикла» — одностраничник, собранный 1:1 из утверждённого партнёром макета `mockups/blueprint-v2/` (вариант 1, оранжевый «Чертёж»; выбор Андрея 26.08, решение оператора о сборке 07.09) + serverless-обвязка лидов. Прежняя версия v3 («продукт-герой», 11 секций) — в истории git до 07.09.
 - **Зачем:** жить на поддомене **custom.betaline-ai.ru**; принимать лиды в тот же Telegram/Sheets/CRM/почту, что и боевой сайт.
-- **Статус:** active — **живёт на https://custom.betaline-ai.ru** со своим счётчиком Метрики (DNS, деплой и аналитика — 09.09). Ждёт мержа PR #10 и контент-решений оператора.
+- **Статус:** active — **в `master` с 15.09 (PR #10)**, живёт на https://custom.betaline-ai.ru (схема в hero) и https://custom2.betaline-ai.ru (топокарта в hero), общий счётчик Метрики. Следующий шаг — реклама.
 - **Дедлайн / милейстоны:** DNS → счётчик → деплой на поддомен → реклама (договорённость с Андреем: первые числа сентября, просрочено).
 - **Vault:** `~/Documents/Jarvis/wiki/projects/betaline-ai-2/index.md` — заведена 2026-08-25
 
@@ -23,7 +23,7 @@
 | Operator / клиент | Сергей — TG `@Sergeyramas`; партнёр-заказчик правок: Андрей — TG `@Andrei_Stanislavovich` (см. `docs/agents/ANDREY.md`) |
 | DNS | Beget, аккаунт `fantroue`, зона `betaline-ai.ru`. **Есть API** (вкл. «Управление DNS»): `https://api.beget.com/api/<метод>?login=…&passwd=…&output_format=json`, креды у оператора. 🔴 `dns/changeRecords` ЗАМЕНЯЕТ весь набор записей FQDN — сначала `dns/getData`, и никогда не вызывать на апексе `betaline-ai.ru` (там MX beget + SPF: снесёшь почту). `dns/getData` на несуществующем поддомене отдаёт `METHOD_FAILED` — это норма, проверять надо через `dig @ns1.beget.com` |
 | RamOS | проект `betaline-ai-2` (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd`) на ramos-ai.ru; Андрей — editor; агент «Betaline-правки (Sonnet)»; клон `/srv/ramos/projects/betaline-ai-2` (RW-deploy-key с 2026-08-26, push `andrey/*` работает) |
-| Аналитика | Яндекс.Метрика **`112421910`** «Betaline AI — custom.betaline-ai.ru», заведён 09.09 в аккаунте `gowindo-elama1` (⚠️ это НЕ аккаунт боевого счётчика — там 0 других счётчиков; похоже на eLama-аккаунт под Директ). Вебвизор включён. Цели: `audit_lead`, `chat_message`, `chat_lead`, `callback_chat` — ровно те, что стреляют на этом сайте. Боевой `108480715` остаётся у betaline-ai.ru и не тронут |
+| Аналитика | Яндекс.Метрика **`112421910`** «Betaline AI — custom.betaline-ai.ru», заведён 09.09 в аккаунте `gowindo-elama1` — аккаунт под Директ, подтверждён оператором 15.09 (боевой счётчик живёт в другом аккаунте, это намеренно). Вебвизор включён. Цели: `audit_lead`, `chat_message`, `chat_lead`, `callback_chat` — ровно те, что стреляют на этом сайте. Боевой `108480715` остаётся у betaline-ai.ru и не тронут |
 
 ## 3. Stack
 
