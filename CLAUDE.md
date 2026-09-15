@@ -4,7 +4,7 @@
 
 - **Что это:** сайт Betaline AI «AI-интегратор полного цикла» — одностраничник, собранный 1:1 из утверждённого партнёром макета `mockups/blueprint-v2/` (вариант 1, оранжевый «Чертёж»; выбор Андрея 26.08, решение оператора о сборке 07.09) + serverless-обвязка лидов. Прежняя версия v3 («продукт-герой», 11 секций) — в истории git до 07.09.
 - **Зачем:** жить на поддомене **custom.betaline-ai.ru**; принимать лиды в тот же Telegram/Sheets/CRM/почту, что и боевой сайт.
-- **Статус:** active — **в `master` с 15.09 (PR #10)**, живёт на https://custom.betaline-ai.ru (схема в hero) и https://custom2.betaline-ai.ru (топокарта в hero), общий счётчик Метрики. Следующий шаг — реклама.
+- **Статус:** active — **в `master` с 15.09 (PR #10)**, живёт на https://custom.betaline-ai.ru (схема в hero) и https://custom2.betaline-ai.ru (топокарта в hero), у каждого свой счётчик Метрики. Следующий шаг — реклама (Мастер кампаний на custom2 — 15.09).
 - **Дедлайн / милейстоны:** DNS → счётчик → деплой на поддомен → реклама (договорённость с Андреем: первые числа сентября, просрочено).
 - **Vault:** `~/Documents/Jarvis/wiki/projects/betaline-ai-2/index.md` — заведена 2026-08-25
 
@@ -16,14 +16,14 @@
 | Production URL | будущий: `https://betaline-ai.ru` (сейчас там старый сайт из репо betaline-landing) |
 | Prod-превью | `https://betaline-ai-2.vercel.app` — живой с 2026-08-25 |
 | Поддомен | **`https://custom.betaline-ai.ru` — работает с 09.09** (A `custom` → 76.76.21.21 и TXT `_vercel` заведены через Beget API, домен verified, сертификат до 08.12.2026) |
-| Поддомен-2 | **`https://custom2.betaline-ai.ru` — работает с 15.09**, тот же сайт, но hero-картинка — исходная топокарта макета вместо инлайн-SVG-схемы (единственное отличие). Отдельный Vercel-проект `betaline-ai-2-custom2` (`prj_6MnG6pIBY1SLHPTBKTIPpaOmnss2`), та же команда npz-avod. Счётчик Метрики общий с custom (`112421910`) — отдельный не заводили, домен виден в отчётах и так. Генерируется скриптом `tools/build-custom2.py` из корневого `index.html` — не отдельная ветка, см. §5 |
+| Поддомен-2 | **`https://custom2.betaline-ai.ru` — работает с 15.09**, тот же сайт, но hero-картинка — исходная топокарта макета вместо инлайн-SVG-схемы (единственное отличие). Отдельный Vercel-проект `betaline-ai-2-custom2` (`prj_6MnG6pIBY1SLHPTBKTIPpaOmnss2`), та же команда npz-avod. Свой счётчик Метрики **`112650916`** «Betaline AI — custom2.betaline-ai.ru» (заведён 15.09 в том же `gowindo-elama1`, те же 4 цели; генератор подменяет YM_ID сам). Генерируется скриптом `tools/build-custom2.py` из корневого `index.html` — не отдельная ветка, см. §5 |
 | Vercel project | `betaline-ai-2` (`prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf`), с 07.09 в команде **npz-avod** `team_N2rwwC7BNrzVq09nBDmle5EB` (старая `sergeyramas-projects` отключена за неуплату, 402) |
 | Боевой API | `https://betaline-ai.ru/api/lead`, `/api/chat-ai` (CORS `*`; превью постит кросс-доменно) |
 | External APIs | Telegram Bot API, Google Sheets, PocketBase CRM, Resend, OpenAI (см. `api/`) |
 | Operator / клиент | Сергей — TG `@Sergeyramas`; партнёр-заказчик правок: Андрей — TG `@Andrei_Stanislavovich` (см. `docs/agents/ANDREY.md`) |
 | DNS | Beget, аккаунт `fantroue`, зона `betaline-ai.ru`. **Есть API** (вкл. «Управление DNS»): `https://api.beget.com/api/<метод>?login=…&passwd=…&output_format=json`, креды у оператора. 🔴 `dns/changeRecords` ЗАМЕНЯЕТ весь набор записей FQDN — сначала `dns/getData`, и никогда не вызывать на апексе `betaline-ai.ru` (там MX beget + SPF: снесёшь почту). `dns/getData` на несуществующем поддомене отдаёт `METHOD_FAILED` — это норма, проверять надо через `dig @ns1.beget.com` |
 | RamOS | проект `betaline-ai-2` (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd`) на ramos-ai.ru; Андрей — editor; агент «Betaline-правки (Sonnet)»; клон `/srv/ramos/projects/betaline-ai-2` (RW-deploy-key с 2026-08-26, push `andrey/*` работает) |
-| Аналитика | Яндекс.Метрика **`112421910`** «Betaline AI — custom.betaline-ai.ru», заведён 09.09 в аккаунте `gowindo-elama1` — аккаунт под Директ, подтверждён оператором 15.09 (боевой счётчик живёт в другом аккаунте, это намеренно). Вебвизор включён. Цели: `audit_lead`, `chat_message`, `chat_lead`, `callback_chat` — ровно те, что стреляют на этом сайте. Боевой `108480715` остаётся у betaline-ai.ru и не тронут |
+| Аналитика | Яндекс.Метрика **`112421910`** «Betaline AI — custom.betaline-ai.ru», заведён 09.09 в аккаунте `gowindo-elama1` — аккаунт под Директ, подтверждён оператором 15.09 (боевой счётчик живёт в другом аккаунте, это намеренно). Вебвизор включён. Цели: `audit_lead`, `chat_message`, `chat_lead`, `callback_chat` — ровно те, что стреляют на этом сайте. Для custom2 — отдельный `112650916` с теми же целями (см. Поддомен-2). Боевой `108480715` остаётся у betaline-ai.ru и не тронут |
 
 ## 3. Stack
 
@@ -63,7 +63,7 @@ betaline-ai-2/
 | deploy prod | `vercel deploy --prod --yes` с Mac. CI (push в master) ждёт секрет `VERCEL_TOKEN` — см. gotcha про токен |
 | тест лид-пайплайна | `curl -X POST https://betaline-ai.ru/api/lead -H 'Content-Type: application/json' -d '{"source":"audit","name":"ТЕСТ — не звонить","phone":"70000000000"}'` |
 | линтер дизайна | `npx impeccable@latest detect style.css index.html` — разово; кремовый фон и трекинг моно-подписей — дизайн макета, не чинить |
-| перелить custom → custom2 | `python3 tools/build-custom2.py && (cd dist-custom2 && vercel deploy --prod --yes --scope npz-avod)` — после каждого прод-деплоя custom предложить оператору перелить в custom2 |
+| перелить custom → custom2 | `python3 tools/build-custom2.py && (cd dist-custom2 && vercel deploy --prod --yes --scope npz-avod)` — после каждого прод-деплоя custom предложить оператору перелить в custom2. 🔴 `dist-custom2/.vercel/project.json` обязан существовать (скрипт его сохраняет); без него deploy заводит дубль-проект `dist-custom2` |
 
 ## 6. Verification — Definition of Done
 

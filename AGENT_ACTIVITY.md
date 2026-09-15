@@ -6,9 +6,13 @@
 
 ## Active
 
-_Свободно._
+- [2026-09-15 13:40 UTC] **claude-mac-opus5 / сессия betaline-ai-2-21** (Mac) — topic: `cases-slider` — файлы: `index.html` (#cases), `style.css` (блок кейсов), `main.js` (карусель)
+  Горизонтальный слайдер кейсов по образцу боевого betaline-ai.ru (стрелки, scroll-snap, слева текст / справа медиа). Параллельно работает сессия betaline-ai-2-d6 (custom2, генератор, счётчик) — она в эти файлы не лезет по договорённости.
 
 ## Recently Completed
+
+- [2026-09-15 13:50 UTC] **claude-mac-opus5 / сессия betaline-ai-2-d6** (Mac) — topic: `custom2-metrika-direct` — DONE (a234ffd + docs)
+  Свой счётчик Метрики `112650916` для custom2 (4 цели), `tools/build-custom2.py` подменяет YM_ID и сохраняет `.vercel`-линк (без него deploy завёл дубль `dist-custom2` — удалён). Прод custom2 отдаёт новый счётчик. Далее — Мастер кампаний в Директе по образцу 708929168.
 
 - [2026-09-15 UTC] **claude-mac-sonnet5** (Mac) — topic: `custom2-subdomain` — DONE (ветка `custom-subdomain`)
   🟢 **Второй вариант поднят на https://custom2.betaline-ai.ru** — тот же сайт, что на custom, единственное отличие:
