@@ -16,6 +16,7 @@
 | Production URL | будущий: `https://betaline-ai.ru` (сейчас там старый сайт из репо betaline-landing) |
 | Prod-превью | `https://betaline-ai-2.vercel.app` — живой с 2026-08-25 |
 | Поддомен | **`https://custom.betaline-ai.ru` — работает с 09.09** (A `custom` → 76.76.21.21 и TXT `_vercel` заведены через Beget API, домен verified, сертификат до 08.12.2026) |
+| Поддомен-2 | **`https://custom2.betaline-ai.ru` — работает с 15.09**, тот же сайт, но hero-картинка — исходная топокарта макета вместо инлайн-SVG-схемы (единственное отличие). Отдельный Vercel-проект `betaline-ai-2-custom2` (`prj_6MnG6pIBY1SLHPTBKTIPpaOmnss2`), та же команда npz-avod. Счётчик Метрики общий с custom (`112421910`) — отдельный не заводили, домен виден в отчётах и так. Генерируется скриптом `tools/build-custom2.py` из корневого `index.html` — не отдельная ветка, см. §5 |
 | Vercel project | `betaline-ai-2` (`prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf`), с 07.09 в команде **npz-avod** `team_N2rwwC7BNrzVq09nBDmle5EB` (старая `sergeyramas-projects` отключена за неуплату, 402) |
 | Боевой API | `https://betaline-ai.ru/api/lead`, `/api/chat-ai` (CORS `*`; превью постит кросс-доменно) |
 | External APIs | Telegram Bot API, Google Sheets, PocketBase CRM, Resend, OpenAI (см. `api/`) |
@@ -62,6 +63,7 @@ betaline-ai-2/
 | deploy prod | `vercel deploy --prod --yes` с Mac. CI (push в master) ждёт секрет `VERCEL_TOKEN` — см. gotcha про токен |
 | тест лид-пайплайна | `curl -X POST https://betaline-ai.ru/api/lead -H 'Content-Type: application/json' -d '{"source":"audit","name":"ТЕСТ — не звонить","phone":"70000000000"}'` |
 | линтер дизайна | `npx impeccable@latest detect style.css index.html` — разово; кремовый фон и трекинг моно-подписей — дизайн макета, не чинить |
+| перелить custom → custom2 | `python3 tools/build-custom2.py && (cd dist-custom2 && vercel deploy --prod --yes --scope npz-avod)` — после каждого прод-деплоя custom предложить оператору перелить в custom2 |
 
 ## 6. Verification — Definition of Done
 
@@ -114,6 +116,7 @@ betaline-ai-2/
 - **Pro-команда npz-avod блокирует деплой, если автор HEAD-коммита не член команды** (readyState BLOCKED). Коммитить от `fantroms@gmail.com`. См. `wiki/howto/vercel-pro-team-migration-blocked-deploys.md`.
 - **Cron `/api/close-stale` в vercel.json на поддомене будет падать 500 «Bot not configured»** — env нет, это ожидаемо и безвредно; нужен только при переезде на апекс.
 - **chat-ai.js читает `bot/betaline_kb.txt`** по жёсткому пути — файл обязан деплоиться (не добавлять bot/ целиком в .vercelignore).
+- **`_vercel.betaline-ai.ru` TXT держит ДВЕ записи разом** — по одной на каждый поддомен-проект (custom и custom2). `dns/changeRecords` заменяет набор целиком, поэтому при добавлении/смене домена читать текущие через `dig +short @ns1.beget.com _vercel.betaline-ai.ru TXT` и переписывать обе строки, иначе верификация другого поддомена слетает.
 
 ## 10. Skills routing
 

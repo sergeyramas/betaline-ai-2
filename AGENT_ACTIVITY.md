@@ -10,6 +10,26 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-15 UTC] **claude-mac-sonnet5** (Mac) — topic: `custom2-subdomain` — DONE (ветка `custom-subdomain`)
+  🟢 **Второй вариант поднят на https://custom2.betaline-ai.ru** — тот же сайт, что на custom, единственное отличие:
+  в hero исходная топокарта-картинка макета (`assets/img/hero-diagram.webp`, 1800×1200) вместо инлайн-SVG-схемы.
+  `#cases` и всё остальное байт-в-байт как на custom (проверено diff'ом).
+  **Механизм, не ветка:** `tools/build-custom2.py` читает корневой `index.html`, меняет только hero-figure и
+  домен в `<head>`/JSON-LD (`custom.` → `custom2.`), собирает `dist-custom2/` (в .gitignore) с копией
+  style.css/main.js/vercel.json/assets/api/bot/package.json. `hero-diagram.webp` тянется из git-истории
+  (`4f85e32^:assets/img/hero-diagram.webp`, был удалён тем коммитом при переходе на SVG). Перелить новую версию
+  custom → custom2 одной командой: `python3 tools/build-custom2.py && (cd dist-custom2 && vercel deploy --prod --yes --scope npz-avod)`.
+  **Инфра:** новый Vercel-проект `betaline-ai-2-custom2` (`prj_6MnG6pIBY1SLHPTBKTIPpaOmnss2`) в команде npz-avod,
+  SSO-защита снята, домен `custom2.betaline-ai.ru` привязан и verified. DNS через Beget API: A `custom2` →
+  76.76.21.21, TXT `_vercel.betaline-ai.ru` теперь содержит ОБЕ verify-записи (custom и custom2) — `dns/changeRecords`
+  заменяет набор целиком, старую запись сохранили. Счётчик Метрики общий с custom (`112421910`) — отдельный не
+  заводили (оператор не просил), домен виден в отчётах фильтром.
+  **Проверено фактами:** custom2 → 200, содержит `hero-diagram.webp`, 0 `class="fig-d"` в hero, 4 карточки кейсов
+  (2×`ba rv`, 2×`kase rv`), `YM_ID = 112421910`. custom.betaline-ai.ru не тронут — по-прежнему 200 со схемой-SVG.
+  Апекс цел — MX mx1/mx2.beget.com, `betaline-ai.ru` 200. Тестовый лид «ТЕСТ custom2 — не звонить» через реальную
+  форму (Playwright) на custom2 → боевой `/api/lead` ответил `{"ok":true}`.
+  Доки: CLAUDE.md §2/§5/§9 обновлены.
+
 - [2026-09-09 14:30 UTC] **claude-mac-opus5** (Mac) — topic: `custom-subdomain-live` — DONE @ 4f85e32
   🟢 **Поддомен https://custom.betaline-ai.ru поднят и отдаёт новый сайт.** Оператор выдал доступ к Beget API
   (аккаунт `fantroue`, «Управление DNS» включено) — записи заведены программно, без панели:
