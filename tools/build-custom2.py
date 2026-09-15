@@ -3,8 +3,8 @@
 
 Same as custom.betaline-ai.ru, except the hero figure is the original
 topo-map image (mockups/blueprint-v2 style) instead of the inline-SVG
-schema. Everything else (incl. #cases, main.js, style.css, YM_ID) is
-copied unchanged. Rerun after every change to the root site.
+schema. Everything else (incl. #cases, main.js, style.css) is
+copied unchanged; YM_ID is swapped to the custom2 counter. Rerun after every change to the root site.
 """
 import re
 import shutil
@@ -29,6 +29,11 @@ HERO_REPLACEMENT = """<figure class="hero-fig ld ld4">
 DOMAIN_OLD = "custom.betaline-ai.ru"
 DOMAIN_NEW = "custom2.betaline-ai.ru"
 
+# custom2 has its own Metrika counter (same 4 goals, created 2026-09-15);
+# 112421910 stays on custom. Both the window.YM_ID and the <noscript> pixel.
+YM_OLD = "112421910"
+YM_NEW = "112650916"
+
 COPY_ITEMS = ["style.css", "main.js", "vercel.json", "assets", "api", "bot", "package.json"]
 
 
@@ -52,10 +57,21 @@ def main():
     html = swap_hero(src_html)
     n_domain = html.count(DOMAIN_OLD)
     html = html.replace(DOMAIN_OLD, DOMAIN_NEW)
+    n_ym = html.count(YM_OLD)
+    if n_ym != 2:
+        sys.exit(f"ERROR: expected YM_ID {YM_OLD} twice in index.html (script + noscript), found {n_ym}")
+    html = html.replace(YM_OLD, YM_NEW)
 
+    # Keep the Vercel project link: without dist-custom2/.vercel/project.json
+    # `vercel deploy` links by directory name and creates a duplicate project.
+    link = DIST / ".vercel" / "project.json"
+    link_json = link.read_text(encoding="utf-8") if link.exists() else None
     if DIST.exists():
         shutil.rmtree(DIST)
     DIST.mkdir(parents=True)
+    if link_json:
+        link.parent.mkdir()
+        link.write_text(link_json, encoding="utf-8")
 
     (DIST / "index.html").write_text(html, encoding="utf-8")
 
@@ -86,6 +102,7 @@ def main():
     print(f"built {DIST}/")
     print(f"  hero figure: dwg/SVG -> img hero-diagram.webp ({webp_path.stat().st_size} bytes)")
     print(f"  domain: {DOMAIN_OLD} -> {DOMAIN_NEW} ({n_domain} occurrences in head/JSON-LD)")
+    print(f"  metrika: {YM_OLD} -> {YM_NEW} ({n_ym} occurrences)")
     print(f"  copied: {', '.join(COPY_ITEMS)}")
 
 
