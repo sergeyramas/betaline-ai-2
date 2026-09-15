@@ -13,7 +13,7 @@
     var PROD_HOSTS = ['betaline-ai.ru', 'www.betaline-ai.ru'];
     var API_BASE = PROD_HOSTS.indexOf(location.hostname) !== -1 ? '' : 'https://betaline-ai.ru';
     var YM_ID = window.YM_ID || 0;   /* задаётся в <head>; 0 = счётчик ещё не заведён */
-    var PHONE_HUMAN = '8 800 200-18-49';
+    var PHONE_HUMAN = '+7 987 760-97-09';
 
     function $(id) { return document.getElementById(id); }
 

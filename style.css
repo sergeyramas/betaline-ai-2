@@ -103,6 +103,8 @@ h2{
   color:var(--mut);padding:6px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s;
 }
 .nav-links a:hover{color:var(--accent);border-color:var(--accent)}
+.nav-phone{font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:.06em;color:var(--ink);white-space:nowrap;padding:6px 0;border-bottom:1px solid transparent;transition:color .2s,border-color .2s;font-variant-numeric:tabular-nums}
+.nav-phone:hover{color:var(--accent);border-color:var(--accent)}
 .nav-cta{white-space:nowrap}
 .burger{display:none;background:none;border:1px solid var(--line2);border-radius:10px;width:42px;height:42px;cursor:pointer;position:relative}
 .burger span{position:absolute;left:10px;right:10px;height:1.5px;background:var(--ink);transition:transform .25s,opacity .2s}
@@ -510,6 +512,9 @@ body.modal-open{overflow:hidden}
 /* ============================================================
    АДАПТИВ
    ============================================================ */
+@media (max-width:1060px){
+  .nav-phone{display:none}   /* в шапку не влезает вместе с меню и CTA; телефон остаётся в мобильном меню и в контактах */
+}
 @media (max-width:1024px){
   .cs-body{grid-template-columns:1fr}
   .cs-text>div:last-child{border-bottom:1px solid var(--line)}
@@ -525,7 +530,7 @@ body.modal-open{overflow:hidden}
   .kase-nums{grid-template-columns:repeat(2,1fr)}
   .price-cmp li{flex-direction:column;align-items:flex-start;gap:6px}
   .cs-pair{grid-template-columns:1fr}
-  .nav-links,.nav .nav-cta{display:none}
+  .nav-links,.nav .nav-cta,.nav .nav-phone{display:none}
   .burger{display:block}
   .svc{grid-column:1 / -1 !important}
   .m-menu{
