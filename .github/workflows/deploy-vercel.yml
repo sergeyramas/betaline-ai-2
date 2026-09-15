@@ -29,7 +29,7 @@ jobs:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           # Не секреты (публично в CLAUDE.md §2). Без них CLI в CI линкуется
           # по имени каталога и может завести ДУБЛЬ проекта вместо betaline-ai-2.
-          VERCEL_ORG_ID: team_IQe20O57hTH99URRYtc0FvFt
+          VERCEL_ORG_ID: team_N2rwwC7BNrzVq09nBDmle5EB
           VERCEL_PROJECT_ID: prj_s1I5SEpy9qq8WWj2Lmq8ToTzDfOf
         run: |
           # ponytail: без секрета — тихий skip, а не failure. Токен нельзя

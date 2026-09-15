@@ -1,0 +1,93 @@
+#!/usr/bin/env python3
+"""Build dist-custom2/ — the custom2.betaline-ai.ru variant of the site.
+
+Same as custom.betaline-ai.ru, except the hero figure is the original
+topo-map image (mockups/blueprint-v2 style) instead of the inline-SVG
+schema. Everything else (incl. #cases, main.js, style.css, YM_ID) is
+copied unchanged. Rerun after every change to the root site.
+"""
+import re
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+DIST = ROOT / "dist-custom2"
+
+HERO_START = '<figure class="hero-fig dwg ld ld4">'
+HERO_END = "</figure>"
+
+HERO_REPLACEMENT = """<figure class="hero-fig ld ld4">
+        <img src="/assets/img/hero-diagram.webp" alt="Чертёж: топология агентной системы — изолинии поля плотности задач, сеть узлов и траектории данных" width="1800" height="1200" fetchpriority="high">
+        <figcaption class="fig-cap">
+          <span><b>рис. 01</b> — топология агентной системы</span>
+          <span>изолинии · узлы · траектории данных</span>
+        </figcaption>
+      </figure>"""
+
+DOMAIN_OLD = "custom.betaline-ai.ru"
+DOMAIN_NEW = "custom2.betaline-ai.ru"
+
+COPY_ITEMS = ["style.css", "main.js", "vercel.json", "assets", "api", "bot", "package.json"]
+
+
+def swap_hero(html: str) -> str:
+    start = html.find(HERO_START)
+    if start == -1:
+        sys.exit(
+            f"ERROR: hero marker {HERO_START!r} not found in index.html — "
+            "markup changed, update tools/build-custom2.py"
+        )
+    end = html.find(HERO_END, start)
+    if end == -1:
+        sys.exit("ERROR: no closing </figure> found after hero marker")
+    end += len(HERO_END)
+    return html[:start] + HERO_REPLACEMENT + html[end:]
+
+
+def main():
+    src_html = (ROOT / "index.html").read_text(encoding="utf-8")
+
+    html = swap_hero(src_html)
+    n_domain = html.count(DOMAIN_OLD)
+    html = html.replace(DOMAIN_OLD, DOMAIN_NEW)
+
+    if DIST.exists():
+        shutil.rmtree(DIST)
+    DIST.mkdir(parents=True)
+
+    (DIST / "index.html").write_text(html, encoding="utf-8")
+
+    for item in COPY_ITEMS:
+        src = ROOT / item
+        dst = DIST / item
+        if not src.exists():
+            print(f"  skip (missing): {item}")
+            continue
+        if src.is_dir():
+            shutil.copytree(src, dst)
+        else:
+            shutil.copy2(src, dst)
+
+    # hero-diagram.webp: removed from the working tree in 4f85e32, still in
+    # git history — pull it from there rather than regenerating from the PNG.
+    img_dir = DIST / "assets" / "img"
+    img_dir.mkdir(parents=True, exist_ok=True)
+    webp_path = img_dir / "hero-diagram.webp"
+    result = subprocess.run(
+        ["git", "-C", str(ROOT), "show", "4f85e32^:assets/img/hero-diagram.webp"],
+        capture_output=True,
+    )
+    if result.returncode != 0 or not result.stdout:
+        sys.exit("ERROR: could not extract hero-diagram.webp from git history (4f85e32^)")
+    webp_path.write_bytes(result.stdout)
+
+    print(f"built {DIST}/")
+    print(f"  hero figure: dwg/SVG -> img hero-diagram.webp ({webp_path.stat().st_size} bytes)")
+    print(f"  domain: {DOMAIN_OLD} -> {DOMAIN_NEW} ({n_domain} occurrences in head/JSON-LD)")
+    print(f"  copied: {', '.join(COPY_ITEMS)}")
+
+
+if __name__ == "__main__":
+    main()
