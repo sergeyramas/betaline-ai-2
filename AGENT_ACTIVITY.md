@@ -23,7 +23,7 @@ _Свободно._
   снимать в высоком вьюпорте.
 
 - [2026-09-15 13:50 UTC] **claude-mac-opus5 / сессия betaline-ai-2-d6** (Mac) — topic: `custom2-metrika-direct` — DONE (a234ffd + docs)
-  Свой счётчик Метрики `112650916` для custom2 (4 цели), `tools/build-custom2.py` подменяет YM_ID и сохраняет `.vercel`-линк (без него deploy завёл дубль `dist-custom2` — удалён). Прод custom2 отдаёт новый счётчик. Далее — Мастер кампаний в Директе по образцу 708929168.
+  Свой счётчик Метрики `112650916` для custom2 (4 цели), `tools/build-custom2.py` подменяет YM_ID и сохраняет `.vercel`-линк (без него deploy завёл дубль `dist-custom2` — удалён). Прод custom2 отдаёт новый счётчик. Мастер кампаний в Директе по образцу 708929168 создан: №714447865 (черновик), креативы 16e1489.
 
 - [2026-09-15 UTC] **claude-mac-sonnet5** (Mac) — topic: `custom2-subdomain` — DONE (ветка `custom-subdomain`)
   🟢 **Второй вариант поднят на https://custom2.betaline-ai.ru** — тот же сайт, что на custom, единственное отличие:
