@@ -1,4 +1,4 @@
-/* ecosystem.js v1.1.0 — связка сайтов Betaline.
+/* ecosystem.js v1.2.0 — связка сайтов Betaline.
  * Один файл, копируется как есть в каждый репо (источник — betaline-ai-2).
  * Подключение: <script src="/ecosystem.js" defer data-site="custom|custom2|voice|main"></script>
  * Сайт с fixed-шапкой добавляет у себя: .шапка{top:var(--eco-h,0)} и scroll-padding-top += 36px.
@@ -6,7 +6,7 @@
  * Десктоп-кнопка стоит под шапкой сайта: html{--eco-back-top:<высота шапки + 12px>} (дефолт 78px).
  *
  * Элемент 1 — оранжевая полоска продуктов (все сайты), закреплена сверху, не прячется (решение оператора 16.09).
- * Элемент 2 — кнопка «← Вернуться к индивидуальным решениям» (voice|main), только если
+ * Элемент 2 — прямоугольная кнопка «← Вернуться» (voice|main), только если
  *   пришли с custom/custom2 (?from=). Появляется после 200px и только когда прокрутка остановилась.
  */
 (function () {
@@ -33,17 +33,16 @@
     '.eco a:hover{opacity:1}.eco a:focus-visible{outline:2px solid #fff;outline-offset:2px;opacity:1}' +
     '.eco a[aria-current]{opacity:1;border-bottom-color:#fff}' +
     '.eco-back{position:fixed;z-index:60;top:calc(var(--eco-h) + var(--eco-back-top,78px));left:16px;display:inline-flex;align-items:center;gap:6px;' +
-    'background:#e8541e;border:0;color:#fff;padding:13px 24px;border-radius:999px;font:600 15px/1 Golos Text,-apple-system,Segoe UI,sans-serif;' +
+    'background:#e8541e;border:0;color:#fff;padding:13px 26px;border-radius:8px;font:600 15px/1 Golos Text,-apple-system,Segoe UI,sans-serif;' +
     'text-decoration:none;box-shadow:0 0 0 0 rgba(232,84,30,.55),0 6px 28px rgba(232,84,30,.45);opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}' +
     '.eco-back.on{animation:ecoPulse 2.4s ease-in-out infinite}' +
     '@keyframes ecoPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,84,30,.55),0 6px 28px rgba(232,84,30,.45)}50%{box-shadow:0 0 0 10px rgba(232,84,30,0),0 6px 36px rgba(232,84,30,.7)}}' +
     '.eco-back.on{opacity:1;transform:none;pointer-events:auto}' +
     '.eco-back:focus-visible{outline:2px solid #fff;outline-offset:3px}' +
-    '.eco-back .m{display:none}' +
-    '@media(max-width:719px){' +
+        '@media(max-width:719px){' +
     '.eco{gap:16px;padding:0 14px;font-size:12px}.eco b{display:none}' +
     '.eco-back{top:auto;left:12px;bottom:calc(var(--eco-back-bottom,12px) + env(safe-area-inset-bottom));white-space:nowrap;padding:12px 18px;transform:translateY(8px)}' +
-    '.eco-back .d{display:none}.eco-back .m{display:inline}}' +
+    '}' +
     '@media(prefers-reduced-motion:reduce){.eco-back{transition:none;animation:none}}';
   var st = document.createElement('style');
   st.textContent = css;
@@ -76,7 +75,7 @@
       back = document.createElement('a');
       back.className = 'eco-back';
       back.href = 'https://' + from + '.betaline-ai.ru/#services';
-      back.innerHTML = '<span aria-hidden="true">&larr;</span><span class="d">Вернуться к индивидуальным решениям</span><span class="m">К решениям</span>';
+      back.innerHTML = '<span aria-hidden="true">&larr;</span><span>Вернуться</span>';
       back.setAttribute('aria-label', 'Вернуться к индивидуальным решениям');
       document.body.appendChild(back);
     }
