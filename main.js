@@ -191,6 +191,10 @@
         });
     })();
 
+    /* ---------- 3b. CTA-карточка «Ваше направление» → затравка в форму ---------- */
+    var svcCta = document.querySelector('.svc--cta');
+    if (svcCta) svcCta.addEventListener('click', function () { var t = $('f-task'); if (t && !t.value) t.value = 'Своё направление: '; });
+
     /* ---------- 4. Модалки политики/оферты ---------- */
     var LEGAL_MODALS = { policy: 'modalPolicy', oferta: 'modalOferta' };
     function setOpen(el, open) {

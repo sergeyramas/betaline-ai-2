@@ -176,7 +176,7 @@ h1 .acc{color:var(--accent)}
   border:1px solid var(--line);
 }
 .svc{background:var(--bg);padding:clamp(22px,2.6vw,34px);grid-column:span 2;display:flex;flex-direction:column;min-height:250px;transition:background .25s}
-.svc:nth-child(4),.svc:nth-child(5){grid-column:span 3}
+.svc:nth-child(7),.svc:nth-child(8){grid-column:span 3}
 .svc .idx{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.1em;color:var(--soft);transition:color .25s}
 .svc h3{margin-top:44px;font-size:clamp(19px,1.7vw,23px);font-weight:600;letter-spacing:-0.015em;line-height:1.2}
 .svc p{margin-top:12px;color:var(--mut);font-size:15px;flex:1}
@@ -348,6 +348,24 @@ h1 .acc{color:var(--accent)}
    ОБВЯЗКА (не из макета): ошибки полей, согласие, реквизиты,
    модалки политики/оферты, чат-виджет
    ============================================================ */
+/* CTA-карточка «Ваше направление» в сетке услуг — минимальный акцент поверх .svc */
+.svc--cta{border:1px dashed var(--accent);cursor:pointer}
+.svc--cta .idx{color:var(--accent)}
+.svc--cta:hover{background:#fff;border-style:solid}
+
+/* Цены: строка результата + подробности (details), поверх исходной 3-колоночной .price */
+.price .n{grid-area:1/1}
+.price .res{grid-area:1/2;color:var(--mut);font-size:14.5px}
+.price .inc{grid-area:2/2}
+.price .v{grid-area:1/3}
+.price-free .res{margin-top:12px;color:var(--mut);font-size:14.5px;max-width:36em}
+.price-free details.more{margin-top:14px}
+.price details.more{grid-area:3/2;margin-top:4px}
+.price details.more summary,.price-free details.more summary{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);cursor:pointer}
+.price details.more ul,.price-free details.more ul{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.price details.more li,.price-free details.more li{color:var(--mut);font-size:13.5px}
+.price details.more li::before,.price-free details.more li::before{content:"—";font-family:var(--mono);color:var(--line2);margin-right:8px}
+
 .field input.err,.field textarea.err{border-bottom-color:var(--accent-d)}
 .field-hint{display:none;margin-top:8px;font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--accent-d);line-height:1.5}
 .consent{margin-top:-8px;font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--soft);line-height:1.6;max-width:36em}
@@ -549,6 +567,7 @@ body.modal-open{overflow:hidden}
   .stats{grid-template-columns:repeat(2,1fr)}
   .cta-grid{grid-template-columns:1fr}
   .price{grid-template-columns:1fr;gap:14px}
+  .price .n,.price .res,.price .inc,.price details.more,.price .v{grid-area:auto}
   .price .v{text-align:left}
   .price-free{grid-template-columns:1fr}
   .price-free .side{align-items:flex-start;text-align:left}
