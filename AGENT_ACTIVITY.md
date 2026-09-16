@@ -11,6 +11,8 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-16] **codex** — `custom2-design-spec`: подготовлена спецификация `docs/superpowers/specs/2026-09-16-custom2-evidence-first-design.md` v1.0.0, ветка `codex/custom2-design-spec-20260916`. Vercel custom2 подтверждён в npz-avod. Изменений сайта и деплоя нет; документ предложен на рассмотрение. Проверены состав, ограничения, атрибуция и риск генератора hero.
+
 - [2026-09-16 15:50 UTC] **claude-mac-fable51** (Mac) — topic: `ecosystem-strip` — DONE, master `975d1b6`, задеплоено на все 4 сайта (custom2 → custom → zvonok `d0de646` → апекс `a8d1473` в `sergeyramas/betaline-landing` master).
   `ecosystem.js` v1.0.0 (источник — этот репо, копия в `betaline-voice-ai/` и `betaline-landing`): оранжевая полоска
   «Betaline · AI-ассистент · Голосовой агент · Индивидуальные решения» на всех сайтах (прячется при прокрутке вниз,
