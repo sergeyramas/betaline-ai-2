@@ -34,7 +34,7 @@
     '.eco a[aria-current]{opacity:1;border-bottom-color:#fff}' +
     '.eco-back{position:fixed;z-index:60;top:calc(var(--eco-h) + var(--eco-back-top,78px));left:16px;display:inline-flex;align-items:center;gap:6px;' +
     'background:#e8541e;border:0;color:#fff;padding:13px 24px;border-radius:999px;font:600 15px/1 Golos Text,-apple-system,Segoe UI,sans-serif;' +
-    'text-decoration:none;box-shadow:0 0 0 0 rgba(232,84,30,.55),0 6px 28px rgba(232,84,30,.45);opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .3s,transform .3s}' +
+    'text-decoration:none;box-shadow:0 0 0 0 rgba(232,84,30,.55),0 6px 28px rgba(232,84,30,.45);opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .5s ease,transform .5s ease}' +
     '.eco-back.on{animation:ecoPulse 2.4s ease-in-out infinite}' +
     '@keyframes ecoPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,84,30,.55),0 6px 28px rgba(232,84,30,.45)}50%{box-shadow:0 0 0 10px rgba(232,84,30,0),0 6px 36px rgba(232,84,30,.7)}}' +
     '.eco-back.on{opacity:1;transform:none;pointer-events:auto}' +
