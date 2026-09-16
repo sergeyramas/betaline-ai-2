@@ -11,6 +11,16 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-16 15:50 UTC] **claude-mac-fable51** (Mac) — topic: `ecosystem-strip` — DONE, master `975d1b6`, задеплоено на все 4 сайта (custom2 → custom → zvonok `d0de646` → апекс `a8d1473` в `sergeyramas/betaline-landing` master).
+  `ecosystem.js` v1.0.0 (источник — этот репо, копия в `betaline-voice-ai/` и `betaline-landing`): оранжевая полоска
+  «Betaline · AI-ассистент · Голосовой агент · Индивидуальные решения» на всех сайтах (прячется при прокрутке вниз,
+  возвращается при остановке/вверх/мыши у верха) + кнопка «← Вернуться к индивидуальным решениям» на zvonok/апексе,
+  когда пришли по `?from=custom|custom2` (плашки `.svc-go` теперь несут его; custom2 — подмена в `build-custom2.py`).
+  Спека прогнана через Codex Terra: один passive scroll + rAF, allowlist `from`, `aria-current`, reduced-motion, `!important`
+  на padding body (стили апекса в `<body>` идут позже). Проверено локально 1440/390 на трёх сайтах и на проде через браузер.
+  Оператор решит, какой из двух элементов оставить. Инцидент: деплой апекса из worktree завёл дубль-проект
+  `betaline-master` (скопированный project.json со старой командой) — удалён, worktree перелинкован; CI zvonok мёртв
+  (VERCEL_TOKEN отклонён) — задеплоен руками. Подробности — CLAUDE.md §9.
 - [2026-09-16 08:09 UTC] **claude-mac-opus5** (Mac) — topic: `directions-and-pricing` — DONE, merged в master `4298b82` (PR #11), **custom2 задеплоен 16.09 ~11:20 UTC** (dpl_6Sb1uEEyawEtCdFjoK8gpfqYT3zx, проверено curl: новые секции и YM 112650916 на месте); custom НЕ перелит — ждёт оператора. Довесок `f0679dc`: плашки-переходы в карточках 01/02 на betaline-ai.ru и zvonok.betaline-ai.ru (просьба оператора по скриншоту), custom2 передеплоен (ветка `andrey/directions-and-pricing`, PR #11 open — https://github.com/sergeyramas/betaline-ai-2/pull/11)
   Правки в «Услуги» и «Цены» по итогам созвона Андрея с оператором. Услуги: заголовок «Пять направлений» →
   «Основные направления» (число убрано), карточки пересобраны на 8: AI-продавец вынесен отдельным направлением (01,

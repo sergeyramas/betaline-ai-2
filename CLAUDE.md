@@ -41,6 +41,7 @@ betaline-ai-2/
 ├── index.html          # ЕДИНСТВЕННЫЙ html: 7 секций макета + модалки + чат-виджет (партиалов нет с 07.09)
 ├── style.css           # стили макета как есть + блок «ОБВЯЗКА» в конце (формы, модалки, чат)
 ├── main.js             # reveal, бургер, форма → /api/lead, модалки, чат-виджет, цели Метрики
+├── ecosystem.js        # связка сайтов (полоска продуктов + кнопка «вернуться»). ИСТОЧНИК; копии лежат в betaline-voice-ai/ и betaline-landing (апекс) — после правки копировать туда и деплоить все три
 ├── api/                # серверлесс: lead.js (fan-out), chat-ai.js, close-stale.js, _lib/ — на поддомене НЕ используется, фронт ходит на боевой API
 ├── bot/betaline_kb.txt # база знаний chat-ai.js — путь менять НЕЛЬЗЯ (process.cwd()/bot/…)
 ├── assets/             # fonts/ (woff2-сабсеты), img/ (process-band.webp, og-image, favicon)
@@ -66,6 +67,7 @@ betaline-ai-2/
 | тест лид-пайплайна | `curl -X POST https://betaline-ai.ru/api/lead -H 'Content-Type: application/json' -d '{"source":"audit","name":"ТЕСТ — не звонить","phone":"70000000000"}'` |
 | линтер дизайна | `npx impeccable@latest detect style.css index.html` — разово; кремовый фон и трекинг моно-подписей — дизайн макета, не чинить |
 | мониторинг Директа | `python3 tools/direct-monitor.py --dry-run` (без `--dry-run` шлёт оператору). Копия для launchd — `~/.local/bin/betaline-direct-monitor.py`, после правки скрипта: `cp tools/direct-monitor.py ~/.local/bin/betaline-direct-monitor.py`. Лог: `~/Library/Logs/betaline-direct-monitor.log` |
+| синхронизировать связку сайтов | после правки `ecosystem.js`: `cp ecosystem.js ~/Documents/betaline/betaline-voice-ai/ && cp ecosystem.js ~/Documents/betaline/worktrees/betaline-master/`, затем коммит+деплой в каждом репо (zvonok: `vercel deploy --prod --yes --scope npz-avod` из его каталога, CI мёртв; апекс: то же из worktree `betaline-master`, потом `git push origin HEAD:master`) |
 | перелить custom → custom2 | `python3 tools/build-custom2.py && (cd dist-custom2 && vercel deploy --prod --yes --scope npz-avod)` — после каждого прод-деплоя custom предложить оператору перелить в custom2. 🔴 `dist-custom2/.vercel/project.json` обязан существовать (скрипт его сохраняет); без него deploy заводит дубль-проект `dist-custom2` |
 
 ## 6. Verification — Definition of Done
@@ -122,6 +124,10 @@ betaline-ai-2/
 - **Cron `/api/close-stale` в vercel.json на поддомене будет падать 500 «Bot not configured»** — env нет, это ожидаемо и безвредно; нужен только при переезде на апекс.
 - **chat-ai.js читает `bot/betaline_kb.txt`** по жёсткому пути — файл обязан деплоиться (не добавлять bot/ целиком в .vercelignore).
 - **`_vercel.betaline-ai.ru` TXT держит ДВЕ записи разом** — по одной на каждый поддомен-проект (custom и custom2). `dns/changeRecords` заменяет набор целиком, поэтому при добавлении/смене домена читать текущие через `dig +short @ns1.beget.com _vercel.betaline-ai.ru TXT` и переписывать обе строки, иначе верификация другого поддомена слетает.
+
+- **Связка сайтов `ecosystem.js` (с 16.09).** Полоска 36px `position:fixed` + `body{padding-top:var(--eco-h)!important}`; fixed-шапка сайта обязана иметь `top:var(--eco-h,0)` (у custom — `.nav` и `.m-menu`, `scroll-padding-top` 92→128). Резерв 36px остаётся всегда, полоска прячется только визуально (иначе CLS). Кнопка «назад» показывается только по `?from=custom|custom2` (allowlist, сохраняется в sessionStorage) и только на `data-site="voice|main"`; её позицию сайт задаёт переменными `--eco-back-top` (десктоп, под шапкой) и `--eco-back-bottom` (мобайл, выше своих sticky-элементов). Инлайн-`<style>` скрипта вставляется последним и перебивает CSS сайта — переопределять только через эти переменные.
+- **Апекс betaline-ai.ru = ветка `master` репо `sergeyramas/betaline-landing`** (`~/Documents/betaline/Betaline NEW V1`, worktree `~/Documents/betaline/worktrees/betaline-master`), `index.html` закоммичен готовым (собирается локально `build_full.py` из партиалов — правки дублировать в партиал). Vercel-проект `tildastorybrandblocks` (`prj_koV0LBViET4ikiBEYDQQdx4V0w9P`) в **npz-avod**. 🔴 Главный каталог репо залинкован на старый проект в отключённой команде, а `project.json` с чужим `orgId` Vercel молча игнорирует и **заводит дубль по имени каталога** (16.09 так появился и был удалён `betaline-master`). Перед деплоем: `cat .vercel/project.json` — `orgId` обязан быть `team_N2rwwC7BNrzVq09nBDmle5EB`.
+- **CI zvonok (`betaline-voice-ai`, «Deploy to Vercel») мёртв с июля** — `VERCEL_TOKEN` отклонён (токен старой команды). Пока секрет не обновлён, деплой — руками `vercel deploy --prod --yes --scope npz-avod` из каталога репо (проект `betaline-voice-ai`, `prj_IHpjSserMKKNoahuvqUfaXoAlIu8`, перелинкован 16.09).
 
 ## 10. Skills routing
 
