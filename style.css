@@ -349,6 +349,15 @@ h1 .acc{color:var(--accent)}
    модалки политики/оферты, чат-виджет
    ============================================================ */
 /* CTA-карточка «Ваше направление» в сетке услуг — минимальный акцент поверх .svc */
+/* плашка-переход на живой продукт (AI-продавец → betaline-ai.ru, голосовой → zvonok) */
+.svc-go{margin-top:14px;align-self:flex-start;display:inline-flex;align-items:center;flex-wrap:wrap;gap:6px 8px;
+  padding:10px 14px;border-radius:8px;background:var(--accent);color:#fff;text-decoration:none;
+  font-size:13.5px;font-weight:500;line-height:1.2;transition:background .2s}
+.svc-go b{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.02em}
+.svc-go .arr{font-family:var(--mono);font-size:14px}
+.svc-go:hover{background:var(--accent-d)}
+.svc-go:hover .arr{transform:translate(2px,-2px)}
+.svc-go .arr{transition:transform .2s}
 .svc--cta{border:1px dashed var(--accent);cursor:pointer}
 .svc--cta .idx{color:var(--accent)}
 .svc--cta:hover{background:#fff;border-style:solid}
