@@ -21,6 +21,14 @@ _Свободно._
   деградацией до одобрения, пороги MONITORING.md, tg-send оператору; ветка Reports проверена на песочнице; реальный прогон
   ушёл оператору (msg 4210). launchd `ru.betaline.direct-monitor` 09:30 ежедневно, копия в `~/.local/bin/`.
   Доки: CLAUDE.md §2/§5/§9, MONITORING.md, вики, auto-memory. index.html/style.css/main.js не трогал.
+- [2026-09-16 10:50 UTC] **claude-mac-opus5** (Mac) — topic: `codex-review-fixes` — DONE @ b046511 (master), fbbda11 (PR #11)
+  Ревью Codex (gpt-5.6-terra) по PR #11 и RamOS-переброске — всё закрыто. Скилл `ramos-project-onboard`:
+  `scripts/ramos-owner-api` переписан без shell-инъекции (METHOD — белый список, PATH — регулярка, тело — base64
+  → файл на VPS, `--fail-with-body`; проверено: инъекционный payload инертен, временных файлов и сессий не остаётся);
+  новый `scripts/ramos-project-rename` — UPDATE + `audit_log` одной транзакцией, имя биндится параметром.
+  `memory/index.md`: build-custom2 после любой правки index/style/main. PR #11: «Результат» + `<details>`
+  у бесплатного аудита, meta/og description с новыми направлениями; QA 1440/390 повторён.
+
 - [2026-09-16 08:20 UTC] **claude-mac-opus5** (Mac) — topic: `ramos-betaline-project` — DONE
   Проект в RamOS переименован в **«Betaline»** (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd` и slug `betaline-ai-2`
   сохранены — на slug завязаны каталог клона, матчинг входящих и адресация делегирования; API-роута переименования
