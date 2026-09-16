@@ -11,7 +11,7 @@ _Свободно._
 
 ## Recently Completed
 
-- [2026-09-16 08:09 UTC] **claude-mac-opus5** (Mac) — topic: `directions-and-pricing` — DONE @ 69d84ca (ветка `andrey/directions-and-pricing`, PR #11 open — https://github.com/sergeyramas/betaline-ai-2/pull/11)
+- [2026-09-16 08:09 UTC] **claude-mac-opus5** (Mac) — topic: `directions-and-pricing` — DONE @ 69d84ca + fbbda11 (фиксы по ревью Codex) (ветка `andrey/directions-and-pricing`, PR #11 open — https://github.com/sergeyramas/betaline-ai-2/pull/11)
   Правки в «Услуги» и «Цены» по итогам созвона Андрея с оператором. Услуги: заголовок «Пять направлений» →
   «Основные направления» (число убрано), карточки пересобраны на 8: AI-продавец вынесен отдельным направлением (01,
   был частью «AI-ассистентов»), добавлен Голосовой агент (02, формулировки — с `~/Documents/betaline/betaline-voice-ai/`,
@@ -23,6 +23,46 @@ _Свободно._
   `docs/agents/reports/2026-09-16-directions-and-pricing/`, `tools/build-custom2.py` без ошибок.
   ⚠️ Открытые вопросы оператору в PR: цены для AI-продавца/голосового (не добавлял), восьмое направление без названия,
   проверка формулировок карточек 01–02.
+- [2026-09-16 09:00 UTC] **claude-mac-opus5 / worktree vigilant-zhukovsky** (Mac) — topic: `direct-api-monitor` — DONE
+  Боевой API Директа + суточный мониторинг. Нашёл песочницу оператора (`base-vps:/root/.openclaw/workspace/direct_sandbox_*.py`,
+  OAuth-приложение «Нейро директолог» `33d228f2…` под gowindo-elama1). Диагноз: доступ открыт у аккаунта, у приложения —
+  только тестовый (error 58 на бою, v5 и v4 Live); Метрика 403 — не было scope `metrika:read`. Сделано: scope добавлен,
+  токен перевыпущен → `~/.config/betaline-ai-2/.env` (не в git; `.env` добавлен в .gitignore — раньше НЕ игнорировался);
+  Метрика API работает (10 визитов с рекламы за 7 дн, отказы 90 %); заявка на полный доступ приложения подана 16.09
+  (статус «новая», read-only, со скриншотом скрипта). `tools/direct-monitor.py` (stdlib) — Метрика + Reports API с
+  деградацией до одобрения, пороги MONITORING.md, tg-send оператору; ветка Reports проверена на песочнице; реальный прогон
+  ушёл оператору (msg 4210). launchd `ru.betaline.direct-monitor` 09:30 ежедневно, копия в `~/.local/bin/`.
+  Доки: CLAUDE.md §2/§5/§9, MONITORING.md, вики, auto-memory. index.html/style.css/main.js не трогал.
+- [2026-09-16 10:50 UTC] **claude-mac-opus5** (Mac) — topic: `codex-review-fixes` — DONE @ b046511 (master), fbbda11 (PR #11)
+  Ревью Codex (gpt-5.6-terra) по PR #11 и RamOS-переброске — всё закрыто. Скилл `ramos-project-onboard`:
+  `scripts/ramos-owner-api` переписан без shell-инъекции (METHOD — белый список, PATH — регулярка, тело — base64
+  → файл на VPS, `--fail-with-body`; проверено: инъекционный payload инертен, временных файлов и сессий не остаётся);
+  новый `scripts/ramos-project-rename` — UPDATE + `audit_log` одной транзакцией, имя биндится параметром.
+  `memory/index.md`: build-custom2 после любой правки index/style/main. PR #11: «Результат» + `<details>`
+  у бесплатного аудита, meta/og description с новыми направлениями; QA 1440/390 повторён.
+
+- [2026-09-16 08:20 UTC] **claude-mac-opus5** (Mac) — topic: `ramos-betaline-project` — DONE
+  Проект в RamOS переименован в **«Betaline»** (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd` и slug `betaline-ai-2`
+  сохранены — на slug завязаны каталог клона, матчинг входящих и адресация делегирования; API-роута переименования
+  в RamOS нет, сделано SQL + строка `project_rename` в `audit_log`).
+  **Члены:** Сергей — owner, Андрей — editor (с 26.08), **Дмитрий — viewer** (добавлен через
+  `PUT /api/projects/:id/members/:userId` под временной owner-сессией, сессия удалена; `member_grant` в audit_log).
+  Олег и Грок остаются viewer с прежних задач.
+  **Агент «Betaline-правки (Sonnet)»** обновлён (`PATCH /api/agents/:id`, version 1 → 2): старый промпт учил
+  партиалам и телефону 8 800, которых больше нет. Новый — контур актуального CLAUDE.md: три файла правятся
+  напрямую, реклама на custom2 → правка проверяется там первой, `tools/build-custom2.py` обязателен,
+  DoD §6 (node --check, скриншоты 1440/390), guardrails §7, «агент, не бот», ветка `andrey/*` + PR, мерж только
+  оператор. Инструментов отправки в Telegram у агента нет (skills: code-review/taste-skill/site-verifier/copywriting,
+  mcp: context7). ⚠️ Существующие чаты держат снапшот старого промпта (`chats.agent_prompt_snapshot`) —
+  новый контур получают новые чаты.
+  **Память проекта:** заведён `memory/index.md` (trust internal + approved_by владельца) — RamOS читает его сам
+  и подаёт в системный промпт каждого задания; карта указывает на CLAUDE.md, SITE-DOSSIER, ANDREY.md, MONITORING.md.
+  `memory/rules.md` не заводил: он требует hash-approval владельца, а красные линии уже в промпте и CLAUDE.md §7.
+  **Клон на VPS:** `git fetch` прошёл, push-проверка ветки `andrey/ping-20260916` от свежего `origin/master`
+  (24002ce) — создана и удалена, RW-deploy-key жив. 🔴 Грабля: ручной `git merge` в `/srv/ramos/projects/<slug>`
+  блокирует хук `ramos-project-guard` (ветку каталога двигает только сам RamOS в пре-флайте задания) — каталог
+  подтягивается до `origin/master` при первом же новом задании, руками не трогать.
+  Процесс упакован в скилл `~/.claude/skills/ramos-project-onboard/` (+ `scripts/ramos-owner-api`).
 
 - [2026-09-15 14:20 UTC] **claude-mac-opus5 / сессия betaline-ai-2-21** (Mac) — topic: `cases-slider` — DONE
   Секция кейсов переделана в горизонтальный слайдер по образцу боевого betaline-ai.ru: 4 слайда
