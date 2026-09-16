@@ -11,6 +11,29 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-16 08:20 UTC] **claude-mac-opus5** (Mac) — topic: `ramos-betaline-project` — DONE
+  Проект в RamOS переименован в **«Betaline»** (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd` и slug `betaline-ai-2`
+  сохранены — на slug завязаны каталог клона, матчинг входящих и адресация делегирования; API-роута переименования
+  в RamOS нет, сделано SQL + строка `project_rename` в `audit_log`).
+  **Члены:** Сергей — owner, Андрей — editor (с 26.08), **Дмитрий — viewer** (добавлен через
+  `PUT /api/projects/:id/members/:userId` под временной owner-сессией, сессия удалена; `member_grant` в audit_log).
+  Олег и Грок остаются viewer с прежних задач.
+  **Агент «Betaline-правки (Sonnet)»** обновлён (`PATCH /api/agents/:id`, version 1 → 2): старый промпт учил
+  партиалам и телефону 8 800, которых больше нет. Новый — контур актуального CLAUDE.md: три файла правятся
+  напрямую, реклама на custom2 → правка проверяется там первой, `tools/build-custom2.py` обязателен,
+  DoD §6 (node --check, скриншоты 1440/390), guardrails §7, «агент, не бот», ветка `andrey/*` + PR, мерж только
+  оператор. Инструментов отправки в Telegram у агента нет (skills: code-review/taste-skill/site-verifier/copywriting,
+  mcp: context7). ⚠️ Существующие чаты держат снапшот старого промпта (`chats.agent_prompt_snapshot`) —
+  новый контур получают новые чаты.
+  **Память проекта:** заведён `memory/index.md` (trust internal + approved_by владельца) — RamOS читает его сам
+  и подаёт в системный промпт каждого задания; карта указывает на CLAUDE.md, SITE-DOSSIER, ANDREY.md, MONITORING.md.
+  `memory/rules.md` не заводил: он требует hash-approval владельца, а красные линии уже в промпте и CLAUDE.md §7.
+  **Клон на VPS:** `git fetch` прошёл, push-проверка ветки `andrey/ping-20260916` от свежего `origin/master`
+  (24002ce) — создана и удалена, RW-deploy-key жив. 🔴 Грабля: ручной `git merge` в `/srv/ramos/projects/<slug>`
+  блокирует хук `ramos-project-guard` (ветку каталога двигает только сам RamOS в пре-флайте задания) — каталог
+  подтягивается до `origin/master` при первом же новом задании, руками не трогать.
+  Процесс упакован в скилл `~/.claude/skills/ramos-project-onboard/` (+ `scripts/ramos-owner-api`).
+
 - [2026-09-15 14:20 UTC] **claude-mac-opus5 / сессия betaline-ai-2-21** (Mac) — topic: `cases-slider` — DONE
   Секция кейсов переделана в горизонтальный слайдер по образцу боевого betaline-ai.ru: 4 слайда
   (Ташкент, Чебоксары — «было → стало»; салон, eBay — с боевого), слева текст / справа медиа, строка метрик,

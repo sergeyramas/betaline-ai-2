@@ -23,7 +23,7 @@
 | Operator / клиент | Сергей — TG `@Sergeyramas`; партнёр-заказчик правок: Андрей — TG `@Andrei_Stanislavovich` (см. `docs/agents/ANDREY.md`) |
 | DNS | Beget, аккаунт `fantroue`, зона `betaline-ai.ru`. **Есть API** (вкл. «Управление DNS»): `https://api.beget.com/api/<метод>?login=…&passwd=…&output_format=json`, креды у оператора. 🔴 `dns/changeRecords` ЗАМЕНЯЕТ весь набор записей FQDN — сначала `dns/getData`, и никогда не вызывать на апексе `betaline-ai.ru` (там MX beget + SPF: снесёшь почту). `dns/getData` на несуществующем поддомене отдаёт `METHOD_FAILED` — это норма, проверять надо через `dig @ns1.beget.com` |
 | Яндекс.Директ | агентский аккаунт `gowindo.elama1` (eLama), клиентский логин `ulogin=e-16571744`. Образец — кампания `708929168` (betaline-ai.ru, остановлена). **Мастер кампаний на custom2 — `714447865`, черновик с 15.09**: Россия, макс. целевых действий, средняя CPA (фикс. недоступна — у нового счётчика нет истории), бюджет 10 000 ₽/нед, 4 цели счётчика 112650916 (доступ «Просмотр» выдан e-16571744), креативы `assets/img/ads/*-text.jpg` (`tools/ad-creatives.py`). Запущена оператором 15.09. **API: у `gowindo-elama1` программный доступ ОТКРЫТ** (не только песочница), OAuth-приложения в списке: «Нейро директолог», Директ Коммандер. Мониторинг и пороги — `docs/ads/MONITORING.md`; боевой API-скрипт — отдельная задача (чип 16.09). Изменения стратегии/бюджета/статуса — только оператор |
-| RamOS | проект `betaline-ai-2` (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd`) на ramos-ai.ru; Андрей — editor; агент «Betaline-правки (Sonnet)»; клон `/srv/ramos/projects/betaline-ai-2` (RW-deploy-key с 2026-08-26, push `andrey/*` работает) |
+| RamOS | проект **«Betaline»** (slug `betaline-ai-2`, id `55a40cfe-b7ee-465a-92ac-24ec293c91cd`) на ramos-ai.ru. Члены: Сергей — owner, **Андрей — editor**, **Дмитрий — viewer** (+ Олег, Грок — viewer с прежних задач). Агент проекта «Betaline-правки (Sonnet)» (`default_model: sonnet`, промпт v2 от 16.09 — под текущий CLAUDE.md: без партиалов, приоритет custom2, DoD §6). Контекст агента — `memory/index.md` (RamOS подаёт его в системный промпт). Клон `/srv/ramos/projects/betaline-ai-2` (RW-deploy-key с 2026-08-26, push `andrey/*` работает; ветку каталога двигает только сам RamOS — ручной merge запирает все чаты проекта) |
 | Аналитика | Яндекс.Метрика **`112421910`** «Betaline AI — custom.betaline-ai.ru», заведён 09.09 в аккаунте `gowindo-elama1` — аккаунт под Директ, подтверждён оператором 15.09 (боевой счётчик живёт в другом аккаунте, это намеренно). Вебвизор включён. Цели: `audit_lead`, `chat_message`, `chat_lead`, `callback_chat` — ровно те, что стреляют на этом сайте. Для custom2 — отдельный `112650916` с теми же целями (см. Поддомен-2). Боевой `108480715` остаётся у betaline-ai.ru и не тронут |
 
 ## 3. Stack
@@ -44,6 +44,7 @@ betaline-ai-2/
 ├── api/                # серверлесс: lead.js (fan-out), chat-ai.js, close-stale.js, _lib/ — на поддомене НЕ используется, фронт ходит на боевой API
 ├── bot/betaline_kb.txt # база знаний chat-ai.js — путь менять НЕЛЬЗЯ (process.cwd()/bot/…)
 ├── assets/             # fonts/ (woff2-сабсеты), img/ (process-band.webp, og-image, favicon)
+├── memory/index.md     # карта памяти для RamOS: подаётся в системный промпт агента (trust: internal)
 ├── mockups/blueprint-v2/  # ИСТОЧНИК сайта — утверждённый макет; остальное в mockups/ — архив
 └── .github/workflows/deploy-vercel.yml  # прод-деплой по push в master (ждёт VERCEL_TOKEN)
 ```
@@ -128,6 +129,7 @@ betaline-ai-2/
 ## 11. Pointers
 
 - **Досье сайта (ссылки, структура, макеты, gap-анализы — всё в одном месте):** [`docs/SITE-DOSSIER.md`](docs/SITE-DOSSIER.md)
+- **Карта памяти проекта (её читает агент RamOS в каждом задании):** [`memory/index.md`](memory/index.md)
 - **Координация агентов:** [`AGENT_ACTIVITY.md`](AGENT_ACTIVITY.md)
 - **Инциденты:** [`docs/agents/incidents.md`](docs/agents/incidents.md)
 - **Правки от партнёра Андрея:** [`docs/agents/ANDREY.md`](docs/agents/ANDREY.md)
