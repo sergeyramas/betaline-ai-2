@@ -11,7 +11,7 @@ _Свободно._
 
 ## Recently Completed
 
-- [2026-09-16 08:09 UTC] **claude-mac-opus5** (Mac) — topic: `directions-and-pricing` — DONE, merged в master `4298b82` (PR #11), **custom2 задеплоен 16.09 ~11:20 UTC** (dpl_6Sb1uEEyawEtCdFjoK8gpfqYT3zx, проверено curl: новые секции и YM 112650916 на месте); custom НЕ перелит — ждёт оператора (ветка `andrey/directions-and-pricing`, PR #11 open — https://github.com/sergeyramas/betaline-ai-2/pull/11)
+- [2026-09-16 08:09 UTC] **claude-mac-opus5** (Mac) — topic: `directions-and-pricing` — DONE, merged в master `4298b82` (PR #11), **custom2 задеплоен 16.09 ~11:20 UTC** (dpl_6Sb1uEEyawEtCdFjoK8gpfqYT3zx, проверено curl: новые секции и YM 112650916 на месте); custom НЕ перелит — ждёт оператора. Довесок `f0679dc`: плашки-переходы в карточках 01/02 на betaline-ai.ru и zvonok.betaline-ai.ru (просьба оператора по скриншоту), custom2 передеплоен (ветка `andrey/directions-and-pricing`, PR #11 open — https://github.com/sergeyramas/betaline-ai-2/pull/11)
   Правки в «Услуги» и «Цены» по итогам созвона Андрея с оператором. Услуги: заголовок «Пять направлений» →
   «Основные направления» (число убрано), карточки пересобраны на 8: AI-продавец вынесен отдельным направлением (01,
   был частью «AI-ассистентов»), добавлен Голосовой агент (02, формулировки — с `~/Documents/betaline/betaline-voice-ai/`,
