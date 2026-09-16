@@ -34,7 +34,7 @@ DOMAIN_NEW = "custom2.betaline-ai.ru"
 YM_OLD = "112421910"
 YM_NEW = "112650916"
 
-COPY_ITEMS = ["style.css", "main.js", "vercel.json", "assets", "api", "bot", "package.json"]
+COPY_ITEMS = ["style.css", "main.js", "ecosystem.js", "vercel.json", "assets", "api", "bot", "package.json"]
 
 
 def swap_hero(html: str) -> str:
@@ -57,6 +57,8 @@ def main():
     html = swap_hero(src_html)
     n_domain = html.count(DOMAIN_OLD)
     html = html.replace(DOMAIN_OLD, DOMAIN_NEW)
+    # ecosystem.js: сайт и метка возврата на плашках
+    html = html.replace('data-site="custom"', 'data-site="custom2"').replace("?from=custom\"", "?from=custom2\"")
     n_ym = html.count(YM_OLD)
     if n_ym != 2:
         sys.exit(f"ERROR: expected YM_ID {YM_OLD} twice in index.html (script + noscript), found {n_ym}")

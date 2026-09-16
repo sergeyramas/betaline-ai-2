@@ -20,7 +20,7 @@
   --pad:clamp(20px,4vw,48px);
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:92px}
+html{scroll-behavior:smooth;scroll-padding-top:128px} /* 92 + полоска экосистемы 36 */
 body{
   background:var(--bg);
   color:var(--ink);
@@ -84,7 +84,7 @@ h2{
 
 /* ---------- навбар ---------- */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:50;
+  position:fixed;top:var(--eco-h,0);left:0;right:0;z-index:50; /* под полоской ecosystem.js */
   background:rgba(255,251,245,.92);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
@@ -561,7 +561,7 @@ body.modal-open{overflow:hidden}
   .burger{display:block}
   .svc{grid-column:1 / -1 !important}
   .m-menu{
-    display:block;position:fixed;top:66px;left:0;right:0;z-index:49;
+    display:block;position:fixed;top:calc(66px + var(--eco-h,0px));left:0;right:0;z-index:49;
     background:var(--bg);border-bottom:1px solid var(--line);
     transform:translateY(-110%);visibility:hidden;
     transition:transform .3s cubic-bezier(.22,.61,.36,1),visibility 0s .3s;
