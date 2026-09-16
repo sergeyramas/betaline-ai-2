@@ -11,6 +11,16 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-16 09:00 UTC] **claude-mac-opus5 / worktree vigilant-zhukovsky** (Mac) — topic: `direct-api-monitor` — DONE
+  Боевой API Директа + суточный мониторинг. Нашёл песочницу оператора (`base-vps:/root/.openclaw/workspace/direct_sandbox_*.py`,
+  OAuth-приложение «Нейро директолог» `33d228f2…` под gowindo-elama1). Диагноз: доступ открыт у аккаунта, у приложения —
+  только тестовый (error 58 на бою, v5 и v4 Live); Метрика 403 — не было scope `metrika:read`. Сделано: scope добавлен,
+  токен перевыпущен → `~/.config/betaline-ai-2/.env` (не в git; `.env` добавлен в .gitignore — раньше НЕ игнорировался);
+  Метрика API работает (10 визитов с рекламы за 7 дн, отказы 90 %); заявка на полный доступ приложения подана 16.09
+  (статус «новая», read-only, со скриншотом скрипта). `tools/direct-monitor.py` (stdlib) — Метрика + Reports API с
+  деградацией до одобрения, пороги MONITORING.md, tg-send оператору; ветка Reports проверена на песочнице; реальный прогон
+  ушёл оператору (msg 4210). launchd `ru.betaline.direct-monitor` 09:30 ежедневно, копия в `~/.local/bin/`.
+  Доки: CLAUDE.md §2/§5/§9, MONITORING.md, вики, auto-memory. index.html/style.css/main.js не трогал.
 - [2026-09-16 08:20 UTC] **claude-mac-opus5** (Mac) — topic: `ramos-betaline-project` — DONE
   Проект в RamOS переименован в **«Betaline»** (id `55a40cfe-b7ee-465a-92ac-24ec293c91cd` и slug `betaline-ai-2`
   сохранены — на slug завязаны каталог клона, матчинг входящих и адресация делегирования; API-роута переименования
