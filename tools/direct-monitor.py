@@ -76,7 +76,10 @@ def direct_report(tok, login, d1, d2):
         if len(lines) < 2:
             return {"Impressions": 0, "Clicks": 0, "Cost": 0, "Ctr": 0, "AvgCpc": 0, "Conversions": 0, "BounceRate": 0}, None
         keys, vals = lines[0].split("\t"), lines[1].split("\t")
-        return {k: float(v) if v not in ("--", "") else 0 for k, v in zip(keys, vals)}, None
+        r = {k: float(v) if v not in ("--", "") else 0 for k, v in zip(keys, vals)}
+        # с параметром Goals API отдаёт Conversions_<goal>_<model> вместо Conversions — суммируем
+        r["Conversions"] = sum(v for k, v in r.items() if k.startswith("Conversions_"))
+        return r, None
     return None, "Директ API: отчёт не собрался за 6 попыток"
 
 
@@ -87,7 +90,7 @@ def direct_balance(tok, login):
     st, _, txt = http("https://api.direct.yandex.ru/live/v4/json/", {"Content-Type": "application/json"},
                       json.dumps(body).encode())
     try:
-        return json.loads(txt)["data"]["Accounts"][0]["Amount"]
+        return float(json.loads(txt)["data"]["Accounts"][0]["Amount"])
     except Exception:
         return None
 
