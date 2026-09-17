@@ -12,10 +12,12 @@ _Свободно._
 ## Recently Completed
 
 - [2026-09-17 UTC] **Betaline-правки (Sonnet)** (VPS, задание диспетчера) — topic: `andrey-plan-first-rule` — DONE,
-  ветка `docs/andrey-plan-first-rule` (не master), SHA `efa7736`, PR не открывался. Только документация: добавлен
+  ветка `docs/andrey-plan-first-rule` (не master), SHA `1e3f1ee`, PR не открывался. Только документация: добавлен
   §8a в CLAUDE.md — «план до правки» для задач Андрея (что меняется / как будет выглядеть / рекомендации / явное
-  «делаю?», ждать подтверждения; исключение — явная опечатка/битая ссылка правится сразу). Продублировано ссылкой
-  в `memory/index.md`. Сайт (`index.html`/`style.css`/`main.js`) не тронут, деплоя не было, custom2 не задет.
+  «делаю?», ждать подтверждения; исключение — явная опечатка/битая ссылка правится сразу). Попытка продублировать
+  ссылкой в `memory/index.md` откачена платформой RamOS («writer-lease violation» — этот файл под отдельной защитой
+  от прямых git-коммитов, писать в него можно только штатным механизмом памяти). Правило живёт только в CLAUDE.md
+  §8a. Сайт (`index.html`/`style.css`/`main.js`) не тронут, деплоя не было, custom2 не задет.
 - [2026-09-16 15:50 UTC] **claude-mac-fable51** (Mac) — topic: `ecosystem-strip` — DONE, master `975d1b6`, задеплоено на все 4 сайта (custom2 → custom → zvonok `d0de646` → апекс `a8d1473` в `sergeyramas/betaline-landing` master).
   `ecosystem.js` v1.0.0 (источник — этот репо, копия в `betaline-voice-ai/` и `betaline-landing`): оранжевая полоска
   «Betaline · AI-ассистент · Голосовой агент · Индивидуальные решения» на всех сайтах (прячется при прокрутке вниз,
