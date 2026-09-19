@@ -34,6 +34,14 @@ DOMAIN_NEW = "custom2.betaline-ai.ru"
 YM_OLD = "112421910"
 YM_NEW = "112650916"
 
+# custom2: тарифы ужаты в 150–900 тыс. (решение оператора 19.09); на custom остаются макетные.
+PRICES = {
+    "<i>от</i>600&thinsp;000&nbsp;": "<i>от</i>450&thinsp;000&nbsp;",
+    "<i>от</i>700&thinsp;000&nbsp;": "<i>от</i>600&thinsp;000&nbsp;",
+    "<i>от</i>800&thinsp;000&nbsp;": "<i>от</i>750&thinsp;000&nbsp;",
+    "<i>от</i>1&thinsp;000&thinsp;000&nbsp;": "<i>от</i>900&thinsp;000&nbsp;",
+}
+
 COPY_ITEMS = ["style.css", "main.js", "ecosystem.js", "vercel.json", "assets", "api", "bot", "package.json"]
 
 
@@ -63,6 +71,10 @@ def main():
     if n_ym != 2:
         sys.exit(f"ERROR: expected YM_ID {YM_OLD} twice in index.html (script + noscript), found {n_ym}")
     html = html.replace(YM_OLD, YM_NEW)
+    for old, new in PRICES.items():
+        if html.count(old) != 1:
+            sys.exit(f"ERROR: expected tariff {old!r} once in index.html, found {html.count(old)}")
+        html = html.replace(old, new)
 
     # Keep the Vercel project link: without dist-custom2/.vercel/project.json
     # `vercel deploy` links by directory name and creates a duplicate project.
