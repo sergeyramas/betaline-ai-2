@@ -324,6 +324,7 @@ API-пути создать запись в `questions` от своего име
 - вёрстка/новые секции → `.agent/skills/frontend-design/SKILL.md`; проверка на «ИИ-шаблонность» → скилл `impeccable` (поставлен глобально 07.09, `/impeccable`)
 - генерация графики (og, иллюстрации) → `.agent/skills/canvas-design/SKILL.md` + `mockups/design/generate-prod.py`
 - ревью диффа → `/code-review`
+- новая кампания/счётчик/креативы в Директе → скилл `yandex-direct-campaign` (`~/.claude/skills/`, howto в вики)
 
 ## 11. Pointers
 
