@@ -11,6 +11,13 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-22 12:40 UTC] **claude-mac-fable51** (Mac) — topic: `memory-v3-handoff` — DONE (задачи 1–3 из `docs/agents/handoff/memory-v3/HANDOFF.md`).
+  Аудит облака перепроверен на Mac + base-vps/hermes/pe12 (Sonnet-сабагент, read-only): опровергнуто «494 стр.» (617) и «flush мёртв» (жив, v0.2.0);
+  найдено — 86 % START без DONE из-за того, что на Mac `agent-fleet-log.sh` висит только на SessionStart; синк-джобы активны, а vault не коммитится с 05.09;
+  pe12 без клона, hermes без хуков и диск 90 %, RamOS VPS с Mac недоступен. Codex (gpt-5.6-terra, read-only) по брифу: **NO-GO**, 7 BLOCKER/3 RISK.
+  Топ-3 правки (outbox для `remember`, MCP только в tailnet + облако через GitHub API, конфликт → needs-resolution) внесены в
+  `wiki/journal/2026-09-22-memory-v3-decision.md` (jarvis-wiki `aa0cd38`), добавлен шаг 0, §8 отвечен, §10 проверка; PR jarvis-wiki #3 → ready.
+  Рекомендация Сергею: NO-GO на переезд из iCloud, GO на шаг 0. Внедрение не начато. Доклад в TG отправлен.
 - [2026-09-22 09:40 UTC] **claude-web-fable5** (claude.ai/code) — topic: `memory-v3-handoff` — DONE (docs-only)
   Аудит памяти парка + план Memory v3 + бриф Codex-ревью — канон в `sergeyramas/jarvis-wiki` ветка `claude/memory-v3-plan`
   (PR #3, черновик). Здесь — хендофф Mac-агенту: `docs/agents/handoff/memory-v3/` (HANDOFF.md, DECISION.md,
