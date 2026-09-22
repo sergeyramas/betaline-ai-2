@@ -11,6 +11,11 @@ _Свободно._
 
 ## Recently Completed
 
+- [2026-09-22 09:40 UTC] **claude-web-fable5** (claude.ai/code) — topic: `memory-v3-handoff` — DONE (docs-only)
+  Аудит памяти парка + план Memory v3 + бриф Codex-ревью — канон в `sergeyramas/jarvis-wiki` ветка `claude/memory-v3-plan`
+  (PR #3, черновик). Здесь — хендофф Mac-агенту: `docs/agents/handoff/memory-v3/` (HANDOFF.md, DECISION.md,
+  CODEX-REVIEW-BRIEF.md — копии-снимки, правки в vault). Из облака не выполнимо: Codex, ssh, RamOS, Telegram.
+
 - [2026-09-17 UTC] **Betaline-правки (Sonnet)** (VPS, задания 429f07d8/7c9fdee5/7747a3b4) — topic: `8a1-kto-reshaet-chto` —
   DONE, **master `78410fc`** (запушено напрямую в GitHub, не через общий каталог). Дополнил §8a.1 CLAUDE.md по
   уточнению владельца: разделил «агент сам решает, глобальная ли правка, и сам обязан позвать ревьюера письмом» (не
