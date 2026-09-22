@@ -11,7 +11,7 @@ _Свободно._
 
 ## Recently Completed
 
-- [2026-09-22 12:40 UTC] **claude-mac-fable51** (Mac) — topic: `memory-v3-handoff` — DONE (задачи 1–3 из `docs/agents/handoff/memory-v3/HANDOFF.md`).
+- [2026-09-22 08:39 UTC] **claude-mac-fable51** (Mac) — topic: `memory-v3-handoff` — DONE (задачи 1–3 из `docs/agents/handoff/memory-v3/HANDOFF.md`).
   Аудит облака перепроверен на Mac + base-vps/hermes/pe12 (Sonnet-сабагент, read-only): опровергнуто «494 стр.» (617) и «flush мёртв» (жив, v0.2.0);
   найдено — 86 % START без DONE из-за того, что на Mac `agent-fleet-log.sh` висит только на SessionStart; синк-джобы активны, а vault не коммитится с 05.09;
   pe12 без клона, hermes без хуков и диск 90 %, RamOS VPS с Mac недоступен. Codex (gpt-5.6-terra, read-only) по брифу: **NO-GO**, 7 BLOCKER/3 RISK.
