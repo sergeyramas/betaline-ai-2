@@ -57,11 +57,13 @@ module.exports = async function handler(req, res) {
 
   // Доступ — только владелец/админы, из env-списка ID (не всем, кто есть в группе). Свой список,
   // а не полагание на закрытость группы: в отличие от простого «закрыть тему» бан — необратимая
-  // для посетителя штука, ставки выше.
+  // для посетителя штука, ставки выше. Fail-CLOSED, не fail-open: если TELEGRAM_ADMIN_IDS не
+  // настроен, действие НЕ выполняется (а не «пропустить проверку для всех») — иначе до настройки
+  // env любой, кто узнает URL вебхука, мог бы забанить/закрыть произвольную тему подделанным апдейтом.
   const adminIds = (process.env.TELEGRAM_ADMIN_IDS || '').split(',').map(s => s.trim()).filter(Boolean);
   const fromId = cb.from && cb.from.id ? String(cb.from.id) : '';
-  if (adminIds.length && !adminIds.includes(fromId)) {
-    await answerCallbackQuery(token, cb.id, 'Недоступно', true);
+  if (!adminIds.length || !adminIds.includes(fromId)) {
+    await answerCallbackQuery(token, cb.id, adminIds.length ? 'Недоступно' : 'Бот не настроен (TELEGRAM_ADMIN_IDS)', true);
     return res.status(200).json({ ok: true });
   }
 

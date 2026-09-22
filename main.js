@@ -322,6 +322,9 @@
             .then(function (data) {
                 dots.remove();
                 if (!data || data.error || typeof data.reply !== 'string') { addMsg('system', 'Ошибка. Попробуйте позже или напишите в Telegram.'); return; }
+                /* Забаненный/закрытый диалог: сервер отвечает пустой строкой вместо ответа модели —
+                   тихо выходим, не рисуем пустой пузырь бота и не пишем это в историю/цели Метрики. */
+                if (data.muted) return;
                 if (data.topicId && !chatState.topicId) {
                     chatState.topicId = data.topicId;
                     try { localStorage.setItem('bl_topic_id', data.topicId); } catch (err) { /* noop */ }
