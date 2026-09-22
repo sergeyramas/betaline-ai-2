@@ -24,6 +24,7 @@ async function getToken() {
 
 const SPREADSHEET_ID = () => process.env.GOOGLE_SPREADSHEET_ID;
 const TOPICS_SHEET = 'Топики';
+const BANS_SHEET = 'Баны';
 
 // Append a row to any sheet tab
 async function appendRow(sheetName, row) {
@@ -77,11 +78,71 @@ function normalizePhone(phone) {
 }
 
 // Log a new topic to the Топики sheet
-// Columns: A=thread_id | B=created_at | C=type | D=phone | E=name | F=status | G=chat_id
-async function logTopic(threadId, type, phone, name) {
+// Columns: A=thread_id | B=created_at | C=type | D=phone | E=name | F=status | G=chat_id | H=visitor_id | I=info_message_id
+// status: open | closed (авто/по кнопке, диалог завершён) | banned (посетитель забанен)
+async function logTopic(threadId, type, phone, name, visitorId, infoMessageId) {
   const now = new Date().toISOString();
   const chatId = process.env.TELEGRAM_CHAT_ID || '';
-  await appendRow(TOPICS_SHEET, [String(threadId), now, type, normalizePhone(phone), name || '', 'open', chatId]);
+  await appendRow(TOPICS_SHEET, [
+    String(threadId), now, type, normalizePhone(phone), name || '', 'open', chatId,
+    visitorId || '', infoMessageId ? String(infoMessageId) : '',
+  ]);
+}
+
+// Найти строку темы по threadId. Возвращает { rowIndex, status, visitorId, chatId, infoMessageId } или null.
+// Используется и «тихим» чек-апом в chat-ai.js (не звать модель для закрытой/забаненной темы),
+// и вебхуком кнопок (ban/unban/close), чтобы не сканировать лист дважды с разной логикой.
+async function getTopicByThreadId(threadId) {
+  const rows = await readSheet(TOPICS_SHEET);
+  const id = String(threadId);
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (row[0] === id) {
+      return {
+        rowIndex: i + 1,
+        status: row[5] || 'open',
+        chatId: row[6] || process.env.TELEGRAM_CHAT_ID,
+        visitorId: row[7] || '',
+        infoMessageId: row[8] || '',
+      };
+    }
+  }
+  return null;
+}
+
+// Проставить статус темы (open | closed | banned) по номеру строки
+async function setTopicStatus(rowIndex, status) {
+  await updateCell(TOPICS_SHEET, `F${rowIndex}`, status);
+}
+
+// --- Баны посетителей (по visitorId — см. ограничение в плане: localStorage, обходится очисткой) ---
+// Колонки листа «Баны»: A=visitor_id | B=banned_at | C=banned_by (telegram user id) | D=status (active|lifted) | E=lifted_at
+async function isVisitorBanned(visitorId) {
+  if (!visitorId) return false;
+  const rows = await readSheet(BANS_SHEET);
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (row[0] === visitorId && row[3] === 'active') return true;
+  }
+  return false;
+}
+
+async function banVisitor(visitorId, bannedBy) {
+  const now = new Date().toISOString();
+  await appendRow(BANS_SHEET, [visitorId, now, String(bannedBy || ''), 'active', '']);
+}
+
+// Разбан: если запись активна — гасим её (status=lifted), а не удаляем строку (история бана остаётся).
+async function unbanVisitor(visitorId) {
+  const rows = await readSheet(BANS_SHEET);
+  const now = new Date().toISOString();
+  for (let i = 1; i < rows.length; i++) {
+    const row = rows[i];
+    if (row[0] === visitorId && row[3] === 'active') {
+      await updateCell(BANS_SHEET, `D${i + 1}`, 'lifted');
+      await updateCell(BANS_SHEET, `E${i + 1}`, now);
+    }
+  }
 }
 
 // Find an existing open topic by phone number. Returns { threadId, rowIndex } or null
@@ -134,6 +195,11 @@ module.exports = {
   findTopicByPhone,
   getOpenTopics,
   markTopicClosed,
+  getTopicByThreadId,
+  setTopicStatus,
+  isVisitorBanned,
+  banVisitor,
+  unbanVisitor,
   getToken,
   SPREADSHEET_ID,
 };

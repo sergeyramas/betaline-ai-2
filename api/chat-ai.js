@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const OpenAI = require('openai');
-const { logTopic } = require('./_lib/sheets');
+const { logTopic, getTopicByThreadId, isVisitorBanned } = require('./_lib/sheets');
 const { generateCodename } = require('./_lib/animals');
 
 // Cache KB at cold start
@@ -62,6 +62,23 @@ module.exports = async function handler(req, res) {
 
   if (!openaiKey) return res.status(500).json({ error: 'OpenAI not configured' });
 
+  // Тихий выход для забаненных/закрытых диалогов — ГЛАВНОЕ: до вызова модели, не тратим токены.
+  // Best-effort: если Sheets недоступен, чек-ап падает молча и бот отвечает как раньше (fail-open,
+  // не блокируем весь чат для всех посетителей из-за сбоя листа со статусами бана).
+  try {
+    if (await isVisitorBanned(visitorId)) {
+      return res.status(200).json({ reply: '', topicId: topicId || null, muted: true });
+    }
+    if (topicId) {
+      const topic = await getTopicByThreadId(Number(topicId));
+      if (topic && (topic.status === 'closed' || topic.status === 'banned')) {
+        return res.status(200).json({ reply: '', topicId, muted: true });
+      }
+    }
+  } catch (e) {
+    console.error('Mute check failed:', e.message);
+  }
+
   try {
     // 1. Build messages for GPT
     const messages = [{ role: 'system', content: SYSTEM_PROMPT }];
@@ -117,8 +134,6 @@ module.exports = async function handler(req, res) {
             const topicData = await createResp.json();
             threadId = topicData.result.message_thread_id;
 
-            logTopic(threadId, 'chat-ai', '', topicName).catch(e => console.error('Topic log failed:', e));
-
             // Send visitor info
             const now = new Date();
             const dateStr = now.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
@@ -126,7 +141,10 @@ module.exports = async function handler(req, res) {
             const geo = [city, region, country].filter(Boolean).join(', ') || '—';
             const utmStr = utm ? Object.entries(utm).filter(([,v]) => v).map(([k,v]) => `${k}: ${v}`).join('\n  ') : '—';
             const info = `🤖 AI-чат с посетителем\n\n🐾 ${codename}\n📄 ${page || '—'}\n⏰ ${dateStr} ${timeStr}\n📍 ${geo}\n🌐 IP: ${ip || '—'}\n🔗 ${referrer || 'Прямой заход'}\n📊 UTM: ${utmStr}`;
-            await tgSend(token, chatId, threadId, info);
+            const infoMsg = await tgSend(token, chatId, threadId, info, buildDialogKeyboard(threadId, 'open'));
+
+            logTopic(threadId, 'chat-ai', '', topicName, visitorId, infoMsg && infoMsg.message_id)
+              .catch(e => console.error('Topic log failed:', e));
 
             // Lead card
             sendAiChatLeadCard(token, chatId, threadId, codename, geoTag, message, page).catch(() => {});
@@ -193,13 +211,27 @@ async function sendAiChatLeadCard(token, chatId, threadId, codename, geo, firstM
   });
 }
 
-async function tgSend(token, chatId, threadId, text) {
+// replyMarkup опционален (кнопки бан/закрыть у вступительного сообщения); возвращает распарсенный
+// result (нужен message_id, чтобы вебхук потом перерисовал клавиатуру через editMessageReplyMarkup).
+async function tgSend(token, chatId, threadId, text, replyMarkup) {
   const body = { chat_id: chatId, text };
   if (threadId) body.message_thread_id = threadId;
+  if (replyMarkup) body.reply_markup = replyMarkup;
   const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
-  if (!resp.ok) console.error(`TG send failed: ${resp.status}`);
+  if (!resp.ok) { console.error(`TG send failed: ${resp.status}`); return null; }
+  const data = await resp.json();
+  return data.result;
+}
+
+// Кнопки на вступительном сообщении темы. Бан/разбан — одна кнопка, текст зависит от текущего
+// статуса (owner просил: кнопка должна отражать реальное состояние, не быть статичной подписью).
+function buildDialogKeyboard(threadId, status) {
+  const banBtn = status === 'banned'
+    ? { text: '🔓 Разбанить', callback_data: `unban:${threadId}` }
+    : { text: '🚫 Забанить', callback_data: `ban:${threadId}` };
+  return { inline_keyboard: [[banBtn, { text: '✅ Закрыть чат', callback_data: `close:${threadId}` }]] };
 }
