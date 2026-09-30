@@ -35,12 +35,8 @@ YM_OLD = "112421910"
 YM_NEW = "112650916"
 
 # custom2: тарифы ужаты в 150–900 тыс. (решение оператора 19.09); на custom остаются макетные.
-PRICES = {
-    "<i>от</i>600&thinsp;000&nbsp;": "<i>от</i>450&thinsp;000&nbsp;",
-    "<i>от</i>700&thinsp;000&nbsp;": "<i>от</i>600&thinsp;000&nbsp;",
-    "<i>от</i>800&thinsp;000&nbsp;": "<i>от</i>750&thinsp;000&nbsp;",
-    "<i>от</i>1&thinsp;000&thinsp;000&nbsp;": "<i>от</i>900&thinsp;000&nbsp;",
-}
+# Тарифы одинаковые на custom и custom2 с 30.09 (решение оператора) — подмены нет.
+PRICES: dict[str, str] = {}
 
 COPY_ITEMS = ["style.css", "main.js", "ecosystem.js", "vercel.json", "assets", "api", "bot", "package.json"]
 
