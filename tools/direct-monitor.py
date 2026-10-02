@@ -25,7 +25,9 @@ COUNTER = 112650916
 GOALS = {617936022: "audit_lead", 617937073: "chat_message", 617937404: "chat_lead", 617937509: "callback_chat"}
 OPERATOR = "609952529"
 DIRECT_API = os.environ.get("YANDEX_DIRECT_API", "https://api.direct.yandex.com")  # песочница: api-sandbox.direct.yandex.com
-TG_SEND = os.path.expanduser("~/Documents/agent-fleet/tools/tg-send")
+# ponytail: копия вне ~/Documents — launchd не может выполнить файлы из Documents (TCC, exit 126).
+# Обновлять: cp ~/Documents/agent-fleet/tools/tg-send ~/.local/bin/tg-send
+TG_SEND = os.path.expanduser("~/.local/bin/tg-send")
 
 
 def load_env():
