@@ -9,9 +9,10 @@
 
     /* ---------- 0. Конфиг и утилиты ---------- */
     /* Точное совпадение, не endsWith: поддомены (custom./zvonok.) тоже оканчиваются
-       на betaline-ai.ru, но своих env не имеют — их формы должны идти на боевой API. */
+       на betaline-ai.ru, но своих env не имеют. С 21.09 поддомены живут на base-vps
+       и ходят в api.betaline-ai.ru (тот же хост) — Vercel-IP частично блокируют в РФ. */
     var PROD_HOSTS = ['betaline-ai.ru', 'www.betaline-ai.ru'];
-    var API_BASE = PROD_HOSTS.indexOf(location.hostname) !== -1 ? '' : 'https://betaline-ai.ru';
+    var API_BASE = PROD_HOSTS.indexOf(location.hostname) !== -1 ? '' : 'https://api.betaline-ai.ru';
     var YM_ID = window.YM_ID || 0;   /* задаётся в <head>; 0 = счётчик ещё не заведён */
     var PHONE_HUMAN = '+7 987 760-97-09';
 
