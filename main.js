@@ -175,7 +175,8 @@
                 name: name.value.trim(),
                 phone: contact.value.trim(),
                 niche: company ? company.value.trim() : '',
-                task: task ? task.value.trim() : ''
+                task: task ? task.value.trim() : '',
+                plan: $('f-plan') ? $('f-plan').value : undefined
             })
             .then(function (r) { if (!r.ok) throw new Error('server'); return r.json(); })
             .then(function (data) {
@@ -195,6 +196,22 @@
     /* ---------- 3b. CTA-карточка «Ваше направление» → затравка в форму ---------- */
     var svcCta = document.querySelector('.svc--cta');
     if (svcCta) svcCta.addEventListener('click', function () { var t = $('f-task'); if (t && !t.value) t.value = 'Своё направление: '; });
+
+    /* ---------- 3c. main.betaline-ai.ru: «Обсудить задачу» → задача в форму (plan) ----------
+       Работает только там, где в форме есть скрытое #f-plan (страница dist-main). */
+    (function () {
+        var plan = $('f-plan'), badge = $('cta-plan');
+        if (!plan || !badge) return;
+        function setPlan(v) {
+            plan.value = v || '';
+            badge.querySelector('b').textContent = plan.value;
+            badge.classList.toggle('on', !!plan.value);
+        }
+        document.querySelectorAll('[data-plan]').forEach(function (a) {
+            a.addEventListener('click', function () { setPlan(a.getAttribute('data-plan')); });
+        });
+        badge.querySelector('button').addEventListener('click', function () { setPlan(''); });
+    })();
 
     /* ---------- 4. Модалки политики/оферты ---------- */
     var LEGAL_MODALS = { policy: 'modalPolicy', oferta: 'modalOferta' };
