@@ -225,6 +225,30 @@ async function main() {
       history.push({ role: 'user', content: turns[i] });
       history.push({ role: 'assistant', content: res._body.reply });
     }
+    // Диалог: повторная просьба назвать цифру без расспроса
+    console.log('\n=== Кейс f) custom2 — настаивает на цифре ===');
+    console.log('Сайт: custom (origin:', ORIGIN_CUSTOM2 + ')');
+    const turnsF = [
+      'сколько стоит бот?',
+      'просто скажите цифру',
+    ];
+    const historyF = [];
+    for (let i = 0; i < turnsF.length; i++) {
+      console.log(`\n--- Ход ${i + 1} ---`);
+      console.log('Вопрос:', turnsF[i]);
+      const res = await runCase(handler, `f-turn${i + 1}`, {
+        origin: ORIGIN_CUSTOM2,
+        message: turnsF[i],
+        history: historyF,
+      });
+      if (res._status !== 200) {
+        console.log('HTTP', res._status, JSON.stringify(res._body));
+        break;
+      }
+      console.log('Ответ:', res._body.reply);
+      historyF.push({ role: 'user', content: turnsF[i] });
+      historyF.push({ role: 'assistant', content: res._body.reply });
+    }
   } finally {
     if (unmock) unmock();
     if (tmpDir) {
