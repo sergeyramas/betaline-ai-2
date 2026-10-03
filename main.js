@@ -310,7 +310,7 @@
             var dots = addMsg('bot', '…');
 
             var payload = { visitorId: chatState.visitorId, topicId: chatState.topicId, message: msg,
-                            history: chatState.history.slice(-10), page: location.pathname + location.search };
+                            history: chatState.history.slice(-20), page: location.pathname + location.search };
             if (!chatState.topicId) {
                 payload.utm = utm;
                 payload.referrer = document.referrer || '';
