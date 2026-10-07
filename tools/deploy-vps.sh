@@ -23,7 +23,7 @@ check() { curl -s -o /dev/null -w "$1 %{http_code}\n" "$1"; }
 case "${1:-}" in
   custom2) cd "$ROOT"; python3 tools/build-custom2.py; rsync -az --delete "${STATIC_X[@]}" dist-custom2/ base-vps:/srv/betaline/custom2/; check https://custom2.betaline-ai.ru/ ;;
   main)    cd "$ROOT"; python3 tools/build-main.py; rsync -az --delete dist-main/ base-vps:/srv/betaline/main/; check https://main.betaline-ai.ru/ ;;
-  custom)  cd "$ROOT"; rsync -az --delete index.html style.css main.js ecosystem.js assets base-vps:/srv/betaline/custom/; check https://custom.betaline-ai.ru/ ;;
+  custom)  cd "$ROOT"; rsync -az --delete index.html kp.html style.css main.js ecosystem.js assets base-vps:/srv/betaline/custom/; check https://custom.betaline-ai.ru/ ;;
   api)     push_api "$ROOT" api betaline-api; curl -s -o /dev/null -w "api %{http_code}\n" -X OPTIONS https://api.betaline-ai.ru/api/lead ;;
   apex)    cd "$APEX"; rsync -az --delete --exclude-from=.vercelignore "${STATIC_X[@]}" --exclude "*.py" --exclude .github --exclude .claude --exclude docs --exclude research ./ base-vps:/srv/betaline/apex/
            push_api "$APEX" apex-api betaline-apex-api; check https://betaline-ai.ru/ ;;

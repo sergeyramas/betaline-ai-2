@@ -73,7 +73,7 @@ def main():
     DIST.mkdir()
     (DIST / "index.html").write_text(html, encoding="utf-8")
     shutil.copy(ROOT / "main" / "main.css", DIST / "main.css")
-    for item in ["style.css", "main.js", "ecosystem.js"]:
+    for item in ["style.css", "main.js", "ecosystem.js", "kp.html"]:
         shutil.copy(ROOT / item, DIST / item)
     shutil.copytree(ROOT / "assets", DIST / "assets")
     print(f"built {DIST}")
