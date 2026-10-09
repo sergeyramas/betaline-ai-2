@@ -2,3 +2,4 @@
 dist-custom2/
 .env
 .env.*
+dist-main/
