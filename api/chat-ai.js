@@ -3,6 +3,7 @@ const path = require('path');
 const OpenAI = require('openai');
 const { logTopic, getTopicByThreadId, isVisitorBanned } = require('./_lib/sheets');
 const { generateCodename } = require('./_lib/animals');
+const admin = require('./_lib/admin');
 
 // Cache KB at cold start
 let knowledgeBase = '';
@@ -69,7 +70,7 @@ module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { visitorId, topicId, message, history, page, utm, referrer, userAgent, screen, lang } = req.body || {};
+  const { visitorId, topicId, message, history, page, utm, referrer, userAgent, screen, lang, chatToken } = req.body || {};
   if (!visitorId || !message) return res.status(400).json({ error: 'Missing required fields' });
 
   const openaiKey = process.env.OPENAI_API_KEY;
@@ -97,6 +98,21 @@ module.exports = async function handler(req, res) {
     console.error('Mute check failed:', e.message);
   }
 
+  // --- Админка: токен диалога, запись реплик, «взято оператором» -> ИИ молчит. Всё best-effort:
+  // админка не ответила — чат работает как раньше.
+  const dlg = admin.validChatToken(chatToken) ? chatToken : admin.newChatToken();
+  const contactMatch = CONTACT_PATTERNS.map(p => String(message).match(p)).find(Boolean);
+  const site = admin.siteFrom(req, null);
+  const utmAdmin = {};
+  if (utm && typeof utm === 'object') for (const k of ['source', 'medium', 'campaign', 'content', 'term']) if (utm[k]) utmAdmin['utm_' + k] = String(utm[k]);
+  await admin.ingest({
+    channel: 'site_chat', external_id: dlg, text: String(message).slice(0, 4000),
+    contact: contactMatch ? contactMatch[0] : undefined, site, utm: utmAdmin,
+  }).catch(e => console.error('Admin ingest (user) failed:', e.message));
+  if (await admin.isPaused('site_chat', dlg)) {
+    return res.status(200).json({ reply: '', topicId: topicId || null, muted: true, chatToken: dlg });
+  }
+
   try {
     // 1. Build messages for GPT
     const messages = [{ role: 'system', content: buildSystemPrompt() }];
@@ -122,6 +138,13 @@ module.exports = async function handler(req, res) {
     });
 
     const reply = completion.choices[0]?.message?.content || 'Извините, произошла ошибка. Попробуйте ещё раз.';
+
+    // Пока шла модель, оператор мог взять диалог — тогда ответ ИИ не отдаём
+    if (await admin.isPaused('site_chat', dlg)) {
+      return res.status(200).json({ reply: '', topicId: topicId || null, muted: true, chatToken: dlg });
+    }
+    await admin.ingest({ channel: 'site_chat', sender: 'ai', external_id: dlg, text: reply.slice(0, 4000) })
+      .catch(e => console.error('Admin ingest (ai) failed:', e.message));
 
     // 3. Detect contact in user message
     const contactDetected = detectContact(message);
@@ -187,6 +210,7 @@ module.exports = async function handler(req, res) {
       reply,
       topicId: threadId,
       contactDetected,
+      chatToken: dlg,
     });
   } catch (err) {
     console.error('Chat AI error:', err);

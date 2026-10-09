@@ -1,5 +1,6 @@
 const fs = require('fs');
 const { appendRow } = require('./_lib/sheets');
+const admin = require('./_lib/admin');
 
 // --- Атрибуция: yclid / utm / ym_uid / host приходят с сайта (см. blLeadAttr в main.js и index.html апекса).
 // Нужна, чтобы лид можно было засчитать Директу офлайн-конверсией, даже если Метрика заблокирована у посетителя.
@@ -83,16 +84,18 @@ module.exports = async function handler(req, res) {
     sendToCRM(source, phone, { name, niche, task, platform, speed, price, date, time, plan }, attr),
     sendEmail(source, phone, { name, niche, task, platform, speed, price, date, time, plan }, attr),
     appendLeadJsonl(source, phone, { name, plan }, attr),
+    sendToAdmin(req, source, phone, { name, niche, task, platform, speed, price, date, time, plan }, attr),
   ]);
 
   // Log failures
-  const labels = ['Telegram', 'Sheets', 'CRM', 'Email', 'JSONL'];
+  const labels = ['Telegram', 'Sheets', 'CRM', 'Email', 'JSONL', 'Admin'];
   results.forEach((r, i) => {
     if (r.status === 'rejected') console.error(`${labels[i]} failed:`, r.reason);
   });
 
-  // Success if at least one channel delivered
-  const anySuccess = results.slice(0, 4).some(r => r.status === 'fulfilled');
+  // Успех — заявка реально легла в Telegram или в админку. Раньше хватало любого «fulfilled», а CRM/почта
+  // без настроенных ключей возвращают без ошибки — заявка могла потеряться молча при падении Telegram.
+  const anySuccess = results[0].status === 'fulfilled' || results[5].status === 'fulfilled';
   if (!anySuccess) return res.status(500).json({ error: 'All delivery channels failed' });
 
   return res.status(200).json({ ok: true });
@@ -273,4 +276,23 @@ async function sendEmail(source, phone, fields, attr) {
     }),
   });
   if (!resp.ok) throw new Error(`Resend ${resp.status}: ${await resp.text()}`);
+}
+
+// --- Админка Betaline (admin.betaline-ai.ru): канал form, заявка -> лид в воронке ---
+async function sendToAdmin(req, source, phone, f, attr) {
+  const isMail = String(phone).includes('@');
+  const labels = { quiz: 'Квиз', audit: 'Аудит', callback: 'Звонок', pricing: 'Тариф' };
+  const text = [
+    `Заявка с формы сайта (${labels[source] || source})`,
+    f.niche && `Ниша: ${f.niche}`, f.task && `Задача: ${f.task}`, f.platform && `Площадка: ${f.platform}`,
+    f.speed && `Сроки: ${f.speed}`, f.price && `Оценка: ${f.price}`,
+    (f.date || f.time) && `Дата: ${[f.date, f.time].filter(Boolean).join(' ')}`,
+  ].filter(Boolean).join('\n');
+  const utm = {};
+  for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'yclid', 'ym_uid']) if (attr[k]) utm[k] = attr[k];
+  await admin.ingest({
+    channel: 'form', name: f.name || null, contact: phone,
+    phone: isMail ? null : phone, email: isMail ? phone : null,
+    text, plan: f.plan || null, site: admin.siteFrom(req, attr), utm,
+  }, 4000);
 }

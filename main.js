@@ -332,10 +332,12 @@
         var win = $('bl-chat-window'), btn = $('bl-chat-btn'), msgs = $('bl-chat-messages'), input = $('bl-chat-input');
         if (!win || !btn || !msgs || !input) return;
 
-        var chatState = { open: false, visitorId: null, topicId: null, inited: false, history: [] };
+        var chatState = { open: false, visitorId: null, topicId: null, inited: false, history: [], token: null, after: 0 };
         try {
             chatState.visitorId = localStorage.getItem('bl_visitor_id') || null;
             chatState.topicId = localStorage.getItem('bl_topic_id') || null;
+            chatState.token = localStorage.getItem('bl_chat_token') || null;
+            chatState.after = Number(localStorage.getItem('bl_chat_after')) || 0;
             chatState.history = JSON.parse(localStorage.getItem('bl_chat_history') || '[]');
         } catch (err) { /* приватный режим — работаем без памяти */ }
         if (!chatState.visitorId) {
@@ -357,6 +359,7 @@
             win.classList.toggle('open', chatState.open);
             win.setAttribute('aria-hidden', chatState.open ? 'false' : 'true');
             btn.classList.toggle('hidden', chatState.open);
+            syncPolling();
             if (!chatState.open) { btn.focus(); return; }
             if (!chatState.inited) {
                 chatState.inited = true;
@@ -365,6 +368,32 @@
             }
             input.focus();
         }
+        /* Ответы оператора из админки: опрос раз в ~5 с, только пока чат открыт и вкладка видна */
+        var pollTimer = null, polling = false;
+        function pollOperator() {
+            if (!chatState.token || polling || !chatState.open || document.hidden) return;
+            polling = true;
+            fetch(API_BASE + '/api/chat-messages?token=' + encodeURIComponent(chatState.token) + '&after=' + chatState.after, { cache: 'no-store' })
+            .then(function (r) { return r.ok ? r.json() : null; })
+            .then(function (d) {
+                ((d && d.messages) || []).forEach(function (m) {
+                    if (!m || !m.id || m.id <= chatState.after || typeof m.text !== 'string') return;
+                    chatState.after = m.id;
+                    try { localStorage.setItem('bl_chat_after', String(m.id)); } catch (err) { /* noop */ }
+                    addMsg('bot', m.text);
+                    chatState.history.push({ role: 'assistant', content: m.text });
+                });
+            })
+            .catch(function () { /* сеть/админка недоступны — молча, повторим через 5 с */ })
+            .then(function () { polling = false; });
+        }
+        function syncPolling() {
+            if (chatState.open && chatState.token) {
+                if (!pollTimer) { pollOperator(); pollTimer = setInterval(pollOperator, 5000); }
+            } else if (pollTimer) { clearInterval(pollTimer); pollTimer = null; }
+        }
+        document.addEventListener('visibilitychange', function () { if (!document.hidden) pollOperator(); });
+
         btn.addEventListener('click', toggleChat);
         $('bl-chat-close').addEventListener('click', toggleChat);
         document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && chatState.open) toggleChat(); });
@@ -389,7 +418,7 @@
             var dots = addMsg('bot', '…');
 
             var payload = { visitorId: chatState.visitorId, topicId: chatState.topicId, message: msg,
-                            history: chatState.history.slice(-20), page: location.pathname + location.search };
+                            history: chatState.history.slice(-20), chatToken: chatState.token, page: location.pathname + location.search };
             if (!chatState.topicId) {
                 payload.utm = utm;
                 payload.referrer = document.referrer || '';
@@ -404,6 +433,12 @@
                 if (!data || data.error || typeof data.reply !== 'string') { addMsg('system', 'Ошибка. Попробуйте позже или напишите в Telegram.'); return; }
                 /* Забаненный/закрытый диалог: сервер отвечает пустой строкой вместо ответа модели —
                    тихо выходим, не рисуем пустой пузырь бота и не пишем это в историю/цели Метрики. */
+                if (data.chatToken && data.chatToken !== chatState.token) {
+                    chatState.token = data.chatToken; chatState.after = 0;
+                    try { localStorage.setItem('bl_chat_after', '0'); } catch (err) { /* noop */ }
+                    try { localStorage.setItem('bl_chat_token', data.chatToken); } catch (err) { /* noop */ }
+                }
+                syncPolling();
                 if (data.muted) return;
                 if (data.topicId && !chatState.topicId) {
                     chatState.topicId = data.topicId;
