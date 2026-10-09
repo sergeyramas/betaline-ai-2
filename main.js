@@ -4,6 +4,68 @@
    форма → /api/lead (source=audit), модалки политики/оферты, чат-виджет
    (/api/chat-ai + callback, source=callback), цели Метрики.
    ============================================================ */
+/* ---------- Атрибуция лида (переживает заблокированную Метрику) ----------
+   yclid / utm_* берём из URL лендинга и держим в localStorage + sessionStorage + cookie
+   bl_attr (90 дней, на .betaline-ai.ru — общая для поддоменов). blLeadAttr(payload) дописывает
+   в тело /api/lead: yclid, utm_*, ym_uid (cookie _ym_uid), landing, page, host, counter.
+   Менять вместе с копией в betaline-ai-2/main.js и betaline-master/index.html. */
+(function () {
+    var KEY = 'bl_attr', FIELDS = ['yclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    function getCookie(n) {
+        try {
+            var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'));
+            return m ? decodeURIComponent(m[1]) : '';
+        } catch (e) { return ''; }
+    }
+    function setCookie(n, v) {
+        try {
+            var dom = /(^|\.)betaline-ai\.ru$/.test(location.hostname) ? '; domain=.betaline-ai.ru' : '';
+            document.cookie = n + '=' + encodeURIComponent(v) + '; max-age=' + (90 * 86400) + '; path=/; SameSite=Lax' +
+                dom + (location.protocol === 'https:' ? '; Secure' : '');
+        } catch (e) { /* noop */ }
+    }
+    function readAttr() {
+        var raw = '';
+        try { raw = localStorage.getItem(KEY) || ''; } catch (e) { /* noop */ }
+        if (!raw) { try { raw = sessionStorage.getItem(KEY) || ''; } catch (e) { /* noop */ } }
+        if (!raw) raw = getCookie(KEY);
+        try { var o = raw ? JSON.parse(raw) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; }
+    }
+    function saveAttr(o) {
+        var s = JSON.stringify(o);
+        try { localStorage.setItem(KEY, s); } catch (e) { /* noop */ }
+        try { sessionStorage.setItem(KEY, s); } catch (e) { /* noop */ }
+        setCookie(KEY, s);
+    }
+    function captureAttr() {
+        var st = readAttr(), q = {}, touched = false, changed = false;
+        try { new URLSearchParams(location.search).forEach(function (v, k) { q[k] = v; }); } catch (e) { /* noop */ }
+        FIELDS.forEach(function (f) { if (q[f]) touched = true; });
+        if (touched) {   /* новый рекламный заход — заменяем прежние метки целиком */
+            FIELDS.forEach(function (f) { delete st[f]; });
+            FIELDS.forEach(function (f) { if (q[f]) st[f] = String(q[f]).slice(0, 80); });
+            changed = true;
+        }
+        if (!st.landing) { st.landing = location.href.slice(0, 200); changed = true; }
+        if (changed) saveAttr(st);
+        return st;
+    }
+    captureAttr();   /* сразу при загрузке: yclid ещё в адресной строке */
+    window.blLeadAttr = function (payload, counter) {
+        var st = captureAttr(), out = payload || {}, add = {};
+        FIELDS.forEach(function (f) { if (st[f]) add[f] = st[f]; });
+        var uid = getCookie('_ym_uid');
+        if (uid) add.ym_uid = uid.slice(0, 32);
+        add.landing = st.landing || location.href.slice(0, 200);
+        add.page = location.href.slice(0, 300);
+        add.host = location.hostname;
+        var c = counter || window.YM_ID || window.BL_COUNTER;
+        if (c) add.counter = String(c);
+        Object.keys(add).forEach(function (k) { if (out[k] === undefined) out[k] = add[k]; });
+        return out;
+    };
+})();
+
 (function () {
     'use strict';
 
@@ -34,7 +96,7 @@
             signal: ctrl ? ctrl.signal : undefined
         }).then(function (r) { return done(r, false); }, function (e) { return done(e, true); });
     }
-    function postLead(payload) { return postJSON('/api/lead', payload, 15000); }
+    function postLead(payload) { return postJSON('/api/lead', window.blLeadAttr ? window.blLeadAttr(payload, YM_ID) : payload, 15000); }
 
     function phoneDigits(v) { return String(v || '').replace(/\D/g, ''); }
     function isValidPhone(v) { return phoneDigits(v).length >= 10; }
@@ -175,7 +237,8 @@
                 name: name.value.trim(),
                 phone: contact.value.trim(),
                 niche: company ? company.value.trim() : '',
-                task: task ? task.value.trim() : ''
+                task: task ? task.value.trim() : '',
+                plan: $('f-plan') ? $('f-plan').value : undefined
             })
             .then(function (r) { if (!r.ok) throw new Error('server'); return r.json(); })
             .then(function (data) {
@@ -195,6 +258,22 @@
     /* ---------- 3b. CTA-карточка «Ваше направление» → затравка в форму ---------- */
     var svcCta = document.querySelector('.svc--cta');
     if (svcCta) svcCta.addEventListener('click', function () { var t = $('f-task'); if (t && !t.value) t.value = 'Своё направление: '; });
+
+    /* ---------- 3c. main.betaline-ai.ru: «Обсудить задачу» → задача в форму (plan) ----------
+       Работает только там, где в форме есть скрытое #f-plan (страница dist-main). */
+    (function () {
+        var plan = $('f-plan'), badge = $('cta-plan');
+        if (!plan || !badge) return;
+        function setPlan(v) {
+            plan.value = v || '';
+            badge.querySelector('b').textContent = plan.value;
+            badge.classList.toggle('on', !!plan.value);
+        }
+        document.querySelectorAll('[data-plan]').forEach(function (a) {
+            a.addEventListener('click', function () { setPlan(a.getAttribute('data-plan')); });
+        });
+        badge.querySelector('button').addEventListener('click', function () { setPlan(''); });
+    })();
 
     /* ---------- 4. Модалки политики/оферты ---------- */
     var LEGAL_MODALS = { policy: 'modalPolicy', oferta: 'modalOferta' };

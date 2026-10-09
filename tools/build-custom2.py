@@ -38,7 +38,7 @@ YM_NEW = "112650916"
 # Тарифы одинаковые на custom и custom2 с 30.09 (решение оператора) — подмены нет.
 PRICES: dict[str, str] = {}
 
-COPY_ITEMS = ["style.css", "main.js", "ecosystem.js", "vercel.json", "assets", "api", "bot", "package.json"]
+COPY_ITEMS = ["style.css", "main.js", "kp.html", "ecosystem.js", "vercel.json", "assets", "api", "bot", "package.json"]
 
 
 def swap_hero(html: str) -> str:

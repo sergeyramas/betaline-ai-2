@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Суточный мониторинг Директа на custom2 — Reports API + Метрика → сводка + тревоги → Telegram.
+"""Суточный мониторинг Директа (все кампании аккаунта) — Reports API + Метрика → сводка + тревоги → Telegram.
 
 Пороги — docs/ads/MONITORING.md. Только чтение, ничего в кампании не меняет.
 
@@ -20,7 +20,8 @@ import urllib.parse
 import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-CAMPAIGN = 714447865
+# живые кампании, которые проверяем, даже если в отчёте нет строк (показов не было)
+LIVE_IDS = [715032341, 715032350, 714626313]
 COUNTER = 112650916
 GOALS = {617936022: "audit_lead", 617937073: "chat_message", 617937404: "chat_lead", 617937509: "callback_chat"}
 OPERATOR = "609952529"
@@ -51,20 +52,28 @@ def http(url, headers, data=None):
 
 
 # ---------- Директ ----------
+# цели-заявки: custom2 (счётчик 112650916), betaline-ai.ru (PriorityGoals кампаний 715032350/708929168), zvonok
+GOAL_LABELS = {617936022: "audit_lead", 617937404: "chat_lead", 617937509: "callback_chat",
+               546490559: "ba_546490559", 545731666: "ba_545731666", 545719489: "ba_545719489",
+               545732855: "ba_545732855", 658043267: "zvonok"}
+
+
+def direct_hdr(tok, login):
+    return {"Authorization": f"Bearer {tok}", "Client-Login": login, "Accept-Language": "ru",
+            "Content-Type": "application/json", "returnMoneyInMicros": "false",
+            "skipReportHeader": "true", "skipReportSummary": "true"}
+
+
 def direct_report(tok, login, d1, d2):
-    """Reports API v5: одна строка по кампании. None + причина, если доступа нет."""
+    """Reports API v5: строки (день, кампания) по ВСЕМ кампаниям — так видны и Мастера. (rows, ошибка)."""
     body = {"params": {
-        "SelectionCriteria": {"DateFrom": d1, "DateTo": d2, "Filter": [
-            {"Field": "CampaignId", "Operator": "EQUALS", "Values": [str(CAMPAIGN)]}]},
-        "Goals": [str(g) for g in GOALS], "AttributionModels": ["AUTO"],
-        "FieldNames": ["Impressions", "Clicks", "Cost", "Ctr", "AvgCpc", "Conversions", "BounceRate"],
-        "ReportName": f"custom2-{d1}-{d2}-{int(time.time())}", "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
+        "SelectionCriteria": {"DateFrom": d1, "DateTo": d2},
+        "Goals": [str(g) for g in GOAL_LABELS], "AttributionModels": ["AUTO"],
+        "FieldNames": ["Date", "CampaignId", "CampaignName", "Impressions", "Clicks", "Cost"],
+        "ReportName": f"monitor-{d1}-{d2}-{int(time.time())}", "ReportType": "CAMPAIGN_PERFORMANCE_REPORT",
         "DateRangeType": "CUSTOM_DATE", "Format": "TSV", "IncludeVAT": "YES"}}
-    hdr = {"Authorization": f"Bearer {tok}", "Client-Login": login, "Accept-Language": "ru",
-           "Content-Type": "application/json", "returnMoneyInMicros": "false",
-           "skipReportHeader": "true", "skipReportSummary": "true"}
     for _ in range(6):
-        st, h, txt = http(f"{DIRECT_API}/json/v5/reports", hdr, json.dumps(body).encode())
+        st, h, txt = http(f"{DIRECT_API}/json/v5/reports", direct_hdr(tok, login), json.dumps(body).encode())
         if st in (201, 202):
             time.sleep(int(h.get("retryIn", 5)))
             continue
@@ -75,14 +84,44 @@ def direct_report(tok, login, d1, d2):
             except Exception:
                 return None, f"Директ API: HTTP {st}"
         lines = [l for l in txt.splitlines() if l.strip()]
-        if len(lines) < 2:
-            return {"Impressions": 0, "Clicks": 0, "Cost": 0, "Ctr": 0, "AvgCpc": 0, "Conversions": 0, "BounceRate": 0}, None
-        keys, vals = lines[0].split("\t"), lines[1].split("\t")
-        r = {k: float(v) if v not in ("--", "") else 0 for k, v in zip(keys, vals)}
-        # с параметром Goals API отдаёт Conversions_<goal>_<model> вместо Conversions — суммируем
-        r["Conversions"] = sum(v for k, v in r.items() if k.startswith("Conversions_"))
-        return r, None
+        if not lines:
+            return [], None
+        keys, rows = lines[0].split("\t"), []
+        for l in lines[1:]:
+            r = dict(zip(keys, l.split("\t")))
+            row = {"date": r["Date"], "id": int(r["CampaignId"]), "name": r["CampaignName"]}
+            for k in ("Impressions", "Clicks", "Cost"):
+                row[k] = float(r[k]) if r[k] not in ("--", "") else 0
+            row["goals"] = {}
+            for k, v in r.items():
+                if k.startswith("Conversions_") and v not in ("--", "", "0"):
+                    gid = int(k.split("_")[1])
+                    row["goals"][GOAL_LABELS.get(gid, str(gid))] = float(v)
+            rows.append(row)
+        return rows, None
     return None, "Директ API: отчёт не собрался за 6 попыток"
+
+
+def direct_campaigns(tok, login, ids):
+    """campaigns.get (только чтение): статус и недельный лимит. Мастера кампаний API не отдаёт — их тут нет."""
+    out = {}
+    for i in range(0, len(ids), 10):
+        body = {"method": "get", "params": {
+            "SelectionCriteria": {"Ids": ids[i:i + 10]}, "FieldNames": ["Id", "Name", "State", "Status", "Type"],
+            "TextCampaignFieldNames": ["BiddingStrategy"], "UnifiedCampaignFieldNames": ["BiddingStrategy"]}}
+        st, _, txt = http(f"{DIRECT_API}/json/v5/campaigns", direct_hdr(tok, login), json.dumps(body).encode())
+        try:
+            for c in json.loads(txt)["result"]["Campaigns"]:
+                sub = c.get("TextCampaign") or c.get("UnifiedCampaign") or {}
+                limit = None
+                for net in (sub.get("BiddingStrategy") or {}).values():
+                    for v in (net or {}).values():
+                        if isinstance(v, dict) and v.get("WeeklySpendLimit"):
+                            limit = v["WeeklySpendLimit"] / 1e6
+                out[c["Id"]] = {"state": c["State"], "status": c["Status"], "limit": limit}
+        except Exception:
+            pass
+    return out
 
 
 def direct_balance(tok, login):
@@ -124,34 +163,71 @@ def fmt(n, dec=0):
     return f"{n:,.{dec}f}".replace(",", " ")
 
 
-def block(title, dr, m):
-    out = [f"*{title}*"]
-    if dr:
-        conv = int(dr["Conversions"])
-        out.append(f"Директ: {fmt(dr['Impressions'])} показов / {fmt(dr['Clicks'])} кликов, CTR {dr['Ctr']:.2f} %, "
-                   f"расход {fmt(dr['Cost'], 2)} ₽, CPC {dr['AvgCpc']:.2f} ₽, конверсий {conv}")
-    ratio = f", {m['ad_visits'] / dr['Clicks'] * 100:.0f} % от кликов" if dr and dr["Clicks"] else ""
-    g = ", ".join(f"{k} {int(v)}" for k, v in m["goals"].items() if v) or "0"
-    out.append(f"Метрика: визитов с рекламы {int(m['ad_visits'])} из {int(m['visits_total'])}{ratio}, "
-               f"отказы {m['ad_bounce']:.0f} %, {m['ad_dur']:.0f} с на сайте; цели: {g}")
-    return out
+def summarize(rows, camps, today):
+    """Группировка по кампаниям: вчера / сегодня / среднее за 3 дня до вчера. Архивные и остановленные без показов скрыты."""
+    y, t = (today - dt.timedelta(days=1)).isoformat(), today.isoformat()
+    by = {}
+    for r in rows:
+        c = by.setdefault(r["id"], {"id": r["id"], "name": r["name"], "days": {}, "w": {"Impressions": 0, "Clicks": 0, "Cost": 0}, "goals": {}})
+        c["days"][r["date"]] = r
+        for k in c["w"]:
+            c["w"][k] += r[k]
+        for g, v in r["goals"].items():
+            c["goals"][g] = c["goals"].get(g, 0) + v
+    for cid, info in camps.items():  # живые кампании без строк отчёта = ноль показов
+        if info["state"] == "ON" and cid not in by:
+            by[cid] = {"id": cid, "name": f"кампания {cid}", "days": {}, "w": {"Impressions": 0, "Clicks": 0, "Cost": 0}, "goals": {}}
+    out = []
+    for c in by.values():
+        info = camps.get(c["id"])  # None = Мастер кампаний (в campaigns.get не виден)
+        c["info"] = info
+        if info and info["state"] != "ON" and c["w"]["Impressions"] == 0:
+            continue
+        c["y"] = c["days"].get(y, {"Impressions": 0, "Clicks": 0, "Cost": 0})
+        c["t"] = c["days"].get(t, {"Impressions": 0, "Clicks": 0, "Cost": 0})
+        prev = [(today - dt.timedelta(days=k)).isoformat() for k in (2, 3, 4)]
+        c["avg3"] = sum(c["days"].get(d, {"Impressions": 0})["Impressions"] for d in prev) / 3
+        out.append(c)
+    return sorted(out, key=lambda c: -c["w"]["Cost"])
 
 
-def alerts(dr_y, m_y, dr_w, m_w, balance):
+def campaign_alerts(c):
+    a, info, nm = [], c["info"], f"{c['name']} ({c['id']})"
+    if info and info["state"] == "ON" and c["y"]["Impressions"] + c["t"]["Impressions"] == 0:
+        a.append(f"{nm}: нет показов больше 24 ч при статусе ON")
+    elif c["avg3"] >= 20 and c["y"]["Impressions"] < c["avg3"] * 0.3:
+        a.append(f"{nm}: показы вчера {fmt(c['y']['Impressions'])} — падение >70 % к среднему за 3 дня ({fmt(c['avg3'])})")
+    if info and info["limit"]:
+        cap = info["limit"] / 7 * 1.5
+        for lab, d in (("вчера", c["y"]), ("сегодня", c["t"])):
+            if d["Cost"] > cap:
+                a.append(f"{nm}: расход {lab} {fmt(d['Cost'])} ₽ > {fmt(cap)} ₽ (1,5 x недельный лимит/7)")
+    if c["y"]["Clicks"] >= 10 and c["y"]["Cost"] / c["y"]["Clicks"] > 40:
+        a.append(f"{nm}: CPC вчера {c['y']['Cost'] / c['y']['Clicks']:.0f} ₽ > 40 ₽")
+    if c["w"]["Cost"] > 5000 and not c["goals"]:
+        a.append(f"{nm}: 0 конверсий при расходе {fmt(c['w']['Cost'])} ₽ за 7 дн")
+    return a
+
+
+def campaign_line(c):
+    i, y, w = c["info"], c["y"], c["w"]
+    tag = "" if not i else ("" if i["state"] == "ON" else f" [{i['state']}]")
+    lim = f", лимит {fmt(i['limit'])} ₽/нед" if i and i["limit"] else ""
+    goals = ", ".join(f"{k} {int(v)}" for k, v in c["goals"].items())
+    ev = f", заявок (событий) {int(sum(c['goals'].values()))}: {goals}" if c["goals"] else ", заявок 0"
+    return (f"• {c['name']} ({c['id']}){tag}{lim}\n"
+            f"  вчера {fmt(y['Impressions'])} пок / {fmt(y['Clicks'])} кл / {fmt(y['Cost'], 2)} ₽; "
+            f"7 дн {fmt(w['Impressions'])} / {fmt(w['Clicks'])} / {fmt(w['Cost'], 2)} ₽{ev}")
+
+
+def metrika_alerts(rows, y, m_y, m_w):
+    """Метрика — счётчик custom2: сверяем клики кампаний custom2 (Мастер + поиск) с визитами с рекламы."""
     a = []
-    # ponytail: «третий день подряд» не считаем — проверяем вчерашний день; история появится, когда понадобится
-    if dr_y and dr_y["Clicks"] >= 10 and m_y["ad_visits"] / dr_y["Clicks"] < 0.4:
-        a.append(f"визиты/клики {m_y['ad_visits'] / dr_y['Clicks'] * 100:.0f} % < 40 % — мусорные клики, смотреть площадки")
+    clicks = sum(r["Clicks"] for r in rows if r["date"] == y and r["name"].lower().startswith("custom2"))
+    if clicks >= 10 and m_y["ad_visits"] / clicks < 0.4:
+        a.append(f"Метрика custom2: визиты/клики {m_y['ad_visits'] / clicks * 100:.0f} % < 40 % — мусорные клики, смотреть площадки")
     if m_w["ad_visits"] >= 30 and m_w["ad_bounce"] > 85:
-        a.append(f"отказы по рекламе {m_w['ad_bounce']:.0f} % > 85 % за 7 дн — чистить площадки")
-    if dr_y and dr_y["AvgCpc"] > 40:
-        a.append(f"CPC вчера {dr_y['AvgCpc']:.0f} ₽ > 40 ₽ — проверить автотаргетинг/тексты")
-    if dr_w and dr_w["Cost"] > 5000 and dr_w["Conversions"] == 0 and not any(m_w["goals"].values()):
-        a.append(f"0 конверсий при расходе {fmt(dr_w['Cost'])} ₽ за 7 дн > 5 000 ₽ — оффер/гео")
-    if dr_w and dr_w["Cost"] > 11000:
-        a.append(f"расход за 7 дн {fmt(dr_w['Cost'])} ₽ > 11 000 ₽ — проверить адаптацию бюджета")
-    if balance is not None and balance < 3000:
-        a.append(f"баланс {fmt(balance)} ₽ < 3 000 ₽ — пополнить или пауза")
+        a.append(f"Метрика custom2: отказы по рекламе {m_w['ad_bounce']:.0f} % > 85 % за 7 дн")
     return a
 
 
@@ -162,20 +238,29 @@ def main():
     y = (today - dt.timedelta(days=1)).isoformat()
     w1 = (today - dt.timedelta(days=7)).isoformat()
 
-    dr_y, err = direct_report(tok, login, y, y)
-    dr_w, _ = direct_report(tok, login, w1, y) if dr_y else (None, None)
-    balance = direct_balance(tok, login) if dr_y else None
+    rows, err = direct_report(tok, login, w1, today.isoformat())
+    camps = direct_campaigns(tok, login, sorted({r["id"] for r in rows})) if rows else {}
+    # живые кампании, которых нет в отчёте (ни одного показа за 8 дней), добираем отдельным списком
+    for cid in LIVE_IDS:
+        if cid not in camps and cid not in {r["id"] for r in (rows or [])}:
+            camps.update(direct_campaigns(tok, login, [cid]))
+    balance = direct_balance(tok, login) if rows is not None else None
     m_y, m_w = metrika_ads(tok, y, y), metrika_ads(tok, w1, y)
 
-    lines = [f"📊 Директ custom2 · {CAMPAIGN} · {today:%d.%m}"]
-    d = lambda s: f"{s[8:]}.{s[5:7]}"
-    lines += block(f"Вчера {d(y)}", dr_y, m_y)
-    lines += block(f"7 дней {d(w1)}–{d(y)}", dr_w, m_w)
+    lines = [f"📊 Директ · {today:%d.%m}"]
+    cs = summarize(rows or [], camps, today)
+    lines += [campaign_line(c) for c in cs] or ["нет кампаний с показами"]
+    g = ", ".join(f"{k} {int(v)}" for k, v in m_w["goals"].items() if v) or "0"
+    lines.append(f"Метрика custom2 (7 дн): визитов с рекламы {int(m_w['ad_visits'])}, отказы {m_w['ad_bounce']:.0f} %, цели: {g}")
     if balance is not None:
         lines.append(f"Баланс: {fmt(balance)} ₽")
+    if any(c["w"]["Clicks"] and not c["w"]["Cost"] for c in cs):
+        lines.append("ℹ️ у части кампаний клики есть, а расход в отчёте 0,00 — API расход не отдаёт (бонусы/промо?), сверять по кабинету")
     if err:
-        lines.append(f"⚠️ {err} — показы/расход недоступны, только Метрика")
-    al = alerts(dr_y, m_y, dr_w, m_w, balance)
+        lines.append(f"⚠️ {err} — показы/расход недоступны")
+    al = [x for c in cs for x in campaign_alerts(c)] + metrika_alerts(rows or [], y, m_y, m_w)
+    if balance is not None and balance < 3000:
+        al.append(f"баланс {fmt(balance)} ₽ < 3 000 ₽ — пополнить или пауза")
     lines.append("🔴 " + "\n🔴 ".join(al) if al else "✅ Порогов MONITORING.md не превышено")
     text = "\n".join(lines)
     print(text)
