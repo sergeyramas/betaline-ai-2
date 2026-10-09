@@ -187,6 +187,8 @@ module.exports = async function handler(req, res) {
             logTopic(threadId, 'chat-ai', '', topicName, visitorId, infoMsg && infoMsg.message_id)
               .catch(e => console.error('Topic log failed:', e));
 
+            admin.registerTopic('site_chat', dlg, chatId, threadId, topicName).catch(e => console.error('registerTopic failed:', e.message));
+
             // Lead card
             sendAiChatLeadCard(token, chatId, threadId, codename, geoTag, message, page).catch(() => {});
           }
