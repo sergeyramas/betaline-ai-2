@@ -354,6 +354,26 @@
             return div;
         }
 
+        /* Режим «на связи менеджер»: подпись в шапке + запоминаем между перезагрузками */
+        var hdrStatus = win.querySelector('#bl-chat-header .bl-info span');
+        function setManager(on) {
+            win.classList.toggle('bl-manager', on);
+            if (hdrStatus) hdrStatus.textContent = on ? 'На связи менеджер' : 'Онлайн';
+            try { localStorage.setItem('bl_chat_mgr', on ? '1' : '0'); } catch (err) { /* noop */ }
+        }
+        function addOperatorMsg(text) {
+            var div = document.createElement('div');
+            div.className = 'bl-msg bot op';
+            var sign = document.createElement('span');
+            sign.className = 'bl-sign';
+            sign.textContent = 'Менеджер';
+            div.appendChild(sign);
+            div.appendChild(document.createTextNode(text));
+            msgs.appendChild(div);
+            msgs.scrollTop = msgs.scrollHeight;
+        }
+        try { if (localStorage.getItem('bl_chat_mgr') === '1') setManager(true); } catch (err) { /* noop */ }
+
         function toggleChat() {
             chatState.open = !chatState.open;
             win.classList.toggle('open', chatState.open);
@@ -380,7 +400,12 @@
                     if (!m || !m.id || m.id <= chatState.after || typeof m.text !== 'string') return;
                     chatState.after = m.id;
                     try { localStorage.setItem('bl_chat_after', String(m.id)); } catch (err) { /* noop */ }
-                    addMsg('bot', m.text);
+                    if (m.kind === 'taken' || m.kind === 'released') {
+                        setManager(m.kind === 'taken');
+                        addMsg('system', m.text);
+                        return;
+                    }
+                    addOperatorMsg(m.text);
                     chatState.history.push({ role: 'assistant', content: m.text });
                 });
             })

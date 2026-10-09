@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const j = await operatorMessages(token, q.get('after'));
-    return res.status(200).json({ messages: (j.messages || []).map((m) => ({ id: m.id, text: m.text, ts: m.ts })) });
+    return res.status(200).json({ messages: (j.messages || []).map((m) => ({ id: m.id, text: m.text, ts: m.ts, kind: m.kind === 'taken' || m.kind === 'released' ? m.kind : 'operator' })) });
   } catch (e) {
     return res.status(200).json({ messages: [] }); // админка недоступна — виджет просто ничего не покажет
   }
