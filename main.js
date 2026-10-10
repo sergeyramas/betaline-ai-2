@@ -4,13 +4,18 @@
    форма → /api/lead (source=audit), модалки политики/оферты, чат-виджет
    (/api/chat-ai + callback, source=callback), цели Метрики.
    ============================================================ */
-/* ---------- Атрибуция лида (переживает заблокированную Метрику) ----------
-   yclid / utm_* берём из URL лендинга и держим в localStorage + sessionStorage + cookie
-   bl_attr (90 дней, на .betaline-ai.ru — общая для поддоменов). blLeadAttr(payload) дописывает
-   в тело /api/lead: yclid, utm_*, ym_uid (cookie _ym_uid), landing, page, host, counter.
-   Менять вместе с копией в betaline-ai-2/main.js и betaline-master/index.html. */
+/* ---------- Атрибуция лида v2 (переживает заблокированную Метрику) ----------
+   last-touch: yclid / utm_* из URL лендинга -> localStorage + sessionStorage + cookie bl_attr
+   (90 дней, на .betaline-ai.ru — общая для поддоменов). Новый рекламный заход заменяет метки.
+   first-touch: bl_first пишется ОДИН раз при первом заходе (landing с query, referrer, utm, yclid) и не перезаписывается.
+   referrer визита запоминается в sessionStorage (bl_ref), чтобы переход по страницам его не терял.
+   blLeadAttr(payload, counter) дописывает в тело /api/lead: yclid, utm_*, ym_uid, landing, page, host, counter,
+   referrer, first_landing, first_referrer, first_utm_*, first_yclid.
+   blGoal(name, counter) — цель Метрики: сразу, а если ym ещё нет — в очередь с повтором 20 с.
+   Менять вместе с копиями: betaline-ai-2/main.js, betaline-master/index.html, betaline-voice-ai/script.js. */
 (function () {
-    var KEY = 'bl_attr', FIELDS = ['yclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+    var KEY = 'bl_attr', FKEY = 'bl_first', RKEY = 'bl_ref';
+    var FIELDS = ['yclid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
     function getCookie(n) {
         try {
             var m = document.cookie.match(new RegExp('(?:^|; )' + n + '=([^;]*)'));
@@ -24,45 +29,93 @@
                 dom + (location.protocol === 'https:' ? '; Secure' : '');
         } catch (e) { /* noop */ }
     }
-    function readAttr() {
+    function readKey(key) {
         var raw = '';
-        try { raw = localStorage.getItem(KEY) || ''; } catch (e) { /* noop */ }
-        if (!raw) { try { raw = sessionStorage.getItem(KEY) || ''; } catch (e) { /* noop */ } }
-        if (!raw) raw = getCookie(KEY);
+        try { raw = localStorage.getItem(key) || ''; } catch (e) { /* noop */ }
+        if (!raw) { try { raw = sessionStorage.getItem(key) || ''; } catch (e) { /* noop */ } }
+        if (!raw) raw = getCookie(key);
         try { var o = raw ? JSON.parse(raw) : {}; return o && typeof o === 'object' ? o : {}; } catch (e) { return {}; }
     }
-    function saveAttr(o) {
+    function saveKey(key, o) {
         var s = JSON.stringify(o);
-        try { localStorage.setItem(KEY, s); } catch (e) { /* noop */ }
-        try { sessionStorage.setItem(KEY, s); } catch (e) { /* noop */ }
-        setCookie(KEY, s);
+        try { localStorage.setItem(key, s); } catch (e) { /* noop */ }
+        try { sessionStorage.setItem(key, s); } catch (e) { /* noop */ }
+        setCookie(key, s);
+    }
+    function query() {
+        var q = {};
+        try { new URLSearchParams(location.search).forEach(function (v, k) { q[k] = v; }); } catch (e) { /* noop */ }
+        return q;
+    }
+    /* внешний referrer текущего визита: на первой странице сессии берём document.referrer и держим в sessionStorage */
+    function visitRef() {
+        var r = '';
+        try { r = sessionStorage.getItem(RKEY) || ''; } catch (e) { /* noop */ }
+        if (r) return r === '-' ? '' : r;
+        var d = (document.referrer || '').split('#')[0].slice(0, 300);
+        try { if (d && new URL(d).hostname === location.hostname) d = ''; } catch (e) { /* noop */ }
+        try { sessionStorage.setItem(RKEY, d || '-'); } catch (e) { /* noop */ }
+        return d;
     }
     function captureAttr() {
-        var st = readAttr(), q = {}, touched = false, changed = false;
-        try { new URLSearchParams(location.search).forEach(function (v, k) { q[k] = v; }); } catch (e) { /* noop */ }
+        var st = readKey(KEY), q = query(), touched = false, changed = false;
         FIELDS.forEach(function (f) { if (q[f]) touched = true; });
         if (touched) {   /* новый рекламный заход — заменяем прежние метки целиком */
             FIELDS.forEach(function (f) { delete st[f]; });
             FIELDS.forEach(function (f) { if (q[f]) st[f] = String(q[f]).slice(0, 80); });
+            st.landing = location.href.split('#')[0].slice(0, 400);
             changed = true;
         }
-        if (!st.landing) { st.landing = location.href.slice(0, 200); changed = true; }
-        if (changed) saveAttr(st);
+        if (!st.landing) { st.landing = location.href.split('#')[0].slice(0, 400); changed = true; }
+        if (changed) saveKey(KEY, st);
+        /* first-touch: один раз, не перезаписывается */
+        var ft = readKey(FKEY);
+        if (!ft.landing) {
+            ft = { landing: location.href.split('#')[0].slice(0, 400), referrer: visitRef(), ts: Math.floor(Date.now() / 1000) };
+            FIELDS.forEach(function (f) { if (q[f]) ft[f] = String(q[f]).slice(0, 80); });
+            saveKey(FKEY, ft);
+        }
         return st;
     }
     captureAttr();   /* сразу при загрузке: yclid ещё в адресной строке */
     window.blLeadAttr = function (payload, counter) {
-        var st = captureAttr(), out = payload || {}, add = {};
+        var st = captureAttr(), ft = readKey(FKEY), out = payload || {}, add = {};
         FIELDS.forEach(function (f) { if (st[f]) add[f] = st[f]; });
         var uid = getCookie('_ym_uid');
         if (uid) add.ym_uid = uid.slice(0, 32);
-        add.landing = st.landing || location.href.slice(0, 200);
-        add.page = location.href.slice(0, 300);
+        add.landing = st.landing || location.href.split('#')[0].slice(0, 400);
+        add.page = location.href.split('#')[0].slice(0, 400);
         add.host = location.hostname;
+        var ref = visitRef();
+        if (ref) add.referrer = ref;
+        if (ft.landing) add.first_landing = ft.landing;
+        if (ft.referrer) add.first_referrer = ft.referrer;
+        ['utm_source', 'utm_medium', 'utm_campaign', 'yclid'].forEach(function (f) { if (ft[f]) add['first_' + f] = ft[f]; });
         var c = counter || window.YM_ID || window.BL_COUNTER;
         if (c) add.counter = String(c);
         Object.keys(add).forEach(function (k) { if (out[k] === undefined) out[k] = add[k]; });
         return out;
+    };
+    /* Цель Метрики независимо от ответа сервера: сразу или из очереди, когда ym появится */
+    var recent = {}, queue = [], timer = null;
+    function flush() {
+        if (typeof window.ym !== 'function') return false;
+        while (queue.length) {
+            var g = queue.shift();
+            try { window.ym(g.c, 'reachGoal', g.n); } catch (e) { /* noop */ }
+        }
+        return true;
+    }
+    window.blGoal = function (name, counter) {
+        var c = counter || window.YM_ID || window.BL_COUNTER;
+        if (!c || !name) return;
+        var now = Date.now();
+        if (/lead|callback|submit/.test(name) && recent[name] && now - recent[name] < 3000) return;   /* двойной клик по заявке */
+        recent[name] = now;
+        queue.push({ n: name, c: c });
+        if (flush() || timer) return;
+        var tries = 0;
+        timer = setInterval(function () { if (flush() || ++tries > 40) { clearInterval(timer); timer = null; } }, 500);
     };
 })();
 
@@ -81,7 +134,8 @@
     function $(id) { return document.getElementById(id); }
 
     function goal(name, params) {
-        if (YM_ID && typeof ym !== 'undefined') ym(YM_ID, 'reachGoal', name, params || {});
+        /* blGoal: сразу или из очереди, когда ym появится; дедуп 3 с от двойного клика */
+        if (YM_ID && window.blGoal) window.blGoal(name, YM_ID);
     }
 
     /* POST с таймаутом: без него при зависшем API кнопка «Отправляем…» висит вечно */
@@ -232,6 +286,7 @@
             var btnHtml = btn ? btn.innerHTML : '';
             if (btn) { btn.disabled = true; btn.textContent = 'Отправляем…'; }
 
+            goal('audit_lead');   /* цель — на отправке, не по ответу сервера: сеть/API не должны её терять */
             postLead({
                 source: 'audit',
                 name: name.value.trim(),
@@ -242,7 +297,6 @@
             })
             .then(function (r) { if (!r.ok) throw new Error('server'); return r.json(); })
             .then(function (data) {
-                goal('audit_lead');
                 var id = data && data.lead_id ? String(data.lead_id).slice(-6).toUpperCase() : '';
                 ok.querySelector('.mk').textContent = id ? 'Заявка № ' + id + ' принята' : 'Заявка принята';
                 form.classList.add('sent');
@@ -501,12 +555,12 @@
             if (!isValidPhone(phone)) { showFieldError(phoneEl, 'Минимум 10 цифр'); return; }
             clearFieldError(phoneEl);
             sendBtn.disabled = true;
+            goal('callback_chat');   /* до fetch: цель не зависит от ответа API */
             postLead({ source: 'callback', name: nameEl.value.trim(), phone: phone })
             .then(function (r) {
                 if (!r.ok) throw new Error('err');
                 $('bl-callback-form').style.display = 'none';
                 addMsg('system', 'Заявка принята — перезвоним в ближайшее время.');
-                goal('callback_chat');
             })
             .catch(function () { addMsg('system', 'Ошибка. Попробуйте позже или позвоните: ' + PHONE_HUMAN); })
             .then(function () { sendBtn.disabled = false; });
