@@ -117,6 +117,22 @@
         var tries = 0;
         timer = setInterval(function () { if (flush() || ++tries > 40) { clearInterval(timer); timer = null; } }, 500);
     };
+    /* Telegram-бот: ссылке на @BetalineAI_bot при клике дописываем ?start=site_<сайт>_<источник>[_<кампания>].
+       Бот сохраняет payload (user_ctx.utm) и показывает его в карточке — видно, с какого сайта и рекламы пришёл человек. */
+    function tgStart() {
+        var st = captureAttr(), ft = readKey(FKEY);
+        var h = location.hostname.replace(/^www\./, '').split('.')[0];
+        var site = { custom: 'cu', custom2: 'c2', main: 'mn', zvonok: 'zv', 'betaline-ai': 'ap' }[h] || 'x';
+        var utm = st.utm_source || ft.utm_source;
+        var src = (st.yclid || ft.yclid) ? 'yd' : (utm ? String(utm).replace(/[^0-9A-Za-z]/g, '').slice(0, 10) || 'utm' : 'org');
+        var camp = String(st.utm_campaign || ft.utm_campaign || '').replace(/[^0-9A-Za-z_-]/g, '').slice(0, 24);
+        return ('site_' + site + '_' + src + (camp ? '_' + camp : '')).slice(0, 64);
+    }
+    document.addEventListener('click', function (e) {
+        var a = e.target && e.target.closest ? e.target.closest('a[href*="t.me/BetalineAI_bot"]') : null;
+        if (!a) return;
+        try { var u = new URL(a.href); u.searchParams.set('start', tgStart()); a.href = u.toString(); } catch (err) { /* noop */ }
+    }, true);
 })();
 
 (function () {
