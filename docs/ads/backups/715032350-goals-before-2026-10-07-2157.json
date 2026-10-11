@@ -1,0 +1,75 @@
+{
+ "result": [
+  {
+   "Id": 715032350,
+   "Name": "betaline-ai.ru · Поиск · Транзакционные · 03.10.26",
+   "UnifiedCampaign": {
+    "BiddingStrategy": {
+     "Search": {
+      "BiddingStrategyType": "PAY_FOR_CONVERSION_MULTIPLE_GOALS",
+      "PayForConversionMultipleGoals": {
+       "WeeklySpendLimit": 10000000000,
+       "BudgetType": "WEEKLY_BUDGET"
+      }
+     },
+     "Network": {
+      "BiddingStrategyType": "SERVING_OFF"
+     }
+    },
+    "PriorityGoals": {
+     "Items": [
+      {
+       "GoalId": 546490559,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545731666,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545719489,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545732855,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      }
+     ]
+    },
+    "CounterIds": {
+     "Items": [
+      108480715
+     ]
+    }
+   }
+  }
+ ],
+ "_request": {
+  "campaigns": {
+   "SelectionCriteria": {
+    "Ids": [
+     715032350
+    ]
+   },
+   "FieldNames": [
+    "Id",
+    "Name"
+   ],
+   "UnifiedCampaignFieldNames": [
+    "BiddingStrategy",
+    "PriorityGoals",
+    "CounterIds"
+   ],
+   "TextCampaignFieldNames": [
+    "BiddingStrategy",
+    "PriorityGoals",
+    "CounterIds"
+   ]
+  },
+  "ver": "v501"
+ }
+}

@@ -1,0 +1,1002 @@
+{
+ "custom-1440": {
+  "scrollWidth": 1440,
+  "innerWidth": 1440,
+  "bodyHeight": 11035,
+  "overflowing": [
+   {
+    "sel": "ARTICLE.cs-slide",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "DIV.cs-head",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "P.dom",
+    "left": 1327,
+    "right": 2395,
+    "w": 1068
+   },
+   {
+    "sel": "H3.",
+    "left": 1327,
+    "right": 2095,
+    "w": 768
+   },
+   {
+    "sel": "DIV.cs-body",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "DIV.cs-text",
+    "left": 1291,
+    "right": 1809,
+    "w": 518
+   },
+   {
+    "sel": "DIV.",
+    "left": 1291,
+    "right": 1809,
+    "w": 518
+   },
+   {
+    "sel": "P.k",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "P.",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "DIV.acc",
+    "left": 1291,
+    "right": 1809,
+    "w": 518
+   },
+   {
+    "sel": "UL.price-cmp",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "LI.",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "SPAN.",
+    "left": 1327,
+    "right": 1513,
+    "w": 186
+   },
+   {
+    "sel": "B.mut",
+    "left": 1531,
+    "right": 1773,
+    "w": 242
+   },
+   {
+    "sel": "B.",
+    "left": 1546,
+    "right": 1773,
+    "w": 227
+   },
+   {
+    "sel": "P.ba-note",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "DIV.cs-media",
+    "left": 1810,
+    "right": 2431,
+    "w": 621
+   },
+   {
+    "sel": "DIV.cs-pair cs-pair-v",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "FIGURE.",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "P.ba-k",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "I.",
+    "left": 1884,
+    "right": 2030,
+    "w": 145
+   },
+   {
+    "sel": "IMG.",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "FIGURE.is-acc",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "UL.kase-nums",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "A.cs-video",
+    "left": 2977,
+    "right": 3546,
+    "w": 569
+   },
+   {
+    "sel": "SPAN.cs-play",
+    "left": 3225,
+    "right": 3297,
+    "w": 72
+   },
+   {
+    "sel": "svg.[object SVGAnimatedString]",
+    "left": 3248,
+    "right": 3278,
+    "w": 30
+   },
+   {
+    "sel": "path.[object SVGAnimatedString]",
+    "left": 3258,
+    "right": 3272,
+    "w": 14
+   },
+   {
+    "sel": "SPAN.cs-vcap",
+    "left": 2978,
+    "right": 3545,
+    "w": 567
+   },
+   {
+    "sel": "BLOCKQUOTE.kase-quote",
+    "left": 4118,
+    "right": 4687,
+    "w": 569
+   },
+   {
+    "sel": "FOOTER.",
+    "left": 4155,
+    "right": 4650,
+    "w": 495
+   }
+  ],
+  "imagesBroken": [],
+  "imagesNoAlt": [],
+  "h1": 1,
+  "h2": 9,
+  "lang": "ru",
+  "title": "Betaline — AI-интегратор полного цикла",
+  "smallTargets": [],
+  "unnamedInteractive": [],
+  "fonts": [
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "IBM Plex Mono",
+   "IBM Plex Mono"
+  ],
+  "console": [],
+  "requestfailed": [],
+  "httpErrors": [],
+  "screenshot": "/Users/sergeyrama/Documents/betaline-ai-2/docs/agents/reports/2026-09-21-audit/custom-1440.png"
+ },
+ "custom-390": {
+  "scrollWidth": 390,
+  "innerWidth": 390,
+  "bodyHeight": 14502,
+  "overflowing": [
+   {
+    "sel": "ARTICLE.cs-slide",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.cs-head",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "P.dom",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "H3.",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "DIV.cs-body",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.cs-text",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "P.k",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "P.",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "DIV.acc",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "UL.price-cmp",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "LI.",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "SPAN.",
+    "left": 391,
+    "right": 607,
+    "w": 216
+   },
+   {
+    "sel": "B.mut",
+    "left": 391,
+    "right": 572,
+    "w": 181
+   },
+   {
+    "sel": "B.",
+    "left": 391,
+    "right": 561,
+    "w": 170
+   },
+   {
+    "sel": "P.ba-note",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "DIV.cs-media",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.cs-pair cs-pair-v",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "FIGURE.",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "P.ba-k",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "I.",
+    "left": 436,
+    "right": 581,
+    "w": 145
+   },
+   {
+    "sel": "IMG.",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "FIGURE.is-acc",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "UL.kase-nums",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "A.cs-video",
+    "left": 734,
+    "right": 1044,
+    "w": 310
+   },
+   {
+    "sel": "SPAN.cs-play",
+    "left": 853,
+    "right": 925,
+    "w": 72
+   },
+   {
+    "sel": "svg.[object SVGAnimatedString]",
+    "left": 876,
+    "right": 906,
+    "w": 30
+   },
+   {
+    "sel": "path.[object SVGAnimatedString]",
+    "left": 886,
+    "right": 899,
+    "w": 14
+   },
+   {
+    "sel": "SPAN.cs-vcap",
+    "left": 735,
+    "right": 1043,
+    "w": 308
+   },
+   {
+    "sel": "BLOCKQUOTE.kase-quote",
+    "left": 1081,
+    "right": 1391,
+    "w": 310
+   },
+   {
+    "sel": "FOOTER.",
+    "left": 1104,
+    "right": 1368,
+    "w": 264
+   },
+   {
+    "sel": "A.",
+    "left": 281,
+    "right": 440,
+    "w": 158
+   }
+  ],
+  "imagesBroken": [],
+  "imagesNoAlt": [],
+  "h1": 1,
+  "h2": 9,
+  "lang": "ru",
+  "title": "Betaline — AI-интегратор полного цикла",
+  "smallTargets": [
+   {
+    "t": "A",
+    "c": "cta-link",
+    "h": 18,
+    "w": 135,
+    "name": "info@betaline-ai.ru"
+   },
+   {
+    "t": "A",
+    "c": "cta-link",
+    "h": 18,
+    "w": 118,
+    "name": "+7 987 760-97-09"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 155,
+    "name": "info@betaline-ai.ru"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 131,
+    "name": "+7 987 760-97-09"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 82,
+    "name": "Telegram ↗"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 196,
+    "name": "Политика конфиденциа"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 102,
+    "name": "Договор оферты"
+   }
+  ],
+  "unnamedInteractive": [
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.acc"
+  ],
+  "fonts": [
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "IBM Plex Mono",
+   "IBM Plex Mono"
+  ],
+  "console": [],
+  "requestfailed": [],
+  "httpErrors": [],
+  "screenshot": "/Users/sergeyrama/Documents/betaline-ai-2/docs/agents/reports/2026-09-21-audit/custom-390.png"
+ },
+ "custom2-1440": {
+  "scrollWidth": 1440,
+  "innerWidth": 1440,
+  "bodyHeight": 11153,
+  "overflowing": [
+   {
+    "sel": "ARTICLE.cs-slide",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "DIV.cs-head",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "P.dom",
+    "left": 1327,
+    "right": 2395,
+    "w": 1068
+   },
+   {
+    "sel": "H3.",
+    "left": 1327,
+    "right": 2095,
+    "w": 768
+   },
+   {
+    "sel": "DIV.cs-body",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "DIV.cs-text",
+    "left": 1291,
+    "right": 1809,
+    "w": 518
+   },
+   {
+    "sel": "DIV.",
+    "left": 1291,
+    "right": 1809,
+    "w": 518
+   },
+   {
+    "sel": "P.k",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "P.",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "DIV.acc",
+    "left": 1291,
+    "right": 1809,
+    "w": 518
+   },
+   {
+    "sel": "UL.price-cmp",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "LI.",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "SPAN.",
+    "left": 1327,
+    "right": 1513,
+    "w": 186
+   },
+   {
+    "sel": "B.mut",
+    "left": 1531,
+    "right": 1773,
+    "w": 242
+   },
+   {
+    "sel": "B.",
+    "left": 1546,
+    "right": 1773,
+    "w": 227
+   },
+   {
+    "sel": "P.ba-note",
+    "left": 1327,
+    "right": 1773,
+    "w": 446
+   },
+   {
+    "sel": "DIV.cs-media",
+    "left": 1810,
+    "right": 2431,
+    "w": 621
+   },
+   {
+    "sel": "DIV.cs-pair cs-pair-v",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "FIGURE.",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "P.ba-k",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "I.",
+    "left": 1884,
+    "right": 2030,
+    "w": 145
+   },
+   {
+    "sel": "IMG.",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "FIGURE.is-acc",
+    "left": 1836,
+    "right": 2405,
+    "w": 569
+   },
+   {
+    "sel": "UL.kase-nums",
+    "left": 1291,
+    "right": 2431,
+    "w": 1140
+   },
+   {
+    "sel": "A.cs-video",
+    "left": 2977,
+    "right": 3546,
+    "w": 569
+   },
+   {
+    "sel": "SPAN.cs-play",
+    "left": 3225,
+    "right": 3297,
+    "w": 72
+   },
+   {
+    "sel": "svg.[object SVGAnimatedString]",
+    "left": 3248,
+    "right": 3278,
+    "w": 30
+   },
+   {
+    "sel": "path.[object SVGAnimatedString]",
+    "left": 3258,
+    "right": 3272,
+    "w": 14
+   },
+   {
+    "sel": "SPAN.cs-vcap",
+    "left": 2978,
+    "right": 3545,
+    "w": 567
+   },
+   {
+    "sel": "BLOCKQUOTE.kase-quote",
+    "left": 4118,
+    "right": 4687,
+    "w": 569
+   },
+   {
+    "sel": "FOOTER.",
+    "left": 4155,
+    "right": 4650,
+    "w": 495
+   }
+  ],
+  "imagesBroken": [],
+  "imagesNoAlt": [],
+  "h1": 1,
+  "h2": 9,
+  "lang": "ru",
+  "title": "Betaline — AI-интегратор полного цикла",
+  "smallTargets": [],
+  "unnamedInteractive": [],
+  "fonts": [
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "IBM Plex Mono",
+   "IBM Plex Mono"
+  ],
+  "console": [],
+  "requestfailed": [],
+  "httpErrors": [],
+  "screenshot": "/Users/sergeyrama/Documents/betaline-ai-2/docs/agents/reports/2026-09-21-audit/custom2-1440.png"
+ },
+ "custom2-390": {
+  "scrollWidth": 390,
+  "innerWidth": 390,
+  "bodyHeight": 14081,
+  "overflowing": [
+   {
+    "sel": "ARTICLE.cs-slide",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.cs-head",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "P.dom",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "H3.",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "DIV.cs-body",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.cs-text",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "P.k",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "P.",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "DIV.acc",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "UL.price-cmp",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "LI.",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "SPAN.",
+    "left": 391,
+    "right": 607,
+    "w": 216
+   },
+   {
+    "sel": "B.mut",
+    "left": 391,
+    "right": 572,
+    "w": 181
+   },
+   {
+    "sel": "B.",
+    "left": 391,
+    "right": 561,
+    "w": 170
+   },
+   {
+    "sel": "P.ba-note",
+    "left": 391,
+    "right": 693,
+    "w": 302
+   },
+   {
+    "sel": "DIV.cs-media",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "DIV.cs-pair cs-pair-v",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "FIGURE.",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "P.ba-k",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "I.",
+    "left": 436,
+    "right": 581,
+    "w": 145
+   },
+   {
+    "sel": "IMG.",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "FIGURE.is-acc",
+    "left": 387,
+    "right": 697,
+    "w": 310
+   },
+   {
+    "sel": "UL.kase-nums",
+    "left": 369,
+    "right": 715,
+    "w": 346
+   },
+   {
+    "sel": "A.cs-video",
+    "left": 734,
+    "right": 1044,
+    "w": 310
+   },
+   {
+    "sel": "SPAN.cs-play",
+    "left": 853,
+    "right": 925,
+    "w": 72
+   },
+   {
+    "sel": "svg.[object SVGAnimatedString]",
+    "left": 876,
+    "right": 906,
+    "w": 30
+   },
+   {
+    "sel": "path.[object SVGAnimatedString]",
+    "left": 886,
+    "right": 899,
+    "w": 14
+   },
+   {
+    "sel": "SPAN.cs-vcap",
+    "left": 735,
+    "right": 1043,
+    "w": 308
+   },
+   {
+    "sel": "BLOCKQUOTE.kase-quote",
+    "left": 1081,
+    "right": 1391,
+    "w": 310
+   },
+   {
+    "sel": "FOOTER.",
+    "left": 1104,
+    "right": 1368,
+    "w": 264
+   },
+   {
+    "sel": "A.",
+    "left": 281,
+    "right": 440,
+    "w": 158
+   }
+  ],
+  "imagesBroken": [],
+  "imagesNoAlt": [],
+  "h1": 1,
+  "h2": 9,
+  "lang": "ru",
+  "title": "Betaline — AI-интегратор полного цикла",
+  "smallTargets": [
+   {
+    "t": "A",
+    "c": "cta-link",
+    "h": 18,
+    "w": 135,
+    "name": "info@betaline-ai.ru"
+   },
+   {
+    "t": "A",
+    "c": "cta-link",
+    "h": 18,
+    "w": 118,
+    "name": "+7 987 760-97-09"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 155,
+    "name": "info@betaline-ai.ru"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 131,
+    "name": "+7 987 760-97-09"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 82,
+    "name": "Telegram ↗"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 196,
+    "name": "Политика конфиденциа"
+   },
+   {
+    "t": "A",
+    "c": "",
+    "h": 20,
+    "w": 102,
+    "name": "Договор оферты"
+   }
+  ],
+  "unnamedInteractive": [
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.",
+   "A#.acc"
+  ],
+  "fonts": [
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "Golos Text",
+   "IBM Plex Mono",
+   "IBM Plex Mono"
+  ],
+  "console": [],
+  "requestfailed": [],
+  "httpErrors": [],
+  "screenshot": "/Users/sergeyrama/Documents/betaline-ai-2/docs/agents/reports/2026-09-21-audit/custom2-390.png"
+ },
+ "metrika-goals": {
+  "calls": [
+   {
+    "id": 112650916,
+    "action": "init",
+    "goal": {
+     "ssr": true,
+     "webvisor": true,
+     "clickmap": true,
+     "ecommerce": "dataLayer",
+     "referrer": "",
+     "url": "https://custom2.betaline-ai.ru/",
+     "accurateTrackBounce": true,
+     "trackLinks": true
+    },
+    "params": null
+   }
+  ],
+  "formStatus": null
+ }
+}

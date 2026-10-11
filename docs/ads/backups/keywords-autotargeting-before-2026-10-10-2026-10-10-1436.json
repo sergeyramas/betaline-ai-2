@@ -1,0 +1,968 @@
+{
+ "result": [
+  {
+   "Id": 58103749073,
+   "Keyword": "голосовой робот для обзвона",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749074,
+   "Keyword": "робот для обзвона клиентов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749075,
+   "Keyword": "автообзвон клиентов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749076,
+   "Keyword": "автоматический обзвон клиентов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749077,
+   "Keyword": "голосовой бот для бизнеса",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749078,
+   "Keyword": "голосовой ассистент для бизнеса",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749079,
+   "Keyword": "ии для звонков",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749080,
+   "Keyword": "ии обзвон клиентов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749081,
+   "Keyword": "нейросеть для обзвона",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749082,
+   "Keyword": "голосовой робот для входящих звонков",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749083,
+   "Keyword": "робот приема звонков",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749084,
+   "Keyword": "автоответчик с ии для бизнеса",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749085,
+   "Keyword": "голосовой робот запись клиентов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749086,
+   "Keyword": "робот для записи на прием",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749087,
+   "Keyword": "голосовой робот для колл центра",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749088,
+   "Keyword": "автоматизация колл центра",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749089,
+   "Keyword": "автоматизация звонков в бизнесе",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749090,
+   "Keyword": "автоматизация входящих звонков",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749091,
+   "Keyword": "обзвон базы клиентов -реактивация",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749092,
+   "Keyword": "обзвон холодной базы",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749093,
+   "Keyword": "реактивация базы клиентов обзвон",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749094,
+   "Keyword": "голосовой робот цена",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749095,
+   "Keyword": "голосовой робот заказать",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749096,
+   "Keyword": "внедрение голосового робота",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749097,
+   "Keyword": "разработка голосового робота",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749098,
+   "Keyword": "голосовой робот для бизнеса купить",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749099,
+   "Keyword": "голосовой бот для обзвона",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749100,
+   "Keyword": "робот обзвона -голосовой -клиент",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58103749101,
+   "Keyword": "умный обзвон",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198897832,
+   "Keyword": "разработка ии агентов",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198897833,
+   "Keyword": "ии агенты для бизнеса",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198897834,
+   "Keyword": "внедрение ии агентов",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198897835,
+   "Keyword": "создание ии агента для бизнеса",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198897836,
+   "Keyword": "ии агент под ключ",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198897837,
+   "Keyword": "ии агент для бизнеса заказать",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898386,
+   "Keyword": "внедрение ии в бизнес",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898387,
+   "Keyword": "внедрение ии в бизнес процессы",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898388,
+   "Keyword": "внедрение ии в компании",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898389,
+   "Keyword": "разработка и внедрение ии",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898390,
+   "Keyword": "внедрение искусственного интеллекта в бизнес",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898391,
+   "Keyword": "интеграция ии в бизнес",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898392,
+   "Keyword": "внедрение ии под ключ",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898751,
+   "Keyword": "компания автоматизация бизнеса",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898752,
+   "Keyword": "автоматизация бизнес процессов компании",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898753,
+   "Keyword": "автоматизация бизнес процессов с ии",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898754,
+   "Keyword": "автоматизация отдела продаж",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898755,
+   "Keyword": "автоматизация продаж с помощью ии",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898756,
+   "Keyword": "автоматизация бизнеса под ключ",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198898757,
+   "Keyword": "автоматизация бизнеса заказать",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899355,
+   "Keyword": "чат бот для бизнеса",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899356,
+   "Keyword": "разработка чат бота для бизнеса",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899357,
+   "Keyword": "чат бот для бизнеса заказать",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899358,
+   "Keyword": "чат бот для бизнеса цена",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899359,
+   "Keyword": "создание чат бота для бизнеса",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899360,
+   "Keyword": "ии чат бот для бизнеса",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899416,
+   "Keyword": "чат бот для сайта",
+   "AdGroupId": 5808016393,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899417,
+   "Keyword": "ии чат бот для сайта",
+   "AdGroupId": 5808016393,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899418,
+   "Keyword": "разработка чат бота для сайта",
+   "AdGroupId": 5808016393,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899419,
+   "Keyword": "ии консультант для сайта",
+   "AdGroupId": 5808016393,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899420,
+   "Keyword": "ии продавец для сайта",
+   "AdGroupId": 5808016393,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899740,
+   "Keyword": "ии ассистент для бизнеса",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899741,
+   "Keyword": "ии продавец для бизнеса",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899742,
+   "Keyword": "ии менеджер по продажам",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899743,
+   "Keyword": "создание ии ассистента для бизнеса",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899744,
+   "Keyword": "бот для обработки заявок",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198899745,
+   "Keyword": "чат бот для авито",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900698,
+   "Keyword": "голосовой робот купить",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900699,
+   "Keyword": "голосовые роботы для бизнеса",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900700,
+   "Keyword": "голосовой робот для компании",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900701,
+   "Keyword": "голосовой бот сервис",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900702,
+   "Keyword": "сервис голосовых роботов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900703,
+   "Keyword": "платформа голосовых роботов",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900704,
+   "Keyword": "сервис автообзвона",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900705,
+   "Keyword": "услуги обзвона базы",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900706,
+   "Keyword": "стоимость обзвона базы",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900707,
+   "Keyword": "услуги голосового робота",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900708,
+   "Keyword": "разработка голосового бота",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900709,
+   "Keyword": "ии оператор колл центра",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 58198900710,
+   "Keyword": "создание голосового робота",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED"
+  },
+  {
+   "Id": 205801424497,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5801424497,
+   "CampaignId": 714626313,
+   "Bid": 300000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "NO"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "NO"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "NO"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "NO"
+     }
+    ]
+   }
+  },
+  {
+   "Id": 205808016363,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5808016363,
+   "CampaignId": 715032341,
+   "Bid": 30000000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "YES"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "YES"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "YES"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "YES"
+     }
+    ]
+   }
+  },
+  {
+   "Id": 205808016365,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5808016365,
+   "CampaignId": 715032341,
+   "Bid": 30000000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "YES"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "YES"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "YES"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "YES"
+     }
+    ]
+   }
+  },
+  {
+   "Id": 205808016379,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5808016379,
+   "CampaignId": 715032341,
+   "Bid": 30000000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "YES"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "YES"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "YES"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "YES"
+     }
+    ]
+   }
+  },
+  {
+   "Id": 205808016389,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5808016389,
+   "CampaignId": 715032350,
+   "Bid": 30000000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "YES"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "YES"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "YES"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "YES"
+     }
+    ]
+   }
+  },
+  {
+   "Id": 205808016393,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5808016393,
+   "CampaignId": 715032350,
+   "Bid": 30000000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "YES"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "YES"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "YES"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "YES"
+     }
+    ]
+   }
+  },
+  {
+   "Id": 205808016418,
+   "Keyword": "---autotargeting",
+   "AdGroupId": 5808016418,
+   "CampaignId": 715032350,
+   "Bid": 30000000,
+   "State": "ON",
+   "Status": "ACCEPTED",
+   "AutotargetingCategories": {
+    "Items": [
+     {
+      "Category": "EXACT",
+      "Value": "YES"
+     },
+     {
+      "Category": "ALTERNATIVE",
+      "Value": "YES"
+     },
+     {
+      "Category": "COMPETITOR",
+      "Value": "YES"
+     },
+     {
+      "Category": "BROADER",
+      "Value": "YES"
+     },
+     {
+      "Category": "ACCESSORY",
+      "Value": "YES"
+     }
+    ]
+   }
+  }
+ ],
+ "_request": {
+  "keywords": {
+   "SelectionCriteria": {
+    "CampaignIds": [
+     715032341,
+     715032350,
+     714626313
+    ]
+   },
+   "FieldNames": [
+    "Id",
+    "AdGroupId",
+    "CampaignId",
+    "Keyword",
+    "State",
+    "Status",
+    "AutotargetingCategories",
+    "Bid"
+   ]
+  },
+  "ver": "v5"
+ }
+}

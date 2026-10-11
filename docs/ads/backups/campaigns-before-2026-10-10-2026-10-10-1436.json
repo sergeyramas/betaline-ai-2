@@ -1,0 +1,440 @@
+{
+ "result": [
+  {
+   "Id": 714626313,
+   "Name": "Betaline Звонок — zvonok.betaline-ai.ru — Поиск, контакты",
+   "NegativeKeywords": {
+    "Items": [
+     "!для детей",
+     "!для дома",
+     "!как отключить",
+     "!своими руками",
+     "!что !такое",
+     "18",
+     "github",
+     "siri",
+     "telegram",
+     "tts",
+     "алиса",
+     "бесплатно",
+     "вакансии",
+     "википедия",
+     "голосовых каналов",
+     "голосовых сообщений",
+     "девушка",
+     "диплом",
+     "дипфейк",
+     "дискорд",
+     "заблокировать",
+     "запугивания",
+     "зарплата",
+     "игра",
+     "курсовая",
+     "курсы",
+     "номер телефона",
+     "обучение",
+     "озвучка",
+     "отзывы",
+     "парня",
+     "перевод",
+     "переводчик",
+     "пожаловаться",
+     "пранк",
+     "пройду",
+     "пылесос",
+     "работа",
+     "распознавание речи онлайн",
+     "реферат",
+     "самому",
+     "синтез речи",
+     "скачать",
+     "скрипт",
+     "собеседования",
+     "спам звонки",
+     "торрент",
+     "транскрибация",
+     "умная колонка",
+     "уроки",
+     "участвовать",
+     "учителю",
+     "шутка"
+    ]
+   },
+   "ExcludedSites": null,
+   "UnifiedCampaign": {
+    "BiddingStrategy": {
+     "Search": {
+      "BiddingStrategyType": "PAY_FOR_CONVERSION",
+      "PayForConversion": {
+       "Cpa": 1000000000,
+       "GoalId": 658043267,
+       "WeeklySpendLimit": 10000000000,
+       "BudgetType": "WEEKLY_BUDGET",
+       "BudgetIncreasePercent": 0
+      }
+     },
+     "Network": {
+      "BiddingStrategyType": "SERVING_OFF"
+     }
+    },
+    "Settings": [
+     {
+      "Option": "ADD_METRICA_TAG",
+      "Value": "YES"
+     },
+     {
+      "Option": "ADD_TO_FAVORITES",
+      "Value": "NO"
+     },
+     {
+      "Option": "CAMPAIGN_EXACT_PHRASE_MATCHING_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "ALTERNATIVE_TEXTS_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "AUTO_ASSETS_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "ENABLE_AREA_OF_INTEREST_TARGETING",
+      "Value": "YES"
+     },
+     {
+      "Option": "ENABLE_COMPANY_INFO",
+      "Value": "YES"
+     },
+     {
+      "Option": "ENABLE_SITE_MONITORING",
+      "Value": "YES"
+     },
+     {
+      "Option": "REQUIRE_SERVICING",
+      "Value": "NO"
+     },
+     {
+      "Option": "SHARED_ACCOUNT_ENABLED",
+      "Value": "YES"
+     }
+    ],
+    "PriorityGoals": null
+   }
+  },
+  {
+   "Id": 715032341,
+   "Name": "custom2 · Поиск · Транзакционные · 03.10.26",
+   "NegativeKeywords": {
+    "Items": [
+     "!как разработать",
+     "!как сделать",
+     "!как сделать рекламу",
+     "!как создать",
+     "!своего",
+     "!своими руками",
+     "!что !такое",
+     "1с",
+     "aimylogic",
+     "chatgpt",
+     "gigachat",
+     "gpt",
+     "speechkit",
+     "алиса",
+     "бесплатно",
+     "бизнес план",
+     "бизнес проект",
+     "битрикс",
+     "вакансия",
+     "видео",
+     "вход",
+     "генератор",
+     "гигачат",
+     "год",
+     "гпт",
+     "диплом",
+     "здравоохранение",
+     "карточку товара",
+     "книга",
+     "концепция",
+     "курсовая",
+     "курсы",
+     "личный кабинет",
+     "образование",
+     "обучение",
+     "отзывы",
+     "презентация",
+     "проблемы",
+     "промт",
+     "работа",
+     "реферат",
+     "риски",
+     "самостоятельно",
+     "скачать",
+     "собственного",
+     "спрос",
+     "статья",
+     "суд",
+     "судопроизводство",
+     "сферы",
+     "техзадание",
+     "цель",
+     "школа",
+     "эксель",
+     "эффекты"
+    ]
+   },
+   "ExcludedSites": null,
+   "UnifiedCampaign": {
+    "BiddingStrategy": {
+     "Search": {
+      "BiddingStrategyType": "PAY_FOR_CONVERSION_MULTIPLE_GOALS",
+      "PayForConversionMultipleGoals": {
+       "WeeklySpendLimit": 10000000000,
+       "BudgetType": "WEEKLY_BUDGET"
+      }
+     },
+     "Network": {
+      "BiddingStrategyType": "SERVING_OFF"
+     }
+    },
+    "Settings": [
+     {
+      "Option": "ADD_METRICA_TAG",
+      "Value": "YES"
+     },
+     {
+      "Option": "ADD_TO_FAVORITES",
+      "Value": "NO"
+     },
+     {
+      "Option": "CAMPAIGN_EXACT_PHRASE_MATCHING_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "ALTERNATIVE_TEXTS_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "AUTO_ASSETS_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "ENABLE_AREA_OF_INTEREST_TARGETING",
+      "Value": "YES"
+     },
+     {
+      "Option": "ENABLE_COMPANY_INFO",
+      "Value": "YES"
+     },
+     {
+      "Option": "ENABLE_SITE_MONITORING",
+      "Value": "YES"
+     },
+     {
+      "Option": "REQUIRE_SERVICING",
+      "Value": "NO"
+     },
+     {
+      "Option": "SHARED_ACCOUNT_ENABLED",
+      "Value": "YES"
+     }
+    ],
+    "PriorityGoals": {
+     "Items": [
+      {
+       "GoalId": 617936022,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 617937404,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 617937509,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      }
+     ]
+    }
+   }
+  },
+  {
+   "Id": 715032350,
+   "Name": "betaline-ai.ru · Поиск · Транзакционные · 03.10.26",
+   "NegativeKeywords": {
+    "Items": [
+     "!как сделать",
+     "!как создать",
+     "!своего",
+     "!своими руками",
+     "!свой",
+     "!что !такое",
+     "chat app",
+     "puzzlebot",
+     "python",
+     "salebot",
+     "speechkit",
+     "автосалон",
+     "бесплатно",
+     "вакансия",
+     "видео",
+     "вк бот",
+     "возражениями",
+     "вход",
+     "делают сайты",
+     "диплом",
+     "дискорд",
+     "ии сайт",
+     "книга",
+     "конструктор",
+     "купить ботов",
+     "курсовая",
+     "курсы",
+     "личный кабинет",
+     "лучшие",
+     "мебель",
+     "мини app",
+     "николай черных",
+     "обучение",
+     "озон",
+     "оптика",
+     "отзывы",
+     "питон",
+     "презентация",
+     "работа",
+     "реви",
+     "реферат",
+     "самому",
+     "самостоятельно",
+     "сбер",
+     "сбербанк",
+     "скачать",
+     "смм",
+     "создание сайтов",
+     "создать сайт",
+     "статья",
+     "тг канал",
+     "установить",
+     "чат апп"
+    ]
+   },
+   "ExcludedSites": null,
+   "UnifiedCampaign": {
+    "BiddingStrategy": {
+     "Search": {
+      "BiddingStrategyType": "PAY_FOR_CONVERSION_MULTIPLE_GOALS",
+      "PayForConversionMultipleGoals": {
+       "WeeklySpendLimit": 10000000000,
+       "BudgetType": "WEEKLY_BUDGET"
+      }
+     },
+     "Network": {
+      "BiddingStrategyType": "SERVING_OFF"
+     }
+    },
+    "Settings": [
+     {
+      "Option": "ADD_METRICA_TAG",
+      "Value": "YES"
+     },
+     {
+      "Option": "ADD_TO_FAVORITES",
+      "Value": "NO"
+     },
+     {
+      "Option": "CAMPAIGN_EXACT_PHRASE_MATCHING_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "ALTERNATIVE_TEXTS_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "AUTO_ASSETS_ENABLED",
+      "Value": "NO"
+     },
+     {
+      "Option": "ENABLE_AREA_OF_INTEREST_TARGETING",
+      "Value": "YES"
+     },
+     {
+      "Option": "ENABLE_COMPANY_INFO",
+      "Value": "YES"
+     },
+     {
+      "Option": "ENABLE_SITE_MONITORING",
+      "Value": "YES"
+     },
+     {
+      "Option": "REQUIRE_SERVICING",
+      "Value": "NO"
+     },
+     {
+      "Option": "SHARED_ACCOUNT_ENABLED",
+      "Value": "YES"
+     }
+    ],
+    "PriorityGoals": {
+     "Items": [
+      {
+       "GoalId": 545732508,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545719489,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545731666,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545732855,
+       "Value": 1000000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 545719587,
+       "Value": 450000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 546490559,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      }
+     ]
+    }
+   }
+  }
+ ],
+ "_request": {
+  "campaigns": {
+   "SelectionCriteria": {
+    "Ids": [
+     715032341,
+     715032350,
+     714626313
+    ]
+   },
+   "FieldNames": [
+    "Id",
+    "Name",
+    "NegativeKeywords",
+    "ExcludedSites"
+   ],
+   "UnifiedCampaignFieldNames": [
+    "BiddingStrategy",
+    "PriorityGoals",
+    "Settings"
+   ]
+  },
+  "ver": "v501"
+ }
+}

@@ -21,7 +21,7 @@ import urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # живые кампании, которые проверяем, даже если в отчёте нет строк (показов не было)
-LIVE_IDS = [715032341, 715032350, 714626313]
+LIVE_IDS = [715032341, 715032350, 714626313, 708929168]
 COUNTER = 112650916
 GOALS = {617936022: "audit_lead", 617937073: "chat_message", 617937404: "chat_lead", 617937509: "callback_chat"}
 OPERATOR = "609952529"

@@ -1,0 +1,98 @@
+{
+ "result": [
+  {
+   "Id": 714626313,
+   "Name": "Betaline Звонок — zvonok.betaline-ai.ru — Поиск, контакты",
+   "UnifiedCampaign": {
+    "BiddingStrategy": {
+     "Search": {
+      "BiddingStrategyType": "PAY_FOR_CONVERSION",
+      "PayForConversion": {
+       "Cpa": 800000000,
+       "GoalId": 658043267,
+       "WeeklySpendLimit": 10000000000,
+       "BudgetType": "WEEKLY_BUDGET",
+       "BudgetIncreasePercent": 0
+      }
+     },
+     "Network": {
+      "BiddingStrategyType": "SERVING_OFF"
+     }
+    },
+    "PriorityGoals": null,
+    "CounterIds": {
+     "Items": [
+      111116675
+     ]
+    }
+   }
+  },
+  {
+   "Id": 715032341,
+   "Name": "custom2 · Поиск · Транзакционные · 03.10.26",
+   "UnifiedCampaign": {
+    "BiddingStrategy": {
+     "Search": {
+      "BiddingStrategyType": "PAY_FOR_CONVERSION_MULTIPLE_GOALS",
+      "PayForConversionMultipleGoals": {
+       "WeeklySpendLimit": 10000000000,
+       "BudgetType": "WEEKLY_BUDGET"
+      }
+     },
+     "Network": {
+      "BiddingStrategyType": "SERVING_OFF"
+     }
+    },
+    "PriorityGoals": {
+     "Items": [
+      {
+       "GoalId": 617936022,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 617937404,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      },
+      {
+       "GoalId": 617937509,
+       "Value": 800000000,
+       "IsMetrikaSourceOfValue": "NO"
+      }
+     ]
+    },
+    "CounterIds": {
+     "Items": [
+      112650916
+     ]
+    }
+   }
+  }
+ ],
+ "_request": {
+  "campaigns": {
+   "SelectionCriteria": {
+    "Ids": [
+     715032341,
+     714626313
+    ]
+   },
+   "FieldNames": [
+    "Id",
+    "Name"
+   ],
+   "UnifiedCampaignFieldNames": [
+    "BiddingStrategy",
+    "PriorityGoals",
+    "CounterIds"
+   ],
+   "TextCampaignFieldNames": [
+    "BiddingStrategy",
+    "PriorityGoals",
+    "CounterIds"
+   ]
+  },
+  "ver": "v501"
+ }
+}
