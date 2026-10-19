@@ -43,6 +43,9 @@ def main():
         sys.exit("ERROR: nav links not replaced (desktop + mobile)")
 
     html = html.replace("custom.betaline-ai.ru", "main.betaline-ai.ru")
+    # хаб — не один из продуктов: в полоске связки ничего не подсвечиваем
+    # ('main' в ecosystem.js — это апекс, 'custom' подсветил бы индивидуальные решения)
+    html = html.replace('data-site="custom"></script>', 'data-site="hub"></script>')
     html = html.replace(f"window.YM_ID = {YM_OLD};", f"window.YM_ID = {YM_NEW};")
     html = html.replace(f"mc.yandex.ru/watch/{YM_OLD}", f"mc.yandex.ru/watch/{YM_NEW}")
     html = html.replace("<title>Betaline — AI-интегратор полного цикла</title>",
