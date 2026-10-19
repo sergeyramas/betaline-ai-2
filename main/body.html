@@ -1,190 +1,93 @@
-  <!-- ================= HERO (main.betaline-ai.ru, стиль betaline-ai.ru) ================= -->
-  <section class="hero hero--main" aria-label="Главный экран">
-    <div class="wrap">
-      <div class="mh-grid">
-        <div class="mh-text">
-          <p class="badge ld">🧭 AI-решения под задачу бизнеса</p>
-          <h1 class="ld ld1">Найдите свою задачу — <span class="acc">мы&nbsp;покажем решение</span></h1>
-          <p class="hero-sub ld ld2">Не обязательно знать слова «агент» или «RAG». Выберите, <b>что мешает бизнесу сейчас</b>, —
-            увидите, что мы сделаем, какой будет результат и <b>сколько это стоит</b>.</p>
-          <div class="hero-cta ld ld3">
-            <a class="btn btn-solid btn-lg" href="#tasks">Выбрать задачу <span class="arr">↓</span></a>
-            <a class="btn btn-ghost btn-lg" href="#contact" data-plan="Не знаю, с чего начать">Нужен совет инженера</a>
-          </div>
-        </div>
-        <div class="mh-card ld ld4" aria-label="Частые задачи">
-          <p class="mh-card-h">Что болит чаще всего</p>
-          <ul class="mh-pick">
-            <li><a href="#t-01" data-open="t-01"><i>🌙</i>Теряю заявки ночью и в выходные</a></li>
-            <li><a href="#t-02" data-open="t-02"><i>💬</i>Одни и те же вопросы от сотрудников</a></li>
-            <li><a href="#t-03" data-open="t-03"><i>📄</i>Тонем в счетах и накладных</a></li>
-            <li><a href="#t-04" data-open="t-04"><i>📈</i>Не понимаю, что будет с продажами</a></li>
-            <li><a href="#t-05" data-open="t-05"><i>⚙️</i>Рутина съедает команду</a></li>
-            <li><a href="#t-06" data-open="t-06"><i>💡</i>Хочу AI, но не знаю, с чего начать</a></li>
-          </ul>
-        </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-sell" viewBox="0 0 24 24"><path d="M4 4.5h16a1 1 0 0 1 1 1V15a1 1 0 0 1-1 1h-8l-5 4v-4H4a1 1 0 0 1-1-1V5.5a1 1 0 0 1 1-1z"/><path d="M8 8.5v3M12 7v6M16 8.5v3"/></symbol>
+    <symbol id="i-kb" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.5 3.5 4.5v13c4.5 0 7 .5 8.5 2 1.5-1.5 4-2 8.5-2v-13c-4.5 0-7 .5-8.5 2z"/><path d="M12 6.5v13"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></symbol>
+    <symbol id="i-forecast" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M4 16l5-5 3.5 3.5L20 7"/><path d="M15 7h5v5"/></symbol>
+    <symbol id="i-agent" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5.5" r="2"/><circle cx="19" cy="5.5" r="2"/><circle cx="12" cy="20" r="2"/><path d="M6.5 7l3.3 3.2M17.5 7l-3.3 3.2M12 15v3"/></symbol>
+    <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a1 1 0 0 1-1 1A15 15 0 0 1 4 5a1 1 0 0 1 1-1z"/></symbol>
+  </defs>
+</svg>
+<section class="hb-screen" id="products" aria-label="Три способа внедрить AI">
+  <div class="hb-stage">
+    <div class="hb-head">
+      <div>
+        <p class="hb-mono hb-eyebrow">AI-интегратор полного цикла</p>
+        <h1>Три способа <em style="white-space:nowrap">внедрить AI в&nbsp;бизнес</em></h1>
       </div>
-      <div class="stats ld ld5" role="list" aria-label="Ключевые цифры">
-        <div class="stat" role="listitem"><div class="num">15<sup>+</sup></div><div class="lbl">инженеров в&nbsp;команде</div></div>
-        <div class="stat" role="listitem"><div class="num">4</div><div class="lbl">года в&nbsp;ML&nbsp;/&nbsp;LLM</div></div>
-        <div class="stat" role="listitem"><div class="num">40<sup>+</sup></div><div class="lbl">внедрений</div></div>
-        <div class="stat" role="listitem"><div class="num">5</div><div class="lbl">направлений работы</div></div>
+      <div class="hb-cta-wrap">
+        <div class="hb-cta">
+          <a class="hb-btn hb-btn-solid" href="#contact" data-plan="Своя задача">Обсудить задачу <svg class="hb-ic"><use href="#i-arrow"/></svg></a>
+          <a class="hb-btn hb-btn-ghost" href="#contact" data-plan="Не знаю, с чего начать">Нужен совет инженера</a>
+        </div>
+        <p class="hb-mono hb-note">Выберите продукт ниже · первый разговор бесплатный</p>
       </div>
     </div>
-  </section>
 
-  <!-- ================= КАРТА ЗАДАЧ ================= -->
-  <section class="sec" id="tasks">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="badge rv">🎯 Карта задач</p>
-        <h2 class="rv">Что сейчас мешает вашему&nbsp;бизнесу?</h2>
-        <p class="sec-lead rv">Нажмите на задачу — откроется решение: что сделаем, что получите и с какой суммы начинается проект.</p>
-      </div>
-
-      <div class="tmap">
-        <details name="tmap" class="task rv" id="t-01">
-          <summary>
-            <span class="tk-i" aria-hidden="true">🌙</span>
-            <span class="tk-q">Теряю заявки ночью, в выходные и когда менеджеры заняты</span>
-            <span class="tk-a">AI-продавец и голосовой агент</span>
-            <span class="tk-x" aria-hidden="true"></span>
-          </summary>
-          <div class="tk-body">
-            <p>Агент отвечает клиентам в чатах и по телефону 24/7: по вашему каталогу, ценам и наличию, квалифицирует и доводит до заявки. Спорный случай — сразу менеджеру.</p>
-            <ul class="inc"><li>сайт, Telegram, WhatsApp, Avito</li><li>входящие и исходящие звонки</li><li>заявка и транскрипт — в CRM</li></ul>
-            <p class="res"><b>Результат:</b> ни одно обращение не остаётся без ответа, менеджер получает уже тёплого клиента.</p>
-            <div class="tk-foot">
-              <p class="val"><i>от</i>240&thinsp;000&nbsp;<span class="cur">₽</span></p>
-              <a class="btn btn-solid" href="#contact" data-plan="Заявки 24/7 — AI-продавец / голосовой агент">Обсудить задачу</a>
-            </div>
-            <p class="tk-demo">Попробовать: <a href="https://betaline-ai.ru/?from=custom" target="_blank" rel="noopener noreferrer">AI-продавец ↗</a> · <a href="https://zvonok.betaline-ai.ru/?from=custom" target="_blank" rel="noopener noreferrer">демо-звонок ↗</a></p>
-          </div>
-        </details>
-
-        <details name="tmap" class="task rv" id="t-02">
-          <summary>
-            <span class="tk-i" aria-hidden="true">💬</span>
-            <span class="tk-q">Сотрудники по сто раз спрашивают одно и то же</span>
-            <span class="tk-a">Корпоративный AI-помощник</span>
-            <span class="tk-x" aria-hidden="true"></span>
-          </summary>
-          <div class="tk-body">
-            <p>Помощник по регламентам, инструкциям и базе знаний компании: отвечает сотрудникам и клиентам со ссылкой на источник, нетиповые вопросы передаёт человеку.</p>
-            <ul class="inc"><li>поиск по смыслу со ссылками</li><li>один канал на старте</li><li>оценка качества ответов</li></ul>
-            <p class="res"><b>Результат:</b> точные ответы по вашей базе знаний за секунды, опытные сотрудники перестают быть справочной.</p>
-            <div class="tk-foot">
-              <p class="val"><i>от</i>240&thinsp;000&nbsp;<span class="cur">₽</span></p>
-              <a class="btn btn-solid" href="#contact" data-plan="База знаний — корпоративный помощник">Обсудить задачу</a>
-            </div>
-          </div>
-        </details>
-
-        <details name="tmap" class="task rv" id="t-03">
-          <summary>
-            <span class="tk-i" aria-hidden="true">📄</span>
-            <span class="tk-q">Тонем в счетах, актах и накладных</span>
-            <span class="tk-a">Обработка документов</span>
-            <span class="tk-x" aria-hidden="true"></span>
-          </summary>
-          <div class="tk-body">
-            <p>Система сама извлекает данные из документов, раскладывает их по типам и сверяет: первичку с 1С, счета с договорами, акты с накладными.</p>
-            <ul class="inc"><li>извлечение данных</li><li>классификация и сверка</li><li>интеграция с 1С или CRM</li></ul>
-            <p class="res"><b>Результат:</b> первичка попадает в учётную систему без ручного ввода, расхождения находятся автоматически.</p>
-            <div class="tk-foot">
-              <p class="val"><i>от</i>140&thinsp;000&nbsp;<span class="cur">₽</span></p>
-              <a class="btn btn-solid" href="#contact" data-plan="Документы — обработка и сверка">Обсудить задачу</a>
-            </div>
-          </div>
-        </details>
-
-        <details name="tmap" class="task rv" id="t-04">
-          <summary>
-            <span class="tk-i" aria-hidden="true">📈</span>
-            <span class="tk-q">Не понимаю, что будет с продажами и спросом</span>
-            <span class="tk-a">Data Science и прогноз</span>
-            <span class="tk-x" aria-hidden="true"></span>
-          </summary>
-          <div class="tk-body">
-            <p>Прогнозная модель на ваших данных: спрос, скоринг лидов, отток. Модель объясняет, почему она так считает, и живёт внутри CRM.</p>
-            <ul class="inc"><li>одна прогнозная модель</li><li>объяснение факторов</li><li>интеграция в CRM</li></ul>
-            <p class="res"><b>Результат:</b> прогноз, которому можно доверять, и понятные причины за каждой цифрой.</p>
-            <div class="tk-foot">
-              <p class="val"><i>от</i>340&thinsp;000&nbsp;<span class="cur">₽</span></p>
-              <a class="btn btn-solid" href="#contact" data-plan="Прогноз — Data Science">Обсудить задачу</a>
-            </div>
-          </div>
-        </details>
-
-        <details name="tmap" class="task rv" id="t-05">
-          <summary>
-            <span class="tk-i" aria-hidden="true">⚙️</span>
-            <span class="tk-q">Рутина съедает команду: задачи, письма, перенос данных</span>
-            <span class="tk-a">Агентные системы</span>
-            <span class="tk-x" aria-hidden="true"></span>
-          </summary>
-          <div class="tk-body">
-            <p>Агент с инструментами действует сам: ставит задачи, пишет письма, обновляет данные в CRM, почте и 1С. Каждое действие записано, спорное уходит человеку.</p>
-            <ul class="inc"><li>агент на один сценарий</li><li>интеграции с вашими системами</li><li>логирование действий</li></ul>
-            <p class="res"><b>Результат:</b> рабочий сценарий закрывается агентом целиком, люди занимаются тем, что требует головы.</p>
-            <div class="tk-foot">
-              <p class="val"><i>от</i>490&thinsp;000&nbsp;<span class="cur">₽</span></p>
-              <a class="btn btn-solid" href="#contact" data-plan="Рутина — агентная система">Обсудить задачу</a>
-            </div>
-            <p class="tk-demo">Новый сценарий для уже работающего агента — от&nbsp;290&thinsp;000&nbsp;₽</p>
-          </div>
-        </details>
-
-        <details name="tmap" class="task task--free rv" id="t-06">
-          <summary>
-            <span class="tk-i" aria-hidden="true">💡</span>
-            <span class="tk-q">Хочу AI, но не знаю, с чего начать</span>
-            <span class="tk-a">Аудит и консалтинг <em>бесплатный старт</em></span>
-            <span class="tk-x" aria-hidden="true"></span>
-          </summary>
-          <div class="tk-body">
-            <p>Начинаем с бесплатного 30-минутного звонка с инженером: разбираем 2–3 процесса и честно говорим, где AI окупится, а где нет. Если нужно глубже — комплексный аудит с дорожной картой внедрения.</p>
-            <ul class="inc"><li>разбор процессов</li><li>карта возможностей</li><li>ориентир по бюджету и срокам</li></ul>
-            <p class="res"><b>Результат:</b> вы понимаете, с какого шага начать и сколько это будет стоить, — до того, как тратить деньги.</p>
-            <div class="tk-foot">
-              <p class="val">0&nbsp;<span class="cur">₽</span><small>вводный звонок</small></p>
-              <a class="btn btn-solid" href="#contact" data-plan="Не знаю, с чего начать — вводный аудит">Записаться на звонок</a>
-            </div>
-          </div>
-        </details>
-      </div>
-
-      <a class="tmap-other rv" href="#contact" data-plan="Своя задача">
-        <span class="tk-i" aria-hidden="true">✍️</span>
-        <span><b>Не нашли свою задачу?</b> Опишите её в&nbsp;двух словах — скажем, решается ли она и&nbsp;за&nbsp;сколько.</span>
-        <span class="go" aria-hidden="true">→</span>
+    <nav class="hb-bento" aria-label="Продукты">
+      <a class="hb-tile hb-prod hb-p1" href="https://betaline-ai.ru/?utm_source=main&amp;utm_medium=hub">
+        <div class="hb-t-top"><span class="hb-mono hb-t-id"><b>01</b> / Сайт и мессенджеры</span><span class="hb-t-ic"><svg class="hb-ic"><use href="#i-sell"/></svg></span></div>
+        <div class="hb-art" aria-hidden="true"><svg viewBox="0 0 360 150" preserveAspectRatio="xMidYMid meet">
+  <rect x="14" y="8" width="204" height="42" rx="15" fill="rgba(249,115,22,.10)" stroke="rgba(253,186,116,.55)"/>
+  <rect x="30" y="20" width="132" height="6" rx="3" fill="rgba(253,186,116,.7)"/><rect x="30" y="32" width="86" height="6" rx="3" fill="rgba(253,186,116,.4)"/>
+  <rect x="140" y="58" width="206" height="44" rx="15" fill="#F97316"/>
+  <rect x="156" y="71" width="150" height="6" rx="3" fill="rgba(23,18,13,.75)"/><rect x="156" y="83" width="104" height="6" rx="3" fill="rgba(23,18,13,.45)"/>
+  <rect x="14" y="110" width="84" height="34" rx="15" fill="rgba(249,115,22,.10)" stroke="rgba(253,186,116,.55)"/>
+  <g fill="#FDBA74"><circle class="hb-tdot" cx="40" cy="127" r="4"/><circle class="hb-tdot" cx="56" cy="127" r="4"/><circle class="hb-tdot" cx="72" cy="127" r="4"/></g>
+</svg></div>
+        <h3 class="hb-p-name">AI-ассистент для сайта и&nbsp;мессенджеров</h3>
+        <p class="hb-p-line">Чат-агент отвечает клиентам 24/7 и&nbsp;доводит до&nbsp;заявки. Спорный случай — сразу менеджеру.</p>
+        <div class="hb-p-foot"><p class="hb-demo"><span class="hb-pl"><svg class="hb-ic"><use href="#i-play"/></svg></span><span>Посмотреть, как работает<small>betaline-ai.ru</small></span></p><span class="hb-go"><svg class="hb-ic"><use href="#i-arrow"/></svg></span></div>
       </a>
-    </div>
-  </section>
 
-  <!-- ================= КАК РАБОТАЕМ ================= -->
-  <section class="sec sec--tint" id="process">
-    <div class="wrap">
-      <div class="sec-head">
-        <p class="badge rv">🛠 Как работаем</p>
-        <h2 class="rv">Сначала разговор, потом пилот, потом&nbsp;масштаб</h2>
+      <a class="hb-tile hb-prod hb-p2" href="https://zvonok.betaline-ai.ru/?utm_source=main&amp;utm_medium=hub">
+        <div class="hb-t-top"><span class="hb-mono hb-t-id"><b>02</b> / Телефон</span><span class="hb-t-ic"><svg class="hb-ic"><use href="#i-phone"/></svg></span></div>
+        <div class="hb-art hb-wave" aria-hidden="true"><svg viewBox="0 0 360 120" preserveAspectRatio="none"><defs><linearGradient id="wg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FDBA74"/><stop offset="1" stop-color="#F97316" stop-opacity=".55"/></linearGradient></defs><rect x="1.2" y="54.0" width="5.8" height="12.0" rx="2" style="animation-delay:-0.00s"/><rect x="9.4" y="49.1" width="5.8" height="21.7" rx="2" style="animation-delay:-0.14s"/><rect x="17.6" y="45.6" width="5.8" height="28.8" rx="2" style="animation-delay:-0.27s"/><rect x="25.7" y="45.6" width="5.8" height="28.9" rx="2" style="animation-delay:-0.41s"/><rect x="33.9" y="44.6" width="5.8" height="30.9" rx="2" style="animation-delay:-0.55s"/><rect x="42.1" y="40.7" width="5.8" height="38.5" rx="2" style="animation-delay:-0.69s"/><rect x="50.3" y="36.8" width="5.8" height="46.5" rx="2" style="animation-delay:-0.82s"/><rect x="58.5" y="39.9" width="5.8" height="40.3" rx="2" style="animation-delay:-0.96s"/><rect x="66.7" y="28.8" width="5.8" height="62.4" rx="2" style="animation-delay:-1.10s"/><rect x="74.8" y="24.3" width="5.8" height="71.4" rx="2" style="animation-delay:-1.23s"/><rect x="83.0" y="31.0" width="5.8" height="58.1" rx="2" style="animation-delay:-1.37s"/><rect x="91.2" y="30.7" width="5.8" height="58.6" rx="2" style="animation-delay:-1.51s"/><rect x="99.4" y="29.6" width="5.8" height="60.8" rx="2" style="animation-delay:-1.64s"/><rect x="107.6" y="31.7" width="5.8" height="56.5" rx="2" style="animation-delay:-1.78s"/><rect x="115.7" y="31.9" width="5.8" height="56.2" rx="2" style="animation-delay:-1.92s"/><rect x="123.9" y="20.5" width="5.8" height="79.1" rx="2" style="animation-delay:-2.06s"/><rect x="132.1" y="13.7" width="5.8" height="92.5" rx="2" style="animation-delay:-2.19s"/><rect x="140.3" y="22.6" width="5.8" height="74.7" rx="2" style="animation-delay:-2.33s"/><rect x="148.5" y="21.2" width="5.8" height="77.5" rx="2" style="animation-delay:-2.47s"/><rect x="156.7" y="15.2" width="5.8" height="89.7" rx="2" style="animation-delay:-0.00s"/><rect x="164.8" y="22.7" width="5.8" height="74.5" rx="2" style="animation-delay:-0.14s"/><rect x="173.0" y="29.2" width="5.8" height="61.6" rx="2" style="animation-delay:-0.28s"/><rect x="181.2" y="24.6" width="5.8" height="70.8" rx="2" style="animation-delay:-0.41s"/><rect x="189.4" y="17.6" width="5.8" height="84.9" rx="2" style="animation-delay:-0.55s"/><rect x="197.6" y="23.1" width="5.8" height="73.9" rx="2" style="animation-delay:-0.69s"/><rect x="205.7" y="20.4" width="5.8" height="79.1" rx="2" style="animation-delay:-0.83s"/><rect x="213.9" y="11.6" width="5.8" height="96.9" rx="2" style="animation-delay:-0.96s"/><rect x="222.1" y="19.0" width="5.8" height="82.0" rx="2" style="animation-delay:-1.10s"/><rect x="230.3" y="30.7" width="5.8" height="58.5" rx="2" style="animation-delay:-1.24s"/><rect x="238.5" y="28.3" width="5.8" height="63.3" rx="2" style="animation-delay:-1.37s"/><rect x="246.7" y="31.3" width="5.8" height="57.4" rx="2" style="animation-delay:-1.51s"/><rect x="254.8" y="31.2" width="5.8" height="57.6" rx="2" style="animation-delay:-1.65s"/><rect x="263.0" y="29.1" width="5.8" height="61.7" rx="2" style="animation-delay:-1.78s"/><rect x="271.2" y="22.5" width="5.8" height="75.0" rx="2" style="animation-delay:-1.92s"/><rect x="279.4" y="27.4" width="5.8" height="65.3" rx="2" style="animation-delay:-2.06s"/><rect x="287.6" y="37.6" width="5.8" height="44.7" rx="2" style="animation-delay:-2.19s"/><rect x="295.7" y="33.1" width="5.8" height="53.8" rx="2" style="animation-delay:-2.33s"/><rect x="303.9" y="37.3" width="5.8" height="45.3" rx="2" style="animation-delay:-2.47s"/><rect x="312.1" y="42.9" width="5.8" height="34.2" rx="2" style="animation-delay:-0.01s"/><rect x="320.3" y="43.7" width="5.8" height="32.5" rx="2" style="animation-delay:-0.14s"/><rect x="328.5" y="43.1" width="5.8" height="33.9" rx="2" style="animation-delay:-0.28s"/><rect x="336.7" y="46.0" width="5.8" height="27.9" rx="2" style="animation-delay:-0.42s"/><rect x="344.8" y="50.7" width="5.8" height="18.6" rx="2" style="animation-delay:-0.55s"/><rect x="353.0" y="54.0" width="5.8" height="12.0" rx="2" style="animation-delay:-0.69s"/></svg></div>
+        <h3 class="hb-p-name">Голосовой агент</h3>
+        <p class="hb-p-line">Обзванивает и&nbsp;отвечает на&nbsp;звонки по&nbsp;вашему скрипту. Заявки сразу в&nbsp;CRM и&nbsp;Telegram.</p>
+        <div class="hb-p-foot"><p class="hb-demo"><span class="hb-pl"><svg class="hb-ic"><use href="#i-play"/></svg></span><span>Послушать демо-звонок<small>zvonok.betaline-ai.ru</small></span></p><span class="hb-go"><svg class="hb-ic"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="hb-tile hb-prod hb-p3" href="https://custom2.betaline-ai.ru/?utm_source=main&amp;utm_medium=hub">
+        <div class="hb-t-top"><span class="hb-mono hb-t-id"><b>03</b> / Под вашу задачу</span><span class="hb-t-ic"><svg class="hb-ic"><use href="#i-agent"/></svg></span></div>
+        <div class="hb-art" aria-hidden="true"><svg viewBox="0 0 360 120" preserveAspectRatio="xMidYMid meet" fill="none">
+  <g stroke="rgba(249,115,22,.75)" stroke-width="1.5" stroke-dasharray="4 4">
+    <path d="M180 60H110V24H60"/><path d="M180 60H250V24H300"/><path d="M180 60H110V96H60"/><path d="M180 60H250V96H300"/>
+  </g>
+  <circle class="hb-nodepulse" cx="180" cy="60" r="12" fill="#F97316"/>
+  <circle cx="180" cy="60" r="12" fill="#F97316"/><circle cx="180" cy="60" r="4.5" fill="#17120D"/>
+  <g fill="#17120D" stroke="#FDBA74" stroke-width="1.6"><circle cx="54" cy="24" r="7"/><circle cx="306" cy="24" r="7"/><circle cx="54" cy="96" r="7"/><circle cx="306" cy="96" r="7"/></g>
+</svg></div>
+        <h3 class="hb-p-name">Индивидуальные решения</h3>
+        <p class="hb-p-line">Соберём систему под процесс вашей компании.</p>
+        <ul class="hb-sol">
+          <li><span>Корпоративный помощник</span><b>по базе знаний</b></li>
+          <li><span>Обработка документов</span><b>счета и акты</b></li>
+          <li><span>Прогнозы · Data&nbsp;Science</span><b>спрос и отток</b></li>
+          <li><span>Агентные системы</span><b>автоматизация рутины</b></li>
+        </ul>
+        <div class="hb-p-foot"><p class="hb-demo" style="font-size:15px;color:var(--mut);font-weight:500">Подробнее о решениях</p><span class="hb-go"><svg class="hb-ic"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="hb-tile hb-free" href="#contact" data-plan="Не знаю, с чего начать — вводный аудит">
+        <div class="hb-big">0<small>&nbsp;₽</small></div>
+        <div class="hb-tx">
+          <p class="hb-mono">Бесплатный старт</p>
+          <h3 class="hb-t-name">Не знаю, с&nbsp;чего начать</h3>
+          <p class="hb-t-line">Вводный аудит: поймёте, какой из трёх путей ваш и&nbsp;сколько это стоит — до&nbsp;того, как тратить деньги</p>
+        </div>
+        <span class="hb-t-go"><svg class="hb-ic"><use href="#i-arrow"/></svg></span>
+      </a>
+
+      <div class="hb-tile hb-stats" role="list" aria-label="Ключевые цифры">
+        <div class="hb-stat" role="listitem"><div class="hb-num">15<sup>+</sup></div><div class="hb-lbl">инженеров<br>в&nbsp;команде</div></div>
+        <div class="hb-stat" role="listitem"><div class="hb-num">4</div><div class="hb-lbl">года в&nbsp;ML<br>и&nbsp;LLM</div></div>
+        <div class="hb-stat" role="listitem"><div class="hb-num">40<sup>+</sup></div><div class="hb-lbl">внедрений</div></div>
+        <div class="hb-stat" role="listitem"><div class="hb-num">5</div><div class="hb-lbl">направлений<br>работы</div></div>
       </div>
-      <ol class="tsteps">
-        <li class="rv"><b>1</b><h3>Звонок</h3><p>30 минут с инженером. Бесплатно, без обязательств.</p></li>
-        <li class="rv"><b>2</b><h3>Пилот</h3><p>Один сценарий, понятная цена и срок, измеримый результат.</p></li>
-        <li class="rv"><b>3</b><h3>Внедрение</h3><p>Интеграция с вашими системами, обучение команды.</p></li>
-        <li class="rv"><b>4</b><h3>Развитие</h3><p>Поддержка, новые сценарии, прямая связь с инженерами.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <script>
-  /* hero-подборка: клик по задаче открывает её плитку на карте */
-  document.addEventListener('click', function (e) {
-    var a = e.target.closest('[data-open]');
-    if (!a) return;
-    var d = document.getElementById(a.getAttribute('data-open'));
-    if (d) d.open = true;
-  });
-  </script>
-
+    </nav>
+  </div>
+</section>
