@@ -2,35 +2,13 @@ const fs = require('fs');
 const { appendRow } = require('./_lib/sheets');
 const admin = require('./_lib/admin');
 
-// --- Атрибуция: yclid / utm / ym_uid / host приходят с сайта (см. blLeadAttr в main.js и index.html апекса).
+// --- Атрибуция: yclid / utm / ym_uid / host / referrer / first-touch приходят с сайта (blLeadAttr в main.js и index.html апекса);
+// если фронт не прислал host/page — берём из Origin/Referer. Логика в ./_lib/attr.js.
 // Нужна, чтобы лид можно было засчитать Директу офлайн-конверсией, даже если Метрика заблокирована у посетителя.
-const ATTR_KEYS = ['host', 'counter', 'yclid', 'ym_uid', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'landing', 'page'];
-const ATTR_MAX = { host: 80, counter: 12, yclid: 64, ym_uid: 32, utm_source: 80, utm_medium: 80, utm_campaign: 120, utm_content: 120, utm_term: 120, landing: 200, page: 300 };
-
-function cleanAttr(body) {
-  const out = {};
-  for (const k of ATTR_KEYS) {
-    let v = body[k];
-    if (typeof v !== 'string' && typeof v !== 'number') continue;
-    v = String(v).replace(/[\u0000-\u001f\u007f]/g, ' ').trim().slice(0, ATTR_MAX[k]);
-    if (!v) continue;
-    if (k === 'yclid' && !/^[\w.-]{1,64}$/.test(v)) continue;
-    if ((k === 'ym_uid' || k === 'counter') && !/^\d+$/.test(v)) continue;
-    if (k === 'host' && !/^[a-z0-9.-]+$/i.test(v)) continue;
-    out[k] = v;
-  }
-  return out;
-}
+const { cleanAttr, attrLines, logLine, publicAttr } = require('./_lib/attr');
 
 const escHtml = (t) => String(t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const unescHtml = (t) => t.replace(/&quot;/g, '"').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&');
-
-// «yclid: да (12345678…)» — полный идентификатор в Telegram не печатаем
-function sourceLine(attr) {
-  const camp = attr.utm_campaign || '—';
-  const yc = attr.yclid ? `да (${attr.yclid.slice(0, 8)}${attr.yclid.length > 8 ? '…' : ''})` : 'нет';
-  return `🔎 Источник: ${attr.host || '—'} · кампания: ${camp} · yclid: ${yc}`;
-}
 
 // Ссылка на КП лежит на том же сайте, откуда пришёл лид (только наши домены)
 function kpUrl(attr) {
@@ -58,7 +36,7 @@ function kpSendLink(contact, attr) {
 async function appendLeadJsonl(source, phone, fields, attr) {
   const file = process.env.LEADS_JSONL_PATH;
   if (!file) return;
-  const rec = { ts: Math.floor(Date.now() / 1000), source, contact: phone, name: fields.name || '', plan: fields.plan || '', ...attr };
+  const rec = { ts: Math.floor(Date.now() / 1000), source, contact: phone, name: fields.name || '', plan: fields.plan || '', ...publicAttr(attr) };
   await fs.promises.appendFile(file, JSON.stringify(rec) + '\n', { mode: 0o600 });
 }
 
@@ -72,10 +50,13 @@ module.exports = async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { source, phone, name, niche, task, platform, speed, price, date, time, plan } = req.body || {};
-  const attr = cleanAttr(req.body || {});
+  const attr = cleanAttr(req.body || {}, req);
 
   if (!source || !phone) return res.status(400).json({ error: 'Missing required fields' });
   if (!['quiz', 'audit', 'callback', 'pricing'].includes(source)) return res.status(400).json({ error: 'Invalid source' });
+
+  // Одна строка в journald на лид — без телефона и имени
+  console.log(logLine(source, attr));
 
   // Fan out to all destinations in parallel
   const results = await Promise.allSettled([
@@ -126,7 +107,7 @@ async function sendLeadCard(source, phone, fields, attr) {
   if (fields.plan) lines.push(`📦 Тариф: ${fields.plan}`);
   if (fields.date || fields.time) lines.push(`📅 ${[fields.date, fields.time].filter(Boolean).join(' ')}`);
   lines.push(`🕐 ${dateStr} ${timeStr}`);
-  lines.push(escHtml(sourceLine(attr)));
+  attrLines(attr).forEach((l) => lines.push(escHtml(l)));
   const kp = kpSendLink(phone, attr);
   if (kp) lines.push(`📄 <a href="${escHtml(kp.url)}">${kp.label}</a> (проверьте текст и нажмите «отправить»)`);
   lines.push(`━━━━━━━━━━━━━━━━━━`);
@@ -166,7 +147,7 @@ async function appendLeadSheet(source, phone, fields, attr) {
     fields.price || '',                               // I: Поддержка / Оценка
     [fields.date, fields.time].filter(Boolean).join(' ') || '',  // J: Срок
     fields.plan || '',                                // K: Тариф
-    // L..V — атрибуция, новые колонки только в конец
+    // L..X — атрибуция, новые колонки только в конец
     attr.host || '',                                  // L: Хост
     attr.utm_source || '',                            // M: utm_source
     attr.utm_medium || '',                            // N: utm_medium
@@ -178,6 +159,10 @@ async function appendLeadSheet(source, phone, fields, attr) {
     attr.landing || '',                               // T: Первая страница
     attr.page || '',                                  // U: Страница заявки
     attr.counter || '',                               // V: Счётчик Метрики
+    attr.referrer || '',                              // W: Referrer визита
+    [attr.first_referrer, attr.first_utm_source, attr.first_utm_medium, attr.first_utm_campaign, attr.first_yclid, attr.first_landing].some(Boolean)
+      ? `ref=${attr.first_referrer || '-'} utm=${[attr.first_utm_source, attr.first_utm_medium, attr.first_utm_campaign].map((v) => v || '-').join('/')} yclid=${attr.first_yclid || '-'} landing=${attr.first_landing || '-'}`
+      : '',                                           // X: Первый визит (first-touch)
   ];
   const sheetName = process.env.GOOGLE_SHEET_NAME || 'Лиды';
   await appendRow(sheetName, row);
@@ -211,6 +196,8 @@ async function sendToCRM(source, phone, fields, attr) {
       fields.date ? `Дата аудита: ${fields.date} ${fields.time || ''}` : '',
       fields.plan ? `Тариф: ${fields.plan}` : '',
       `Источник: ${attr.host || '—'}, кампания: ${attr.utm_campaign || '—'}, yclid: ${attr.yclid ? 'да' : 'нет'}`,
+      `Referrer: ${attr.referrer || '—'} · страница: ${attr.page || '—'}`,
+      attr.first_landing || attr.first_referrer ? `Первый визит: ref=${attr.first_referrer || '—'} utm=${[attr.first_utm_source, attr.first_utm_medium, attr.first_utm_campaign].map((v) => v || '—').join('/')} yclid=${attr.first_yclid || '—'} landing=${attr.first_landing || '—'}` : '',
       attr.yclid ? `yclid: ${attr.yclid}` : '',
       attr.ym_uid ? `ym_uid: ${attr.ym_uid}` : '',
     ].filter(Boolean).join('\n'),

@@ -31,6 +31,10 @@ async function isPaused(channel, externalId) {
 const operatorMessages = (externalId, after) =>
   call('GET', `/api/ingest/messages?channel=site_chat&external_id=${encodeURIComponent(externalId)}&after=${Number(after) || 0}`, null, 2000);
 
+// Привязка темы Telegram к диалогу админки — чтобы автоархив мог закрыть тему. Best-effort.
+const registerTopic = (channel, externalId, chatId, threadId, name) =>
+  call('POST', '/api/ingest/topic', { channel, external_id: externalId, chat_id: String(chatId), thread_id: String(threadId), name }, 2000);
+
 // Токен диалога: 16 случайных байт + HMAC — подделать или угадать нельзя, чужие диалоги не прочитать
 const sig = (rnd) => crypto.createHmac('sha256', secret() || 'x').update('chat:' + rnd).digest('hex').slice(0, 16);
 const newChatToken = () => { const r = crypto.randomBytes(16).toString('hex'); return `${r}.${sig(r)}`; };
@@ -51,4 +55,4 @@ function siteFrom(req, attr) {
   return (m ? m[1] : h).toLowerCase().slice(0, 40);
 }
 
-module.exports = { ingest, isPaused, operatorMessages, newChatToken, validChatToken, siteFrom };
+module.exports = { registerTopic, ingest, isPaused, operatorMessages, newChatToken, validChatToken, siteFrom };
