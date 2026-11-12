@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кабинет — BetaLine AI</title>
+  <meta name="supabase-url" content="SUPABASE_PLACEHOLDER">
+  <meta name="supabase-anon-key" content="">
+  <link rel="stylesheet" href="/assets/css/saas-tokens.css">
+  <link rel="stylesheet" href="/cabinet/cabinet.css">
+</head>
+<body>
+
+  <!-- ─── LOGIN VIEW ──────────────────────────────────────────────────────── -->
+  <section id="login-view" class="cab-login-split">
+
+    <!-- Left branding panel -->
+    <div class="cab-login-left">
+      <div class="cab-login-left-inner">
+        <div class="cab-ll-logo">BetaLine AI</div>
+        <h1 class="cab-ll-headline">Создайте умного<br>ИИ-ассистента<br>за 5 минут</h1>
+        <p class="cab-ll-sub">Ваш персональный кабинет управления ботом</p>
+        <ul class="cab-ll-features">
+          <li>
+            <span class="cab-ll-icon">⚡</span>
+            <div>
+              <strong>Без кода</strong>
+              <span>Настройка за 5 минут, без программиста</span>
+            </div>
+          </li>
+          <li>
+            <span class="cab-ll-icon">🚀</span>
+            <div>
+              <strong>Быстрый запуск</strong>
+              <span>Бот готов к работе в течение 24 часов</span>
+            </div>
+          </li>
+          <li>
+            <span class="cab-ll-icon">📊</span>
+            <div>
+              <strong>Аналитика</strong>
+              <span>Статистика диалогов в реальном времени</span>
+            </div>
+          </li>
+          <li>
+            <span class="cab-ll-icon">🔒</span>
+            <div>
+              <strong>Безопасность</strong>
+              <span>Данные клиентов под надёжной защитой</span>
+            </div>
+          </li>
+        </ul>
+        <div class="cab-ll-badge">7 дней бесплатно · без карты</div>
+      </div>
+    </div>
+
+    <!-- Right form panel -->
+    <div class="cab-login-right">
+      <div class="cab-login-right-inner">
+        <div class="cab-lr-logo">BetaLine AI</div>
+        <h2 class="cab-lr-title">Добро пожаловать</h2>
+        <p class="cab-lr-sub">Войдите в кабинет управления ботом</p>
+
+        <button id="login-google" class="cab-google-btn" type="button">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908C16.658 14.215 17.64 11.907 17.64 9.2z" fill="#4285F4"/>
+            <path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.859-3.048.859-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/>
+            <path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/>
+            <path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/>
+          </svg>
+          Войти через Google
+        </button>
+
+        <div class="cab-divider"><span>или войдите через email</span></div>
+
+        <div class="cab-demo-banner" role="note">
+          🔓 Демо-режим — введи любые данные и нажми «Войти»
+        </div>
+
+        <form id="login-form" novalidate>
+          <div class="cab-field">
+            <label for="login-contact">Email или телефон</label>
+            <input id="login-contact" type="text" placeholder="email@company.ru или +7 900 000-00-00" autocomplete="username" required>
+          </div>
+          <div class="cab-field">
+            <label for="login-password">Пароль</label>
+            <div class="cab-input-wrap">
+              <input id="login-password" type="password" placeholder="Пароль из Telegram" autocomplete="current-password" required>
+              <button type="button" class="cab-eye-btn" id="toggle-password" aria-label="Показать пароль">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <p id="login-error" class="cab-error" role="alert" aria-live="polite"></p>
+          <button type="submit" id="login-submit" class="btn-primary cab-btn-full">Войти →</button>
+        </form>
+
+        <p class="cab-login-hint">Нет аккаунта? <a href="/#builder">Создайте бота бесплатно →</a></p>
+        <div class="cab-demo-hint">💡 Демо: любой email + любой пароль</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DASHBOARD VIEW ───────────────────────────────────────────────────── -->
+  <section id="dashboard-view" hidden class="cab-shell">
+
+    <!-- Single nav — sidebar on desktop, top bar on mobile (CSS-only transform) -->
+    <aside class="cab-sidebar">
+      <a href="/" class="cab-sidebar-logo">BetaLine AI</a>
+
+      <nav class="cab-sidenav" role="tablist" aria-label="Разделы кабинета">
+        <button role="tab" class="cab-tab active" data-tab="dashboard" aria-selected="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          Дашборд
+        </button>
+        <button role="tab" class="cab-tab" data-tab="bot-config" aria-selected="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          Мои боты
+        </button>
+        <button role="tab" class="cab-tab" data-tab="integrations" aria-selected="false">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+          Интеграции
+        </button>
+      </nav>
+
+      <div class="cab-sidebar-footer">
+        <button id="logout-btn" class="cab-sidebar-logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Выйти
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="cab-content">
+
+      <!-- ── Dashboard Panel ───────────────────────────── -->
+      <section id="cab-dashboard" role="tabpanel" class="cab-panel">
+        <div class="cab-content-header">
+          <div>
+            <h2 id="cab-greeting" class="cab-page-title">Привет! 👋</h2>
+            <p class="cab-page-sub">Вот что происходит с вашими ботами сегодня</p>
+          </div>
+          <div class="cab-content-header-actions">
+            <div class="trial-badge" id="trial-badge"></div>
+            <button id="btn-create-bot" type="button" class="btn-primary cab-btn-create">
+              + Создать нового бота
+            </button>
+          </div>
+        </div>
+
+        <div class="cab-stats-grid">
+          <div class="cab-stat-card">
+            <div class="cab-stat-icon cab-stat-icon--orange">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            </div>
+            <div class="cab-stat-body">
+              <div class="cab-stat-value"><span id="msg-used">0</span><span class="cab-stat-total" id="msg-total"> / 100</span></div>
+              <div class="cab-stat-label">Сообщений сегодня</div>
+            </div>
+          </div>
+          <div class="cab-stat-card">
+            <div class="cab-stat-icon cab-stat-icon--amber">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div class="cab-stat-body">
+              <div class="cab-stat-value" id="days-left-stat">—</div>
+              <div class="cab-stat-label">Дней в триале</div>
+            </div>
+          </div>
+          <div class="cab-stat-card">
+            <div class="cab-stat-icon cab-stat-icon--blue">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="cab-stat-body">
+              <div class="cab-stat-value" id="plan-stat">Free</div>
+              <div class="cab-stat-label">Тариф</div>
+            </div>
+          </div>
+          <div class="cab-stat-card">
+            <div class="cab-stat-icon cab-stat-icon--green">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="cab-stat-body">
+              <div class="cab-stat-value" id="leads-stat">0</div>
+              <div class="cab-stat-label">Лидов собрано</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cab-chart-card">
+          <div class="cab-chart-header">
+            <div>
+              <h3 class="cab-card-title">Диалоги за 14 дней</h3>
+              <p class="cab-chart-sub">Всего за период: <span id="chart-total">9 860</span></p>
+            </div>
+            <div class="cab-chart-tabs" role="tablist">
+              <button type="button" class="active">2 нед</button>
+              <button type="button">1 мес</button>
+              <button type="button">3 мес</button>
+            </div>
+          </div>
+          <svg class="cab-chart-bars" viewBox="0 0 700 200" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div class="cab-chart-labels" id="chart-labels"></div>
+        </div>
+
+        <div class="cab-bots-section">
+          <div class="cab-bots-header">
+            <div>
+              <h3 class="cab-card-title">Мои боты</h3>
+              <p class="cab-bots-sub" id="bots-count">0 ботов в вашем аккаунте</p>
+            </div>
+            <input type="search" class="cab-bots-search" placeholder="🔍 Поиск..." aria-label="Поиск ботов">
+          </div>
+          <div id="bots-list" class="cab-bots-grid"></div>
+        </div>
+
+        <div id="add-email-banner" class="cab-email-banner" hidden>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Добавьте email для восстановления пароля
+          <input type="email" id="email-input" placeholder="email@example.com">
+          <button id="save-email-btn" class="btn-primary btn-sm">Сохранить</button>
+        </div>
+      </section>
+
+      <!-- ── Bot Config Panel ──────────────────────────── -->
+      <section id="cab-bot-config" role="tabpanel" class="cab-panel" hidden>
+        <div class="cab-content-header">
+          <div>
+            <h2 class="cab-page-title">Мой бот</h2>
+            <p class="cab-page-sub">Настройте внешний вид и поведение ИИ-ассистента</p>
+          </div>
+        </div>
+
+        <div class="cab-config-layout">
+          <div class="cab-config-form-col">
+            <div class="cab-card">
+              <h3 class="cab-card-title">Основные настройки</h3>
+              <form id="bot-config-form">
+                <div class="cab-field">
+                  <label for="botName">Имя бота</label>
+                  <input id="botName" type="text" placeholder="Алиса">
+                </div>
+                <fieldset style="border:none;padding:0;margin:0 0 var(--s-4);">
+                  <legend style="font:600 14px/1.2 var(--font-sans);color:var(--text-body);margin-bottom:8px;">Тон общения</legend>
+                  <div class="cab-chips">
+                    <label class="cab-chip"><input type="radio" name="tone" value="friendly" checked> Дружелюбный</label>
+                    <label class="cab-chip"><input type="radio" name="tone" value="professional"> Профессиональный</label>
+                    <label class="cab-chip"><input type="radio" name="tone" value="neutral"> Нейтральный</label>
+                  </div>
+                </fieldset>
+                <div class="cab-field">
+                  <label for="greeting">Приветствие</label>
+                  <textarea id="greeting" rows="3" placeholder="Привет! Чем могу помочь?"></textarea>
+                </div>
+                <div class="cab-field">
+                  <label>Цвет виджета</label>
+                  <div class="cab-swatches">
+                    <button type="button" class="cab-swatch selected" data-color="orange" aria-label="Оранжевый"></button>
+                    <button type="button" class="cab-swatch" data-color="blue" aria-label="Синий"></button>
+                    <button type="button" class="cab-swatch" data-color="green" aria-label="Зелёный"></button>
+                    <button type="button" class="cab-swatch" data-color="pink" aria-label="Розовый"></button>
+                    <button type="button" class="cab-swatch" data-color="dark" aria-label="Тёмный"></button>
+                  </div>
+                </div>
+                <p id="config-toast" class="cab-config-toast" hidden>Сохранено ✓</p>
+                <button type="submit" class="btn-primary">Сохранить изменения</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="cab-config-preview-col">
+            <div class="cab-card">
+              <h3 class="cab-card-title">Предпросмотр</h3>
+              <div class="cab-bot-preview">
+                <div class="cab-preview-chat">
+                  <div class="cab-preview-msg cab-preview-msg--bot">Привет! Чем могу помочь? 👋</div>
+                  <div class="cab-preview-msg cab-preview-msg--user">Расскажите о ваших услугах</div>
+                  <div class="cab-preview-msg cab-preview-msg--bot">Конечно! Мы предлагаем...</div>
+                </div>
+                <div class="cab-preview-locked">
+                  🔒 Предпросмотр в реальном времени — после активации
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── Integrations Panel ────────────────────────── -->
+      <section id="cab-integrations" role="tabpanel" class="cab-panel" hidden>
+        <div class="cab-content-header">
+          <div>
+            <h2 class="cab-page-title">Интеграции</h2>
+            <p class="cab-page-sub">Подключите дополнительные каналы. Менеджер свяжется в течение 24 часов.</p>
+          </div>
+        </div>
+
+        <div class="integration-grid">
+          <div class="integration-card" data-price="5000" data-type="Telegram">
+            <div class="int-header">
+              <span class="int-icon">✈️</span>
+              <span class="int-badge">🔥 Акция</span>
+            </div>
+            <h4>Telegram</h4>
+            <p class="int-desc">Ответы прямо в мессенджере клиента</p>
+            <div class="int-footer">
+              <span class="int-price">5 000₽</span>
+              <button type="button" class="btn-primary btn-sm int-connect-btn">Подключить</button>
+            </div>
+            <p class="integration-requested" hidden>✅ Менеджер свяжется в течение 24 ч</p>
+          </div>
+          <div class="integration-card" data-price="10000" data-type="WhatsApp">
+            <div class="int-header">
+              <span class="int-icon">💬</span>
+            </div>
+            <h4>WhatsApp</h4>
+            <p class="int-desc">Самый популярный мессенджер в России</p>
+            <div class="int-footer">
+              <span class="int-price">10 000₽</span>
+              <button type="button" class="btn-primary btn-sm int-connect-btn">Подключить</button>
+            </div>
+            <p class="integration-requested" hidden>✅ Менеджер свяжется в течение 24 ч</p>
+          </div>
+          <div class="integration-card" data-price="15000" data-type="Avito">
+            <div class="int-header">
+              <span class="int-icon">🏠</span>
+            </div>
+            <h4>Avito</h4>
+            <p class="int-desc">Автоответы на запросы с объявлений</p>
+            <div class="int-footer">
+              <span class="int-price">15 000₽</span>
+              <button type="button" class="btn-primary btn-sm int-connect-btn">Подключить</button>
+            </div>
+            <p class="integration-requested" hidden>✅ Менеджер свяжется в течение 24 ч</p>
+          </div>
+          <div class="integration-card" data-price="10000" data-type="ВКонтакте">
+            <div class="int-header">
+              <span class="int-icon">🔵</span>
+            </div>
+            <h4>ВКонтакте</h4>
+            <p class="int-desc">Бот в сообщениях вашей группы</p>
+            <div class="int-footer">
+              <span class="int-price">10 000₽</span>
+              <button type="button" class="btn-primary btn-sm int-connect-btn">Подключить</button>
+            </div>
+            <p class="integration-requested" hidden>✅ Менеджер свяжется в течение 24 ч</p>
+          </div>
+          <div class="integration-card" data-price="15000" data-type="AmoCRM">
+            <div class="int-header">
+              <span class="int-icon">📊</span>
+            </div>
+            <h4>AmoCRM</h4>
+            <p class="int-desc">Все лиды автоматически в вашей CRM</p>
+            <div class="int-footer">
+              <span class="int-price">15 000₽</span>
+              <button type="button" class="btn-primary btn-sm int-connect-btn">Подключить</button>
+            </div>
+            <p class="integration-requested" hidden>✅ Менеджер свяжется в течение 24 ч</p>
+          </div>
+          <div class="integration-card" data-price="25000" data-type="Bitrix24">
+            <div class="int-header">
+              <span class="int-icon">⚙️</span>
+            </div>
+            <h4>Bitrix24</h4>
+            <p class="int-desc">Полная интеграция с корпоративной системой</p>
+            <div class="int-footer">
+              <span class="int-price">25 000₽</span>
+              <button type="button" class="btn-primary btn-sm int-connect-btn">Подключить</button>
+            </div>
+            <p class="integration-requested" hidden>✅ Менеджер свяжется в течение 24 ч</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </section>
+
+  <!-- ─── WIZARD VIEW ─────────────────────────────────────────────────────── -->
+  <section id="wizard-view" hidden class="cab-wiz">
+    <div class="cab-wiz-card">
+      <div class="cab-wiz-dots" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div id="wiz-step-content" class="cab-wiz-content"></div>
+      <footer class="cab-wiz-footer">
+        <button type="button" class="btn-secondary" data-wiz-action="back">← Назад</button>
+        <span class="cab-wiz-progress">Шаг 1 из 5</span>
+        <button type="button" class="btn-primary" data-wiz-action="next">Далее →</button>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ─── WIZARD SUCCESS VIEW ────────────────────────────────────────────── -->
+  <section id="wizard-success-view" hidden class="cab-wiz-success">
+    <div class="cab-wiz-success-card">
+      <div class="cab-wiz-success-icon">🎉</div>
+      <h2 class="cab-wiz-success-title">Бот успешно создан!</h2>
+      <p class="cab-wiz-success-desc">
+        Ваш ИИ-ассистент <strong id="success-bot-name">—</strong> готов к работе.<br>
+        Теперь его можно протестировать или сразу интегрировать на сайт.
+      </p>
+      <div class="cab-wiz-success-actions">
+        <button type="button" class="btn-primary" id="success-test-btn">💬 Протестировать бота</button>
+        <button type="button" class="btn-secondary" id="success-cabinet-btn">📊 В личный кабинет</button>
+      </div>
+      <div class="cab-wiz-success-next">
+        <h4>Что дальше?</h4>
+        <ul>
+          <li>✅ Бот создан и готов к работе</li>
+          <li>⌛ Получить код для установки на сайте</li>
+          <li>⌛ Настроить автоматические ответы</li>
+          <li>⌛ Пополнить базу знаний</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BOT DETAIL VIEW (test chat) ────────────────────────────────────── -->
+  <section id="bot-detail-view" hidden class="cab-bot-detail">
+    <aside class="cab-bot-detail-info">
+      <button type="button" class="cab-back-btn" data-action="back-to-dashboard">← Назад к дашборду</button>
+      <div class="cab-info-section">
+        <h4 class="cab-info-section-title">Информация о боте</h4>
+        <div class="cab-bot-info-card">
+          <div class="cab-bot-info-avatar">🤖</div>
+          <h3 id="bd-bot-name">—</h3>
+          <p id="bd-bot-purpose">—</p>
+          <span class="cab-bot-info-status">● АКТИВЕН</span>
+          <dl class="cab-bot-info-stats">
+            <dt>Диалогов</dt><dd>0</dd>
+            <dt>Удовлетворённость</dt><dd>—</dd>
+            <dt>Тон</dt><dd id="bd-bot-tone">—</dd>
+            <dt>Каналы</dt><dd id="bd-bot-channels-count">0</dd>
+          </dl>
+        </div>
+      </div>
+      <div class="cab-info-section">
+        <h4 class="cab-info-section-title">Тематики</h4>
+        <div id="bd-topics" class="cab-info-chips">—</div>
+      </div>
+      <div class="cab-info-section">
+        <h4 class="cab-info-section-title">Каналы</h4>
+        <div id="bd-channels" class="cab-info-chips">—</div>
+      </div>
+      <div class="cab-info-section">
+        <h4 class="cab-info-section-title">Быстрые действия</h4>
+        <button type="button" class="cab-quick-action" id="bd-code-btn">📋 Код для сайта</button>
+        <button type="button" class="cab-quick-action" id="bd-reset-btn">🔄 Сбросить чат</button>
+        <button type="button" class="cab-quick-action" id="bd-edit-btn">✏️ Редактировать</button>
+      </div>
+    </aside>
+    <main class="cab-bot-detail-chat">
+      <header class="cab-chat-header">
+        <div class="cab-chat-header-bot">
+          <div class="cab-chat-header-avatar">🤖</div>
+          <div>
+            <strong id="bd-chat-bot-name">—</strong>
+            <span class="cab-chat-online">● Онлайн</span>
+          </div>
+        </div>
+        <div class="cab-chat-header-status">
+          <span class="cab-chat-pill">● ИИ Активен</span>
+          <span class="cab-chat-label">Тестирование</span>
+        </div>
+      </header>
+      <div id="bd-messages" class="cab-chat-messages"></div>
+      <div class="cab-chat-suggestions" id="bd-suggestions"></div>
+      <form class="cab-chat-input" id="bd-chat-form">
+        <input id="bd-chat-input" type="text" placeholder="Напишите сообщение..." autocomplete="off">
+        <button type="submit" aria-label="Отправить">➤</button>
+      </form>
+    </main>
+  </section>
+
+  <!-- ─── PRO LOCK MODAL ─────────────────────────────────────────────────── -->
+  <div id="pro-modal" class="cab-pro-modal" hidden role="dialog" aria-modal="true" aria-labelledby="pro-modal-title">
+    <div class="cab-pro-modal-card">
+      <button type="button" class="cab-pro-modal-close" data-action="close" aria-label="Закрыть">×</button>
+      <div class="cab-pro-modal-icon">🔒</div>
+      <h3 id="pro-modal-title" class="cab-pro-modal-title">Доступно на Pro</h3>
+      <p id="pro-modal-desc" class="cab-pro-modal-desc">Эта возможность откроется на платном тарифе.</p>
+      <div class="cab-pro-modal-actions">
+        <button type="button" class="btn-secondary" data-action="close">Отмена</button>
+        <button type="button" class="btn-primary" data-action="upgrade">Перейти на Pro</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/cabinet/cabinet.js"></script>
+</body>
+</html>
